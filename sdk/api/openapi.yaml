@@ -1,0 +1,4874 @@
+openapi: 3.0.1
+info:
+  contact:
+    email: info@finbourne.com
+    name: FINBOURNE Technology
+    url: https://www.finbourne.com
+  termsOfService: https://www.finbourne.com/legal/terms-conditions
+  title: FINBOURNE Workflow API
+  version: 0.1.518
+  x-logo:
+    url: https://www.lusid.com/app/assets/logo_white.png
+    backgroundColor: '#415464'
+servers:
+- url: https://fbn-ci.lusid.com/workflow
+security:
+- {}
+tags:
+- description: Workflow endpoint for managing Task Definitions
+  name: Task Definitions
+- description: Workflow endpoint for managing Tasks
+  name: Tasks
+- description: Workflow endpoint for managing and running Workers
+  name: Workers
+paths:
+  /api/taskdefinitions:
+    get:
+      operationId: ListTaskDefinitions
+      parameters:
+      - description: The asAt datetime at which to list the Task Definitions. Defaults
+          to return the latest version of each Task Definition if not specified.
+        explode: true
+        in: query
+        name: asAt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+        x-nullable: true
+      - description: "Expression to filter the result set. Read more about filtering\
+          \ results from LUSID here: https://support.lusid.com/filtering-results-from-lusid."
+        explode: true
+        in: query
+        name: filter
+        required: false
+        schema:
+          maxLength: 16384
+          minLength: 0
+          pattern: "^[\\s\\S]*$"
+          type: string
+        style: form
+      - description: "When paginating, limit the number of returned results to this\
+          \ many."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+        x-nullable: true
+      - description: "The pagination token to use to continue listing task definitions\
+          \ from a previous call to list task definitions. This value is returned\
+          \ from the previous call. If a pagination token is provided the sortBy,\
+          \ filter, effectiveAt, and asAt fields must not have changed since the original\
+          \ request."
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          maxLength: 500
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\+/]*={0,3}$"
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                values:
+                - id:
+                    scope: A1
+                    code: ZZZ
+                  version:
+                    asAtCreated: 2022-01-01T01:02:03.0000000+00:00
+                    userIdCreated: User-1
+                    requestIdCreated: RequestId-1
+                    asAtModified: 2022-01-01T01:02:03.0000000+00:00
+                    userIdModified: User-1
+                    requestIdModified: RequestId-1
+                    asAtVersionNumber: 1
+                  displayName: An example TaskDefinition
+                  description: Test
+                  states:
+                  - name: Submitted
+                  - name: InProgress
+                  - name: SendingSurvey
+                  - name: Done
+                  - name: SurveyNotSent
+                  - name: NotDone
+                  fieldSchema:
+                  - name: clientId
+                    type: String
+                  - name: assignee
+                    type: String
+                  - name: resolutionDetail
+                    type: String
+                  initialState:
+                    name: Submitted
+                    requiredFields:
+                    - clientId
+                  triggers:
+                  - name: start
+                    trigger:
+                      type: External
+                  - name: cancel
+                    trigger:
+                      type: External
+                  - name: resolve
+                    trigger:
+                      type: External
+                  - name: timeout
+                    trigger:
+                      type: External
+                  - name: success
+                    trigger:
+                      type: External
+                  - name: failure
+                    trigger:
+                      type: External
+                  actions:
+                  - name: health-check
+                    actionDetails:
+                      type: RunWorker
+                      workerId:
+                        scope: Health
+                        code: HealthCheckWorker
+                      workerAsAt: 2022-01-01T01:02:03.0000000+00:00
+                      workerParameters: {}
+                      workerStatusTriggers:
+                        started: null
+                        completedWithResults: null
+                        completedNoResults: null
+                        failedToStart: null
+                        failedToComplete: null
+                      childTaskConfigurations:
+                      - taskDefinitionId:
+                          scope: AAA
+                          code: BBB
+                        childTaskFields:
+                          assignee:
+                            mapFrom: foo
+                            setTo: bar
+                        resultMatchingPattern: null
+                        taskDefinitionAsAt: null
+                        initialTrigger: test-trigger
+                  transitions:
+                  - fromState: Submitted
+                    toState: InProgress
+                    trigger: start
+                    guard: "fields['assignee'] exists AND fields['assignee'] NOT eq\
+                      \ ''"
+                  - fromState: InProgress
+                    toState: SendingSurvey
+                    trigger: resolve
+                    guard: "fields['resolutionDetail'] exists AND fields['resolutionDetail']\
+                      \ NOT eq ''"
+                    action: health-check
+                  - fromState: SendingSurvey
+                    toState: Done
+                    trigger: success
+                  - fromState: SendingSurvey
+                    toState: SurveyNotSent
+                    trigger: failure
+                  - fromState: SendingSurvey
+                    toState: NotDone
+                    trigger: timeout
+                  - fromState: InProgress
+                    toState: NotDone
+                    trigger: cancel
+                    guard: "fields['cancellationDetail'] exists AND fields['cancellationDetail']\
+                      \ NOT eq ''"
+                links: []
+              schema:
+                $ref: '#/components/schemas/PagedResourceListOfTaskDefinition'
+          description: List of Task Definitions
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        "404":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: No Task Definitions found.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] ListTaskDefinitions: List Task Definitions"
+      tags:
+      - Task Definitions
+      x-fbn-apistatus: Experimental
+      x-accepts: application/json
+    post:
+      operationId: CreateTaskDefinition
+      requestBody:
+        content:
+          application/json-patch+json:
+            example:
+              id:
+                scope: A1
+                code: ZZZ
+              displayName: An example TaskDefinition
+              description: Test
+              states:
+              - name: Submitted
+              - name: InProgress
+              - name: SendingSurvey
+              - name: Done
+              - name: SurveyNotSent
+              - name: NotDone
+              fieldSchema:
+              - name: clientId
+                type: String
+              - name: assignee
+                type: String
+              - name: resolutionDetail
+                type: String
+              initialState:
+                name: Submitted
+                requiredFields:
+                - clientId
+              triggers:
+              - name: start
+                trigger:
+                  type: External
+              - name: cancel
+                trigger:
+                  type: External
+              - name: resolve
+                trigger:
+                  type: External
+              - name: timeout
+                trigger:
+                  type: External
+              - name: success
+                trigger:
+                  type: External
+              - name: failure
+                trigger:
+                  type: External
+              transitions:
+              - fromState: Submitted
+                toState: InProgress
+                trigger: start
+                guard: "fields['assignee'] exists AND fields['assignee'] NOT eq ''"
+              - fromState: InProgress
+                toState: SendingSurvey
+                trigger: resolve
+                guard: "fields['resolutionDetail'] exists AND fields['resolutionDetail']\
+                  \ NOT eq ''"
+                action: health-check
+              - fromState: SendingSurvey
+                toState: Done
+                trigger: success
+              - fromState: SendingSurvey
+                toState: SurveyNotSent
+                trigger: failure
+              - fromState: SendingSurvey
+                toState: NotDone
+                trigger: timeout
+              - fromState: InProgress
+                toState: NotDone
+                trigger: cancel
+                guard: "fields['cancellationDetail'] exists AND fields['cancellationDetail']\
+                  \ NOT eq ''"
+              actions:
+              - name: health-check
+                actionDetails:
+                  type: RunWorker
+                  workerId:
+                    scope: Health
+                    code: HealthCheckWorker
+                  workerAsAt: 2022-01-01T01:02:03.0000000+00:00
+                  workerParameters: {}
+                  workerStatusTriggers:
+                    started: null
+                    completedWithResults: null
+                    completedNoResults: null
+                    failedToStart: null
+                    failedToComplete: null
+                  childTaskConfigurations:
+                  - taskDefinitionId:
+                      scope: AAA
+                      code: BBB
+                    childTaskFields:
+                      assignee:
+                        mapFrom: foo
+                        setTo: bar
+                    resultMatchingPattern: null
+                    taskDefinitionAsAt: null
+                    initialTrigger: test-trigger
+            schema:
+              $ref: '#/components/schemas/CreateTaskDefinitionRequest'
+          application/json:
+            example:
+              id:
+                scope: A1
+                code: ZZZ
+              displayName: An example TaskDefinition
+              description: Test
+              states:
+              - name: Submitted
+              - name: InProgress
+              - name: SendingSurvey
+              - name: Done
+              - name: SurveyNotSent
+              - name: NotDone
+              fieldSchema:
+              - name: clientId
+                type: String
+              - name: assignee
+                type: String
+              - name: resolutionDetail
+                type: String
+              initialState:
+                name: Submitted
+                requiredFields:
+                - clientId
+              triggers:
+              - name: start
+                trigger:
+                  type: External
+              - name: cancel
+                trigger:
+                  type: External
+              - name: resolve
+                trigger:
+                  type: External
+              - name: timeout
+                trigger:
+                  type: External
+              - name: success
+                trigger:
+                  type: External
+              - name: failure
+                trigger:
+                  type: External
+              transitions:
+              - fromState: Submitted
+                toState: InProgress
+                trigger: start
+                guard: "fields['assignee'] exists AND fields['assignee'] NOT eq ''"
+              - fromState: InProgress
+                toState: SendingSurvey
+                trigger: resolve
+                guard: "fields['resolutionDetail'] exists AND fields['resolutionDetail']\
+                  \ NOT eq ''"
+                action: health-check
+              - fromState: SendingSurvey
+                toState: Done
+                trigger: success
+              - fromState: SendingSurvey
+                toState: SurveyNotSent
+                trigger: failure
+              - fromState: SendingSurvey
+                toState: NotDone
+                trigger: timeout
+              - fromState: InProgress
+                toState: NotDone
+                trigger: cancel
+                guard: "fields['cancellationDetail'] exists AND fields['cancellationDetail']\
+                  \ NOT eq ''"
+              actions:
+              - name: health-check
+                actionDetails:
+                  type: RunWorker
+                  workerId:
+                    scope: Health
+                    code: HealthCheckWorker
+                  workerAsAt: 2022-01-01T01:02:03.0000000+00:00
+                  workerParameters: {}
+                  workerStatusTriggers:
+                    started: null
+                    completedWithResults: null
+                    completedNoResults: null
+                    failedToStart: null
+                    failedToComplete: null
+                  childTaskConfigurations:
+                  - taskDefinitionId:
+                      scope: AAA
+                      code: BBB
+                    childTaskFields:
+                      assignee:
+                        mapFrom: foo
+                        setTo: bar
+                    resultMatchingPattern: null
+                    taskDefinitionAsAt: null
+                    initialTrigger: test-trigger
+            schema:
+              $ref: '#/components/schemas/CreateTaskDefinitionRequest'
+          text/json:
+            example:
+              id:
+                scope: A1
+                code: ZZZ
+              displayName: An example TaskDefinition
+              description: Test
+              states:
+              - name: Submitted
+              - name: InProgress
+              - name: SendingSurvey
+              - name: Done
+              - name: SurveyNotSent
+              - name: NotDone
+              fieldSchema:
+              - name: clientId
+                type: String
+              - name: assignee
+                type: String
+              - name: resolutionDetail
+                type: String
+              initialState:
+                name: Submitted
+                requiredFields:
+                - clientId
+              triggers:
+              - name: start
+                trigger:
+                  type: External
+              - name: cancel
+                trigger:
+                  type: External
+              - name: resolve
+                trigger:
+                  type: External
+              - name: timeout
+                trigger:
+                  type: External
+              - name: success
+                trigger:
+                  type: External
+              - name: failure
+                trigger:
+                  type: External
+              transitions:
+              - fromState: Submitted
+                toState: InProgress
+                trigger: start
+                guard: "fields['assignee'] exists AND fields['assignee'] NOT eq ''"
+              - fromState: InProgress
+                toState: SendingSurvey
+                trigger: resolve
+                guard: "fields['resolutionDetail'] exists AND fields['resolutionDetail']\
+                  \ NOT eq ''"
+                action: health-check
+              - fromState: SendingSurvey
+                toState: Done
+                trigger: success
+              - fromState: SendingSurvey
+                toState: SurveyNotSent
+                trigger: failure
+              - fromState: SendingSurvey
+                toState: NotDone
+                trigger: timeout
+              - fromState: InProgress
+                toState: NotDone
+                trigger: cancel
+                guard: "fields['cancellationDetail'] exists AND fields['cancellationDetail']\
+                  \ NOT eq ''"
+              actions:
+              - name: health-check
+                actionDetails:
+                  type: RunWorker
+                  workerId:
+                    scope: Health
+                    code: HealthCheckWorker
+                  workerAsAt: 2022-01-01T01:02:03.0000000+00:00
+                  workerParameters: {}
+                  workerStatusTriggers:
+                    started: null
+                    completedWithResults: null
+                    completedNoResults: null
+                    failedToStart: null
+                    failedToComplete: null
+                  childTaskConfigurations:
+                  - taskDefinitionId:
+                      scope: AAA
+                      code: BBB
+                    childTaskFields:
+                      assignee:
+                        mapFrom: foo
+                        setTo: bar
+                    resultMatchingPattern: null
+                    taskDefinitionAsAt: null
+                    initialTrigger: test-trigger
+            schema:
+              $ref: '#/components/schemas/CreateTaskDefinitionRequest'
+          application/*+json:
+            example:
+              id:
+                scope: A1
+                code: ZZZ
+              displayName: An example TaskDefinition
+              description: Test
+              states:
+              - name: Submitted
+              - name: InProgress
+              - name: SendingSurvey
+              - name: Done
+              - name: SurveyNotSent
+              - name: NotDone
+              fieldSchema:
+              - name: clientId
+                type: String
+              - name: assignee
+                type: String
+              - name: resolutionDetail
+                type: String
+              initialState:
+                name: Submitted
+                requiredFields:
+                - clientId
+              triggers:
+              - name: start
+                trigger:
+                  type: External
+              - name: cancel
+                trigger:
+                  type: External
+              - name: resolve
+                trigger:
+                  type: External
+              - name: timeout
+                trigger:
+                  type: External
+              - name: success
+                trigger:
+                  type: External
+              - name: failure
+                trigger:
+                  type: External
+              transitions:
+              - fromState: Submitted
+                toState: InProgress
+                trigger: start
+                guard: "fields['assignee'] exists AND fields['assignee'] NOT eq ''"
+              - fromState: InProgress
+                toState: SendingSurvey
+                trigger: resolve
+                guard: "fields['resolutionDetail'] exists AND fields['resolutionDetail']\
+                  \ NOT eq ''"
+                action: health-check
+              - fromState: SendingSurvey
+                toState: Done
+                trigger: success
+              - fromState: SendingSurvey
+                toState: SurveyNotSent
+                trigger: failure
+              - fromState: SendingSurvey
+                toState: NotDone
+                trigger: timeout
+              - fromState: InProgress
+                toState: NotDone
+                trigger: cancel
+                guard: "fields['cancellationDetail'] exists AND fields['cancellationDetail']\
+                  \ NOT eq ''"
+              actions:
+              - name: health-check
+                actionDetails:
+                  type: RunWorker
+                  workerId:
+                    scope: Health
+                    code: HealthCheckWorker
+                  workerAsAt: 2022-01-01T01:02:03.0000000+00:00
+                  workerParameters: {}
+                  workerStatusTriggers:
+                    started: null
+                    completedWithResults: null
+                    completedNoResults: null
+                    failedToStart: null
+                    failedToComplete: null
+                  childTaskConfigurations:
+                  - taskDefinitionId:
+                      scope: AAA
+                      code: BBB
+                    childTaskFields:
+                      assignee:
+                        mapFrom: foo
+                        setTo: bar
+                    resultMatchingPattern: null
+                    taskDefinitionAsAt: null
+                    initialTrigger: test-trigger
+            schema:
+              $ref: '#/components/schemas/CreateTaskDefinitionRequest'
+        description: The data to create a Task Definition
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              example:
+                id:
+                  scope: A1
+                  code: ZZZ
+                version:
+                  asAtCreated: 2022-01-01T01:02:03.0000000+00:00
+                  userIdCreated: User-1
+                  requestIdCreated: RequestId-1
+                  asAtModified: 2022-01-01T01:02:03.0000000+00:00
+                  userIdModified: User-1
+                  requestIdModified: RequestId-1
+                  asAtVersionNumber: 1
+                displayName: An example TaskDefinition
+                description: Test
+                states:
+                - name: Submitted
+                - name: InProgress
+                - name: SendingSurvey
+                - name: Done
+                - name: SurveyNotSent
+                - name: NotDone
+                fieldSchema:
+                - name: clientId
+                  type: String
+                - name: assignee
+                  type: String
+                - name: resolutionDetail
+                  type: String
+                initialState:
+                  name: Submitted
+                  requiredFields:
+                  - clientId
+                triggers:
+                - name: start
+                  trigger:
+                    type: External
+                - name: cancel
+                  trigger:
+                    type: External
+                - name: resolve
+                  trigger:
+                    type: External
+                - name: timeout
+                  trigger:
+                    type: External
+                - name: success
+                  trigger:
+                    type: External
+                - name: failure
+                  trigger:
+                    type: External
+                actions:
+                - name: health-check
+                  actionDetails:
+                    type: RunWorker
+                    workerId:
+                      scope: Health
+                      code: HealthCheckWorker
+                    workerAsAt: 2022-01-01T01:02:03.0000000+00:00
+                    workerParameters: {}
+                    workerStatusTriggers:
+                      started: null
+                      completedWithResults: null
+                      completedNoResults: null
+                      failedToStart: null
+                      failedToComplete: null
+                    childTaskConfigurations:
+                    - taskDefinitionId:
+                        scope: AAA
+                        code: BBB
+                      childTaskFields:
+                        assignee:
+                          mapFrom: foo
+                          setTo: bar
+                      resultMatchingPattern: null
+                      taskDefinitionAsAt: null
+                      initialTrigger: test-trigger
+                transitions:
+                - fromState: Submitted
+                  toState: InProgress
+                  trigger: start
+                  guard: "fields['assignee'] exists AND fields['assignee'] NOT eq\
+                    \ ''"
+                - fromState: InProgress
+                  toState: SendingSurvey
+                  trigger: resolve
+                  guard: "fields['resolutionDetail'] exists AND fields['resolutionDetail']\
+                    \ NOT eq ''"
+                  action: health-check
+                - fromState: SendingSurvey
+                  toState: Done
+                  trigger: success
+                - fromState: SendingSurvey
+                  toState: SurveyNotSent
+                  trigger: failure
+                - fromState: SendingSurvey
+                  toState: NotDone
+                  trigger: timeout
+                - fromState: InProgress
+                  toState: NotDone
+                  trigger: cancel
+                  guard: "fields['cancellationDetail'] exists AND fields['cancellationDetail']\
+                    \ NOT eq ''"
+              schema:
+                $ref: '#/components/schemas/TaskDefinition'
+          description: Created
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] CreateTaskDefinition: Create a new Task Definition"
+      tags:
+      - Task Definitions
+      x-fbn-apistatus: Experimental
+      x-content-type: application/json-patch+json
+      x-accepts: application/json
+  /api/taskdefinitions/{scope}/{code}:
+    delete:
+      operationId: DeleteTaskDefinition
+      parameters:
+      - description: The scope that identifies a Task Definition
+        explode: false
+        in: path
+        name: scope
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      - description: The code that identifies a Task Definition
+        explode: false
+        in: path
+        name: code
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletedEntityResponse'
+          description: Success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        "404":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Task Definition not found.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] DeleteTaskDefinition: Delete a Task Definition"
+      tags:
+      - Task Definitions
+      x-fbn-apistatus: Experimental
+      x-accepts: application/json
+    get:
+      operationId: GetTaskDefinition
+      parameters:
+      - description: The scope that identifies a Task Definition
+        explode: false
+        in: path
+        name: scope
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      - description: The code that identifies a Task Definition
+        explode: false
+        in: path
+        name: code
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      - description: The asAt datetime at which to retrieve the Task Definition. Defaults
+          to returning the latest version of the Task Definition if not specified.
+        explode: true
+        in: query
+        name: asAt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+        x-nullable: true
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                id:
+                  scope: A1
+                  code: ZZZ
+                version:
+                  asAtCreated: 2022-01-01T01:02:03.0000000+00:00
+                  userIdCreated: User-1
+                  requestIdCreated: RequestId-1
+                  asAtModified: 2022-01-01T01:02:03.0000000+00:00
+                  userIdModified: User-1
+                  requestIdModified: RequestId-1
+                  asAtVersionNumber: 1
+                displayName: An example TaskDefinition
+                description: Test
+                states:
+                - name: Submitted
+                - name: InProgress
+                - name: SendingSurvey
+                - name: Done
+                - name: SurveyNotSent
+                - name: NotDone
+                fieldSchema:
+                - name: clientId
+                  type: String
+                - name: assignee
+                  type: String
+                - name: resolutionDetail
+                  type: String
+                initialState:
+                  name: Submitted
+                  requiredFields:
+                  - clientId
+                triggers:
+                - name: start
+                  trigger:
+                    type: External
+                - name: cancel
+                  trigger:
+                    type: External
+                - name: resolve
+                  trigger:
+                    type: External
+                - name: timeout
+                  trigger:
+                    type: External
+                - name: success
+                  trigger:
+                    type: External
+                - name: failure
+                  trigger:
+                    type: External
+                actions:
+                - name: health-check
+                  actionDetails:
+                    type: RunWorker
+                    workerId:
+                      scope: Health
+                      code: HealthCheckWorker
+                    workerAsAt: 2022-01-01T01:02:03.0000000+00:00
+                    workerParameters: {}
+                    workerStatusTriggers:
+                      started: null
+                      completedWithResults: null
+                      completedNoResults: null
+                      failedToStart: null
+                      failedToComplete: null
+                    childTaskConfigurations:
+                    - taskDefinitionId:
+                        scope: AAA
+                        code: BBB
+                      childTaskFields:
+                        assignee:
+                          mapFrom: foo
+                          setTo: bar
+                      resultMatchingPattern: null
+                      taskDefinitionAsAt: null
+                      initialTrigger: test-trigger
+                transitions:
+                - fromState: Submitted
+                  toState: InProgress
+                  trigger: start
+                  guard: "fields['assignee'] exists AND fields['assignee'] NOT eq\
+                    \ ''"
+                - fromState: InProgress
+                  toState: SendingSurvey
+                  trigger: resolve
+                  guard: "fields['resolutionDetail'] exists AND fields['resolutionDetail']\
+                    \ NOT eq ''"
+                  action: health-check
+                - fromState: SendingSurvey
+                  toState: Done
+                  trigger: success
+                - fromState: SendingSurvey
+                  toState: SurveyNotSent
+                  trigger: failure
+                - fromState: SendingSurvey
+                  toState: NotDone
+                  trigger: timeout
+                - fromState: InProgress
+                  toState: NotDone
+                  trigger: cancel
+                  guard: "fields['cancellationDetail'] exists AND fields['cancellationDetail']\
+                    \ NOT eq ''"
+              schema:
+                $ref: '#/components/schemas/TaskDefinition'
+          description: Success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        "404":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Task Definition not found.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] GetTaskDefinition: Get a Task Definition"
+      tags:
+      - Task Definitions
+      x-fbn-apistatus: Experimental
+      x-accepts: application/json
+    put:
+      operationId: UpdateTaskDefinition
+      parameters:
+      - description: The scope that identifies a Task Definition
+        explode: false
+        in: path
+        name: scope
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      - description: The code that identifies a Task Definition
+        explode: false
+        in: path
+        name: code
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json-patch+json:
+            example:
+              displayName: An example TaskDefinition
+              description: Test
+              states:
+              - name: Submitted
+              - name: InProgress
+              - name: SendingSurvey
+              - name: Done
+              - name: SurveyNotSent
+              - name: NotDone
+              fieldSchema:
+              - name: clientId
+                type: String
+              - name: assignee
+                type: String
+              - name: resolutionDetail
+                type: String
+              initialState:
+                name: Submitted
+                requiredFields:
+                - clientId
+              triggers:
+              - name: start
+                trigger:
+                  type: External
+              - name: cancel
+                trigger:
+                  type: External
+              - name: resolve
+                trigger:
+                  type: External
+              - name: timeout
+                trigger:
+                  type: External
+              - name: success
+                trigger:
+                  type: External
+              - name: failure
+                trigger:
+                  type: External
+              transitions:
+              - fromState: Submitted
+                toState: InProgress
+                trigger: start
+                guard: "fields['assignee'] exists AND fields['assignee'] NOT eq ''"
+              - fromState: InProgress
+                toState: SendingSurvey
+                trigger: resolve
+                guard: "fields['resolutionDetail'] exists AND fields['resolutionDetail']\
+                  \ NOT eq ''"
+                action: health-check
+              - fromState: SendingSurvey
+                toState: Done
+                trigger: success
+              - fromState: SendingSurvey
+                toState: SurveyNotSent
+                trigger: failure
+              - fromState: SendingSurvey
+                toState: NotDone
+                trigger: timeout
+              - fromState: InProgress
+                toState: NotDone
+                trigger: cancel
+                guard: "fields['cancellationDetail'] exists AND fields['cancellationDetail']\
+                  \ NOT eq ''"
+              actions:
+              - name: health-check
+                actionDetails:
+                  type: RunWorker
+                  workerId:
+                    scope: Health
+                    code: HealthCheckWorker
+                  workerAsAt: 2022-01-01T01:02:03.0000000+00:00
+                  workerParameters: {}
+                  workerStatusTriggers:
+                    started: null
+                    completedWithResults: null
+                    completedNoResults: null
+                    failedToStart: null
+                    failedToComplete: null
+                  childTaskConfigurations:
+                  - taskDefinitionId:
+                      scope: AAA
+                      code: BBB
+                    childTaskFields:
+                      assignee:
+                        mapFrom: foo
+                        setTo: bar
+                    resultMatchingPattern: null
+                    taskDefinitionAsAt: null
+                    initialTrigger: test-trigger
+            schema:
+              $ref: '#/components/schemas/UpdateTaskDefinitionRequest'
+          application/json:
+            example:
+              displayName: An example TaskDefinition
+              description: Test
+              states:
+              - name: Submitted
+              - name: InProgress
+              - name: SendingSurvey
+              - name: Done
+              - name: SurveyNotSent
+              - name: NotDone
+              fieldSchema:
+              - name: clientId
+                type: String
+              - name: assignee
+                type: String
+              - name: resolutionDetail
+                type: String
+              initialState:
+                name: Submitted
+                requiredFields:
+                - clientId
+              triggers:
+              - name: start
+                trigger:
+                  type: External
+              - name: cancel
+                trigger:
+                  type: External
+              - name: resolve
+                trigger:
+                  type: External
+              - name: timeout
+                trigger:
+                  type: External
+              - name: success
+                trigger:
+                  type: External
+              - name: failure
+                trigger:
+                  type: External
+              transitions:
+              - fromState: Submitted
+                toState: InProgress
+                trigger: start
+                guard: "fields['assignee'] exists AND fields['assignee'] NOT eq ''"
+              - fromState: InProgress
+                toState: SendingSurvey
+                trigger: resolve
+                guard: "fields['resolutionDetail'] exists AND fields['resolutionDetail']\
+                  \ NOT eq ''"
+                action: health-check
+              - fromState: SendingSurvey
+                toState: Done
+                trigger: success
+              - fromState: SendingSurvey
+                toState: SurveyNotSent
+                trigger: failure
+              - fromState: SendingSurvey
+                toState: NotDone
+                trigger: timeout
+              - fromState: InProgress
+                toState: NotDone
+                trigger: cancel
+                guard: "fields['cancellationDetail'] exists AND fields['cancellationDetail']\
+                  \ NOT eq ''"
+              actions:
+              - name: health-check
+                actionDetails:
+                  type: RunWorker
+                  workerId:
+                    scope: Health
+                    code: HealthCheckWorker
+                  workerAsAt: 2022-01-01T01:02:03.0000000+00:00
+                  workerParameters: {}
+                  workerStatusTriggers:
+                    started: null
+                    completedWithResults: null
+                    completedNoResults: null
+                    failedToStart: null
+                    failedToComplete: null
+                  childTaskConfigurations:
+                  - taskDefinitionId:
+                      scope: AAA
+                      code: BBB
+                    childTaskFields:
+                      assignee:
+                        mapFrom: foo
+                        setTo: bar
+                    resultMatchingPattern: null
+                    taskDefinitionAsAt: null
+                    initialTrigger: test-trigger
+            schema:
+              $ref: '#/components/schemas/UpdateTaskDefinitionRequest'
+          text/json:
+            example:
+              displayName: An example TaskDefinition
+              description: Test
+              states:
+              - name: Submitted
+              - name: InProgress
+              - name: SendingSurvey
+              - name: Done
+              - name: SurveyNotSent
+              - name: NotDone
+              fieldSchema:
+              - name: clientId
+                type: String
+              - name: assignee
+                type: String
+              - name: resolutionDetail
+                type: String
+              initialState:
+                name: Submitted
+                requiredFields:
+                - clientId
+              triggers:
+              - name: start
+                trigger:
+                  type: External
+              - name: cancel
+                trigger:
+                  type: External
+              - name: resolve
+                trigger:
+                  type: External
+              - name: timeout
+                trigger:
+                  type: External
+              - name: success
+                trigger:
+                  type: External
+              - name: failure
+                trigger:
+                  type: External
+              transitions:
+              - fromState: Submitted
+                toState: InProgress
+                trigger: start
+                guard: "fields['assignee'] exists AND fields['assignee'] NOT eq ''"
+              - fromState: InProgress
+                toState: SendingSurvey
+                trigger: resolve
+                guard: "fields['resolutionDetail'] exists AND fields['resolutionDetail']\
+                  \ NOT eq ''"
+                action: health-check
+              - fromState: SendingSurvey
+                toState: Done
+                trigger: success
+              - fromState: SendingSurvey
+                toState: SurveyNotSent
+                trigger: failure
+              - fromState: SendingSurvey
+                toState: NotDone
+                trigger: timeout
+              - fromState: InProgress
+                toState: NotDone
+                trigger: cancel
+                guard: "fields['cancellationDetail'] exists AND fields['cancellationDetail']\
+                  \ NOT eq ''"
+              actions:
+              - name: health-check
+                actionDetails:
+                  type: RunWorker
+                  workerId:
+                    scope: Health
+                    code: HealthCheckWorker
+                  workerAsAt: 2022-01-01T01:02:03.0000000+00:00
+                  workerParameters: {}
+                  workerStatusTriggers:
+                    started: null
+                    completedWithResults: null
+                    completedNoResults: null
+                    failedToStart: null
+                    failedToComplete: null
+                  childTaskConfigurations:
+                  - taskDefinitionId:
+                      scope: AAA
+                      code: BBB
+                    childTaskFields:
+                      assignee:
+                        mapFrom: foo
+                        setTo: bar
+                    resultMatchingPattern: null
+                    taskDefinitionAsAt: null
+                    initialTrigger: test-trigger
+            schema:
+              $ref: '#/components/schemas/UpdateTaskDefinitionRequest'
+          application/*+json:
+            example:
+              displayName: An example TaskDefinition
+              description: Test
+              states:
+              - name: Submitted
+              - name: InProgress
+              - name: SendingSurvey
+              - name: Done
+              - name: SurveyNotSent
+              - name: NotDone
+              fieldSchema:
+              - name: clientId
+                type: String
+              - name: assignee
+                type: String
+              - name: resolutionDetail
+                type: String
+              initialState:
+                name: Submitted
+                requiredFields:
+                - clientId
+              triggers:
+              - name: start
+                trigger:
+                  type: External
+              - name: cancel
+                trigger:
+                  type: External
+              - name: resolve
+                trigger:
+                  type: External
+              - name: timeout
+                trigger:
+                  type: External
+              - name: success
+                trigger:
+                  type: External
+              - name: failure
+                trigger:
+                  type: External
+              transitions:
+              - fromState: Submitted
+                toState: InProgress
+                trigger: start
+                guard: "fields['assignee'] exists AND fields['assignee'] NOT eq ''"
+              - fromState: InProgress
+                toState: SendingSurvey
+                trigger: resolve
+                guard: "fields['resolutionDetail'] exists AND fields['resolutionDetail']\
+                  \ NOT eq ''"
+                action: health-check
+              - fromState: SendingSurvey
+                toState: Done
+                trigger: success
+              - fromState: SendingSurvey
+                toState: SurveyNotSent
+                trigger: failure
+              - fromState: SendingSurvey
+                toState: NotDone
+                trigger: timeout
+              - fromState: InProgress
+                toState: NotDone
+                trigger: cancel
+                guard: "fields['cancellationDetail'] exists AND fields['cancellationDetail']\
+                  \ NOT eq ''"
+              actions:
+              - name: health-check
+                actionDetails:
+                  type: RunWorker
+                  workerId:
+                    scope: Health
+                    code: HealthCheckWorker
+                  workerAsAt: 2022-01-01T01:02:03.0000000+00:00
+                  workerParameters: {}
+                  workerStatusTriggers:
+                    started: null
+                    completedWithResults: null
+                    completedNoResults: null
+                    failedToStart: null
+                    failedToComplete: null
+                  childTaskConfigurations:
+                  - taskDefinitionId:
+                      scope: AAA
+                      code: BBB
+                    childTaskFields:
+                      assignee:
+                        mapFrom: foo
+                        setTo: bar
+                    resultMatchingPattern: null
+                    taskDefinitionAsAt: null
+                    initialTrigger: test-trigger
+            schema:
+              $ref: '#/components/schemas/UpdateTaskDefinitionRequest'
+        description: The data to update a Task Definition
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                id:
+                  scope: A1
+                  code: ZZZ
+                version:
+                  asAtCreated: 2022-01-01T01:02:03.0000000+00:00
+                  userIdCreated: User-1
+                  requestIdCreated: RequestId-1
+                  asAtModified: 2022-01-01T01:02:03.0000000+00:00
+                  userIdModified: User-1
+                  requestIdModified: RequestId-1
+                  asAtVersionNumber: 1
+                displayName: An example TaskDefinition
+                description: Test
+                states:
+                - name: Submitted
+                - name: InProgress
+                - name: SendingSurvey
+                - name: Done
+                - name: SurveyNotSent
+                - name: NotDone
+                fieldSchema:
+                - name: clientId
+                  type: String
+                - name: assignee
+                  type: String
+                - name: resolutionDetail
+                  type: String
+                initialState:
+                  name: Submitted
+                  requiredFields:
+                  - clientId
+                triggers:
+                - name: start
+                  trigger:
+                    type: External
+                - name: cancel
+                  trigger:
+                    type: External
+                - name: resolve
+                  trigger:
+                    type: External
+                - name: timeout
+                  trigger:
+                    type: External
+                - name: success
+                  trigger:
+                    type: External
+                - name: failure
+                  trigger:
+                    type: External
+                actions:
+                - name: health-check
+                  actionDetails:
+                    type: RunWorker
+                    workerId:
+                      scope: Health
+                      code: HealthCheckWorker
+                    workerAsAt: 2022-01-01T01:02:03.0000000+00:00
+                    workerParameters: {}
+                    workerStatusTriggers:
+                      started: null
+                      completedWithResults: null
+                      completedNoResults: null
+                      failedToStart: null
+                      failedToComplete: null
+                    childTaskConfigurations:
+                    - taskDefinitionId:
+                        scope: AAA
+                        code: BBB
+                      childTaskFields:
+                        assignee:
+                          mapFrom: foo
+                          setTo: bar
+                      resultMatchingPattern: null
+                      taskDefinitionAsAt: null
+                      initialTrigger: test-trigger
+                transitions:
+                - fromState: Submitted
+                  toState: InProgress
+                  trigger: start
+                  guard: "fields['assignee'] exists AND fields['assignee'] NOT eq\
+                    \ ''"
+                - fromState: InProgress
+                  toState: SendingSurvey
+                  trigger: resolve
+                  guard: "fields['resolutionDetail'] exists AND fields['resolutionDetail']\
+                    \ NOT eq ''"
+                  action: health-check
+                - fromState: SendingSurvey
+                  toState: Done
+                  trigger: success
+                - fromState: SendingSurvey
+                  toState: SurveyNotSent
+                  trigger: failure
+                - fromState: SendingSurvey
+                  toState: NotDone
+                  trigger: timeout
+                - fromState: InProgress
+                  toState: NotDone
+                  trigger: cancel
+                  guard: "fields['cancellationDetail'] exists AND fields['cancellationDetail']\
+                    \ NOT eq ''"
+              schema:
+                $ref: '#/components/schemas/TaskDefinition'
+          description: Success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        "404":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Task Definition not found.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] UpdateTaskDefinition: Update an existing Task Definition"
+      tags:
+      - Task Definitions
+      x-fbn-apistatus: Experimental
+      x-content-type: application/json-patch+json
+      x-accepts: application/json
+  /api/taskdefinitions/{scope}/{code}/tasks:
+    get:
+      operationId: ListTasksForTaskDefinition
+      parameters:
+      - description: The scope that identifies a Task Definition
+        explode: false
+        in: path
+        name: scope
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      - description: The code that identifies a Task Definition
+        explode: false
+        in: path
+        name: code
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      - description: The asAt datetime at which to list the Tasks. Defaults to return
+          the latest version of each Task if not specified.
+        explode: true
+        in: query
+        name: asAt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+        x-nullable: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceListOfTask'
+          description: Success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        "404":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: No tasks found for this Task Definition.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] ListTasksForTaskDefinition: List Tasks for a Task Definition"
+      tags:
+      - Task Definitions
+      x-fbn-apistatus: Experimental
+      x-accepts: application/json
+  /api/tasks:
+    get:
+      operationId: ListTasks
+      parameters:
+      - description: The asAt datetime at which to list the Tasks. Defaults to return
+          the latest version of each Task if not specified.
+        explode: true
+        in: query
+        name: asAt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+        x-nullable: true
+      - description: "Expression to filter the result set. Read more about filtering\
+          \ results from LUSID here: https://support.lusid.com/filtering-results-from-lusid."
+        explode: true
+        in: query
+        name: filter
+        required: false
+        schema:
+          maxLength: 16384
+          minLength: 0
+          pattern: "^[\\s\\S]*$"
+          type: string
+        style: form
+      - description: "When paginating, limit the number of returned results to this\
+          \ many."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+        x-nullable: true
+      - description: "The pagination token to use to continue listing tasks from a\
+          \ previous call to list tasks. This value is returned from the previous\
+          \ call. If a pagination token is provided the sortBy, filter, effectiveAt,\
+          \ and asAt fields must not have changed since the original request."
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          maxLength: 500
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\+/]*={0,3}$"
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResourceListOfTask'
+          description: Success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        "404":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: No Tasks found.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] ListTasks: List Tasks"
+      tags:
+      - Tasks
+      x-fbn-apistatus: Experimental
+      x-accepts: application/json
+    post:
+      operationId: CreateTask
+      parameters:
+      - description: The name of the Trigger to invoke
+        explode: true
+        in: query
+        name: trigger
+        required: false
+        schema:
+          maxLength: 1024
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: form
+      requestBody:
+        content:
+          application/json-patch+json:
+            example:
+              taskDefinitionId:
+                scope: A1
+                code: ZZZ
+              correlationIds:
+              - correlation-id
+              fields:
+              - name: clientId
+                value: zzz123
+              - name: assignee
+              - name: resolutionDetail
+                value: ""
+            schema:
+              $ref: '#/components/schemas/CreateTaskRequest'
+          application/json:
+            example:
+              taskDefinitionId:
+                scope: A1
+                code: ZZZ
+              correlationIds:
+              - correlation-id
+              fields:
+              - name: clientId
+                value: zzz123
+              - name: assignee
+              - name: resolutionDetail
+                value: ""
+            schema:
+              $ref: '#/components/schemas/CreateTaskRequest'
+          text/json:
+            example:
+              taskDefinitionId:
+                scope: A1
+                code: ZZZ
+              correlationIds:
+              - correlation-id
+              fields:
+              - name: clientId
+                value: zzz123
+              - name: assignee
+              - name: resolutionDetail
+                value: ""
+            schema:
+              $ref: '#/components/schemas/CreateTaskRequest'
+          application/*+json:
+            example:
+              taskDefinitionId:
+                scope: A1
+                code: ZZZ
+              correlationIds:
+              - correlation-id
+              fields:
+              - name: clientId
+                value: zzz123
+              - name: assignee
+              - name: resolutionDetail
+                value: ""
+            schema:
+              $ref: '#/components/schemas/CreateTaskRequest'
+        description: Request to create Task
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              example:
+                id: 4aa4b4e1-866a-493e-8d33-51f9e47a0843
+                taskDefinitionId:
+                  scope: A1
+                  code: ZZZ
+                taskDefinitionDisplayName: Test Definition
+                state: foo
+                ultimateParentTask:
+                  id: 4aa4b4e1-866a-493e-8d33-51f9e47a0843
+                  taskDefinitionId:
+                    scope: A1
+                    code: ZZZ
+                  taskDefinitionDisplayName: Test Definition
+                  state: foo
+                correlationIds:
+                - correlation-id
+                terminalState: false
+                asAtLastTransition: 2022-01-01T01:02:03.0000000+00:00
+              schema:
+                $ref: '#/components/schemas/Task'
+          description: Created
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] CreateTask: Create a new Task"
+      tags:
+      - Tasks
+      x-fbn-apistatus: Experimental
+      x-content-type: application/json-patch+json
+      x-accepts: application/json
+  /api/tasks/{id}:
+    delete:
+      operationId: DeleteTask
+      parameters:
+      - description: The identifier for the Task to be deleted.
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          maxLength: 40
+          minLength: 30
+          pattern: "^[a-zA-Z0-9\\-]+$"
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletedEntityResponse'
+          description: Success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        "404":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Task not found.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] DeleteTask: Delete a Task"
+      tags:
+      - Tasks
+      x-fbn-apistatus: Experimental
+      x-accepts: application/json
+    get:
+      operationId: GetTask
+      parameters:
+      - description: Id of the Task to retrieve
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          maxLength: 40
+          minLength: 30
+          pattern: "^[a-zA-Z0-9\\-]+$"
+          type: string
+        style: simple
+      - description: The asAt datetime at which to retrieve the Task. Defaults to
+          returning the latest version of the Task if not specified.
+        explode: true
+        in: query
+        name: asAt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+        x-nullable: true
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                id: 4aa4b4e1-866a-493e-8d33-51f9e47a0843
+                taskDefinitionId:
+                  scope: A1
+                  code: ZZZ
+                taskDefinitionDisplayName: Test Definition
+                state: foo
+                ultimateParentTask:
+                  id: 4aa4b4e1-866a-493e-8d33-51f9e47a0843
+                  taskDefinitionId:
+                    scope: A1
+                    code: ZZZ
+                  taskDefinitionDisplayName: Test Definition
+                  state: foo
+                correlationIds:
+                - correlation-id
+                terminalState: false
+                asAtLastTransition: 2022-01-01T01:02:03.0000000+00:00
+              schema:
+                $ref: '#/components/schemas/Task'
+          description: Success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        "404":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Task not found.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] GetTask: Get a Task"
+      tags:
+      - Tasks
+      x-fbn-apistatus: Experimental
+      x-accepts: application/json
+    post:
+      operationId: UpdateTask
+      parameters:
+      - description: Id of the Task to act upon
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          maxLength: 40
+          minLength: 30
+          pattern: "^[a-zA-Z0-9\\-]+$"
+          type: string
+        style: simple
+      - description: ""
+        explode: true
+        in: query
+        name: trigger
+        required: false
+        schema:
+          maxLength: 1024
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: form
+      requestBody:
+        content:
+          application/json-patch+json:
+            example:
+              fields:
+              - name: clientId
+                value: zzz123
+              - name: assignee
+                value: bob
+              - name: resolutionDetail
+                value: ""
+            schema:
+              $ref: '#/components/schemas/UpdateTaskRequest'
+          application/json:
+            example:
+              fields:
+              - name: clientId
+                value: zzz123
+              - name: assignee
+                value: bob
+              - name: resolutionDetail
+                value: ""
+            schema:
+              $ref: '#/components/schemas/UpdateTaskRequest'
+          text/json:
+            example:
+              fields:
+              - name: clientId
+                value: zzz123
+              - name: assignee
+                value: bob
+              - name: resolutionDetail
+                value: ""
+            schema:
+              $ref: '#/components/schemas/UpdateTaskRequest'
+          application/*+json:
+            example:
+              fields:
+              - name: clientId
+                value: zzz123
+              - name: assignee
+                value: bob
+              - name: resolutionDetail
+                value: ""
+            schema:
+              $ref: '#/components/schemas/UpdateTaskRequest'
+        description: The details of the request
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                id: 4aa4b4e1-866a-493e-8d33-51f9e47a0843
+                taskDefinitionId:
+                  scope: A1
+                  code: ZZZ
+                taskDefinitionDisplayName: Test Definition
+                state: foo
+                ultimateParentTask:
+                  id: 4aa4b4e1-866a-493e-8d33-51f9e47a0843
+                  taskDefinitionId:
+                    scope: A1
+                    code: ZZZ
+                  taskDefinitionDisplayName: Test Definition
+                  state: foo
+                correlationIds:
+                - correlation-id
+                terminalState: false
+                asAtLastTransition: 2022-01-01T01:02:03.0000000+00:00
+              schema:
+                $ref: '#/components/schemas/Task'
+          description: Success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        "404":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Task not found.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] UpdateTask: Update a Task"
+      tags:
+      - Tasks
+      x-fbn-apistatus: Experimental
+      x-content-type: application/json-patch+json
+      x-accepts: application/json
+  /api/workers:
+    get:
+      operationId: ListWorkers
+      parameters:
+      - description: The asAt datetime at which to list the Workers. Defaults to return
+          the latest version of each Worker if not specified.
+        explode: true
+        in: query
+        name: asAt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+        x-nullable: true
+      - description: "When paginating, limit the number of returned results to this\
+          \ many."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+        x-nullable: true
+      - description: "The pagination token to use to continue listing workers from\
+          \ a previous call to list workers. This value is returned from the previous\
+          \ call. If a pagination token is provided the sortBy, filter, effectiveAt,\
+          \ and asAt fields must not have changed since the original request."
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          maxLength: 500
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\+/]*={0,3}$"
+          type: string
+        style: form
+      responses:
+        "201":
+          content:
+            text/plain:
+              example:
+                values:
+                - id:
+                    scope: Health
+                    code: HealthCheckWorker
+                  displayName: ASP.Net Health Check worker
+                  description: Calls /health to check a service is running
+                  workerConfiguration:
+                    type: HealthCheck
+                    url: http://localhost.lusid.com:8282/health
+                  version:
+                    asAtCreated: 2023-01-01T12:00:00.0000000+00:00
+                    userIdCreated: UserId123
+                    requestIdCreated: RequestId123
+                    asAtModified: 2023-01-01T12:00:00.0000000+00:00
+                    userIdModified: UserId123
+                    requestIdModified: RequestId123
+                    asAtVersionNumber: 1
+                  parameters: []
+                  resultFields: []
+                links: []
+              schema:
+                $ref: '#/components/schemas/PagedResourceListOfWorker'
+            application/json:
+              example:
+                values:
+                - id:
+                    scope: Health
+                    code: HealthCheckWorker
+                  displayName: ASP.Net Health Check worker
+                  description: Calls /health to check a service is running
+                  workerConfiguration:
+                    type: HealthCheck
+                    url: http://localhost.lusid.com:8282/health
+                  version:
+                    asAtCreated: 2023-01-01T12:00:00.0000000+00:00
+                    userIdCreated: UserId123
+                    requestIdCreated: RequestId123
+                    asAtModified: 2023-01-01T12:00:00.0000000+00:00
+                    userIdModified: UserId123
+                    requestIdModified: RequestId123
+                    asAtVersionNumber: 1
+                  parameters: []
+                  resultFields: []
+                links: []
+              schema:
+                $ref: '#/components/schemas/PagedResourceListOfWorker'
+            text/json:
+              example:
+                values:
+                - id:
+                    scope: Health
+                    code: HealthCheckWorker
+                  displayName: ASP.Net Health Check worker
+                  description: Calls /health to check a service is running
+                  workerConfiguration:
+                    type: HealthCheck
+                    url: http://localhost.lusid.com:8282/health
+                  version:
+                    asAtCreated: 2023-01-01T12:00:00.0000000+00:00
+                    userIdCreated: UserId123
+                    requestIdCreated: RequestId123
+                    asAtModified: 2023-01-01T12:00:00.0000000+00:00
+                    userIdModified: UserId123
+                    requestIdModified: RequestId123
+                    asAtVersionNumber: 1
+                  parameters: []
+                  resultFields: []
+                links: []
+              schema:
+                $ref: '#/components/schemas/PagedResourceListOfWorker'
+          description: Created
+        "400":
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] ListWorkers: List Workers"
+      tags:
+      - Workers
+      x-fbn-apistatus: Experimental
+      x-accepts: application/json
+    post:
+      description: If the Worker already exists a failure will be returned
+      operationId: CreateWorker
+      requestBody:
+        content:
+          application/json-patch+json:
+            example:
+              id:
+                scope: Health
+                code: HealthCheckWorker
+              displayName: ASP.Net Health Check worker
+              description: Calls /health to check a service is running
+              workerConfiguration:
+                type: HealthCheck
+                url: http://localhost.lusid.com:8282
+            schema:
+              $ref: '#/components/schemas/CreateWorkerRequest'
+          application/json:
+            example:
+              id:
+                scope: Health
+                code: HealthCheckWorker
+              displayName: ASP.Net Health Check worker
+              description: Calls /health to check a service is running
+              workerConfiguration:
+                type: HealthCheck
+                url: http://localhost.lusid.com:8282
+            schema:
+              $ref: '#/components/schemas/CreateWorkerRequest'
+          text/json:
+            example:
+              id:
+                scope: Health
+                code: HealthCheckWorker
+              displayName: ASP.Net Health Check worker
+              description: Calls /health to check a service is running
+              workerConfiguration:
+                type: HealthCheck
+                url: http://localhost.lusid.com:8282
+            schema:
+              $ref: '#/components/schemas/CreateWorkerRequest'
+          application/*+json:
+            example:
+              id:
+                scope: Health
+                code: HealthCheckWorker
+              displayName: ASP.Net Health Check worker
+              description: Calls /health to check a service is running
+              workerConfiguration:
+                type: HealthCheck
+                url: http://localhost.lusid.com:8282
+            schema:
+              $ref: '#/components/schemas/CreateWorkerRequest'
+        description: Worker to be created
+        required: true
+      responses:
+        "201":
+          content:
+            text/plain:
+              example:
+                id:
+                  scope: Health
+                  code: HealthCheckWorker
+                displayName: ASP.Net Health Check worker
+                description: Calls /health to check a service is running
+                workerConfiguration:
+                  type: HealthCheck
+                  url: http://localhost.lusid.com:8282/health
+                version:
+                  asAtCreated: 2023-01-01T12:00:00.0000000+00:00
+                  userIdCreated: UserId123
+                  requestIdCreated: RequestId123
+                  asAtModified: 2023-01-01T12:00:00.0000000+00:00
+                  userIdModified: UserId123
+                  requestIdModified: RequestId123
+                  asAtVersionNumber: 1
+                parameters: []
+                resultFields: []
+              schema:
+                $ref: '#/components/schemas/Worker'
+            application/json:
+              example:
+                id:
+                  scope: Health
+                  code: HealthCheckWorker
+                displayName: ASP.Net Health Check worker
+                description: Calls /health to check a service is running
+                workerConfiguration:
+                  type: HealthCheck
+                  url: http://localhost.lusid.com:8282/health
+                version:
+                  asAtCreated: 2023-01-01T12:00:00.0000000+00:00
+                  userIdCreated: UserId123
+                  requestIdCreated: RequestId123
+                  asAtModified: 2023-01-01T12:00:00.0000000+00:00
+                  userIdModified: UserId123
+                  requestIdModified: RequestId123
+                  asAtVersionNumber: 1
+                parameters: []
+                resultFields: []
+              schema:
+                $ref: '#/components/schemas/Worker'
+            text/json:
+              example:
+                id:
+                  scope: Health
+                  code: HealthCheckWorker
+                displayName: ASP.Net Health Check worker
+                description: Calls /health to check a service is running
+                workerConfiguration:
+                  type: HealthCheck
+                  url: http://localhost.lusid.com:8282/health
+                version:
+                  asAtCreated: 2023-01-01T12:00:00.0000000+00:00
+                  userIdCreated: UserId123
+                  requestIdCreated: RequestId123
+                  asAtModified: 2023-01-01T12:00:00.0000000+00:00
+                  userIdModified: UserId123
+                  requestIdModified: RequestId123
+                  asAtVersionNumber: 1
+                parameters: []
+                resultFields: []
+              schema:
+                $ref: '#/components/schemas/Worker'
+          description: Created
+        "400":
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] CreateWorker: Create a new Worker"
+      tags:
+      - Workers
+      x-fbn-apistatus: Experimental
+      x-content-type: application/json-patch+json
+      x-accepts: application/json
+  /api/workers/{runId}/$result:
+    get:
+      operationId: GetWorkerResult
+      parameters:
+      - description: The ID returned when calling Run Worker
+        explode: false
+        in: path
+        name: runId
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            text/plain:
+              example:
+                workerStatus: CompletedNoResults
+                results:
+                - HttpStatusCode: "200"
+              schema:
+                $ref: '#/components/schemas/GetWorkerResultResponse'
+            application/json:
+              example:
+                workerStatus: CompletedNoResults
+                results:
+                - HttpStatusCode: "200"
+              schema:
+                $ref: '#/components/schemas/GetWorkerResultResponse'
+            text/json:
+              example:
+                workerStatus: CompletedNoResults
+                results:
+                - HttpStatusCode: "200"
+              schema:
+                $ref: '#/components/schemas/GetWorkerResultResponse'
+          description: Success
+        "400":
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] GetWorkerResult: Get the status of a specific run of\
+        \ a worker with any relevant results"
+      tags:
+      - Workers
+      x-fbn-apistatus: Experimental
+      x-accepts: application/json
+  /api/workers/{scope}/{code}:
+    get:
+      description: Will return a NotFound failure if the Worker does not exist
+      operationId: GetWorker
+      parameters:
+      - description: Scope of the worker
+        explode: false
+        in: path
+        name: scope
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      - description: Code of the worker
+        explode: false
+        in: path
+        name: code
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      - description: The asAt datetime at which to retrieve the Worker. Defaults to
+          returning the latest version of the Worker if not specified.
+        explode: true
+        in: query
+        name: asAt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+        x-nullable: true
+      responses:
+        "201":
+          content:
+            text/plain:
+              example:
+                id:
+                  scope: Health
+                  code: HealthCheckWorker
+                displayName: ASP.Net Health Check worker
+                description: Calls /health to check a service is running
+                workerConfiguration:
+                  type: HealthCheck
+                  url: http://localhost.lusid.com:8282/health
+                version:
+                  asAtCreated: 2023-01-01T12:00:00.0000000+00:00
+                  userIdCreated: UserId123
+                  requestIdCreated: RequestId123
+                  asAtModified: 2023-01-01T12:00:00.0000000+00:00
+                  userIdModified: UserId123
+                  requestIdModified: RequestId123
+                  asAtVersionNumber: 1
+                parameters: []
+                resultFields: []
+              schema:
+                $ref: '#/components/schemas/Worker'
+            application/json:
+              example:
+                id:
+                  scope: Health
+                  code: HealthCheckWorker
+                displayName: ASP.Net Health Check worker
+                description: Calls /health to check a service is running
+                workerConfiguration:
+                  type: HealthCheck
+                  url: http://localhost.lusid.com:8282/health
+                version:
+                  asAtCreated: 2023-01-01T12:00:00.0000000+00:00
+                  userIdCreated: UserId123
+                  requestIdCreated: RequestId123
+                  asAtModified: 2023-01-01T12:00:00.0000000+00:00
+                  userIdModified: UserId123
+                  requestIdModified: RequestId123
+                  asAtVersionNumber: 1
+                parameters: []
+                resultFields: []
+              schema:
+                $ref: '#/components/schemas/Worker'
+            text/json:
+              example:
+                id:
+                  scope: Health
+                  code: HealthCheckWorker
+                displayName: ASP.Net Health Check worker
+                description: Calls /health to check a service is running
+                workerConfiguration:
+                  type: HealthCheck
+                  url: http://localhost.lusid.com:8282/health
+                version:
+                  asAtCreated: 2023-01-01T12:00:00.0000000+00:00
+                  userIdCreated: UserId123
+                  requestIdCreated: RequestId123
+                  asAtModified: 2023-01-01T12:00:00.0000000+00:00
+                  userIdModified: UserId123
+                  requestIdModified: RequestId123
+                  asAtVersionNumber: 1
+                parameters: []
+                resultFields: []
+              schema:
+                $ref: '#/components/schemas/Worker'
+          description: Created
+        "400":
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] GetWorker: Get a Worker"
+      tags:
+      - Workers
+      x-fbn-apistatus: Experimental
+      x-accepts: application/json
+  /api/workers/{scope}/{code}/$run:
+    post:
+      operationId: RunWorker
+      parameters:
+      - description: Scope of the worker
+        explode: false
+        in: path
+        name: scope
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      - description: Code of the worker
+        explode: false
+        in: path
+        name: code
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      - description: The asAt datetime at which to retrieve the Worker. Defaults to
+          returning the latest version of the Worker if not specified.
+        explode: true
+        in: query
+        name: asAt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+        x-nullable: true
+      requestBody:
+        content:
+          application/json-patch+json:
+            example:
+              parameters:
+              - name: test-parameter
+                value: true
+            schema:
+              $ref: '#/components/schemas/RunWorkerRequest'
+          application/json:
+            example:
+              parameters:
+              - name: test-parameter
+                value: true
+            schema:
+              $ref: '#/components/schemas/RunWorkerRequest'
+          text/json:
+            example:
+              parameters:
+              - name: test-parameter
+                value: true
+            schema:
+              $ref: '#/components/schemas/RunWorkerRequest'
+          application/*+json:
+            example:
+              parameters:
+              - name: test-parameter
+                value: true
+            schema:
+              $ref: '#/components/schemas/RunWorkerRequest'
+        description: ""
+        required: true
+      responses:
+        "200":
+          content:
+            text/plain:
+              example:
+                runId: 0
+              schema:
+                $ref: '#/components/schemas/RunWorkerResponse'
+            application/json:
+              example:
+                runId: 0
+              schema:
+                $ref: '#/components/schemas/RunWorkerResponse'
+            text/json:
+              example:
+                runId: 0
+              schema:
+                $ref: '#/components/schemas/RunWorkerResponse'
+          description: Success
+        "400":
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] RunWorker: Run a Worker"
+      tags:
+      - Workers
+      x-fbn-apistatus: Experimental
+      x-content-type: application/json-patch+json
+      x-accepts: application/json
+components:
+  schemas:
+    ActionDefinition:
+      additionalProperties: false
+      description: Defines the Actions for a Task
+      example:
+        name: name
+        actionDetails:
+          type: type
+      properties:
+        name:
+          description: The Name of this Action
+          maxLength: 1024
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        actionDetails:
+          $ref: '#/components/schemas/ActionDetails'
+      required:
+      - actionDetails
+      - name
+      type: object
+    ActionDefinitionResponse:
+      additionalProperties: false
+      description: Defines the Actions for a Task in a read-only form
+      example:
+        name: name
+        actionDetails:
+          type: type
+      properties:
+        name:
+          description: The Name of this Action
+          nullable: true
+          type: string
+        actionDetails:
+          $ref: '#/components/schemas/ActionDetailsResponse'
+      type: object
+    ActionDetails:
+      additionalProperties: false
+      description: Abstracts the kinds of Actions available
+      example:
+        type: type
+      oneOf:
+      - $ref: '#/components/schemas/CreateChildTasksAction'
+      - $ref: '#/components/schemas/RunWorkerAction'
+      - $ref: '#/components/schemas/TriggerParentTaskAction'
+      properties:
+        type:
+          description: Type name for this Action
+          minLength: 1
+          type: string
+      required:
+      - type
+      type: object
+    ActionDetailsResponse:
+      additionalProperties: false
+      description: Abstracts the kinds of Actions available in a read-only form
+      example:
+        type: type
+      oneOf:
+      - $ref: '#/components/schemas/CreateChildTasksActionResponse'
+      - $ref: '#/components/schemas/RunWorkerActionResponse'
+      - $ref: '#/components/schemas/TriggerParentTaskActionResponse'
+      properties:
+        type:
+          description: Type name for this Action
+          nullable: true
+          type: string
+      type: object
+    CreateChildTaskConfiguration:
+      additionalProperties: false
+      description: Create Child Task Configuration
+      properties:
+        taskDefinitionId:
+          $ref: '#/components/schemas/ResourceId'
+        taskDefinitionAsAt:
+          description: TaskDefinition AsAt timestamp
+          format: date-time
+          nullable: true
+          type: string
+        initialTrigger:
+          description: The Initial Trigger for automatic start
+          maxLength: 1024
+          nullable: true
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        childTaskFields:
+          additionalProperties:
+            $ref: '#/components/schemas/FieldMapping'
+          description: Field Mappings
+          nullable: true
+          type: object
+      required:
+      - taskDefinitionId
+      type: object
+    CreateChildTasksAction:
+      additionalProperties: false
+      description: Defines a Create Child Tasks Action
+      properties:
+        type:
+          description: Type name for this Action
+          enum:
+          - CreateChildTasks
+          - RunWorker
+          - TriggerParentTask
+          minLength: 1
+          type: string
+        childTaskConfigurations:
+          description: The Child Task Configurations
+          items:
+            $ref: '#/components/schemas/CreateChildTaskConfiguration'
+          type: array
+      required:
+      - childTaskConfigurations
+      - type
+      type: object
+    CreateChildTasksActionResponse:
+      additionalProperties: false
+      description: Defines a read-only Create Child Tasks Action
+      properties:
+        type:
+          description: Type name for this Action
+          enum:
+          - CreateChildTasks
+          - RunWorker
+          - TriggerParentTask
+          nullable: true
+          type: string
+        childTaskConfigurations:
+          description: The Child Task Configurations
+          items:
+            $ref: '#/components/schemas/CreateChildTaskConfiguration'
+          nullable: true
+          type: array
+      type: object
+    CreateTaskDefinitionRequest:
+      additionalProperties: false
+      description: Contains required info to create a new Task Definition
+      example:
+        initialState:
+          requiredFields:
+          - requiredFields
+          - requiredFields
+          name: name
+        displayName: displayName
+        description: description
+        fieldSchema:
+        - name: name
+          type: type
+        - name: name
+          type: type
+        id:
+          code: code
+          scope: scope
+        triggers:
+        - name: name
+          trigger:
+            type: type
+        - name: name
+          trigger:
+            type: type
+        transitions:
+        - fromState: fromState
+          toState: toState
+          guard: guard
+          action: action
+          trigger: trigger
+        - fromState: fromState
+          toState: toState
+          guard: guard
+          action: action
+          trigger: trigger
+        actions:
+        - name: name
+          actionDetails:
+            type: type
+        - name: name
+          actionDetails:
+            type: type
+        states:
+        - name: name
+        - name: name
+      properties:
+        id:
+          $ref: '#/components/schemas/ResourceId'
+        displayName:
+          description: Human readable name
+          minLength: 1
+          type: string
+        description:
+          description: Human readable description
+          nullable: true
+          type: string
+        states:
+          description: The states this Task Definition operates over
+          items:
+            $ref: '#/components/schemas/TaskStateDefinition'
+          minItems: 1
+          type: array
+        fieldSchema:
+          description: Defines the fields associated with this Task
+          items:
+            $ref: '#/components/schemas/TaskFieldDefinition'
+          nullable: true
+          type: array
+        initialState:
+          $ref: '#/components/schemas/InitialState'
+        triggers:
+          description: Triggers
+          items:
+            $ref: '#/components/schemas/TransitionTriggerDefinition'
+          nullable: true
+          type: array
+        transitions:
+          description: Transitions
+          items:
+            $ref: '#/components/schemas/TaskTransitionDefinition'
+          nullable: true
+          type: array
+        actions:
+          description: Actions
+          items:
+            $ref: '#/components/schemas/ActionDefinition'
+          nullable: true
+          type: array
+      required:
+      - displayName
+      - id
+      - initialState
+      - states
+      type: object
+    CreateTaskRequest:
+      additionalProperties: false
+      description: Contains required info to create a new Task
+      example:
+        correlationIds:
+        - correlationIds
+        - correlationIds
+        fields:
+        - name: name
+          value: ""
+        - name: name
+          value: ""
+        taskDefinitionId:
+          code: code
+          scope: scope
+      properties:
+        taskDefinitionId:
+          $ref: '#/components/schemas/ResourceId'
+        correlationIds:
+          description: A set of guid identifiers that allow correlation across the
+            application tier
+          items:
+            type: string
+          nullable: true
+          type: array
+        fields:
+          description: Fields and their initial values - should correspond with the
+            Task Definition field schema
+          items:
+            $ref: '#/components/schemas/TaskInstanceField'
+          nullable: true
+          type: array
+      required:
+      - taskDefinitionId
+      type: object
+    CreateWorkerRequest:
+      additionalProperties: false
+      description: Request to Create a new worker
+      example:
+        workerConfiguration:
+          type: type
+        displayName: displayName
+        description: description
+        id:
+          code: code
+          scope: scope
+      properties:
+        id:
+          $ref: '#/components/schemas/ResourceId'
+        displayName:
+          description: Human readable name
+          maxLength: 512
+          minLength: 1
+          pattern: "^[\\s\\S]*$"
+          type: string
+        description:
+          description: Human readable description
+          maxLength: 1024
+          minLength: 0
+          nullable: true
+          pattern: "^[\\s\\S]*$"
+          type: string
+        workerConfiguration:
+          $ref: '#/components/schemas/WorkerConfiguration'
+      required:
+      - displayName
+      - id
+      - workerConfiguration
+      type: object
+    DeletedEntityResponse:
+      additionalProperties: false
+      example:
+        asAt: 2000-01-23T04:56:07.000+00:00
+        links:
+        - method: method
+          description: description
+          href: https://openapi-generator.tech
+          relation: relation
+        - method: method
+          description: description
+          href: https://openapi-generator.tech
+          relation: relation
+        href: https://openapi-generator.tech
+        effectiveFrom: 2000-01-23T04:56:07.000+00:00
+      properties:
+        href:
+          description: The Uri related to this Entity
+          format: uri
+          nullable: true
+          type: string
+        effectiveFrom:
+          description: The EffectiveFrom for this response
+          format: date-time
+          nullable: true
+          type: string
+        asAt:
+          description: The AsAt for this response
+          format: date-time
+          type: string
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          nullable: true
+          type: array
+      required:
+      - asAt
+      type: object
+    Fail:
+      additionalProperties: false
+      description: Configuration for a Worker that always Fails
+      properties:
+        type:
+          description: The type of worker
+          enum:
+          - Fail
+          - HealthCheck
+          - LuminesceView
+          - Sleep
+          minLength: 1
+          type: string
+      required:
+      - type
+      type: object
+    FailResponse:
+      additionalProperties: false
+      description: Readonly configuration for a Worker that always Fails
+      properties:
+        type:
+          description: The type of worker
+          enum:
+          - Fail
+          - HealthCheck
+          - LuminesceView
+          - Sleep
+          nullable: true
+          type: string
+      type: object
+    FieldMapping:
+      additionalProperties: false
+      description: Defines a single Field map
+      properties:
+        mapFrom:
+          description: The field to map from
+          maxLength: 1024
+          minLength: 1
+          nullable: true
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        setTo:
+          description: The (constant) value to set
+          nullable: true
+      type: object
+    GetWorkerResultResponse:
+      additionalProperties: false
+      description: The RunWorker response
+      example:
+        statusDetail: statusDetail
+        workerStatus: workerStatus
+        results:
+        - key: ""
+        - key: ""
+      properties:
+        workerStatus:
+          description: The final status of the Worker
+          minLength: 1
+          type: string
+        results:
+          description: Results
+          items:
+            additionalProperties: {}
+            type: object
+          type: array
+        statusDetail:
+          description: Detail on the final status
+          nullable: true
+          type: string
+      required:
+      - results
+      - workerStatus
+      type: object
+    HealthCheck:
+      additionalProperties: false
+      description: Configuration for a Worker that performs a GET against a given
+        Url.
+      properties:
+        type:
+          description: The type of worker
+          enum:
+          - HealthCheck
+          minLength: 1
+          type: string
+        url:
+          description: "The URL to check, eg: https://www.google.com/"
+          format: uri
+          maxLength: 2048
+          minLength: 1
+          type: string
+      required:
+      - type
+      - url
+      type: object
+    HealthCheckResponse:
+      additionalProperties: false
+      description: Readonly configuration for a Worker that performs a GET against
+        a given Url.
+      properties:
+        type:
+          description: The type of worker
+          enum:
+          - HealthCheck
+          nullable: true
+          type: string
+        url:
+          description: "The URL to check, eg: https://www.google.com/"
+          nullable: true
+          type: string
+      type: object
+    InitialState:
+      additionalProperties: false
+      description: Defines the Initial State of the Task
+      example:
+        requiredFields:
+        - requiredFields
+        - requiredFields
+        name: name
+      properties:
+        name:
+          description: The Initial State of the Task
+          maxLength: 1024
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        requiredFields:
+          description: Required input Fields for the Initial State
+          items:
+            type: string
+          nullable: true
+          type: array
+      required:
+      - name
+      type: object
+    Link:
+      additionalProperties: false
+      example:
+        method: method
+        description: description
+        href: https://openapi-generator.tech
+        relation: relation
+      properties:
+        relation:
+          type: string
+        href:
+          format: uri
+          type: string
+        description:
+          nullable: true
+          type: string
+        method:
+          type: string
+      required:
+      - href
+      - method
+      - relation
+      type: object
+    LuminesceView:
+      additionalProperties: false
+      description: Configuration for a Worker that calls a Luminesce view
+      properties:
+        type:
+          description: The type of worker
+          enum:
+          - LuminesceView
+          minLength: 1
+          type: string
+        name:
+          description: Name of the view in Luminesce
+          maxLength: 512
+          minLength: 1
+          pattern: "^[\\s\\S]*$"
+          type: string
+      required:
+      - name
+      - type
+      type: object
+    LuminesceViewResponse:
+      additionalProperties: false
+      description: Readonly configuration for a Worker that calls a Luminesce view
+      properties:
+        type:
+          description: The type of worker
+          enum:
+          - LuminesceView
+          nullable: true
+          type: string
+        name:
+          description: Name of the view in Luminesce
+          nullable: true
+          type: string
+      type: object
+    LusidProblemDetails:
+      additionalProperties: false
+      properties:
+        name:
+          minLength: 1
+          type: string
+        errorDetails:
+          items:
+            additionalProperties:
+              type: string
+            type: object
+          nullable: true
+          type: array
+        code:
+          format: int32
+          type: integer
+        type:
+          nullable: true
+          type: string
+        title:
+          nullable: true
+          type: string
+        status:
+          format: int32
+          nullable: true
+          type: integer
+        detail:
+          nullable: true
+          type: string
+        instance:
+          nullable: true
+          type: string
+      required:
+      - code
+      - name
+      type: object
+    LusidValidationProblemDetails:
+      additionalProperties: false
+      properties:
+        name:
+          minLength: 1
+          type: string
+        errorDetails:
+          items:
+            additionalProperties:
+              type: string
+            type: object
+          nullable: true
+          type: array
+        code:
+          format: int32
+          type: integer
+        errors:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          nullable: true
+          type: object
+        type:
+          nullable: true
+          type: string
+        title:
+          nullable: true
+          type: string
+        status:
+          format: int32
+          nullable: true
+          type: integer
+        detail:
+          nullable: true
+          type: string
+        instance:
+          nullable: true
+          type: string
+      required:
+      - code
+      - name
+      type: object
+    PagedResourceListOfTask:
+      additionalProperties: false
+      example:
+        previousPage: previousPage
+        nextPage: nextPage
+        values:
+        - terminalState: true
+          parentTask:
+            taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
+          version:
+            asAtModified: 2000-01-23T04:56:07.000+00:00
+            userIdModified: userIdModified
+            asAtVersionNumber: 0
+            asAtCreated: 2000-01-23T04:56:07.000+00:00
+            requestIdCreated: requestIdCreated
+            userIdCreated: userIdCreated
+            requestIdModified: requestIdModified
+          taskDefinitionId:
+            code: code
+            scope: scope
+          childTasks:
+          - taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
+          - taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
+          asAtLastTransition: 2000-01-23T04:56:07.000+00:00
+          ultimateParentTask:
+            taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
+          correlationIds:
+          - correlationIds
+          - correlationIds
+          taskDefinitionVersion:
+            asAtModified: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: state
+          taskDefinitionDisplayName: taskDefinitionDisplayName
+          fields:
+          - name: name
+            value: ""
+          - name: name
+            value: ""
+        - terminalState: true
+          parentTask:
+            taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
+          version:
+            asAtModified: 2000-01-23T04:56:07.000+00:00
+            userIdModified: userIdModified
+            asAtVersionNumber: 0
+            asAtCreated: 2000-01-23T04:56:07.000+00:00
+            requestIdCreated: requestIdCreated
+            userIdCreated: userIdCreated
+            requestIdModified: requestIdModified
+          taskDefinitionId:
+            code: code
+            scope: scope
+          childTasks:
+          - taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
+          - taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
+          asAtLastTransition: 2000-01-23T04:56:07.000+00:00
+          ultimateParentTask:
+            taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
+          correlationIds:
+          - correlationIds
+          - correlationIds
+          taskDefinitionVersion:
+            asAtModified: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: state
+          taskDefinitionDisplayName: taskDefinitionDisplayName
+          fields:
+          - name: name
+            value: ""
+          - name: name
+            value: ""
+        links:
+        - method: method
+          description: description
+          href: https://openapi-generator.tech
+          relation: relation
+        - method: method
+          description: description
+          href: https://openapi-generator.tech
+          relation: relation
+        href: https://openapi-generator.tech
+      properties:
+        nextPage:
+          nullable: true
+          type: string
+        previousPage:
+          nullable: true
+          type: string
+        values:
+          items:
+            $ref: '#/components/schemas/Task'
+          type: array
+        href:
+          format: uri
+          nullable: true
+          type: string
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          nullable: true
+          type: array
+      required:
+      - values
+      type: object
+    PagedResourceListOfTaskDefinition:
+      additionalProperties: false
+      example:
+        previousPage: previousPage
+        nextPage: nextPage
+        values:
+        - initialState:
+            requiredFields:
+            - requiredFields
+            - requiredFields
+            name: name
+          displayName: displayName
+          description: description
+          fieldSchema:
+          - name: name
+            type: type
+          - name: name
+            type: type
+          id:
+            code: code
+            scope: scope
+          triggers:
+          - name: name
+            trigger:
+              type: type
+          - name: name
+            trigger:
+              type: type
+          transitions:
+          - fromState: fromState
+            toState: toState
+            guard: guard
+            action: action
+            trigger: trigger
+          - fromState: fromState
+            toState: toState
+            guard: guard
+            action: action
+            trigger: trigger
+          version:
+            asAtModified: 2000-01-23T04:56:07.000+00:00
+            userIdModified: userIdModified
+            asAtVersionNumber: 0
+            asAtCreated: 2000-01-23T04:56:07.000+00:00
+            requestIdCreated: requestIdCreated
+            userIdCreated: userIdCreated
+            requestIdModified: requestIdModified
+          actions:
+          - name: name
+            actionDetails:
+              type: type
+          - name: name
+            actionDetails:
+              type: type
+          states:
+          - name: name
+          - name: name
+        - initialState:
+            requiredFields:
+            - requiredFields
+            - requiredFields
+            name: name
+          displayName: displayName
+          description: description
+          fieldSchema:
+          - name: name
+            type: type
+          - name: name
+            type: type
+          id:
+            code: code
+            scope: scope
+          triggers:
+          - name: name
+            trigger:
+              type: type
+          - name: name
+            trigger:
+              type: type
+          transitions:
+          - fromState: fromState
+            toState: toState
+            guard: guard
+            action: action
+            trigger: trigger
+          - fromState: fromState
+            toState: toState
+            guard: guard
+            action: action
+            trigger: trigger
+          version:
+            asAtModified: 2000-01-23T04:56:07.000+00:00
+            userIdModified: userIdModified
+            asAtVersionNumber: 0
+            asAtCreated: 2000-01-23T04:56:07.000+00:00
+            requestIdCreated: requestIdCreated
+            userIdCreated: userIdCreated
+            requestIdModified: requestIdModified
+          actions:
+          - name: name
+            actionDetails:
+              type: type
+          - name: name
+            actionDetails:
+              type: type
+          states:
+          - name: name
+          - name: name
+        links:
+        - method: method
+          description: description
+          href: https://openapi-generator.tech
+          relation: relation
+        - method: method
+          description: description
+          href: https://openapi-generator.tech
+          relation: relation
+        href: https://openapi-generator.tech
+      properties:
+        nextPage:
+          nullable: true
+          type: string
+        previousPage:
+          nullable: true
+          type: string
+        values:
+          items:
+            $ref: '#/components/schemas/TaskDefinition'
+          type: array
+        href:
+          format: uri
+          nullable: true
+          type: string
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          nullable: true
+          type: array
+      required:
+      - values
+      type: object
+    PagedResourceListOfWorker:
+      additionalProperties: false
+      example:
+        previousPage: previousPage
+        nextPage: nextPage
+        values:
+        - workerConfiguration: null
+          resultFields:
+          - displayName: displayName
+            name: name
+            description: description
+            type: type
+          - displayName: displayName
+            name: name
+            description: description
+            type: type
+          displayName: displayName
+          description: description
+          links:
+          - method: method
+            description: description
+            href: https://openapi-generator.tech
+            relation: relation
+          - method: method
+            description: description
+            href: https://openapi-generator.tech
+            relation: relation
+          id:
+            code: code
+            scope: scope
+          version:
+            asAtModified: 2000-01-23T04:56:07.000+00:00
+            userIdModified: userIdModified
+            asAtVersionNumber: 0
+            asAtCreated: 2000-01-23T04:56:07.000+00:00
+            requestIdCreated: requestIdCreated
+            userIdCreated: userIdCreated
+            requestIdModified: requestIdModified
+          parameters:
+          - displayName: displayName
+            defaultValue: defaultValue
+            name: name
+            description: description
+            type: type
+            required: true
+          - displayName: displayName
+            defaultValue: defaultValue
+            name: name
+            description: description
+            type: type
+            required: true
+        - workerConfiguration: null
+          resultFields:
+          - displayName: displayName
+            name: name
+            description: description
+            type: type
+          - displayName: displayName
+            name: name
+            description: description
+            type: type
+          displayName: displayName
+          description: description
+          links:
+          - method: method
+            description: description
+            href: https://openapi-generator.tech
+            relation: relation
+          - method: method
+            description: description
+            href: https://openapi-generator.tech
+            relation: relation
+          id:
+            code: code
+            scope: scope
+          version:
+            asAtModified: 2000-01-23T04:56:07.000+00:00
+            userIdModified: userIdModified
+            asAtVersionNumber: 0
+            asAtCreated: 2000-01-23T04:56:07.000+00:00
+            requestIdCreated: requestIdCreated
+            userIdCreated: userIdCreated
+            requestIdModified: requestIdModified
+          parameters:
+          - displayName: displayName
+            defaultValue: defaultValue
+            name: name
+            description: description
+            type: type
+            required: true
+          - displayName: displayName
+            defaultValue: defaultValue
+            name: name
+            description: description
+            type: type
+            required: true
+        links:
+        - method: method
+          description: description
+          href: https://openapi-generator.tech
+          relation: relation
+        - method: method
+          description: description
+          href: https://openapi-generator.tech
+          relation: relation
+        href: https://openapi-generator.tech
+      properties:
+        nextPage:
+          nullable: true
+          type: string
+        previousPage:
+          nullable: true
+          type: string
+        values:
+          items:
+            $ref: '#/components/schemas/Worker'
+          type: array
+        href:
+          format: uri
+          nullable: true
+          type: string
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          nullable: true
+          type: array
+      required:
+      - values
+      type: object
+    Parameter:
+      additionalProperties: false
+      description: Defines a Worker Parameter
+      example:
+        displayName: displayName
+        defaultValue: defaultValue
+        name: name
+        description: description
+        type: type
+        required: true
+      properties:
+        type:
+          description: The type of this Parameter
+          minLength: 1
+          type: string
+        name:
+          description: Name
+          minLength: 1
+          type: string
+        displayName:
+          description: DisplayName
+          nullable: true
+          type: string
+        description:
+          description: Description
+          nullable: true
+          type: string
+        required:
+          description: Required or not
+          type: boolean
+        defaultValue:
+          description: DefaultValue
+          nullable: true
+          type: string
+      required:
+      - name
+      - required
+      - type
+      type: object
+    ParameterValue:
+      additionalProperties: false
+      description: Defines a Parameter Value
+      example:
+        name: name
+        value: ""
+      properties:
+        name:
+          description: Name
+          maxLength: 1024
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        value:
+          description: "Value which can be a String, Boolean, Decimal or DateTime\
+            \ (ISO 8601)"
+          nullable: true
+      required:
+      - name
+      type: object
+    ResourceId:
+      additionalProperties: false
+      example:
+        code: code
+        scope: scope
+      properties:
+        scope:
+          type: string
+        code:
+          type: string
+      required:
+      - code
+      - scope
+      type: object
+    ResourceListOfTask:
+      additionalProperties: false
+      example:
+        previousPage: previousPage
+        nextPage: nextPage
+        values:
+        - terminalState: true
+          parentTask:
+            taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
+          version:
+            asAtModified: 2000-01-23T04:56:07.000+00:00
+            userIdModified: userIdModified
+            asAtVersionNumber: 0
+            asAtCreated: 2000-01-23T04:56:07.000+00:00
+            requestIdCreated: requestIdCreated
+            userIdCreated: userIdCreated
+            requestIdModified: requestIdModified
+          taskDefinitionId:
+            code: code
+            scope: scope
+          childTasks:
+          - taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
+          - taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
+          asAtLastTransition: 2000-01-23T04:56:07.000+00:00
+          ultimateParentTask:
+            taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
+          correlationIds:
+          - correlationIds
+          - correlationIds
+          taskDefinitionVersion:
+            asAtModified: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: state
+          taskDefinitionDisplayName: taskDefinitionDisplayName
+          fields:
+          - name: name
+            value: ""
+          - name: name
+            value: ""
+        - terminalState: true
+          parentTask:
+            taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
+          version:
+            asAtModified: 2000-01-23T04:56:07.000+00:00
+            userIdModified: userIdModified
+            asAtVersionNumber: 0
+            asAtCreated: 2000-01-23T04:56:07.000+00:00
+            requestIdCreated: requestIdCreated
+            userIdCreated: userIdCreated
+            requestIdModified: requestIdModified
+          taskDefinitionId:
+            code: code
+            scope: scope
+          childTasks:
+          - taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
+          - taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
+          asAtLastTransition: 2000-01-23T04:56:07.000+00:00
+          ultimateParentTask:
+            taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
+          correlationIds:
+          - correlationIds
+          - correlationIds
+          taskDefinitionVersion:
+            asAtModified: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: state
+          taskDefinitionDisplayName: taskDefinitionDisplayName
+          fields:
+          - name: name
+            value: ""
+          - name: name
+            value: ""
+        links:
+        - method: method
+          description: description
+          href: https://openapi-generator.tech
+          relation: relation
+        - method: method
+          description: description
+          href: https://openapi-generator.tech
+          relation: relation
+        href: https://openapi-generator.tech
+      properties:
+        values:
+          items:
+            $ref: '#/components/schemas/Task'
+          type: array
+        href:
+          format: uri
+          nullable: true
+          type: string
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          nullable: true
+          type: array
+        nextPage:
+          nullable: true
+          type: string
+        previousPage:
+          nullable: true
+          type: string
+      required:
+      - values
+      type: object
+    ResultantChildTaskConfiguration:
+      additionalProperties: false
+      description: Child Task Configuration
+      properties:
+        resultMatchingPattern:
+          $ref: '#/components/schemas/ResultMatchingPattern'
+        taskDefinitionId:
+          $ref: '#/components/schemas/ResourceId'
+        taskDefinitionAsAt:
+          description: TaskDefinition AsAt timestamp
+          format: date-time
+          nullable: true
+          type: string
+        initialTrigger:
+          description: The Initial Trigger for automatic start
+          maxLength: 1024
+          nullable: true
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        childTaskFields:
+          additionalProperties:
+            $ref: '#/components/schemas/FieldMapping'
+          description: Field Mappings
+          type: object
+      required:
+      - childTaskFields
+      - taskDefinitionId
+      type: object
+    ResultField:
+      additionalProperties: false
+      description: Defines a Worker Result Field
+      example:
+        displayName: displayName
+        name: name
+        description: description
+        type: type
+      properties:
+        name:
+          description: Name
+          minLength: 1
+          type: string
+        type:
+          description: The type of this Parameter
+          minLength: 1
+          type: string
+        displayName:
+          description: DisplayName
+          nullable: true
+          type: string
+        description:
+          description: Description
+          nullable: true
+          type: string
+      required:
+      - name
+      - type
+      type: object
+    ResultMatchingPattern:
+      additionalProperties: false
+      description: Standard Finbourne filter to match against Run Worker results
+      properties:
+        filter:
+          description: Filter string
+          maxLength: 1024
+          minLength: 1
+          pattern: "^[\\s\\S]*$"
+          type: string
+      required:
+      - filter
+      type: object
+    RunWorkerAction:
+      additionalProperties: false
+      description: Defines a Run Worker Action
+      properties:
+        type:
+          description: Type name for this Action
+          enum:
+          - RunWorker
+          minLength: 1
+          type: string
+        workerId:
+          $ref: '#/components/schemas/ResourceId'
+        workerAsAt:
+          description: Worker AsAt
+          format: date-time
+          nullable: true
+          type: string
+        workerParameters:
+          additionalProperties:
+            $ref: '#/components/schemas/FieldMapping'
+          description: Parameters for this Worker
+          nullable: true
+          type: object
+        workerStatusTriggers:
+          $ref: '#/components/schemas/WorkerStatusTriggers'
+        childTaskConfigurations:
+          description: Tasks can be generated from run worker results; this is the
+            configuration
+          items:
+            $ref: '#/components/schemas/ResultantChildTaskConfiguration'
+          nullable: true
+          type: array
+      required:
+      - type
+      - workerId
+      type: object
+    RunWorkerActionResponse:
+      additionalProperties: false
+      description: Defines a read-only Run Worker Action
+      properties:
+        type:
+          description: Type name for this Action
+          enum:
+          - RunWorker
+          nullable: true
+          type: string
+        workerId:
+          $ref: '#/components/schemas/ResourceId'
+        workerAsAt:
+          description: Worker AsAt
+          format: date-time
+          nullable: true
+          type: string
+        workerParameters:
+          additionalProperties:
+            $ref: '#/components/schemas/FieldMapping'
+          description: Parameters for this Worker
+          nullable: true
+          type: object
+        workerStatusTriggers:
+          $ref: '#/components/schemas/WorkerStatusTriggers'
+        childTaskConfigurations:
+          description: Tasks can be generated from run worker results; this is the
+            configuration
+          items:
+            $ref: '#/components/schemas/ResultantChildTaskConfiguration'
+          nullable: true
+          type: array
+      type: object
+    RunWorkerRequest:
+      additionalProperties: false
+      description: Request to Create a new worker
+      example:
+        parameters:
+        - name: name
+          value: ""
+        - name: name
+          value: ""
+      properties:
+        parameters:
+          description: The Parameter and their values.
+          items:
+            $ref: '#/components/schemas/ParameterValue'
+          type: array
+      required:
+      - parameters
+      type: object
+    RunWorkerResponse:
+      additionalProperties: false
+      description: The RunWorker response
+      example:
+        statusDetail: statusDetail
+        runId: 0
+      properties:
+        runId:
+          description: Identifies a Worker run
+          format: int64
+          type: integer
+        statusDetail:
+          description: Detail on the final status
+          nullable: true
+          type: string
+      required:
+      - runId
+      type: object
+    Sleep:
+      additionalProperties: false
+      description: Configuration for a Worker that Sleeps for a user-defined amount
+        of time
+      properties:
+        type:
+          description: The type of worker
+          enum:
+          - Sleep
+          minLength: 1
+          type: string
+      required:
+      - type
+      type: object
+    SleepResponse:
+      additionalProperties: false
+      description: Configuration for a Worker that Sleeps for a user-defined amount
+        of time
+      properties:
+        type:
+          description: The type of worker
+          enum:
+          - Sleep
+          minLength: 1
+          type: string
+      required:
+      - type
+      type: object
+    Task:
+      additionalProperties: false
+      description: Defines a Task created based on a Task Definition
+      example:
+        terminalState: true
+        parentTask:
+          taskDefinitionVersion:
+            asAtModified: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: state
+          taskDefinitionDisplayName: taskDefinitionDisplayName
+          taskDefinitionId:
+            code: code
+            scope: scope
+        version:
+          asAtModified: 2000-01-23T04:56:07.000+00:00
+          userIdModified: userIdModified
+          asAtVersionNumber: 0
+          asAtCreated: 2000-01-23T04:56:07.000+00:00
+          requestIdCreated: requestIdCreated
+          userIdCreated: userIdCreated
+          requestIdModified: requestIdModified
+        taskDefinitionId:
+          code: code
+          scope: scope
+        childTasks:
+        - taskDefinitionVersion:
+            asAtModified: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: state
+          taskDefinitionDisplayName: taskDefinitionDisplayName
+          taskDefinitionId:
+            code: code
+            scope: scope
+        - taskDefinitionVersion:
+            asAtModified: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: state
+          taskDefinitionDisplayName: taskDefinitionDisplayName
+          taskDefinitionId:
+            code: code
+            scope: scope
+        asAtLastTransition: 2000-01-23T04:56:07.000+00:00
+        ultimateParentTask:
+          taskDefinitionVersion:
+            asAtModified: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: state
+          taskDefinitionDisplayName: taskDefinitionDisplayName
+          taskDefinitionId:
+            code: code
+            scope: scope
+        correlationIds:
+        - correlationIds
+        - correlationIds
+        taskDefinitionVersion:
+          asAtModified: 2000-01-23T04:56:07.000+00:00
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        state: state
+        taskDefinitionDisplayName: taskDefinitionDisplayName
+        fields:
+        - name: name
+          value: ""
+        - name: name
+          value: ""
+      properties:
+        id:
+          description: The unique id for this Task
+          format: uuid
+          type: string
+        taskDefinitionId:
+          $ref: '#/components/schemas/ResourceId'
+        taskDefinitionVersion:
+          $ref: '#/components/schemas/TaskDefinitionVersion'
+        taskDefinitionDisplayName:
+          description: The display name of the Task Definition used by this Task
+          minLength: 1
+          type: string
+        state:
+          description: Current State
+          minLength: 1
+          type: string
+        ultimateParentTask:
+          $ref: '#/components/schemas/TaskSummary'
+        parentTask:
+          $ref: '#/components/schemas/TaskSummary'
+        childTasks:
+          description: This Task's child tasks
+          items:
+            $ref: '#/components/schemas/TaskSummary'
+          nullable: true
+          type: array
+        correlationIds:
+          description: User-provided ID used to link entities and tasks
+          items:
+            type: string
+          nullable: true
+          type: array
+        version:
+          $ref: '#/components/schemas/VersionInfo'
+        terminalState:
+          description: True if no onward transitions are possible
+          type: boolean
+        asAtLastTransition:
+          description: Last Transition timestamp
+          format: date-time
+          nullable: true
+          type: string
+        fields:
+          description: Fields and their latest values - should correspond with the
+            Task Definition field schema
+          items:
+            $ref: '#/components/schemas/TaskInstanceField'
+          nullable: true
+          type: array
+      required:
+      - id
+      - state
+      - taskDefinitionDisplayName
+      - taskDefinitionId
+      - taskDefinitionVersion
+      - terminalState
+      - ultimateParentTask
+      type: object
+    TaskDefinition:
+      additionalProperties: false
+      description: Task Definition
+      example:
+        initialState:
+          requiredFields:
+          - requiredFields
+          - requiredFields
+          name: name
+        displayName: displayName
+        description: description
+        fieldSchema:
+        - name: name
+          type: type
+        - name: name
+          type: type
+        id:
+          code: code
+          scope: scope
+        triggers:
+        - name: name
+          trigger:
+            type: type
+        - name: name
+          trigger:
+            type: type
+        transitions:
+        - fromState: fromState
+          toState: toState
+          guard: guard
+          action: action
+          trigger: trigger
+        - fromState: fromState
+          toState: toState
+          guard: guard
+          action: action
+          trigger: trigger
+        version:
+          asAtModified: 2000-01-23T04:56:07.000+00:00
+          userIdModified: userIdModified
+          asAtVersionNumber: 0
+          asAtCreated: 2000-01-23T04:56:07.000+00:00
+          requestIdCreated: requestIdCreated
+          userIdCreated: userIdCreated
+          requestIdModified: requestIdModified
+        actions:
+        - name: name
+          actionDetails:
+            type: type
+        - name: name
+          actionDetails:
+            type: type
+        states:
+        - name: name
+        - name: name
+      properties:
+        id:
+          $ref: '#/components/schemas/ResourceId'
+        version:
+          $ref: '#/components/schemas/VersionInfo'
+        displayName:
+          description: Human readable name
+          minLength: 1
+          type: string
+        description:
+          description: Human readable description
+          nullable: true
+          type: string
+        states:
+          description: The states this Task Definition operates over
+          items:
+            $ref: '#/components/schemas/TaskStateDefinition'
+          minItems: 1
+          type: array
+        fieldSchema:
+          description: The Fields that this Task Definition operates on
+          items:
+            $ref: '#/components/schemas/TaskFieldDefinition'
+          nullable: true
+          type: array
+        initialState:
+          $ref: '#/components/schemas/InitialState'
+        triggers:
+          description: The Triggers for State transition
+          items:
+            $ref: '#/components/schemas/TransitionTriggerDefinition'
+          nullable: true
+          type: array
+        actions:
+          description: The Actions of this Task - executed after a Transition completion
+          items:
+            $ref: '#/components/schemas/ActionDefinitionResponse'
+          nullable: true
+          type: array
+        transitions:
+          description: The Transitions between States
+          items:
+            $ref: '#/components/schemas/TaskTransitionDefinition'
+          nullable: true
+          type: array
+      required:
+      - displayName
+      - id
+      - initialState
+      - states
+      type: object
+    TaskDefinitionVersion:
+      additionalProperties: false
+      description: The version of the Task Definition used by this Task
+      example:
+        asAtModified: 2000-01-23T04:56:07.000+00:00
+      properties:
+        asAtModified:
+          description: The asAt datetime of the Task Definition used by this Task
+          format: date-time
+          type: string
+      type: object
+    TaskFieldDefinition:
+      additionalProperties: false
+      description: Defines a Task Definition Field
+      example:
+        name: name
+        type: type
+      properties:
+        name:
+          description: The name of this Field
+          maxLength: 1024
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        type:
+          description: "The value type for the field. Available values are: \"String\"\
+            , \"Decimal\", \"DateTime\", \"Boolean\")"
+          minLength: 1
+          type: string
+      required:
+      - name
+      - type
+      type: object
+    TaskInstanceField:
+      additionalProperties: false
+      description: Defines a Field on a Task
+      example:
+        name: name
+        value: ""
+      properties:
+        name:
+          description: The name of this Field
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        value:
+          description: The value of this Field
+          nullable: true
+      required:
+      - name
+      type: object
+    TaskStateDefinition:
+      additionalProperties: false
+      description: A Task Definition/Task has a given set of States
+      example:
+        name: name
+      properties:
+        name:
+          description: The Name of this State
+          maxLength: 1024
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+      required:
+      - name
+      type: object
+    TaskSummary:
+      additionalProperties: false
+      description: Summary of a Task created based on a Task Definition
+      example:
+        taskDefinitionVersion:
+          asAtModified: 2000-01-23T04:56:07.000+00:00
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        state: state
+        taskDefinitionDisplayName: taskDefinitionDisplayName
+        taskDefinitionId:
+          code: code
+          scope: scope
+      properties:
+        id:
+          description: The unique id for this Task
+          format: uuid
+          type: string
+        taskDefinitionId:
+          $ref: '#/components/schemas/ResourceId'
+        taskDefinitionVersion:
+          $ref: '#/components/schemas/TaskDefinitionVersion'
+        taskDefinitionDisplayName:
+          description: The display name of the Task Definition used by this Task
+          minLength: 1
+          type: string
+        state:
+          description: Current State
+          minLength: 1
+          type: string
+      required:
+      - id
+      - state
+      - taskDefinitionDisplayName
+      - taskDefinitionId
+      - taskDefinitionVersion
+      type: object
+    TaskTransitionDefinition:
+      additionalProperties: false
+      description: Defines a State change
+      example:
+        fromState: fromState
+        toState: toState
+        guard: guard
+        action: action
+        trigger: trigger
+      properties:
+        fromState:
+          description: The State this Transition if coming From
+          maxLength: 1024
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        toState:
+          description: The State this Transition is going To
+          maxLength: 1024
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        trigger:
+          description: The Trigger for this Transition
+          maxLength: 1024
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        guard:
+          description: "The Guard for this Transition, if any"
+          maxLength: 1024
+          minLength: 1
+          nullable: true
+          pattern: "^[\\s\\S]*$"
+          type: string
+        action:
+          description: The Action to invoke on successful Transition
+          maxLength: 1024
+          minLength: 1
+          nullable: true
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+      required:
+      - fromState
+      - toState
+      - trigger
+      type: object
+    TransitionTriggerDefinition:
+      additionalProperties: false
+      description: State changes happen in response to Triggers
+      example:
+        name: name
+        trigger:
+          type: type
+      properties:
+        name:
+          description: The key/Name of this Trigger
+          maxLength: 1024
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        trigger:
+          $ref: '#/components/schemas/TriggerSchema'
+      required:
+      - name
+      - trigger
+      type: object
+    TriggerParentTaskAction:
+      additionalProperties: false
+      description: Defines a Trigger Parent Task Action
+      properties:
+        type:
+          description: Type name for this Action
+          enum:
+          - TriggerParentTask
+          minLength: 1
+          type: string
+        trigger:
+          description: Trigger on parent task to be invoked
+          maxLength: 1024
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+      required:
+      - trigger
+      - type
+      type: object
+    TriggerParentTaskActionResponse:
+      additionalProperties: false
+      description: Defines a read-only Trigger Parent Task Action
+      properties:
+        type:
+          description: Type name for this Action
+          enum:
+          - TriggerParentTask
+          nullable: true
+          type: string
+        trigger:
+          description: Trigger on parent task to be invoked
+          nullable: true
+          type: string
+      type: object
+    TriggerSchema:
+      additionalProperties: false
+      description: Triggers can operate in response to different stimuli
+      example:
+        type: type
+      properties:
+        type:
+          description: "The type of Trigger; available value(s): External"
+          minLength: 1
+          type: string
+      required:
+      - type
+      type: object
+    UpdateTaskDefinitionRequest:
+      additionalProperties: false
+      description: Contains required info to update a Task Definition
+      example:
+        initialState:
+          requiredFields:
+          - requiredFields
+          - requiredFields
+          name: name
+        displayName: displayName
+        description: description
+        fieldSchema:
+        - name: name
+          type: type
+        - name: name
+          type: type
+        triggers:
+        - name: name
+          trigger:
+            type: type
+        - name: name
+          trigger:
+            type: type
+        transitions:
+        - fromState: fromState
+          toState: toState
+          guard: guard
+          action: action
+          trigger: trigger
+        - fromState: fromState
+          toState: toState
+          guard: guard
+          action: action
+          trigger: trigger
+        actions:
+        - name: name
+          actionDetails:
+            type: type
+        - name: name
+          actionDetails:
+            type: type
+        states:
+        - name: name
+        - name: name
+      properties:
+        displayName:
+          description: Human readable name
+          minLength: 1
+          type: string
+        description:
+          description: Human readable description
+          nullable: true
+          type: string
+        states:
+          description: The states this Task Definition operates over
+          items:
+            $ref: '#/components/schemas/TaskStateDefinition'
+          minItems: 1
+          type: array
+        fieldSchema:
+          description: Defines the fields associated with this Task
+          items:
+            $ref: '#/components/schemas/TaskFieldDefinition'
+          nullable: true
+          type: array
+        initialState:
+          $ref: '#/components/schemas/InitialState'
+        triggers:
+          description: Triggers
+          items:
+            $ref: '#/components/schemas/TransitionTriggerDefinition'
+          nullable: true
+          type: array
+        transitions:
+          description: Transitions
+          items:
+            $ref: '#/components/schemas/TaskTransitionDefinition'
+          nullable: true
+          type: array
+        actions:
+          description: Actions
+          items:
+            $ref: '#/components/schemas/ActionDefinition'
+          nullable: true
+          type: array
+      required:
+      - displayName
+      - initialState
+      - states
+      type: object
+    UpdateTaskRequest:
+      additionalProperties: false
+      description: A request to update a Task
+      example:
+        correlationIds:
+        - correlationIds
+        - correlationIds
+        fields:
+        - name: name
+          value: ""
+        - name: name
+          value: ""
+      properties:
+        correlationIds:
+          description: A set of guid identifiers that allow correlation across the
+            application tier
+          items:
+            type: string
+          nullable: true
+          type: array
+        fields:
+          description: Defines the fields associated with the update
+          items:
+            $ref: '#/components/schemas/TaskInstanceField'
+          nullable: true
+          type: array
+      type: object
+    VersionInfo:
+      additionalProperties: false
+      description: The version metadata.
+      example:
+        asAtModified: 2000-01-23T04:56:07.000+00:00
+        userIdModified: userIdModified
+        asAtVersionNumber: 0
+        asAtCreated: 2000-01-23T04:56:07.000+00:00
+        requestIdCreated: requestIdCreated
+        userIdCreated: userIdCreated
+        requestIdModified: requestIdModified
+      properties:
+        asAtCreated:
+          description: The asAt datetime at which this entity was first created.
+          format: date-time
+          nullable: true
+          type: string
+        userIdCreated:
+          description: The unique id of the user who created this entity.
+          nullable: true
+          type: string
+        requestIdCreated:
+          description: The request id of the request that created this entity.
+          nullable: true
+          type: string
+        asAtModified:
+          description: The asAt datetime at which this entity was last updated.
+          format: date-time
+          nullable: true
+          type: string
+        userIdModified:
+          description: The unique id of the user who last updated this entity.
+          nullable: true
+          type: string
+        requestIdModified:
+          description: The request id of the request that last updated this entity.
+          nullable: true
+          type: string
+        asAtVersionNumber:
+          description: The integer version number for this entity (the entity was
+            created at version 1).
+          format: int32
+          nullable: true
+          type: integer
+      type: object
+    Worker:
+      additionalProperties: false
+      description: Information about the Worker
+      example:
+        workerConfiguration: null
+        resultFields:
+        - displayName: displayName
+          name: name
+          description: description
+          type: type
+        - displayName: displayName
+          name: name
+          description: description
+          type: type
+        displayName: displayName
+        description: description
+        links:
+        - method: method
+          description: description
+          href: https://openapi-generator.tech
+          relation: relation
+        - method: method
+          description: description
+          href: https://openapi-generator.tech
+          relation: relation
+        id:
+          code: code
+          scope: scope
+        version:
+          asAtModified: 2000-01-23T04:56:07.000+00:00
+          userIdModified: userIdModified
+          asAtVersionNumber: 0
+          asAtCreated: 2000-01-23T04:56:07.000+00:00
+          requestIdCreated: requestIdCreated
+          userIdCreated: userIdCreated
+          requestIdModified: requestIdModified
+        parameters:
+        - displayName: displayName
+          defaultValue: defaultValue
+          name: name
+          description: description
+          type: type
+          required: true
+        - displayName: displayName
+          defaultValue: defaultValue
+          name: name
+          description: description
+          type: type
+          required: true
+      properties:
+        id:
+          $ref: '#/components/schemas/ResourceId'
+        displayName:
+          description: Human readable name
+          minLength: 1
+          type: string
+        description:
+          description: Human readable description
+          nullable: true
+          type: string
+        workerConfiguration:
+          $ref: '#/components/schemas/WorkerConfigurationResponse'
+        version:
+          $ref: '#/components/schemas/VersionInfo'
+        parameters:
+          description: The Parameters this Worker accepts or requires.
+          items:
+            $ref: '#/components/schemas/Parameter'
+          nullable: true
+          type: array
+        resultFields:
+          description: The Fields that the Worker results will come back with.
+          items:
+            $ref: '#/components/schemas/ResultField'
+          nullable: true
+          type: array
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          nullable: true
+          type: array
+      required:
+      - displayName
+      - id
+      - workerConfiguration
+      type: object
+    WorkerConfiguration:
+      additionalProperties: false
+      description: Information about how the worker should be executed
+      example:
+        type: type
+      oneOf:
+      - $ref: '#/components/schemas/Fail'
+      - $ref: '#/components/schemas/HealthCheck'
+      - $ref: '#/components/schemas/LuminesceView'
+      - $ref: '#/components/schemas/Sleep'
+      properties:
+        type:
+          description: The type of worker
+          minLength: 1
+          type: string
+      required:
+      - type
+      type: object
+    WorkerConfigurationResponse:
+      additionalProperties: false
+      description: Readonly information about how the worker should be executed
+      oneOf:
+      - $ref: '#/components/schemas/FailResponse'
+      - $ref: '#/components/schemas/HealthCheckResponse'
+      - $ref: '#/components/schemas/LuminesceViewResponse'
+      - $ref: '#/components/schemas/SleepResponse'
+      type: object
+    WorkerStatusTriggers:
+      additionalProperties: false
+      description: Defines triggers that will be invoked per Worker outcome
+      properties:
+        started:
+          description: Trigger to invoke when the Worker has Started
+          nullable: true
+          type: string
+        completedWithResults:
+          description: Trigger to invoke when the Worker has Completed (with results)
+          nullable: true
+          type: string
+        completedNoResults:
+          description: Trigger to invoke when the Worker has Completed (no results)
+          nullable: true
+          type: string
+        failedToStart:
+          description: Trigger to invoke when the Worker has Failed to Start
+          nullable: true
+          type: string
+        failedToComplete:
+          description: Trigger to invoke when the Worker has Failed to Complete
+          nullable: true
+          type: string
+      type: object
+  securitySchemes:
+    oauth2:
+      description: OAuth2 Implicit Grant
+      flows:
+        implicit:
+          authorizationUrl: https://lusid.okta.com/oauth2/default/v1/authorize
+          scopes: {}
+      type: oauth2
+x-tagGroups:
+  name: API
+  tags:
+  - Task Definitions
+  - Tasks
+  - Workers
+x-group-parameters: true
+
