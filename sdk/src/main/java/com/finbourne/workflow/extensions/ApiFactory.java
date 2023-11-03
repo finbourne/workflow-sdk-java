@@ -7,16 +7,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
-* Utility class that builds pre-configured lusidWorkflow API instances to access lusidWorkflow.
+* Utility class that builds pre-configured workflow API instances to access workflow.
 *
 */
 public class ApiFactory {
 
 
     /**
-    * The unique package that hosts all the lusidWorkflow API classes
+    * The unique package that hosts all the workflow API classes
     */
-    public static final String API_PACKAGE = "com.finbourne.lusid-workflow.api";
+    public static final String API_PACKAGE = "com.finbourne.workflow.api";
 
     private final ApiClient apiClient;
     private final Map<Class, Object> initialisedApis;
@@ -32,17 +32,17 @@ public class ApiFactory {
     }
 
     /**
-    * Builds an instance of a lusidWorkflow API 
+    * Builds an instance of a workflow API 
     *
-    * For each instance of an {@link ApiFactory} only a singleton instance of each lusidWorkflow API class exist. The APIs
+    * For each instance of an {@link ApiFactory} only a singleton instance of each workflow API class exist. The APIs
     * are lazily initialised on request.
     *
     *
-    * @param apiClass - class of the lusidWorkflow API to create
-    * @param <T> lusidWorkflow API type
-    * @return instance of the lusidWorkflow API type configured as per the {@link ApiClient}
+    * @param apiClass - class of the workflow API to create
+    * @param <T> workflow API type
+    * @return instance of the workflow API type configured as per the {@link ApiClient}
     *
-    * @throws UnsupportedOperationException is the apiClass does not belong to the import com.finbourne.lusid-workflow.api package or
+    * @throws UnsupportedOperationException is the apiClass does not belong to the import com.finbourne.workflow.api package or
     * if the class has no constructor that accepts an {@link ApiClient} parameter.
     */
     public synchronized <T> T build(Class<T> apiClass) {
@@ -58,9 +58,9 @@ public class ApiFactory {
     };
 
     /*
-    * Create an instance of a lusidWorkflow API configured by an {@link ApiClient}
+    * Create an instance of a workflow API configured by an {@link ApiClient}
     *
-    * @throws UnsupportedOperationException on any reflection related issues on constructing the lusidWorkflow API object
+    * @throws UnsupportedOperationException on any reflection related issues on constructing the workflow API object
     */
     private <T> T createInstance(Constructor<T> constructor){
         try {
@@ -72,10 +72,10 @@ public class ApiFactory {
     }
 
     /*
-    * Retrieves the constructor for the lusidWorkflow API that accepts an {@link ApiClient}
+    * Retrieves the constructor for the workflow API that accepts an {@link ApiClient}
     *
     * @throws UnsupportedOperationException if the class doesn't have a valid constructor that takes
-    * an {@link ApiClient} as an argument to ensure proper construction of a lusidWorkflow API instance.
+    * an {@link ApiClient} as an argument to ensure proper construction of a workflow API instance.
     */
     private <T> Constructor<T> getApiConstructor(Class<T> apiClass){
         try {
@@ -87,9 +87,9 @@ public class ApiFactory {
     }
 
     /*
-    * Checks the class lives in the set package for lusidWorkflow API classes.
+    * Checks the class lives in the set package for workflow API classes.
     *
-    * @throws UnsupportedOperationException if API class does not live in lusidWorkflow API package
+    * @throws UnsupportedOperationException if API class does not live in workflow API package
     */
     private void checkIsSupportedApiClass(Class apiClass){
         if (!isInApiPackage(apiClass)) {

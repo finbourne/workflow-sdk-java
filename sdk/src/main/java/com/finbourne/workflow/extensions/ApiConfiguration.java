@@ -32,7 +32,7 @@ public class ApiConfiguration {
     private String clientSecret;
 
     /**
-     * lusidWorkflow API Url
+     * workflow API Url
      */
     private String apiUrl;
 
