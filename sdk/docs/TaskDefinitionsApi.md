@@ -1,6 +1,6 @@
 # TaskDefinitionsApi
 
-All URIs are relative to *https://fbn-ci.lusid.com/workflow*
+All URIs are relative to *https://fbn-prd.lusid.com/workflow*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
@@ -31,7 +31,7 @@ import com.finbourne.workflow.api.TaskDefinitionsApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://fbn-ci.lusid.com/workflow");
+    defaultClient.setBasePath("https://fbn-prd.lusid.com/workflow");
     
     // Configure OAuth2 access token for authorization: oauth2
     OAuth oauth2 = (OAuth) defaultClient.getAuthentication("oauth2");
@@ -99,7 +99,7 @@ import com.finbourne.workflow.api.TaskDefinitionsApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://fbn-ci.lusid.com/workflow");
+    defaultClient.setBasePath("https://fbn-prd.lusid.com/workflow");
     
     // Configure OAuth2 access token for authorization: oauth2
     OAuth oauth2 = (OAuth) defaultClient.getAuthentication("oauth2");
@@ -170,7 +170,7 @@ import com.finbourne.workflow.api.TaskDefinitionsApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://fbn-ci.lusid.com/workflow");
+    defaultClient.setBasePath("https://fbn-prd.lusid.com/workflow");
     
     // Configure OAuth2 access token for authorization: oauth2
     OAuth oauth2 = (OAuth) defaultClient.getAuthentication("oauth2");
@@ -244,7 +244,7 @@ import com.finbourne.workflow.api.TaskDefinitionsApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://fbn-ci.lusid.com/workflow");
+    defaultClient.setBasePath("https://fbn-prd.lusid.com/workflow");
     
     // Configure OAuth2 access token for authorization: oauth2
     OAuth oauth2 = (OAuth) defaultClient.getAuthentication("oauth2");
@@ -323,7 +323,7 @@ import com.finbourne.workflow.api.TaskDefinitionsApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://fbn-ci.lusid.com/workflow");
+    defaultClient.setBasePath("https://fbn-prd.lusid.com/workflow");
     
     // Configure OAuth2 access token for authorization: oauth2
     OAuth oauth2 = (OAuth) defaultClient.getAuthentication("oauth2");
@@ -397,7 +397,7 @@ import com.finbourne.workflow.api.TaskDefinitionsApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://fbn-ci.lusid.com/workflow");
+    defaultClient.setBasePath("https://fbn-prd.lusid.com/workflow");
     
     // Configure OAuth2 access token for authorization: oauth2
     OAuth oauth2 = (OAuth) defaultClient.getAuthentication("oauth2");
