@@ -6,7 +6,7 @@ info:
     url: https://www.finbourne.com
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.546
+  version: 0.1.549
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -3249,6 +3249,15 @@ components:
         nextPage: nextPage
         values:
         - terminalState: true
+          stack:
+            stackMembershipType: stackMembershipType
+            stackOpenedAsAt: 2000-01-23T04:56:07.000+00:00
+            stackClosedAsAt: 2000-01-23T04:56:07.000+00:00
+            leadTaskState: leadTaskState
+            stackStatus: stackStatus
+            leadTaskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            tasksInStack: 0
+            memberAddedAsAt: 2000-01-23T04:56:07.000+00:00
           parentTask:
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -3269,6 +3278,7 @@ components:
           taskDefinitionId:
             code: code
             scope: scope
+          stackingKey: stackingKey
           childTasks:
           - taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -3310,6 +3320,15 @@ components:
           - name: name
             value: ""
         - terminalState: true
+          stack:
+            stackMembershipType: stackMembershipType
+            stackOpenedAsAt: 2000-01-23T04:56:07.000+00:00
+            stackClosedAsAt: 2000-01-23T04:56:07.000+00:00
+            leadTaskState: leadTaskState
+            stackStatus: stackStatus
+            leadTaskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            tasksInStack: 0
+            memberAddedAsAt: 2000-01-23T04:56:07.000+00:00
           parentTask:
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -3330,6 +3349,7 @@ components:
           taskDefinitionId:
             code: code
             scope: scope
+          stackingKey: stackingKey
           childTasks:
           - taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -3753,6 +3773,15 @@ components:
         nextPage: nextPage
         values:
         - terminalState: true
+          stack:
+            stackMembershipType: stackMembershipType
+            stackOpenedAsAt: 2000-01-23T04:56:07.000+00:00
+            stackClosedAsAt: 2000-01-23T04:56:07.000+00:00
+            leadTaskState: leadTaskState
+            stackStatus: stackStatus
+            leadTaskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            tasksInStack: 0
+            memberAddedAsAt: 2000-01-23T04:56:07.000+00:00
           parentTask:
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -3773,6 +3802,7 @@ components:
           taskDefinitionId:
             code: code
             scope: scope
+          stackingKey: stackingKey
           childTasks:
           - taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -3814,6 +3844,15 @@ components:
           - name: name
             value: ""
         - terminalState: true
+          stack:
+            stackMembershipType: stackMembershipType
+            stackOpenedAsAt: 2000-01-23T04:56:07.000+00:00
+            stackClosedAsAt: 2000-01-23T04:56:07.000+00:00
+            leadTaskState: leadTaskState
+            stackStatus: stackStatus
+            leadTaskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            tasksInStack: 0
+            memberAddedAsAt: 2000-01-23T04:56:07.000+00:00
           parentTask:
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -3834,6 +3873,7 @@ components:
           taskDefinitionId:
             code: code
             scope: scope
+          stackingKey: stackingKey
           childTasks:
           - taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -4110,11 +4150,68 @@ components:
       required:
       - type
       type: object
+    Stack:
+      additionalProperties: false
+      description: Information pertaining to the Tasks Stack if one is present
+      example:
+        stackMembershipType: stackMembershipType
+        stackOpenedAsAt: 2000-01-23T04:56:07.000+00:00
+        stackClosedAsAt: 2000-01-23T04:56:07.000+00:00
+        leadTaskState: leadTaskState
+        stackStatus: stackStatus
+        leadTaskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        tasksInStack: 0
+        memberAddedAsAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        memberAddedAsAt:
+          description: When the Task was added to the Stack
+          format: date-time
+          type: string
+        stackOpenedAsAt:
+          description: When the Stack was opened
+          format: date-time
+          type: string
+        stackClosedAsAt:
+          description: When the Stack was closed
+          format: date-time
+          nullable: true
+          type: string
+        stackMembershipType:
+          description: Whether the task is the Lead task of the Stack or a Member
+            within the Stack
+          nullable: true
+          type: string
+        stackStatus:
+          description: Status of the Stack (Open/Closed)
+          nullable: true
+          type: string
+        leadTaskId:
+          description: ID of the Lead Task
+          format: uuid
+          type: string
+        leadTaskState:
+          description: State of the Lead Task
+          nullable: true
+          type: string
+        tasksInStack:
+          description: Number of Tasks in the Stack
+          format: int32
+          type: integer
+      type: object
     Task:
       additionalProperties: false
       description: Defines a Task created based on a Task Definition
       example:
         terminalState: true
+        stack:
+          stackMembershipType: stackMembershipType
+          stackOpenedAsAt: 2000-01-23T04:56:07.000+00:00
+          stackClosedAsAt: 2000-01-23T04:56:07.000+00:00
+          leadTaskState: leadTaskState
+          stackStatus: stackStatus
+          leadTaskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tasksInStack: 0
+          memberAddedAsAt: 2000-01-23T04:56:07.000+00:00
         parentTask:
           taskDefinitionVersion:
             asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -4135,6 +4232,7 @@ components:
         taskDefinitionId:
           code: code
           scope: scope
+        stackingKey: stackingKey
         childTasks:
         - taskDefinitionVersion:
             asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -4225,6 +4323,12 @@ components:
             $ref: '#/components/schemas/TaskInstanceField'
           nullable: true
           type: array
+        stackingKey:
+          description: The key used to determine which stack to add the Task to
+          nullable: true
+          type: string
+        stack:
+          $ref: '#/components/schemas/Stack'
       required:
       - id
       - state

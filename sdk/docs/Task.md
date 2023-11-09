@@ -21,6 +21,8 @@ Defines a Task created based on a Task Definition
 |**terminalState** | **Boolean** | True if no onward transitions are possible |  |
 |**asAtLastTransition** | **OffsetDateTime** | Last Transition timestamp |  [optional] |
 |**fields** | [**List&lt;TaskInstanceField&gt;**](TaskInstanceField.md) | Fields and their latest values - should correspond with the Task Definition field schema |  [optional] |
+|**stackingKey** | **String** | The key used to determine which stack to add the Task to |  [optional] |
+|**stack** | [**Stack**](Stack.md) |  |  [optional] |
 
 
 

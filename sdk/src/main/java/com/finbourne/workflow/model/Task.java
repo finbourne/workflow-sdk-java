@@ -12,6 +12,7 @@ package com.finbourne.workflow.model;
 
 import java.util.Objects;
 import com.finbourne.workflow.model.ResourceId;
+import com.finbourne.workflow.model.Stack;
 import com.finbourne.workflow.model.TaskDefinitionVersion;
 import com.finbourne.workflow.model.TaskInstanceField;
 import com.finbourne.workflow.model.TaskSummary;
@@ -110,6 +111,14 @@ public class Task {
   public static final String SERIALIZED_NAME_FIELDS = "fields";
   @SerializedName(SERIALIZED_NAME_FIELDS)
   private List<TaskInstanceField> fields;
+
+  public static final String SERIALIZED_NAME_STACKING_KEY = "stackingKey";
+  @SerializedName(SERIALIZED_NAME_STACKING_KEY)
+  private String stackingKey;
+
+  public static final String SERIALIZED_NAME_STACK = "stack";
+  @SerializedName(SERIALIZED_NAME_STACK)
+  private Stack stack;
 
   public Task() {
   }
@@ -411,6 +420,48 @@ public class Task {
   }
 
 
+  public Task stackingKey(String stackingKey) {
+    
+    this.stackingKey = stackingKey;
+    return this;
+  }
+
+   /**
+   * The key used to determine which stack to add the Task to
+   * @return stackingKey
+  **/
+  @jakarta.annotation.Nullable
+  public String getStackingKey() {
+    return stackingKey;
+  }
+
+
+  public void setStackingKey(String stackingKey) {
+    this.stackingKey = stackingKey;
+  }
+
+
+  public Task stack(Stack stack) {
+    
+    this.stack = stack;
+    return this;
+  }
+
+   /**
+   * Get stack
+   * @return stack
+  **/
+  @jakarta.annotation.Nullable
+  public Stack getStack() {
+    return stack;
+  }
+
+
+  public void setStack(Stack stack) {
+    this.stack = stack;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -433,7 +484,9 @@ public class Task {
         Objects.equals(this.version, task.version) &&
         Objects.equals(this.terminalState, task.terminalState) &&
         Objects.equals(this.asAtLastTransition, task.asAtLastTransition) &&
-        Objects.equals(this.fields, task.fields);
+        Objects.equals(this.fields, task.fields) &&
+        Objects.equals(this.stackingKey, task.stackingKey) &&
+        Objects.equals(this.stack, task.stack);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -442,7 +495,7 @@ public class Task {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, taskDefinitionId, taskDefinitionVersion, taskDefinitionDisplayName, state, ultimateParentTask, parentTask, childTasks, correlationIds, version, terminalState, asAtLastTransition, fields);
+    return Objects.hash(id, taskDefinitionId, taskDefinitionVersion, taskDefinitionDisplayName, state, ultimateParentTask, parentTask, childTasks, correlationIds, version, terminalState, asAtLastTransition, fields, stackingKey, stack);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -469,6 +522,8 @@ public class Task {
     sb.append("    terminalState: ").append(toIndentedString(terminalState)).append("\n");
     sb.append("    asAtLastTransition: ").append(toIndentedString(asAtLastTransition)).append("\n");
     sb.append("    fields: ").append(toIndentedString(fields)).append("\n");
+    sb.append("    stackingKey: ").append(toIndentedString(stackingKey)).append("\n");
+    sb.append("    stack: ").append(toIndentedString(stack)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -504,6 +559,8 @@ public class Task {
     openapiFields.add("terminalState");
     openapiFields.add("asAtLastTransition");
     openapiFields.add("fields");
+    openapiFields.add("stackingKey");
+    openapiFields.add("stack");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -590,6 +647,13 @@ public class Task {
             TaskInstanceField.validateJsonElement(jsonArrayfields.get(i));
           };
         }
+      }
+      if ((jsonObj.get("stackingKey") != null && !jsonObj.get("stackingKey").isJsonNull()) && !jsonObj.get("stackingKey").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `stackingKey` to be a primitive type in the JSON string but got `%s`", jsonObj.get("stackingKey").toString()));
+      }
+      // validate the optional field `stack`
+      if (jsonObj.get("stack") != null && !jsonObj.get("stack").isJsonNull()) {
+        Stack.validateJsonElement(jsonObj.get("stack"));
       }
   }
 
