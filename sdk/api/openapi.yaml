@@ -6,7 +6,7 @@ info:
     url: https://www.finbourne.com
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.556
+  version: 0.1.585
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -2879,6 +2879,7 @@ components:
         taskDefinitionId:
           code: code
           scope: scope
+        stackingKey: stackingKey
       properties:
         taskDefinitionId:
           $ref: '#/components/schemas/ResourceId'
@@ -2896,6 +2897,10 @@ components:
             $ref: '#/components/schemas/TaskInstanceField'
           nullable: true
           type: array
+        stackingKey:
+          description: The key for the Stack that this Task should be added to
+          nullable: true
+          type: string
       required:
       - taskDefinitionId
       type: object
@@ -4762,6 +4767,7 @@ components:
           value: ""
         - name: name
           value: ""
+        stackingKey: stackingKey
       properties:
         correlationIds:
           description: A set of guid identifiers that allow correlation across the
@@ -4776,6 +4782,10 @@ components:
             $ref: '#/components/schemas/TaskInstanceField'
           nullable: true
           type: array
+        stackingKey:
+          description: The key for the Stack that this Task should be added to
+          nullable: true
+          type: string
       type: object
     VersionInfo:
       additionalProperties: false

@@ -66,6 +66,10 @@ public class CreateTaskRequest {
   @SerializedName(SERIALIZED_NAME_FIELDS)
   private List<TaskInstanceField> fields;
 
+  public static final String SERIALIZED_NAME_STACKING_KEY = "stackingKey";
+  @SerializedName(SERIALIZED_NAME_STACKING_KEY)
+  private String stackingKey;
+
   public CreateTaskRequest() {
   }
 
@@ -148,6 +152,27 @@ public class CreateTaskRequest {
   }
 
 
+  public CreateTaskRequest stackingKey(String stackingKey) {
+    
+    this.stackingKey = stackingKey;
+    return this;
+  }
+
+   /**
+   * The key for the Stack that this Task should be added to
+   * @return stackingKey
+  **/
+  @jakarta.annotation.Nullable
+  public String getStackingKey() {
+    return stackingKey;
+  }
+
+
+  public void setStackingKey(String stackingKey) {
+    this.stackingKey = stackingKey;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -160,7 +185,8 @@ public class CreateTaskRequest {
     CreateTaskRequest createTaskRequest = (CreateTaskRequest) o;
     return Objects.equals(this.taskDefinitionId, createTaskRequest.taskDefinitionId) &&
         Objects.equals(this.correlationIds, createTaskRequest.correlationIds) &&
-        Objects.equals(this.fields, createTaskRequest.fields);
+        Objects.equals(this.fields, createTaskRequest.fields) &&
+        Objects.equals(this.stackingKey, createTaskRequest.stackingKey);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -169,7 +195,7 @@ public class CreateTaskRequest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(taskDefinitionId, correlationIds, fields);
+    return Objects.hash(taskDefinitionId, correlationIds, fields, stackingKey);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -186,6 +212,7 @@ public class CreateTaskRequest {
     sb.append("    taskDefinitionId: ").append(toIndentedString(taskDefinitionId)).append("\n");
     sb.append("    correlationIds: ").append(toIndentedString(correlationIds)).append("\n");
     sb.append("    fields: ").append(toIndentedString(fields)).append("\n");
+    sb.append("    stackingKey: ").append(toIndentedString(stackingKey)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -211,6 +238,7 @@ public class CreateTaskRequest {
     openapiFields.add("taskDefinitionId");
     openapiFields.add("correlationIds");
     openapiFields.add("fields");
+    openapiFields.add("stackingKey");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -256,6 +284,9 @@ public class CreateTaskRequest {
             TaskInstanceField.validateJsonElement(jsonArrayfields.get(i));
           };
         }
+      }
+      if ((jsonObj.get("stackingKey") != null && !jsonObj.get("stackingKey").isJsonNull()) && !jsonObj.get("stackingKey").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `stackingKey` to be a primitive type in the JSON string but got `%s`", jsonObj.get("stackingKey").toString()));
       }
   }
 
