@@ -6,7 +6,7 @@ info:
     url: https://www.finbourne.com
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.655
+  version: 0.1.670
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -151,6 +151,7 @@ paths:
                       - taskDefinitionId:
                           scope: AAA
                           code: BBB
+                        mapStackingKeyFrom: null
                         childTaskFields:
                           assignee:
                             mapFrom: foo
@@ -305,6 +306,7 @@ paths:
                   - taskDefinitionId:
                       scope: AAA
                       code: BBB
+                    mapStackingKeyFrom: null
                     childTaskFields:
                       assignee:
                         mapFrom: foo
@@ -402,6 +404,7 @@ paths:
                   - taskDefinitionId:
                       scope: AAA
                       code: BBB
+                    mapStackingKeyFrom: null
                     childTaskFields:
                       assignee:
                         mapFrom: foo
@@ -499,6 +502,7 @@ paths:
                   - taskDefinitionId:
                       scope: AAA
                       code: BBB
+                    mapStackingKeyFrom: null
                     childTaskFields:
                       assignee:
                         mapFrom: foo
@@ -596,6 +600,7 @@ paths:
                   - taskDefinitionId:
                       scope: AAA
                       code: BBB
+                    mapStackingKeyFrom: null
                     childTaskFields:
                       assignee:
                         mapFrom: foo
@@ -681,6 +686,7 @@ paths:
                     - taskDefinitionId:
                         scope: AAA
                         code: BBB
+                      mapStackingKeyFrom: null
                       childTaskFields:
                         assignee:
                           mapFrom: foo
@@ -905,6 +911,7 @@ paths:
                     - taskDefinitionId:
                         scope: AAA
                         code: BBB
+                      mapStackingKeyFrom: null
                       childTaskFields:
                         assignee:
                           mapFrom: foo
@@ -1078,6 +1085,7 @@ paths:
                   - taskDefinitionId:
                       scope: AAA
                       code: BBB
+                    mapStackingKeyFrom: null
                     childTaskFields:
                       assignee:
                         mapFrom: foo
@@ -1172,6 +1180,7 @@ paths:
                   - taskDefinitionId:
                       scope: AAA
                       code: BBB
+                    mapStackingKeyFrom: null
                     childTaskFields:
                       assignee:
                         mapFrom: foo
@@ -1266,6 +1275,7 @@ paths:
                   - taskDefinitionId:
                       scope: AAA
                       code: BBB
+                    mapStackingKeyFrom: null
                     childTaskFields:
                       assignee:
                         mapFrom: foo
@@ -1360,6 +1370,7 @@ paths:
                   - taskDefinitionId:
                       scope: AAA
                       code: BBB
+                    mapStackingKeyFrom: null
                     childTaskFields:
                       assignee:
                         mapFrom: foo
@@ -1445,6 +1456,7 @@ paths:
                     - taskDefinitionId:
                         scope: AAA
                         code: BBB
+                      mapStackingKeyFrom: null
                       childTaskFields:
                         assignee:
                           mapFrom: foo
@@ -2725,6 +2737,11 @@ components:
           description: Field Mappings
           nullable: true
           type: object
+        mapStackingKeyFrom:
+          description: "If present, the value of this field on the parent task will\
+            \ be the Stacking Key on any created child tasks"
+          nullable: true
+          type: string
       required:
       - taskDefinitionId
       type: object
@@ -3976,6 +3993,10 @@ components:
             $ref: '#/components/schemas/FieldMapping'
           description: Field Mappings
           type: object
+        mapStackingKeyFrom:
+          description: The field to be mapped as the ChildTasks Stacking Key
+          nullable: true
+          type: string
       required:
       - childTaskFields
       - taskDefinitionId

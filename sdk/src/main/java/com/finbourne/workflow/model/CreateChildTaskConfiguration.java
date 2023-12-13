@@ -71,6 +71,10 @@ public class CreateChildTaskConfiguration {
   @SerializedName(SERIALIZED_NAME_CHILD_TASK_FIELDS)
   private Map<String, FieldMapping> childTaskFields;
 
+  public static final String SERIALIZED_NAME_MAP_STACKING_KEY_FROM = "mapStackingKeyFrom";
+  @SerializedName(SERIALIZED_NAME_MAP_STACKING_KEY_FROM)
+  private String mapStackingKeyFrom;
+
   public CreateChildTaskConfiguration() {
   }
 
@@ -166,6 +170,27 @@ public class CreateChildTaskConfiguration {
   }
 
 
+  public CreateChildTaskConfiguration mapStackingKeyFrom(String mapStackingKeyFrom) {
+    
+    this.mapStackingKeyFrom = mapStackingKeyFrom;
+    return this;
+  }
+
+   /**
+   * If present, the value of this field on the parent task will be the Stacking Key on any created child tasks
+   * @return mapStackingKeyFrom
+  **/
+  @jakarta.annotation.Nullable
+  public String getMapStackingKeyFrom() {
+    return mapStackingKeyFrom;
+  }
+
+
+  public void setMapStackingKeyFrom(String mapStackingKeyFrom) {
+    this.mapStackingKeyFrom = mapStackingKeyFrom;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -179,7 +204,8 @@ public class CreateChildTaskConfiguration {
     return Objects.equals(this.taskDefinitionId, createChildTaskConfiguration.taskDefinitionId) &&
         Objects.equals(this.taskDefinitionAsAt, createChildTaskConfiguration.taskDefinitionAsAt) &&
         Objects.equals(this.initialTrigger, createChildTaskConfiguration.initialTrigger) &&
-        Objects.equals(this.childTaskFields, createChildTaskConfiguration.childTaskFields);
+        Objects.equals(this.childTaskFields, createChildTaskConfiguration.childTaskFields) &&
+        Objects.equals(this.mapStackingKeyFrom, createChildTaskConfiguration.mapStackingKeyFrom);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -188,7 +214,7 @@ public class CreateChildTaskConfiguration {
 
   @Override
   public int hashCode() {
-    return Objects.hash(taskDefinitionId, taskDefinitionAsAt, initialTrigger, childTaskFields);
+    return Objects.hash(taskDefinitionId, taskDefinitionAsAt, initialTrigger, childTaskFields, mapStackingKeyFrom);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -206,6 +232,7 @@ public class CreateChildTaskConfiguration {
     sb.append("    taskDefinitionAsAt: ").append(toIndentedString(taskDefinitionAsAt)).append("\n");
     sb.append("    initialTrigger: ").append(toIndentedString(initialTrigger)).append("\n");
     sb.append("    childTaskFields: ").append(toIndentedString(childTaskFields)).append("\n");
+    sb.append("    mapStackingKeyFrom: ").append(toIndentedString(mapStackingKeyFrom)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -232,6 +259,7 @@ public class CreateChildTaskConfiguration {
     openapiFields.add("taskDefinitionAsAt");
     openapiFields.add("initialTrigger");
     openapiFields.add("childTaskFields");
+    openapiFields.add("mapStackingKeyFrom");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -262,6 +290,9 @@ public class CreateChildTaskConfiguration {
       ResourceId.validateJsonElement(jsonObj.get("taskDefinitionId"));
       if ((jsonObj.get("initialTrigger") != null && !jsonObj.get("initialTrigger").isJsonNull()) && !jsonObj.get("initialTrigger").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `initialTrigger` to be a primitive type in the JSON string but got `%s`", jsonObj.get("initialTrigger").toString()));
+      }
+      if ((jsonObj.get("mapStackingKeyFrom") != null && !jsonObj.get("mapStackingKeyFrom").isJsonNull()) && !jsonObj.get("mapStackingKeyFrom").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `mapStackingKeyFrom` to be a primitive type in the JSON string but got `%s`", jsonObj.get("mapStackingKeyFrom").toString()));
       }
   }
 
