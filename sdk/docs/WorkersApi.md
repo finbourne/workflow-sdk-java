@@ -5,10 +5,12 @@ All URIs are relative to *https://fbn-prd.lusid.com/workflow*
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
 | [**createWorker**](WorkersApi.md#createWorker) | **POST** /api/workers | [EXPERIMENTAL] CreateWorker: Create a new Worker |
+| [**deleteWorker**](WorkersApi.md#deleteWorker) | **DELETE** /api/workers/{scope}/{code} | [EXPERIMENTAL] DeleteWorker: Delete a Worker |
 | [**getWorker**](WorkersApi.md#getWorker) | **GET** /api/workers/{scope}/{code} | [EXPERIMENTAL] GetWorker: Get a Worker |
 | [**getWorkerResult**](WorkersApi.md#getWorkerResult) | **GET** /api/workers/{runId}/$result | [EXPERIMENTAL] GetWorkerResult: Get the status of a specific run of a worker with any relevant results |
 | [**listWorkers**](WorkersApi.md#listWorkers) | **GET** /api/workers | [EXPERIMENTAL] ListWorkers: List Workers |
 | [**runWorker**](WorkersApi.md#runWorker) | **POST** /api/workers/{scope}/{code}/$run | [EXPERIMENTAL] RunWorker: Run a Worker |
+| [**updateWorker**](WorkersApi.md#updateWorker) | **PUT** /api/workers/{scope}/{code} | [EXPERIMENTAL] UpdateWorker: Update a Worker |
 
 
 <a id="createWorker"></a>
@@ -79,6 +81,79 @@ public class Example {
 |-------------|-------------|------------------|
 | **201** | Created |  -  |
 | **400** | The details of the input related failure |  -  |
+| **0** | Error response |  -  |
+
+<a id="deleteWorker"></a>
+# **deleteWorker**
+> DeletedEntityResponse deleteWorker(scope, code).execute();
+
+[EXPERIMENTAL] DeleteWorker: Delete a Worker
+
+If the Worker does not exist a failure will be returned
+
+### Example
+```java
+// Import classes:
+import com.finbourne.workflow.ApiClient;
+import com.finbourne.workflow.ApiException;
+import com.finbourne.workflow.Configuration;
+import com.finbourne.workflow.auth.*;
+import com.finbourne.workflow.models.*;
+import com.finbourne.workflow.api.WorkersApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://fbn-prd.lusid.com/workflow");
+    
+    // Configure OAuth2 access token for authorization: oauth2
+    OAuth oauth2 = (OAuth) defaultClient.getAuthentication("oauth2");
+    oauth2.setAccessToken("YOUR ACCESS TOKEN");
+
+    WorkersApi apiInstance = new WorkersApi(defaultClient);
+    String scope = "scope_example"; // String | Scope of the worker to be deleted
+    String code = "code_example"; // String | Code of the worker to be deleted
+    try {
+      DeletedEntityResponse result = apiInstance.deleteWorker(scope, code)
+            .execute();
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling WorkersApi#deleteWorker");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **scope** | **String**| Scope of the worker to be deleted | |
+| **code** | **String**| Code of the worker to be deleted | |
+
+### Return type
+
+[**DeletedEntityResponse**](DeletedEntityResponse.md)
+
+### Authorization
+
+[oauth2](../README.md#oauth2)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json, text/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Success |  -  |
+| **400** | The details of the input related failure |  -  |
+| **404** | Worker not found. |  -  |
 | **0** | Error response |  -  |
 
 <a id="getWorker"></a>
@@ -372,5 +447,80 @@ public class Example {
 |-------------|-------------|------------------|
 | **200** | Success |  -  |
 | **400** | The details of the input related failure |  -  |
+| **0** | Error response |  -  |
+
+<a id="updateWorker"></a>
+# **updateWorker**
+> Worker updateWorker(scope, code, updateWorkerRequest).execute();
+
+[EXPERIMENTAL] UpdateWorker: Update a Worker
+
+If the Worker does not exist a failure will be returned
+
+### Example
+```java
+// Import classes:
+import com.finbourne.workflow.ApiClient;
+import com.finbourne.workflow.ApiException;
+import com.finbourne.workflow.Configuration;
+import com.finbourne.workflow.auth.*;
+import com.finbourne.workflow.models.*;
+import com.finbourne.workflow.api.WorkersApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://fbn-prd.lusid.com/workflow");
+    
+    // Configure OAuth2 access token for authorization: oauth2
+    OAuth oauth2 = (OAuth) defaultClient.getAuthentication("oauth2");
+    oauth2.setAccessToken("YOUR ACCESS TOKEN");
+
+    WorkersApi apiInstance = new WorkersApi(defaultClient);
+    String scope = "scope_example"; // String | Scope of the worker to be updated
+    String code = "code_example"; // String | Code of the worker to be updated
+    UpdateWorkerRequest updateWorkerRequest = new UpdateWorkerRequest(); // UpdateWorkerRequest | State of the updated worker
+    try {
+      Worker result = apiInstance.updateWorker(scope, code, updateWorkerRequest)
+            .execute();
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling WorkersApi#updateWorker");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **scope** | **String**| Scope of the worker to be updated | |
+| **code** | **String**| Code of the worker to be updated | |
+| **updateWorkerRequest** | [**UpdateWorkerRequest**](UpdateWorkerRequest.md)| State of the updated worker | |
+
+### Return type
+
+[**Worker**](Worker.md)
+
+### Authorization
+
+[oauth2](../README.md#oauth2)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json-patch+json, application/json, text/json, application/*+json
+ - **Accept**: text/plain, application/json, text/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Success |  -  |
+| **400** | The details of the input related failure |  -  |
+| **404** | Worker not found. |  -  |
 | **0** | Error response |  -  |
 

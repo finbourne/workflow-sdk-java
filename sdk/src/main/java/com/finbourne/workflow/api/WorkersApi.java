@@ -25,6 +25,7 @@ import java.io.IOException;
 
 
 import com.finbourne.workflow.model.CreateWorkerRequest;
+import com.finbourne.workflow.model.DeletedEntityResponse;
 import com.finbourne.workflow.model.GetWorkerResultResponse;
 import com.finbourne.workflow.model.LusidProblemDetails;
 import com.finbourne.workflow.model.LusidValidationProblemDetails;
@@ -32,6 +33,7 @@ import java.time.OffsetDateTime;
 import com.finbourne.workflow.model.PagedResourceListOfWorker;
 import com.finbourne.workflow.model.RunWorkerRequest;
 import com.finbourne.workflow.model.RunWorkerResponse;
+import com.finbourne.workflow.model.UpdateWorkerRequest;
 import com.finbourne.workflow.model.Worker;
 
 import java.lang.reflect.Type;
@@ -243,6 +245,184 @@ public class WorkersApi {
      */
     public APIcreateWorkerRequest createWorker(CreateWorkerRequest createWorkerRequest) {
         return new APIcreateWorkerRequest(createWorkerRequest);
+    }
+    private okhttp3.Call deleteWorkerCall(String scope, String code, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/api/workers/{scope}/{code}"
+            .replace("{" + "scope" + "}", localVarApiClient.escapeString(scope.toString()))
+            .replace("{" + "code" + "}", localVarApiClient.escapeString(code.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "text/plain",
+            "application/json",
+            "text/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "oauth2" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call deleteWorkerValidateBeforeCall(String scope, String code, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'scope' is set
+        if (scope == null) {
+            throw new ApiException("Missing the required parameter 'scope' when calling deleteWorker(Async)");
+        }
+
+        // verify the required parameter 'code' is set
+        if (code == null) {
+            throw new ApiException("Missing the required parameter 'code' when calling deleteWorker(Async)");
+        }
+
+        return deleteWorkerCall(scope, code, _callback);
+
+    }
+
+
+    private ApiResponse<DeletedEntityResponse> deleteWorkerWithHttpInfo(String scope, String code) throws ApiException {
+        okhttp3.Call localVarCall = deleteWorkerValidateBeforeCall(scope, code, null);
+        Type localVarReturnType = new TypeToken<DeletedEntityResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private okhttp3.Call deleteWorkerAsync(String scope, String code, final ApiCallback<DeletedEntityResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = deleteWorkerValidateBeforeCall(scope, code, _callback);
+        Type localVarReturnType = new TypeToken<DeletedEntityResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    public class APIdeleteWorkerRequest {
+        private final String scope;
+        private final String code;
+
+        private APIdeleteWorkerRequest(String scope, String code) {
+            this.scope = scope;
+            this.code = code;
+        }
+
+        /**
+         * Build call for deleteWorker
+         * @param _callback ApiCallback API callback
+         * @return Call to execute
+         * @throws ApiException If fail to serialize the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Worker not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call buildCall(final ApiCallback _callback) throws ApiException {
+            return deleteWorkerCall(scope, code, _callback);
+        }
+
+        /**
+         * Execute deleteWorker request
+         * @return DeletedEntityResponse
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Worker not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public DeletedEntityResponse execute() throws ApiException {
+            ApiResponse<DeletedEntityResponse> localVarResp = deleteWorkerWithHttpInfo(scope, code);
+            return localVarResp.getData();
+        }
+
+        /**
+         * Execute deleteWorker request with HTTP info returned
+         * @return ApiResponse&lt;DeletedEntityResponse&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Worker not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<DeletedEntityResponse> executeWithHttpInfo() throws ApiException {
+            return deleteWorkerWithHttpInfo(scope, code);
+        }
+
+        /**
+         * Execute deleteWorker request (asynchronously)
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Worker not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<DeletedEntityResponse> _callback) throws ApiException {
+            return deleteWorkerAsync(scope, code, _callback);
+        }
+    }
+
+    /**
+     * [EXPERIMENTAL] DeleteWorker: Delete a Worker
+     * If the Worker does not exist a failure will be returned
+     * @param scope Scope of the worker to be deleted (required)
+     * @param code Code of the worker to be deleted (required)
+     * @return APIdeleteWorkerRequest
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Worker not found. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+     </table>
+     */
+    public APIdeleteWorkerRequest deleteWorker(String scope, String code) {
+        return new APIdeleteWorkerRequest(scope, code);
     }
     private okhttp3.Call getWorkerCall(String scope, String code, OffsetDateTime asAt, final ApiCallback _callback) throws ApiException {
         String basePath = null;
@@ -995,5 +1175,195 @@ public class WorkersApi {
      */
     public APIrunWorkerRequest runWorker(String scope, String code, RunWorkerRequest runWorkerRequest) {
         return new APIrunWorkerRequest(scope, code, runWorkerRequest);
+    }
+    private okhttp3.Call updateWorkerCall(String scope, String code, UpdateWorkerRequest updateWorkerRequest, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = updateWorkerRequest;
+
+        // create path and map variables
+        String localVarPath = "/api/workers/{scope}/{code}"
+            .replace("{" + "scope" + "}", localVarApiClient.escapeString(scope.toString()))
+            .replace("{" + "code" + "}", localVarApiClient.escapeString(code.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "text/plain",
+            "application/json",
+            "text/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json-patch+json",
+            "application/json",
+            "text/json",
+            "application/*+json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "oauth2" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call updateWorkerValidateBeforeCall(String scope, String code, UpdateWorkerRequest updateWorkerRequest, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'scope' is set
+        if (scope == null) {
+            throw new ApiException("Missing the required parameter 'scope' when calling updateWorker(Async)");
+        }
+
+        // verify the required parameter 'code' is set
+        if (code == null) {
+            throw new ApiException("Missing the required parameter 'code' when calling updateWorker(Async)");
+        }
+
+        // verify the required parameter 'updateWorkerRequest' is set
+        if (updateWorkerRequest == null) {
+            throw new ApiException("Missing the required parameter 'updateWorkerRequest' when calling updateWorker(Async)");
+        }
+
+        return updateWorkerCall(scope, code, updateWorkerRequest, _callback);
+
+    }
+
+
+    private ApiResponse<Worker> updateWorkerWithHttpInfo(String scope, String code, UpdateWorkerRequest updateWorkerRequest) throws ApiException {
+        okhttp3.Call localVarCall = updateWorkerValidateBeforeCall(scope, code, updateWorkerRequest, null);
+        Type localVarReturnType = new TypeToken<Worker>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private okhttp3.Call updateWorkerAsync(String scope, String code, UpdateWorkerRequest updateWorkerRequest, final ApiCallback<Worker> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = updateWorkerValidateBeforeCall(scope, code, updateWorkerRequest, _callback);
+        Type localVarReturnType = new TypeToken<Worker>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    public class APIupdateWorkerRequest {
+        private final String scope;
+        private final String code;
+        private final UpdateWorkerRequest updateWorkerRequest;
+
+        private APIupdateWorkerRequest(String scope, String code, UpdateWorkerRequest updateWorkerRequest) {
+            this.scope = scope;
+            this.code = code;
+            this.updateWorkerRequest = updateWorkerRequest;
+        }
+
+        /**
+         * Build call for updateWorker
+         * @param _callback ApiCallback API callback
+         * @return Call to execute
+         * @throws ApiException If fail to serialize the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Worker not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call buildCall(final ApiCallback _callback) throws ApiException {
+            return updateWorkerCall(scope, code, updateWorkerRequest, _callback);
+        }
+
+        /**
+         * Execute updateWorker request
+         * @return Worker
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Worker not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public Worker execute() throws ApiException {
+            ApiResponse<Worker> localVarResp = updateWorkerWithHttpInfo(scope, code, updateWorkerRequest);
+            return localVarResp.getData();
+        }
+
+        /**
+         * Execute updateWorker request with HTTP info returned
+         * @return ApiResponse&lt;Worker&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Worker not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<Worker> executeWithHttpInfo() throws ApiException {
+            return updateWorkerWithHttpInfo(scope, code, updateWorkerRequest);
+        }
+
+        /**
+         * Execute updateWorker request (asynchronously)
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Worker not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<Worker> _callback) throws ApiException {
+            return updateWorkerAsync(scope, code, updateWorkerRequest, _callback);
+        }
+    }
+
+    /**
+     * [EXPERIMENTAL] UpdateWorker: Update a Worker
+     * If the Worker does not exist a failure will be returned
+     * @param scope Scope of the worker to be updated (required)
+     * @param code Code of the worker to be updated (required)
+     * @param updateWorkerRequest State of the updated worker (required)
+     * @return APIupdateWorkerRequest
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Worker not found. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+     </table>
+     */
+    public APIupdateWorkerRequest updateWorker(String scope, String code, UpdateWorkerRequest updateWorkerRequest) {
+        return new APIupdateWorkerRequest(scope, code, updateWorkerRequest);
     }
 }

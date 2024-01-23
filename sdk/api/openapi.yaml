@@ -6,7 +6,7 @@ info:
     url: https://www.finbourne.com
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.721
+  version: 0.1.727
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -2399,6 +2399,82 @@ paths:
       x-fbn-apistatus: Experimental
       x-accepts: application/json
   /api/workers/{scope}/{code}:
+    delete:
+      description: If the Worker does not exist a failure will be returned
+      operationId: DeleteWorker
+      parameters:
+      - description: Scope of the worker to be deleted
+        explode: false
+        in: path
+        name: scope
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      - description: Code of the worker to be deleted
+        explode: false
+        in: path
+        name: code
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/DeletedEntityResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletedEntityResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/DeletedEntityResponse'
+          description: Success
+        "400":
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        "404":
+          content:
+            text/plain:
+              schema:
+                type: string
+            application/json:
+              schema:
+                type: string
+            text/json:
+              schema:
+                type: string
+          description: Worker not found.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] DeleteWorker: Delete a Worker"
+      tags:
+      - Workers
+      x-fbn-apistatus: Experimental
+      x-accepts: application/json
     get:
       description: Will return a NotFound failure if the Worker does not exist
       operationId: GetWorker
@@ -2530,6 +2606,180 @@ paths:
       tags:
       - Workers
       x-fbn-apistatus: Experimental
+      x-accepts: application/json
+    put:
+      description: If the Worker does not exist a failure will be returned
+      operationId: UpdateWorker
+      parameters:
+      - description: Scope of the worker to be updated
+        explode: false
+        in: path
+        name: scope
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      - description: Code of the worker to be updated
+        explode: false
+        in: path
+        name: code
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json-patch+json:
+            example:
+              displayName: ASP.Net Health Check worker
+              description: Calls /health to check a service is running
+              workerConfiguration:
+                type: HealthCheck
+                url: http://localhost.lusid.com:8282
+            schema:
+              $ref: '#/components/schemas/UpdateWorkerRequest'
+          application/json:
+            example:
+              displayName: ASP.Net Health Check worker
+              description: Calls /health to check a service is running
+              workerConfiguration:
+                type: HealthCheck
+                url: http://localhost.lusid.com:8282
+            schema:
+              $ref: '#/components/schemas/UpdateWorkerRequest'
+          text/json:
+            example:
+              displayName: ASP.Net Health Check worker
+              description: Calls /health to check a service is running
+              workerConfiguration:
+                type: HealthCheck
+                url: http://localhost.lusid.com:8282
+            schema:
+              $ref: '#/components/schemas/UpdateWorkerRequest'
+          application/*+json:
+            example:
+              displayName: ASP.Net Health Check worker
+              description: Calls /health to check a service is running
+              workerConfiguration:
+                type: HealthCheck
+                url: http://localhost.lusid.com:8282
+            schema:
+              $ref: '#/components/schemas/UpdateWorkerRequest'
+        description: State of the updated worker
+        required: true
+      responses:
+        "200":
+          content:
+            text/plain:
+              example:
+                id:
+                  scope: Health
+                  code: HealthCheckWorker
+                displayName: ASP.Net Health Check worker
+                description: Calls /health to check a service is running
+                workerConfiguration:
+                  type: HealthCheck
+                  url: http://localhost.lusid.com:8282/health
+                version:
+                  asAtCreated: 2023-01-01T12:00:00.0000000+00:00
+                  userIdCreated: UserId123
+                  requestIdCreated: RequestId123
+                  asAtModified: 2023-01-01T12:00:00.0000000+00:00
+                  userIdModified: UserId123
+                  requestIdModified: RequestId123
+                  asAtVersionNumber: 1
+                parameters: []
+                resultFields: []
+              schema:
+                $ref: '#/components/schemas/Worker'
+            application/json:
+              example:
+                id:
+                  scope: Health
+                  code: HealthCheckWorker
+                displayName: ASP.Net Health Check worker
+                description: Calls /health to check a service is running
+                workerConfiguration:
+                  type: HealthCheck
+                  url: http://localhost.lusid.com:8282/health
+                version:
+                  asAtCreated: 2023-01-01T12:00:00.0000000+00:00
+                  userIdCreated: UserId123
+                  requestIdCreated: RequestId123
+                  asAtModified: 2023-01-01T12:00:00.0000000+00:00
+                  userIdModified: UserId123
+                  requestIdModified: RequestId123
+                  asAtVersionNumber: 1
+                parameters: []
+                resultFields: []
+              schema:
+                $ref: '#/components/schemas/Worker'
+            text/json:
+              example:
+                id:
+                  scope: Health
+                  code: HealthCheckWorker
+                displayName: ASP.Net Health Check worker
+                description: Calls /health to check a service is running
+                workerConfiguration:
+                  type: HealthCheck
+                  url: http://localhost.lusid.com:8282/health
+                version:
+                  asAtCreated: 2023-01-01T12:00:00.0000000+00:00
+                  userIdCreated: UserId123
+                  requestIdCreated: RequestId123
+                  asAtModified: 2023-01-01T12:00:00.0000000+00:00
+                  userIdModified: UserId123
+                  requestIdModified: RequestId123
+                  asAtVersionNumber: 1
+                parameters: []
+                resultFields: []
+              schema:
+                $ref: '#/components/schemas/Worker'
+          description: Success
+        "400":
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        "404":
+          content:
+            text/plain:
+              schema:
+                type: string
+            application/json:
+              schema:
+                type: string
+            text/json:
+              schema:
+                type: string
+          description: Worker not found.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] UpdateWorker: Update a Worker"
+      tags:
+      - Workers
+      x-fbn-apistatus: Experimental
+      x-content-type: application/json-patch+json
       x-accepts: application/json
   /api/workers/{scope}/{code}/$run:
     post:
@@ -4807,6 +5057,33 @@ components:
           description: The key for the Stack that this Task should be added to
           nullable: true
           type: string
+      type: object
+    UpdateWorkerRequest:
+      additionalProperties: false
+      description: Request to Update a new worker
+      example:
+        workerConfiguration: ""
+        displayName: displayName
+        description: description
+      properties:
+        displayName:
+          description: Human readable name
+          maxLength: 512
+          minLength: 1
+          pattern: "^[\\s\\S]*$"
+          type: string
+        description:
+          description: Human readable description
+          maxLength: 1024
+          minLength: 0
+          nullable: true
+          pattern: "^[\\s\\S]*$"
+          type: string
+        workerConfiguration:
+          description: Information about how the worker should be executed
+      required:
+      - displayName
+      - workerConfiguration
       type: object
     VersionInfo:
       additionalProperties: false
