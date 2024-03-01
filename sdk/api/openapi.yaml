@@ -6,7 +6,7 @@ info:
     url: https://www.finbourne.com
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.786
+  version: 0.1.787
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -2083,7 +2083,7 @@ paths:
           type: string
         style: form
       responses:
-        "201":
+        "200":
           content:
             text/plain:
               example:
@@ -2157,7 +2157,7 @@ paths:
                 links: []
               schema:
                 $ref: '#/components/schemas/PagedResourceListOfWorker'
-          description: Created
+          description: Success
         "400":
           content:
             text/plain:
