@@ -55,6 +55,10 @@ public class ActionDefinitionResponse {
   @SerializedName(SERIALIZED_NAME_NAME)
   private String name;
 
+  public static final String SERIALIZED_NAME_RUN_AS_USER_ID = "runAsUserId";
+  @SerializedName(SERIALIZED_NAME_RUN_AS_USER_ID)
+  private String runAsUserId;
+
   public static final String SERIALIZED_NAME_ACTION_DETAILS = "actionDetails";
   @SerializedName(SERIALIZED_NAME_ACTION_DETAILS)
   private ActionDetailsResponse actionDetails;
@@ -80,6 +84,27 @@ public class ActionDefinitionResponse {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+
+  public ActionDefinitionResponse runAsUserId(String runAsUserId) {
+    
+    this.runAsUserId = runAsUserId;
+    return this;
+  }
+
+   /**
+   * The ID of the user that this action will be performed by. If not specified, the actions will be performed by the \&quot;current user\&quot;.
+   * @return runAsUserId
+  **/
+  @jakarta.annotation.Nullable
+  public String getRunAsUserId() {
+    return runAsUserId;
+  }
+
+
+  public void setRunAsUserId(String runAsUserId) {
+    this.runAsUserId = runAsUserId;
   }
 
 
@@ -115,6 +140,7 @@ public class ActionDefinitionResponse {
     }
     ActionDefinitionResponse actionDefinitionResponse = (ActionDefinitionResponse) o;
     return Objects.equals(this.name, actionDefinitionResponse.name) &&
+        Objects.equals(this.runAsUserId, actionDefinitionResponse.runAsUserId) &&
         Objects.equals(this.actionDetails, actionDefinitionResponse.actionDetails);
   }
 
@@ -124,7 +150,7 @@ public class ActionDefinitionResponse {
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, actionDetails);
+    return Objects.hash(name, runAsUserId, actionDetails);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -139,6 +165,7 @@ public class ActionDefinitionResponse {
     StringBuilder sb = new StringBuilder();
     sb.append("class ActionDefinitionResponse {\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    runAsUserId: ").append(toIndentedString(runAsUserId)).append("\n");
     sb.append("    actionDetails: ").append(toIndentedString(actionDetails)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -163,6 +190,7 @@ public class ActionDefinitionResponse {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
     openapiFields.add("name");
+    openapiFields.add("runAsUserId");
     openapiFields.add("actionDetails");
 
     // a set of required properties/fields (JSON key names)
@@ -184,6 +212,9 @@ public class ActionDefinitionResponse {
         JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("name") != null && !jsonObj.get("name").isJsonNull()) && !jsonObj.get("name").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `name` to be a primitive type in the JSON string but got `%s`", jsonObj.get("name").toString()));
+      }
+      if ((jsonObj.get("runAsUserId") != null && !jsonObj.get("runAsUserId").isJsonNull()) && !jsonObj.get("runAsUserId").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `runAsUserId` to be a primitive type in the JSON string but got `%s`", jsonObj.get("runAsUserId").toString()));
       }
       // validate the optional field `actionDetails`
       if (jsonObj.get("actionDetails") != null && !jsonObj.get("actionDetails").isJsonNull()) {

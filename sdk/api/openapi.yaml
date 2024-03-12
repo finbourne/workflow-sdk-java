@@ -6,7 +6,7 @@ info:
     url: https://www.finbourne.com
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.796
+  version: 0.1.797
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -134,6 +134,7 @@ paths:
                       type: External
                   actions:
                   - name: health-check
+                    runAsUserId: user-id
                     actionDetails:
                       type: RunWorker
                       workerId:
@@ -289,6 +290,7 @@ paths:
                   \ NOT eq ''"
               actions:
               - name: health-check
+                runAsUserId: user-id
                 actionDetails:
                   type: RunWorker
                   workerId:
@@ -387,6 +389,7 @@ paths:
                   \ NOT eq ''"
               actions:
               - name: health-check
+                runAsUserId: user-id
                 actionDetails:
                   type: RunWorker
                   workerId:
@@ -485,6 +488,7 @@ paths:
                   \ NOT eq ''"
               actions:
               - name: health-check
+                runAsUserId: user-id
                 actionDetails:
                   type: RunWorker
                   workerId:
@@ -583,6 +587,7 @@ paths:
                   \ NOT eq ''"
               actions:
               - name: health-check
+                runAsUserId: user-id
                 actionDetails:
                   type: RunWorker
                   workerId:
@@ -669,6 +674,7 @@ paths:
                     type: External
                 actions:
                 - name: health-check
+                  runAsUserId: user-id
                   actionDetails:
                     type: RunWorker
                     workerId:
@@ -894,6 +900,7 @@ paths:
                     type: External
                 actions:
                 - name: health-check
+                  runAsUserId: user-id
                   actionDetails:
                     type: RunWorker
                     workerId:
@@ -1068,6 +1075,7 @@ paths:
                   \ NOT eq ''"
               actions:
               - name: health-check
+                runAsUserId: user-id
                 actionDetails:
                   type: RunWorker
                   workerId:
@@ -1163,6 +1171,7 @@ paths:
                   \ NOT eq ''"
               actions:
               - name: health-check
+                runAsUserId: user-id
                 actionDetails:
                   type: RunWorker
                   workerId:
@@ -1258,6 +1267,7 @@ paths:
                   \ NOT eq ''"
               actions:
               - name: health-check
+                runAsUserId: user-id
                 actionDetails:
                   type: RunWorker
                   workerId:
@@ -1353,6 +1363,7 @@ paths:
                   \ NOT eq ''"
               actions:
               - name: health-check
+                runAsUserId: user-id
                 actionDetails:
                   type: RunWorker
                   workerId:
@@ -1439,6 +1450,7 @@ paths:
                     type: External
                 actions:
                 - name: health-check
+                  runAsUserId: user-id
                   actionDetails:
                     type: RunWorker
                     workerId:
@@ -2902,6 +2914,7 @@ components:
       description: Defines the Actions for a Task
       example:
         name: name
+        runAsUserId: runAsUserId
         actionDetails:
           type: type
       properties:
@@ -2909,6 +2922,15 @@ components:
           description: The Name of this Action
           maxLength: 1024
           minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        runAsUserId:
+          description: "The ID of the user that this action will be performed by.\
+            \ If not specified, the actions will be performed by the \"current user\"\
+            ."
+          maxLength: 1024
+          minLength: 0
+          nullable: true
           pattern: "^[a-zA-Z0-9\\-_]+$"
           type: string
         actionDetails:
@@ -2922,11 +2944,18 @@ components:
       description: Defines the Actions for a Task in a read-only form
       example:
         name: name
+        runAsUserId: runAsUserId
         actionDetails:
           type: type
       properties:
         name:
           description: The Name of this Action
+          nullable: true
+          type: string
+        runAsUserId:
+          description: "The ID of the user that this action will be performed by.\
+            \ If not specified, the actions will be performed by the \"current user\"\
+            ."
           nullable: true
           type: string
         actionDetails:
@@ -3074,9 +3103,11 @@ components:
           trigger: trigger
         actions:
         - name: name
+          runAsUserId: runAsUserId
           actionDetails:
             type: type
         - name: name
+          runAsUserId: runAsUserId
           actionDetails:
             type: type
         states:
@@ -3744,9 +3775,11 @@ components:
             requestIdModified: requestIdModified
           actions:
           - name: name
+            runAsUserId: runAsUserId
             actionDetails:
               type: type
           - name: name
+            runAsUserId: runAsUserId
             actionDetails:
               type: type
           states:
@@ -3795,9 +3828,11 @@ components:
             requestIdModified: requestIdModified
           actions:
           - name: name
+            runAsUserId: runAsUserId
             actionDetails:
               type: type
           - name: name
+            runAsUserId: runAsUserId
             actionDetails:
               type: type
           states:
@@ -4661,9 +4696,11 @@ components:
           requestIdModified: requestIdModified
         actions:
         - name: name
+          runAsUserId: runAsUserId
           actionDetails:
             type: type
         - name: name
+          runAsUserId: runAsUserId
           actionDetails:
             type: type
         states:
@@ -4972,9 +5009,11 @@ components:
           trigger: trigger
         actions:
         - name: name
+          runAsUserId: runAsUserId
           actionDetails:
             type: type
         - name: name
+          runAsUserId: runAsUserId
           actionDetails:
             type: type
         states:

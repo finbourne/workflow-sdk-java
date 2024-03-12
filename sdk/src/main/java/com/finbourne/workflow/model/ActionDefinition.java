@@ -19,6 +19,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.util.Arrays;
+import org.openapitools.jackson.nullable.JsonNullable;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -54,6 +55,10 @@ public class ActionDefinition {
   @SerializedName(SERIALIZED_NAME_NAME)
   private String name;
 
+  public static final String SERIALIZED_NAME_RUN_AS_USER_ID = "runAsUserId";
+  @SerializedName(SERIALIZED_NAME_RUN_AS_USER_ID)
+  private String runAsUserId;
+
   public static final String SERIALIZED_NAME_ACTION_DETAILS = "actionDetails";
   @SerializedName(SERIALIZED_NAME_ACTION_DETAILS)
   private ActionDetails actionDetails;
@@ -79,6 +84,27 @@ public class ActionDefinition {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+
+  public ActionDefinition runAsUserId(String runAsUserId) {
+    
+    this.runAsUserId = runAsUserId;
+    return this;
+  }
+
+   /**
+   * The ID of the user that this action will be performed by. If not specified, the actions will be performed by the \&quot;current user\&quot;.
+   * @return runAsUserId
+  **/
+  @jakarta.annotation.Nullable
+  public String getRunAsUserId() {
+    return runAsUserId;
+  }
+
+
+  public void setRunAsUserId(String runAsUserId) {
+    this.runAsUserId = runAsUserId;
   }
 
 
@@ -114,12 +140,24 @@ public class ActionDefinition {
     }
     ActionDefinition actionDefinition = (ActionDefinition) o;
     return Objects.equals(this.name, actionDefinition.name) &&
+        Objects.equals(this.runAsUserId, actionDefinition.runAsUserId) &&
         Objects.equals(this.actionDetails, actionDefinition.actionDetails);
+  }
+
+  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
+    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, actionDetails);
+    return Objects.hash(name, runAsUserId, actionDetails);
+  }
+
+  private static <T> int hashCodeNullable(JsonNullable<T> a) {
+    if (a == null) {
+      return 1;
+    }
+    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
   }
 
   @Override
@@ -127,6 +165,7 @@ public class ActionDefinition {
     StringBuilder sb = new StringBuilder();
     sb.append("class ActionDefinition {\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    runAsUserId: ").append(toIndentedString(runAsUserId)).append("\n");
     sb.append("    actionDetails: ").append(toIndentedString(actionDetails)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -151,6 +190,7 @@ public class ActionDefinition {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
     openapiFields.add("name");
+    openapiFields.add("runAsUserId");
     openapiFields.add("actionDetails");
 
     // a set of required properties/fields (JSON key names)
@@ -181,6 +221,9 @@ public class ActionDefinition {
         JsonObject jsonObj = jsonElement.getAsJsonObject();
       if (!jsonObj.get("name").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `name` to be a primitive type in the JSON string but got `%s`", jsonObj.get("name").toString()));
+      }
+      if ((jsonObj.get("runAsUserId") != null && !jsonObj.get("runAsUserId").isJsonNull()) && !jsonObj.get("runAsUserId").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `runAsUserId` to be a primitive type in the JSON string but got `%s`", jsonObj.get("runAsUserId").toString()));
       }
       // validate the required field `actionDetails`
       ActionDetails.validateJsonElement(jsonObj.get("actionDetails"));
