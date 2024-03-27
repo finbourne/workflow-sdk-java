@@ -14,6 +14,8 @@ import java.util.Objects;
 import com.finbourne.workflow.model.FailResponse;
 import com.finbourne.workflow.model.HealthCheckResponse;
 import com.finbourne.workflow.model.LuminesceViewResponse;
+import com.finbourne.workflow.model.ResourceId;
+import com.finbourne.workflow.model.SchedulerJobResponse;
 import com.finbourne.workflow.model.SleepResponse;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
@@ -74,6 +76,7 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
             final TypeAdapter<FailResponse> adapterFailResponse = gson.getDelegateAdapter(this, TypeToken.get(FailResponse.class));
             final TypeAdapter<HealthCheckResponse> adapterHealthCheckResponse = gson.getDelegateAdapter(this, TypeToken.get(HealthCheckResponse.class));
             final TypeAdapter<LuminesceViewResponse> adapterLuminesceViewResponse = gson.getDelegateAdapter(this, TypeToken.get(LuminesceViewResponse.class));
+            final TypeAdapter<SchedulerJobResponse> adapterSchedulerJobResponse = gson.getDelegateAdapter(this, TypeToken.get(SchedulerJobResponse.class));
             final TypeAdapter<SleepResponse> adapterSleepResponse = gson.getDelegateAdapter(this, TypeToken.get(SleepResponse.class));
 
             return (TypeAdapter<T>) new TypeAdapter<WorkerConfigurationResponse>() {
@@ -102,13 +105,19 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
                       elementAdapter.write(out, element);
                       return;
                     }
+                    // check if the actual instance is of the type `SchedulerJobResponse`
+                    if (value.getActualInstance() instanceof SchedulerJobResponse) {
+                      JsonElement element = adapterSchedulerJobResponse.toJsonTree((SchedulerJobResponse)value.getActualInstance());
+                      elementAdapter.write(out, element);
+                      return;
+                    }
                     // check if the actual instance is of the type `SleepResponse`
                     if (value.getActualInstance() instanceof SleepResponse) {
                       JsonElement element = adapterSleepResponse.toJsonTree((SleepResponse)value.getActualInstance());
                       elementAdapter.write(out, element);
                       return;
                     }
-                    throw new IOException("Failed to serialize as the type doesn't match oneOf schemas: FailResponse, HealthCheckResponse, LuminesceViewResponse, SleepResponse");
+                    throw new IOException("Failed to serialize as the type doesn't match oneOf schemas: FailResponse, HealthCheckResponse, LuminesceViewResponse, SchedulerJobResponse, SleepResponse");
                 }
 
                 @Override
@@ -155,6 +164,18 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
                       // deserialization failed, continue
                       errorMessages.add(String.format("Deserialization for LuminesceViewResponse failed with `%s`.", e.getMessage()));
                       log.log(Level.FINER, "Input data does not match schema 'LuminesceViewResponse'", e);
+                    }
+                    // deserialize SchedulerJobResponse
+                    try {
+                      // validate the JSON object to see if any exception is thrown
+                      SchedulerJobResponse.validateJsonElement(jsonElement);
+                      actualAdapter = adapterSchedulerJobResponse;
+                      match++;
+                      log.log(Level.FINER, "Input data matches schema 'SchedulerJobResponse'");
+                    } catch (Exception e) {
+                      // deserialization failed, continue
+                      errorMessages.add(String.format("Deserialization for SchedulerJobResponse failed with `%s`.", e.getMessage()));
+                      log.log(Level.FINER, "Input data does not match schema 'SchedulerJobResponse'", e);
                     }
                     // deserialize SleepResponse
                     try {
@@ -203,6 +224,11 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
         setActualInstance(o);
     }
 
+    public WorkerConfigurationResponse(SchedulerJobResponse o) {
+        super("oneOf", Boolean.FALSE);
+        setActualInstance(o);
+    }
+
     public WorkerConfigurationResponse(SleepResponse o) {
         super("oneOf", Boolean.FALSE);
         setActualInstance(o);
@@ -212,6 +238,7 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
         schemas.put("FailResponse", FailResponse.class);
         schemas.put("HealthCheckResponse", HealthCheckResponse.class);
         schemas.put("LuminesceViewResponse", LuminesceViewResponse.class);
+        schemas.put("SchedulerJobResponse", SchedulerJobResponse.class);
         schemas.put("SleepResponse", SleepResponse.class);
     }
 
@@ -223,7 +250,7 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
     /**
      * Set the instance that matches the oneOf child schema, check
      * the instance parameter is valid against the oneOf child schemas:
-     * FailResponse, HealthCheckResponse, LuminesceViewResponse, SleepResponse
+     * FailResponse, HealthCheckResponse, LuminesceViewResponse, SchedulerJobResponse, SleepResponse
      *
      * It could be an instance of the 'oneOf' schemas.
      */
@@ -244,19 +271,24 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
             return;
         }
 
+        if (instance instanceof SchedulerJobResponse) {
+            super.setActualInstance(instance);
+            return;
+        }
+
         if (instance instanceof SleepResponse) {
             super.setActualInstance(instance);
             return;
         }
 
-        throw new RuntimeException("Invalid instance type. Must be FailResponse, HealthCheckResponse, LuminesceViewResponse, SleepResponse");
+        throw new RuntimeException("Invalid instance type. Must be FailResponse, HealthCheckResponse, LuminesceViewResponse, SchedulerJobResponse, SleepResponse");
     }
 
     /**
      * Get the actual instance, which can be the following:
-     * FailResponse, HealthCheckResponse, LuminesceViewResponse, SleepResponse
+     * FailResponse, HealthCheckResponse, LuminesceViewResponse, SchedulerJobResponse, SleepResponse
      *
-     * @return The actual instance (FailResponse, HealthCheckResponse, LuminesceViewResponse, SleepResponse)
+     * @return The actual instance (FailResponse, HealthCheckResponse, LuminesceViewResponse, SchedulerJobResponse, SleepResponse)
      */
     @Override
     public Object getActualInstance() {
@@ -292,6 +324,16 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
      */
     public LuminesceViewResponse getLuminesceViewResponse() throws ClassCastException {
         return (LuminesceViewResponse)super.getActualInstance();
+    }
+    /**
+     * Get the actual instance of `SchedulerJobResponse`. If the actual instance is not `SchedulerJobResponse`,
+     * the ClassCastException will be thrown.
+     *
+     * @return The actual instance of `SchedulerJobResponse`
+     * @throws ClassCastException if the instance is not `SchedulerJobResponse`
+     */
+    public SchedulerJobResponse getSchedulerJobResponse() throws ClassCastException {
+        return (SchedulerJobResponse)super.getActualInstance();
     }
     /**
      * Get the actual instance of `SleepResponse`. If the actual instance is not `SleepResponse`,
@@ -338,6 +380,14 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
       errorMessages.add(String.format("Deserialization for LuminesceViewResponse failed with `%s`.", e.getMessage()));
       // continue to the next one
     }
+    // validate the json string with SchedulerJobResponse
+    try {
+      SchedulerJobResponse.validateJsonElement(jsonElement);
+      validCount++;
+    } catch (Exception e) {
+      errorMessages.add(String.format("Deserialization for SchedulerJobResponse failed with `%s`.", e.getMessage()));
+      // continue to the next one
+    }
     // validate the json string with SleepResponse
     try {
       SleepResponse.validateJsonElement(jsonElement);
@@ -347,7 +397,7 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
       // continue to the next one
     }
     if (validCount != 1) {
-      throw new IOException(String.format("The JSON string is invalid for WorkerConfigurationResponse with oneOf schemas: FailResponse, HealthCheckResponse, LuminesceViewResponse, SleepResponse. %d class(es) match the result, expected 1. Detailed failure message for oneOf schemas: %s. JSON: %s", validCount, errorMessages, jsonElement.toString()));
+      throw new IOException(String.format("The JSON string is invalid for WorkerConfigurationResponse with oneOf schemas: FailResponse, HealthCheckResponse, LuminesceViewResponse, SchedulerJobResponse, SleepResponse. %d class(es) match the result, expected 1. Detailed failure message for oneOf schemas: %s. JSON: %s", validCount, errorMessages, jsonElement.toString()));
     }
   }
 

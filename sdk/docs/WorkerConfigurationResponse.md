@@ -11,6 +11,7 @@ Readonly information about how the worker should be executed
 |**type** | [**TypeEnum**](#TypeEnum) | The type of worker |  |
 |**url** | **String** | The URL to check, eg: https://www.google.com/ |  [optional] |
 |**name** | **String** | Name of the view in Luminesce |  [optional] |
+|**jobId** | [**ResourceId**](ResourceId.md) |  |  [optional] |
 
 
 
@@ -21,6 +22,7 @@ Readonly information about how the worker should be executed
 | FAIL | &quot;Fail&quot; |
 | HEALTHCHECK | &quot;HealthCheck&quot; |
 | LUMINESCEVIEW | &quot;LuminesceView&quot; |
+| SCHEDULERJOB | &quot;SchedulerJob&quot; |
 | SLEEP | &quot;Sleep&quot; |
 
 

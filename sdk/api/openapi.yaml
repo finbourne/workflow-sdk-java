@@ -6,7 +6,7 @@ info:
     url: https://www.finbourne.com
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.835
+  version: 0.1.840
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -3284,6 +3284,7 @@ components:
           - Fail
           - HealthCheck
           - LuminesceView
+          - SchedulerJob
           - Sleep
           minLength: 1
           type: string
@@ -3300,6 +3301,7 @@ components:
           - Fail
           - HealthCheck
           - LuminesceView
+          - SchedulerJob
           - Sleep
           nullable: true
           type: string
@@ -4433,6 +4435,35 @@ components:
       required:
       - runId
       type: object
+    SchedulerJob:
+      additionalProperties: false
+      description: Configuration for a Worker that calls a Scheduler Job
+      properties:
+        type:
+          description: The type of worker
+          enum:
+          - SchedulerJob
+          minLength: 1
+          type: string
+        jobId:
+          $ref: '#/components/schemas/ResourceId'
+      required:
+      - jobId
+      - type
+      type: object
+    SchedulerJobResponse:
+      additionalProperties: false
+      description: Readonly configuration for a Worker that calls a Scheduler job
+      properties:
+        type:
+          description: The type of worker
+          enum:
+          - SchedulerJob
+          nullable: true
+          type: string
+        jobId:
+          $ref: '#/components/schemas/ResourceId'
+      type: object
     Sleep:
       additionalProperties: false
       description: Configuration for a Worker that Sleeps for a user-defined amount
@@ -5264,6 +5295,7 @@ components:
       - $ref: '#/components/schemas/Fail'
       - $ref: '#/components/schemas/HealthCheck'
       - $ref: '#/components/schemas/LuminesceView'
+      - $ref: '#/components/schemas/SchedulerJob'
       - $ref: '#/components/schemas/Sleep'
       properties:
         type:
@@ -5280,6 +5312,7 @@ components:
       - $ref: '#/components/schemas/FailResponse'
       - $ref: '#/components/schemas/HealthCheckResponse'
       - $ref: '#/components/schemas/LuminesceViewResponse'
+      - $ref: '#/components/schemas/SchedulerJobResponse'
       - $ref: '#/components/schemas/SleepResponse'
       type: object
     WorkerStatusTriggers:
