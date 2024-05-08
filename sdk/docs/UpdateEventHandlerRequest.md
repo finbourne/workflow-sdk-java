@@ -15,7 +15,7 @@ Contains information for updating an Event Handler
 |**runAsUserId** | [**EventHandlerMapping**](EventHandlerMapping.md) |  |  |
 |**taskDefinitionId** | [**ResourceId**](ResourceId.md) |  |  |
 |**taskDefinitionAsAt** | **OffsetDateTime** | AsAt of the required task definition |  [optional] |
-|**taskActivity** | **Object** | Defines what the event handler should do after being triggered |  |
+|**taskActivity** | [**TaskActivity**](TaskActivity.md) |  |  |
 
 
 

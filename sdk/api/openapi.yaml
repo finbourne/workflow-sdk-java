@@ -6,7 +6,7 @@ info:
     url: https://www.finbourne.com
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.974
+  version: 0.1.980
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -3930,7 +3930,17 @@ components:
       additionalProperties: false
       description: Contains information for creating an Event Handler
       example:
-        taskActivity: ""
+        taskActivity:
+          correlationIds:
+          - setTo: setTo
+            mapFrom: mapFrom
+          - setTo: setTo
+            mapFrom: mapFrom
+          type: type
+          taskFields:
+            key:
+              setTo: ""
+              mapFrom: mapFrom
         eventMatchingPattern:
           filter: filter
           eventType: eventType
@@ -3974,7 +3984,7 @@ components:
           nullable: true
           type: string
         taskActivity:
-          description: Defines what the event handler should do after being triggered
+          $ref: '#/components/schemas/TaskActivity'
       required:
       - displayName
       - eventMatchingPattern
@@ -3983,6 +3993,65 @@ components:
       - status
       - taskActivity
       - taskDefinitionId
+      type: object
+    CreateNewTaskActivity:
+      additionalProperties: false
+      description: Define a Task Activity that creates a new task
+      properties:
+        initialTrigger:
+          description: Trigger to supply to all tasks to be made
+          minLength: 1
+          type: string
+        type:
+          description: The type of task activity
+          enum:
+          - CreateNewTask
+          - UpdateMatchingTasks
+          minLength: 1
+          type: string
+        correlationIds:
+          description: The event to correlation ID mappings
+          items:
+            $ref: '#/components/schemas/EventHandlerMapping'
+          nullable: true
+          type: array
+        taskFields:
+          additionalProperties:
+            $ref: '#/components/schemas/FieldMapping'
+          description: The event to task field mappings
+          nullable: true
+          type: object
+      required:
+      - initialTrigger
+      - type
+      type: object
+    CreateNewTaskActivityResponse:
+      additionalProperties: false
+      description: Read only Create new task response
+      properties:
+        type:
+          description: Type of task activity
+          enum:
+          - CreateNewTask
+          - UpdateMatchingTasks
+          nullable: true
+          type: string
+        initialTrigger:
+          description: Trigger to supply to all tasks to be made
+          nullable: true
+          type: string
+        correlationIds:
+          description: The event to correlation ID mappings
+          items:
+            $ref: '#/components/schemas/EventHandlerMapping'
+          nullable: true
+          type: array
+        taskFields:
+          additionalProperties:
+            $ref: '#/components/schemas/FieldMapping'
+          description: The event to task field mappings
+          nullable: true
+          type: object
       type: object
     CreateTaskDefinitionRequest:
       additionalProperties: false
@@ -4198,7 +4267,17 @@ components:
       additionalProperties: false
       description: Information about an Event Handler
       example:
-        taskActivity: ""
+        taskActivity:
+          correlationIds:
+          - setTo: setTo
+            mapFrom: mapFrom
+          - setTo: setTo
+            mapFrom: mapFrom
+          type: type
+          taskFields:
+            key:
+              setTo: ""
+              mapFrom: mapFrom
         eventMatchingPattern:
           filter: filter
           eventType: eventType
@@ -4252,7 +4331,7 @@ components:
           nullable: true
           type: string
         taskActivity:
-          description: Defines what the event handler should do after being triggered
+          $ref: '#/components/schemas/TaskActivityResponse'
       required:
       - displayName
       - eventMatchingPattern
@@ -4336,6 +4415,9 @@ components:
     FieldMapping:
       additionalProperties: false
       description: Defines a single Field map
+      example:
+        setTo: ""
+        mapFrom: mapFrom
       properties:
         mapFrom:
           description: The field to map from
@@ -4663,7 +4745,17 @@ components:
         previousPage: previousPage
         nextPage: nextPage
         values:
-        - taskActivity: ""
+        - taskActivity:
+            correlationIds:
+            - setTo: setTo
+              mapFrom: mapFrom
+            - setTo: setTo
+              mapFrom: mapFrom
+            type: type
+            taskFields:
+              key:
+                setTo: ""
+                mapFrom: mapFrom
           eventMatchingPattern:
             filter: filter
             eventType: eventType
@@ -4688,7 +4780,17 @@ components:
             scope: scope
           status: status
           taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
-        - taskActivity: ""
+        - taskActivity:
+            correlationIds:
+            - setTo: setTo
+              mapFrom: mapFrom
+            - setTo: setTo
+              mapFrom: mapFrom
+            type: type
+            taskFields:
+              key:
+                setTo: ""
+                mapFrom: mapFrom
           eventMatchingPattern:
             filter: filter
             eventType: eventType
@@ -6150,6 +6252,78 @@ components:
       - terminalState
       - ultimateParentTask
       type: object
+    TaskActivity:
+      additionalProperties: false
+      description: Information about what tasks to create/update when receiving events
+      example:
+        correlationIds:
+        - setTo: setTo
+          mapFrom: mapFrom
+        - setTo: setTo
+          mapFrom: mapFrom
+        type: type
+        taskFields:
+          key:
+            setTo: ""
+            mapFrom: mapFrom
+      oneOf:
+      - $ref: '#/components/schemas/CreateNewTaskActivity'
+      - $ref: '#/components/schemas/UpdateMatchingTasksActivity'
+      properties:
+        type:
+          description: The type of task activity
+          minLength: 1
+          type: string
+        correlationIds:
+          description: The event to correlation ID mappings
+          items:
+            $ref: '#/components/schemas/EventHandlerMapping'
+          nullable: true
+          type: array
+        taskFields:
+          additionalProperties:
+            $ref: '#/components/schemas/FieldMapping'
+          description: The event to task field mappings
+          nullable: true
+          type: object
+      required:
+      - type
+      type: object
+    TaskActivityResponse:
+      additionalProperties: false
+      description: Readonly information about how the worker should be executed
+      example:
+        correlationIds:
+        - setTo: setTo
+          mapFrom: mapFrom
+        - setTo: setTo
+          mapFrom: mapFrom
+        type: type
+        taskFields:
+          key:
+            setTo: ""
+            mapFrom: mapFrom
+      oneOf:
+      - $ref: '#/components/schemas/CreateNewTaskActivityResponse'
+      - $ref: '#/components/schemas/UpdateMatchingTasksActivityResponse'
+      properties:
+        type:
+          description: The type of task activity
+          nullable: true
+          type: string
+        correlationIds:
+          description: The event to correlation ID mappings
+          items:
+            $ref: '#/components/schemas/EventHandlerMapping'
+          nullable: true
+          type: array
+        taskFields:
+          additionalProperties:
+            $ref: '#/components/schemas/FieldMapping'
+          description: The event to task field mappings
+          nullable: true
+          type: object
+      type: object
     TaskDefinition:
       additionalProperties: false
       description: Task Definition
@@ -6478,7 +6652,17 @@ components:
       additionalProperties: false
       description: Contains information for updating an Event Handler
       example:
-        taskActivity: ""
+        taskActivity:
+          correlationIds:
+          - setTo: setTo
+            mapFrom: mapFrom
+          - setTo: setTo
+            mapFrom: mapFrom
+          type: type
+          taskFields:
+            key:
+              setTo: ""
+              mapFrom: mapFrom
         eventMatchingPattern:
           filter: filter
           eventType: eventType
@@ -6517,7 +6701,7 @@ components:
           nullable: true
           type: string
         taskActivity:
-          description: Defines what the event handler should do after being triggered
+          $ref: '#/components/schemas/TaskActivity'
       required:
       - displayName
       - eventMatchingPattern
@@ -6525,6 +6709,71 @@ components:
       - status
       - taskActivity
       - taskDefinitionId
+      type: object
+    UpdateMatchingTasksActivity:
+      additionalProperties: false
+      description: Update all matching tasks based on filter matches
+      properties:
+        type:
+          description: The type of task activity
+          enum:
+          - UpdateMatchingTasks
+          minLength: 1
+          type: string
+        filter:
+          description: The filter that matches on existing tasks
+          nullable: true
+          type: string
+        trigger:
+          description: Trigger to supply to all tasks that have been matched
+          minLength: 1
+          type: string
+        correlationIds:
+          description: The event to correlation ID mappings
+          items:
+            $ref: '#/components/schemas/EventHandlerMapping'
+          nullable: true
+          type: array
+        taskFields:
+          additionalProperties:
+            $ref: '#/components/schemas/FieldMapping'
+          description: The event to task field mappings
+          nullable: true
+          type: object
+      required:
+      - trigger
+      - type
+      type: object
+    UpdateMatchingTasksActivityResponse:
+      additionalProperties: false
+      description: Readonly TaskActivity response
+      properties:
+        type:
+          description: The type of task activity
+          enum:
+          - UpdateMatchingTasks
+          nullable: true
+          type: string
+        filter:
+          description: The filter that matches on existing tasks
+          nullable: true
+          type: string
+        trigger:
+          description: Trigger to supply to all tasks that have been matched
+          nullable: true
+          type: string
+        correlationIds:
+          description: The event to correlation ID mappings
+          items:
+            $ref: '#/components/schemas/EventHandlerMapping'
+          nullable: true
+          type: array
+        taskFields:
+          additionalProperties:
+            $ref: '#/components/schemas/FieldMapping'
+          description: The event to task field mappings
+          nullable: true
+          type: object
       type: object
     UpdateTaskDefinitionRequest:
       additionalProperties: false

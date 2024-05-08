@@ -14,6 +14,7 @@ import java.util.Objects;
 import com.finbourne.workflow.model.EventHandlerMapping;
 import com.finbourne.workflow.model.EventMatchingPattern;
 import com.finbourne.workflow.model.ResourceId;
+import com.finbourne.workflow.model.TaskActivityResponse;
 import com.finbourne.workflow.model.VersionInfo;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
@@ -93,7 +94,7 @@ public class EventHandler {
 
   public static final String SERIALIZED_NAME_TASK_ACTIVITY = "taskActivity";
   @SerializedName(SERIALIZED_NAME_TASK_ACTIVITY)
-  private Object taskActivity = null;
+  private TaskActivityResponse taskActivity;
 
   public EventHandler() {
   }
@@ -287,23 +288,23 @@ public class EventHandler {
   }
 
 
-  public EventHandler taskActivity(Object taskActivity) {
+  public EventHandler taskActivity(TaskActivityResponse taskActivity) {
     
     this.taskActivity = taskActivity;
     return this;
   }
 
    /**
-   * Defines what the event handler should do after being triggered
+   * Get taskActivity
    * @return taskActivity
   **/
-  @jakarta.annotation.Nullable
-  public Object getTaskActivity() {
+  @jakarta.annotation.Nonnull
+  public TaskActivityResponse getTaskActivity() {
     return taskActivity;
   }
 
 
-  public void setTaskActivity(Object taskActivity) {
+  public void setTaskActivity(TaskActivityResponse taskActivity) {
     this.taskActivity = taskActivity;
   }
 
@@ -445,6 +446,8 @@ public class EventHandler {
       EventHandlerMapping.validateJsonElement(jsonObj.get("runAsUserId"));
       // validate the required field `taskDefinitionId`
       ResourceId.validateJsonElement(jsonObj.get("taskDefinitionId"));
+      // validate the required field `taskActivity`
+      TaskActivityResponse.validateJsonElement(jsonObj.get("taskActivity"));
   }
 
   public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
