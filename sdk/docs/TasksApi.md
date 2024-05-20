@@ -225,7 +225,7 @@ public class Example {
 
 <a id="listTasks"></a>
 # **listTasks**
-> PagedResourceListOfTask listTasks().asAt(asAt).filter(filter).limit(limit).page(page).execute();
+> PagedResourceListOfTask listTasks().asAt(asAt).filter(filter).sortBy(sortBy).limit(limit).page(page).execute();
 
 [EXPERIMENTAL] ListTasks: List Tasks
 
@@ -251,12 +251,14 @@ public class Example {
     TasksApi apiInstance = new TasksApi(defaultClient);
     OffsetDateTime asAt = OffsetDateTime.now(); // OffsetDateTime | The asAt datetime at which to list the Tasks. Defaults to return the latest version of each Task if not specified.
     String filter = "filter_example"; // String | Expression to filter the result set. Read more about filtering results from LUSID here: https://support.lusid.com/filtering-results-from-lusid.
+    List<String> sortBy = Arrays.asList(); // List<String> | A list of field names or properties to sort by, each optionally suffixed by \" ASC\" or \" DESC\"
     Integer limit = 10; // Integer | When paginating, limit the number of returned results to this many.
     String page = "page_example"; // String | The pagination token to use to continue listing tasks from a previous call to list tasks. This value is returned from the previous call. If a pagination token is provided the sortBy, filter, effectiveAt, and asAt fields must not have changed since the original request.
     try {
       PagedResourceListOfTask result = apiInstance.listTasks()
             .asAt(asAt)
             .filter(filter)
+            .sortBy(sortBy)
             .limit(limit)
             .page(page)
             .execute();
@@ -278,6 +280,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **asAt** | **OffsetDateTime**| The asAt datetime at which to list the Tasks. Defaults to return the latest version of each Task if not specified. | [optional] |
 | **filter** | **String**| Expression to filter the result set. Read more about filtering results from LUSID here: https://support.lusid.com/filtering-results-from-lusid. | [optional] |
+| **sortBy** | [**List&lt;String&gt;**](String.md)| A list of field names or properties to sort by, each optionally suffixed by \&quot; ASC\&quot; or \&quot; DESC\&quot; | [optional] |
 | **limit** | **Integer**| When paginating, limit the number of returned results to this many. | [optional] [default to 10] |
 | **page** | **String**| The pagination token to use to continue listing tasks from a previous call to list tasks. This value is returned from the previous call. If a pagination token is provided the sortBy, filter, effectiveAt, and asAt fields must not have changed since the original request. | [optional] |
 
