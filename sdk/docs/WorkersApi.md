@@ -301,7 +301,7 @@ public class Example {
 
 <a id="listWorkers"></a>
 # **listWorkers**
-> PagedResourceListOfWorker listWorkers().asAt(asAt).limit(limit).page(page).execute();
+> PagedResourceListOfWorker listWorkers().asAt(asAt).filter(filter).limit(limit).page(page).execute();
 
 [EXPERIMENTAL] ListWorkers: List Workers
 
@@ -326,11 +326,13 @@ public class Example {
 
     WorkersApi apiInstance = new WorkersApi(defaultClient);
     OffsetDateTime asAt = OffsetDateTime.now(); // OffsetDateTime | The asAt datetime at which to list the Workers. Defaults to return the latest version of each Worker if not specified.
+    String filter = "filter_example"; // String | Expression to filter the result set. Read more about filtering results from LUSID here: https://support.lusid.com/filtering-results-from-lusid.
     Integer limit = 10; // Integer | When paginating, limit the number of returned results to this many.
     String page = "page_example"; // String | The pagination token to use to continue listing workers from a previous call to list workers. This value is returned from the previous call. If a pagination token is provided the sortBy, filter, effectiveAt, and asAt fields must not have changed since the original request.
     try {
       PagedResourceListOfWorker result = apiInstance.listWorkers()
             .asAt(asAt)
+            .filter(filter)
             .limit(limit)
             .page(page)
             .execute();
@@ -351,6 +353,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **asAt** | **OffsetDateTime**| The asAt datetime at which to list the Workers. Defaults to return the latest version of each Worker if not specified. | [optional] |
+| **filter** | **String**| Expression to filter the result set. Read more about filtering results from LUSID here: https://support.lusid.com/filtering-results-from-lusid. | [optional] |
 | **limit** | **Integer**| When paginating, limit the number of returned results to this many. | [optional] [default to 10] |
 | **page** | **String**| The pagination token to use to continue listing workers from a previous call to list workers. This value is returned from the previous call. If a pagination token is provided the sortBy, filter, effectiveAt, and asAt fields must not have changed since the original request. | [optional] |
 
