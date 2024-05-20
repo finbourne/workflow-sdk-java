@@ -923,7 +923,7 @@ public class EventHandlersApi {
             <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
             <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
             <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
-            <tr><td> 404 </td><td> Task Definition not found. </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Event Handler not found. </td><td>  -  </td></tr>
             <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
          </table>
          */
@@ -940,7 +940,7 @@ public class EventHandlersApi {
             <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
             <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
             <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
-            <tr><td> 404 </td><td> Task Definition not found. </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Event Handler not found. </td><td>  -  </td></tr>
             <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
          </table>
          */
@@ -958,7 +958,7 @@ public class EventHandlersApi {
             <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
             <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
             <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
-            <tr><td> 404 </td><td> Task Definition not found. </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Event Handler not found. </td><td>  -  </td></tr>
             <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
          </table>
          */
@@ -976,7 +976,7 @@ public class EventHandlersApi {
             <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
             <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
             <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
-            <tr><td> 404 </td><td> Task Definition not found. </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Event Handler not found. </td><td>  -  </td></tr>
             <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
          </table>
          */
@@ -986,18 +986,18 @@ public class EventHandlersApi {
     }
 
     /**
-     * [EXPERIMENTAL] UpdateEventHandler: Update an existing Task Definition
+     * [EXPERIMENTAL] UpdateEventHandler: Update an existing Event handler
      * 
-     * @param scope The scope that identifies a Task Definition (required)
-     * @param code The code that identifies a Task Definition (required)
-     * @param updateEventHandlerRequest The data to update a Task Definition (required)
+     * @param scope The scope that identifies an Event Handler (required)
+     * @param code The code that identifies an Event Handler (required)
+     * @param updateEventHandlerRequest The data to update an Event Handler (required)
      * @return APIupdateEventHandlerRequest
      * @http.response.details
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Task Definition not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Event Handler not found. </td><td>  -  </td></tr>
         <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
      </table>
      */

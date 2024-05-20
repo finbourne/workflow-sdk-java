@@ -6,7 +6,7 @@ info:
     url: https://www.finbourne.com
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1026
+  version: 0.1.1027
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -449,7 +449,7 @@ paths:
     put:
       operationId: UpdateEventHandler
       parameters:
-      - description: The scope that identifies a Task Definition
+      - description: The scope that identifies an Event Handler
         explode: false
         in: path
         name: scope
@@ -460,7 +460,7 @@ paths:
           pattern: "^[a-zA-Z0-9\\-_]+$"
           type: string
         style: simple
-      - description: The code that identifies a Task Definition
+      - description: The code that identifies an Event Handler
         explode: false
         in: path
         name: code
@@ -557,7 +557,7 @@ paths:
                 TaskFields: {}
             schema:
               $ref: '#/components/schemas/UpdateEventHandlerRequest'
-        description: The data to update a Task Definition
+        description: The data to update an Event Handler
         required: true
       responses:
         "200":
@@ -606,7 +606,7 @@ paths:
             application/json:
               schema:
                 type: string
-          description: Task Definition not found.
+          description: Event Handler not found.
         default:
           content:
             application/json:
@@ -615,7 +615,7 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: "[EXPERIMENTAL] UpdateEventHandler: Update an existing Task Definition"
+      summary: "[EXPERIMENTAL] UpdateEventHandler: Update an existing Event handler"
       tags:
       - Event Handlers
       x-fbn-apistatus: Experimental

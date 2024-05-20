@@ -8,7 +8,7 @@ All URIs are relative to *https://fbn-prd.lusid.com/workflow*
 | [**deleteEventHandler**](EventHandlersApi.md#deleteEventHandler) | **DELETE** /api/eventhandlers/{scope}/{code} | [EXPERIMENTAL] DeleteEventHandler: Delete an Event Handler |
 | [**getEventHandler**](EventHandlersApi.md#getEventHandler) | **GET** /api/eventhandlers/{scope}/{code} | [EXPERIMENTAL] GetEventHandler: Get an Event Handler |
 | [**listEventHandlers**](EventHandlersApi.md#listEventHandlers) | **GET** /api/eventhandlers | [EXPERIMENTAL] ListEventHandlers: List Event Handlers |
-| [**updateEventHandler**](EventHandlersApi.md#updateEventHandler) | **PUT** /api/eventhandlers/{scope}/{code} | [EXPERIMENTAL] UpdateEventHandler: Update an existing Task Definition |
+| [**updateEventHandler**](EventHandlersApi.md#updateEventHandler) | **PUT** /api/eventhandlers/{scope}/{code} | [EXPERIMENTAL] UpdateEventHandler: Update an existing Event handler |
 
 
 <a id="createEventHandler"></a>
@@ -309,7 +309,7 @@ public class Example {
 # **updateEventHandler**
 > EventHandler updateEventHandler(scope, code, updateEventHandlerRequest).execute();
 
-[EXPERIMENTAL] UpdateEventHandler: Update an existing Task Definition
+[EXPERIMENTAL] UpdateEventHandler: Update an existing Event handler
 
 ### Example
 ```java
@@ -331,9 +331,9 @@ public class Example {
     oauth2.setAccessToken("YOUR ACCESS TOKEN");
 
     EventHandlersApi apiInstance = new EventHandlersApi(defaultClient);
-    String scope = "scope_example"; // String | The scope that identifies a Task Definition
-    String code = "code_example"; // String | The code that identifies a Task Definition
-    UpdateEventHandlerRequest updateEventHandlerRequest = new UpdateEventHandlerRequest(); // UpdateEventHandlerRequest | The data to update a Task Definition
+    String scope = "scope_example"; // String | The scope that identifies an Event Handler
+    String code = "code_example"; // String | The code that identifies an Event Handler
+    UpdateEventHandlerRequest updateEventHandlerRequest = new UpdateEventHandlerRequest(); // UpdateEventHandlerRequest | The data to update an Event Handler
     try {
       EventHandler result = apiInstance.updateEventHandler(scope, code, updateEventHandlerRequest)
             .execute();
@@ -353,9 +353,9 @@ public class Example {
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **scope** | **String**| The scope that identifies a Task Definition | |
-| **code** | **String**| The code that identifies a Task Definition | |
-| **updateEventHandlerRequest** | [**UpdateEventHandlerRequest**](UpdateEventHandlerRequest.md)| The data to update a Task Definition | |
+| **scope** | **String**| The scope that identifies an Event Handler | |
+| **code** | **String**| The code that identifies an Event Handler | |
+| **updateEventHandlerRequest** | [**UpdateEventHandlerRequest**](UpdateEventHandlerRequest.md)| The data to update an Event Handler | |
 
 ### Return type
 
@@ -375,6 +375,6 @@ public class Example {
 |-------------|-------------|------------------|
 | **200** | Success |  -  |
 | **400** | The details of the input related failure |  -  |
-| **404** | Task Definition not found. |  -  |
+| **404** | Event Handler not found. |  -  |
 | **0** | Error response |  -  |
 
