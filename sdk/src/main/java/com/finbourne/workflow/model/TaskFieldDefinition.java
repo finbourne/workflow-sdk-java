@@ -11,6 +11,7 @@
 package com.finbourne.workflow.model;
 
 import java.util.Objects;
+import com.finbourne.workflow.model.ReadOnlyStates;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -57,6 +58,10 @@ public class TaskFieldDefinition {
   @SerializedName(SERIALIZED_NAME_TYPE)
   private String type;
 
+  public static final String SERIALIZED_NAME_READ_ONLY_STATES = "readOnlyStates";
+  @SerializedName(SERIALIZED_NAME_READ_ONLY_STATES)
+  private ReadOnlyStates readOnlyStates;
+
   public TaskFieldDefinition() {
   }
 
@@ -102,6 +107,27 @@ public class TaskFieldDefinition {
   }
 
 
+  public TaskFieldDefinition readOnlyStates(ReadOnlyStates readOnlyStates) {
+    
+    this.readOnlyStates = readOnlyStates;
+    return this;
+  }
+
+   /**
+   * Get readOnlyStates
+   * @return readOnlyStates
+  **/
+  @jakarta.annotation.Nullable
+  public ReadOnlyStates getReadOnlyStates() {
+    return readOnlyStates;
+  }
+
+
+  public void setReadOnlyStates(ReadOnlyStates readOnlyStates) {
+    this.readOnlyStates = readOnlyStates;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -113,12 +139,13 @@ public class TaskFieldDefinition {
     }
     TaskFieldDefinition taskFieldDefinition = (TaskFieldDefinition) o;
     return Objects.equals(this.name, taskFieldDefinition.name) &&
-        Objects.equals(this.type, taskFieldDefinition.type);
+        Objects.equals(this.type, taskFieldDefinition.type) &&
+        Objects.equals(this.readOnlyStates, taskFieldDefinition.readOnlyStates);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, type);
+    return Objects.hash(name, type, readOnlyStates);
   }
 
   @Override
@@ -127,6 +154,7 @@ public class TaskFieldDefinition {
     sb.append("class TaskFieldDefinition {\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    readOnlyStates: ").append(toIndentedString(readOnlyStates)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -151,6 +179,7 @@ public class TaskFieldDefinition {
     openapiFields = new HashSet<String>();
     openapiFields.add("name");
     openapiFields.add("type");
+    openapiFields.add("readOnlyStates");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -183,6 +212,10 @@ public class TaskFieldDefinition {
       }
       if (!jsonObj.get("type").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `type` to be a primitive type in the JSON string but got `%s`", jsonObj.get("type").toString()));
+      }
+      // validate the optional field `readOnlyStates`
+      if (jsonObj.get("readOnlyStates") != null && !jsonObj.get("readOnlyStates").isJsonNull()) {
+        ReadOnlyStates.validateJsonElement(jsonObj.get("readOnlyStates"));
       }
   }
 

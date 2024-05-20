@@ -6,7 +6,7 @@ info:
     url: https://www.finbourne.com
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1022
+  version: 0.1.1023
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -738,8 +738,17 @@ paths:
                     type: String
                   - name: assignee
                     type: String
+                    readOnlyStates:
+                      stateType: SelectedStates
+                      selectedStates:
+                      - Submitted
+                      - Done
+                      - SurveyNotSent
+                      - NotDone
                   - name: resolutionDetail
                     type: String
+                    readOnlyStates:
+                      stateType: TerminalState
                   initialState:
                     name: Submitted
                     requiredFields:
@@ -869,8 +878,17 @@ paths:
                 type: String
               - name: assignee
                 type: String
+                readOnlyStates:
+                  stateType: SelectedStates
+                  selectedStates:
+                  - Submitted
+                  - Done
+                  - SurveyNotSent
+                  - NotDone
               - name: resolutionDetail
                 type: String
+                readOnlyStates:
+                  stateType: TerminalState
               initialState:
                 name: Submitted
                 requiredFields:
@@ -968,8 +986,17 @@ paths:
                 type: String
               - name: assignee
                 type: String
+                readOnlyStates:
+                  stateType: SelectedStates
+                  selectedStates:
+                  - Submitted
+                  - Done
+                  - SurveyNotSent
+                  - NotDone
               - name: resolutionDetail
                 type: String
+                readOnlyStates:
+                  stateType: TerminalState
               initialState:
                 name: Submitted
                 requiredFields:
@@ -1067,8 +1094,17 @@ paths:
                 type: String
               - name: assignee
                 type: String
+                readOnlyStates:
+                  stateType: SelectedStates
+                  selectedStates:
+                  - Submitted
+                  - Done
+                  - SurveyNotSent
+                  - NotDone
               - name: resolutionDetail
                 type: String
+                readOnlyStates:
+                  stateType: TerminalState
               initialState:
                 name: Submitted
                 requiredFields:
@@ -1166,8 +1202,17 @@ paths:
                 type: String
               - name: assignee
                 type: String
+                readOnlyStates:
+                  stateType: SelectedStates
+                  selectedStates:
+                  - Submitted
+                  - Done
+                  - SurveyNotSent
+                  - NotDone
               - name: resolutionDetail
                 type: String
+                readOnlyStates:
+                  stateType: TerminalState
               initialState:
                 name: Submitted
                 requiredFields:
@@ -1278,8 +1323,17 @@ paths:
                   type: String
                 - name: assignee
                   type: String
+                  readOnlyStates:
+                    stateType: SelectedStates
+                    selectedStates:
+                    - Submitted
+                    - Done
+                    - SurveyNotSent
+                    - NotDone
                 - name: resolutionDetail
                   type: String
+                  readOnlyStates:
+                    stateType: TerminalState
                 initialState:
                   name: Submitted
                   requiredFields:
@@ -1504,8 +1558,17 @@ paths:
                   type: String
                 - name: assignee
                   type: String
+                  readOnlyStates:
+                    stateType: SelectedStates
+                    selectedStates:
+                    - Submitted
+                    - Done
+                    - SurveyNotSent
+                    - NotDone
                 - name: resolutionDetail
                   type: String
+                  readOnlyStates:
+                    stateType: TerminalState
                 initialState:
                   name: Submitted
                   requiredFields:
@@ -1654,8 +1717,17 @@ paths:
                 type: String
               - name: assignee
                 type: String
+                readOnlyStates:
+                  stateType: SelectedStates
+                  selectedStates:
+                  - Submitted
+                  - Done
+                  - SurveyNotSent
+                  - NotDone
               - name: resolutionDetail
                 type: String
+                readOnlyStates:
+                  stateType: TerminalState
               initialState:
                 name: Submitted
                 requiredFields:
@@ -1750,8 +1822,17 @@ paths:
                 type: String
               - name: assignee
                 type: String
+                readOnlyStates:
+                  stateType: SelectedStates
+                  selectedStates:
+                  - Submitted
+                  - Done
+                  - SurveyNotSent
+                  - NotDone
               - name: resolutionDetail
                 type: String
+                readOnlyStates:
+                  stateType: TerminalState
               initialState:
                 name: Submitted
                 requiredFields:
@@ -1846,8 +1927,17 @@ paths:
                 type: String
               - name: assignee
                 type: String
+                readOnlyStates:
+                  stateType: SelectedStates
+                  selectedStates:
+                  - Submitted
+                  - Done
+                  - SurveyNotSent
+                  - NotDone
               - name: resolutionDetail
                 type: String
+                readOnlyStates:
+                  stateType: TerminalState
               initialState:
                 name: Submitted
                 requiredFields:
@@ -1942,8 +2032,17 @@ paths:
                 type: String
               - name: assignee
                 type: String
+                readOnlyStates:
+                  stateType: SelectedStates
+                  selectedStates:
+                  - Submitted
+                  - Done
+                  - SurveyNotSent
+                  - NotDone
               - name: resolutionDetail
                 type: String
+                readOnlyStates:
+                  stateType: TerminalState
               initialState:
                 name: Submitted
                 requiredFields:
@@ -2054,8 +2153,17 @@ paths:
                   type: String
                 - name: assignee
                   type: String
+                  readOnlyStates:
+                    stateType: SelectedStates
+                    selectedStates:
+                    - Submitted
+                    - Done
+                    - SurveyNotSent
+                    - NotDone
                 - name: resolutionDetail
                   type: String
+                  readOnlyStates:
+                    stateType: TerminalState
                 initialState:
                   name: Submitted
                   requiredFields:
@@ -4089,9 +4197,19 @@ components:
         displayName: displayName
         description: description
         fieldSchema:
-        - name: name
+        - readOnlyStates:
+            stateType: stateType
+            selectedStates:
+            - selectedStates
+            - selectedStates
+          name: name
           type: type
-        - name: name
+        - readOnlyStates:
+            stateType: stateType
+            selectedStates:
+            - selectedStates
+            - selectedStates
+          name: name
           type: type
         id:
           code: code
@@ -5067,9 +5185,19 @@ components:
           displayName: displayName
           description: description
           fieldSchema:
-          - name: name
+          - readOnlyStates:
+              stateType: stateType
+              selectedStates:
+              - selectedStates
+              - selectedStates
+            name: name
             type: type
-          - name: name
+          - readOnlyStates:
+              stateType: stateType
+              selectedStates:
+              - selectedStates
+              - selectedStates
+            name: name
             type: type
           id:
             code: code
@@ -5120,9 +5248,19 @@ components:
           displayName: displayName
           description: description
           fieldSchema:
-          - name: name
+          - readOnlyStates:
+              stateType: stateType
+              selectedStates:
+              - selectedStates
+              - selectedStates
+            name: name
             type: type
-          - name: name
+          - readOnlyStates:
+              stateType: stateType
+              selectedStates:
+              - selectedStates
+              - selectedStates
+            name: name
             type: type
           id:
             code: code
@@ -5385,6 +5523,29 @@ components:
           nullable: true
       required:
       - name
+      type: object
+    ReadOnlyStates:
+      additionalProperties: false
+      description: Information about which states the field can be edited in
+      example:
+        stateType: stateType
+        selectedStates:
+        - selectedStates
+        - selectedStates
+      properties:
+        stateType:
+          description: "The State Type (e.g. InitialState, AllStates, SelectedStates)"
+          minLength: 1
+          type: string
+        selectedStates:
+          description: Named states for which the field will be readonly - This field
+            can only be populated if StateType = SelectedStates
+          items:
+            type: string
+          type: array
+      required:
+      - selectedStates
+      - stateType
       type: object
     ResourceId:
       additionalProperties: false
@@ -6360,9 +6521,19 @@ components:
         displayName: displayName
         description: description
         fieldSchema:
-        - name: name
+        - readOnlyStates:
+            stateType: stateType
+            selectedStates:
+            - selectedStates
+            - selectedStates
+          name: name
           type: type
-        - name: name
+        - readOnlyStates:
+            stateType: stateType
+            selectedStates:
+            - selectedStates
+            - selectedStates
+          name: name
           type: type
         id:
           code: code
@@ -6471,6 +6642,11 @@ components:
       additionalProperties: false
       description: Defines a Task Definition Field
       example:
+        readOnlyStates:
+          stateType: stateType
+          selectedStates:
+          - selectedStates
+          - selectedStates
         name: name
         type: type
       properties:
@@ -6485,6 +6661,8 @@ components:
             , \"Decimal\", \"DateTime\", \"Boolean\")"
           minLength: 1
           type: string
+        readOnlyStates:
+          $ref: '#/components/schemas/ReadOnlyStates'
       required:
       - name
       - type
@@ -6811,9 +6989,19 @@ components:
         displayName: displayName
         description: description
         fieldSchema:
-        - name: name
+        - readOnlyStates:
+            stateType: stateType
+            selectedStates:
+            - selectedStates
+            - selectedStates
+          name: name
           type: type
-        - name: name
+        - readOnlyStates:
+            stateType: stateType
+            selectedStates:
+            - selectedStates
+            - selectedStates
+          name: name
           type: type
         triggers:
         - name: name
