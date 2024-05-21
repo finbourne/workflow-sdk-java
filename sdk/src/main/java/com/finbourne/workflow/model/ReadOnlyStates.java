@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.openapitools.jackson.nullable.JsonNullable;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -57,7 +58,7 @@ public class ReadOnlyStates {
 
   public static final String SERIALIZED_NAME_SELECTED_STATES = "selectedStates";
   @SerializedName(SERIALIZED_NAME_SELECTED_STATES)
-  private List<String> selectedStates = new ArrayList<>();
+  private List<String> selectedStates;
 
   public ReadOnlyStates() {
   }
@@ -69,7 +70,7 @@ public class ReadOnlyStates {
   }
 
    /**
-   * The State Type (e.g. InitialState, AllStates, SelectedStates)
+   * The State Type (e.g. InitialState, AllStates, TerminalState, SelectedStates)
    * @return stateType
   **/
   @jakarta.annotation.Nonnull
@@ -101,7 +102,7 @@ public class ReadOnlyStates {
    * Named states for which the field will be readonly - This field can only be populated if StateType &#x3D; SelectedStates
    * @return selectedStates
   **/
-  @jakarta.annotation.Nonnull
+  @jakarta.annotation.Nullable
   public List<String> getSelectedStates() {
     return selectedStates;
   }
@@ -126,9 +127,20 @@ public class ReadOnlyStates {
         Objects.equals(this.selectedStates, readOnlyStates.selectedStates);
   }
 
+  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
+    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
+  }
+
   @Override
   public int hashCode() {
     return Objects.hash(stateType, selectedStates);
+  }
+
+  private static <T> int hashCodeNullable(JsonNullable<T> a) {
+    if (a == null) {
+      return 1;
+    }
+    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
   }
 
   @Override
@@ -165,7 +177,6 @@ public class ReadOnlyStates {
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
     openapiRequiredFields.add("stateType");
-    openapiRequiredFields.add("selectedStates");
   }
 
  /**
@@ -191,10 +202,8 @@ public class ReadOnlyStates {
       if (!jsonObj.get("stateType").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `stateType` to be a primitive type in the JSON string but got `%s`", jsonObj.get("stateType").toString()));
       }
-      // ensure the required json array is present
-      if (jsonObj.get("selectedStates") == null) {
-        throw new IllegalArgumentException("Expected the field `linkedContent` to be an array in the JSON string but got `null`");
-      } else if (!jsonObj.get("selectedStates").isJsonArray()) {
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("selectedStates") != null && !jsonObj.get("selectedStates").isJsonNull() && !jsonObj.get("selectedStates").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `selectedStates` to be an array in the JSON string but got `%s`", jsonObj.get("selectedStates").toString()));
       }
   }

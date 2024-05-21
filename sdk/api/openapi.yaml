@@ -6,7 +6,7 @@ info:
     url: https://www.finbourne.com
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1030
+  version: 0.1.1043
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -5534,7 +5534,8 @@ components:
         - selectedStates
       properties:
         stateType:
-          description: "The State Type (e.g. InitialState, AllStates, SelectedStates)"
+          description: "The State Type (e.g. InitialState, AllStates, TerminalState,\
+            \ SelectedStates)"
           minLength: 1
           type: string
         selectedStates:
@@ -5542,9 +5543,9 @@ components:
             can only be populated if StateType = SelectedStates
           items:
             type: string
+          nullable: true
           type: array
       required:
-      - selectedStates
       - stateType
       type: object
     ResourceId:
