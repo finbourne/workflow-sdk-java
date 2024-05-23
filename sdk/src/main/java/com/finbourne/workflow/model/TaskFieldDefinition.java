@@ -12,6 +12,7 @@ package com.finbourne.workflow.model;
 
 import java.util.Objects;
 import com.finbourne.workflow.model.ReadOnlyStates;
+import com.finbourne.workflow.model.ValueConstraints;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -61,6 +62,10 @@ public class TaskFieldDefinition {
   public static final String SERIALIZED_NAME_READ_ONLY_STATES = "readOnlyStates";
   @SerializedName(SERIALIZED_NAME_READ_ONLY_STATES)
   private ReadOnlyStates readOnlyStates;
+
+  public static final String SERIALIZED_NAME_VALUE_CONSTRAINTS = "valueConstraints";
+  @SerializedName(SERIALIZED_NAME_VALUE_CONSTRAINTS)
+  private ValueConstraints valueConstraints;
 
   public TaskFieldDefinition() {
   }
@@ -128,6 +133,27 @@ public class TaskFieldDefinition {
   }
 
 
+  public TaskFieldDefinition valueConstraints(ValueConstraints valueConstraints) {
+    
+    this.valueConstraints = valueConstraints;
+    return this;
+  }
+
+   /**
+   * Get valueConstraints
+   * @return valueConstraints
+  **/
+  @jakarta.annotation.Nullable
+  public ValueConstraints getValueConstraints() {
+    return valueConstraints;
+  }
+
+
+  public void setValueConstraints(ValueConstraints valueConstraints) {
+    this.valueConstraints = valueConstraints;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -140,12 +166,13 @@ public class TaskFieldDefinition {
     TaskFieldDefinition taskFieldDefinition = (TaskFieldDefinition) o;
     return Objects.equals(this.name, taskFieldDefinition.name) &&
         Objects.equals(this.type, taskFieldDefinition.type) &&
-        Objects.equals(this.readOnlyStates, taskFieldDefinition.readOnlyStates);
+        Objects.equals(this.readOnlyStates, taskFieldDefinition.readOnlyStates) &&
+        Objects.equals(this.valueConstraints, taskFieldDefinition.valueConstraints);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, type, readOnlyStates);
+    return Objects.hash(name, type, readOnlyStates, valueConstraints);
   }
 
   @Override
@@ -155,6 +182,7 @@ public class TaskFieldDefinition {
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    readOnlyStates: ").append(toIndentedString(readOnlyStates)).append("\n");
+    sb.append("    valueConstraints: ").append(toIndentedString(valueConstraints)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -180,6 +208,7 @@ public class TaskFieldDefinition {
     openapiFields.add("name");
     openapiFields.add("type");
     openapiFields.add("readOnlyStates");
+    openapiFields.add("valueConstraints");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -216,6 +245,10 @@ public class TaskFieldDefinition {
       // validate the optional field `readOnlyStates`
       if (jsonObj.get("readOnlyStates") != null && !jsonObj.get("readOnlyStates").isJsonNull()) {
         ReadOnlyStates.validateJsonElement(jsonObj.get("readOnlyStates"));
+      }
+      // validate the optional field `valueConstraints`
+      if (jsonObj.get("valueConstraints") != null && !jsonObj.get("valueConstraints").isJsonNull()) {
+        ValueConstraints.validateJsonElement(jsonObj.get("valueConstraints"));
       }
   }
 
