@@ -776,7 +776,7 @@ public class WorkersApi {
     public APIgetWorkerResultRequest getWorkerResult(Long runId) {
         return new APIgetWorkerResultRequest(runId);
     }
-    private okhttp3.Call listWorkersCall(OffsetDateTime asAt, String filter, Integer limit, String page, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call listWorkersCall(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -809,6 +809,10 @@ public class WorkersApi {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("filter", filter));
         }
 
+        if (sortBy != null) {
+            localVarCollectionQueryParams.addAll(localVarApiClient.parameterToPairs("multi", "sortBy", sortBy));
+        }
+
         if (limit != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("limit", limit));
         }
@@ -839,21 +843,21 @@ public class WorkersApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call listWorkersValidateBeforeCall(OffsetDateTime asAt, String filter, Integer limit, String page, final ApiCallback _callback) throws ApiException {
-        return listWorkersCall(asAt, filter, limit, page, _callback);
+    private okhttp3.Call listWorkersValidateBeforeCall(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback _callback) throws ApiException {
+        return listWorkersCall(asAt, filter, sortBy, limit, page, _callback);
 
     }
 
 
-    private ApiResponse<PagedResourceListOfWorker> listWorkersWithHttpInfo(OffsetDateTime asAt, String filter, Integer limit, String page) throws ApiException {
-        okhttp3.Call localVarCall = listWorkersValidateBeforeCall(asAt, filter, limit, page, null);
+    private ApiResponse<PagedResourceListOfWorker> listWorkersWithHttpInfo(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page) throws ApiException {
+        okhttp3.Call localVarCall = listWorkersValidateBeforeCall(asAt, filter, sortBy, limit, page, null);
         Type localVarReturnType = new TypeToken<PagedResourceListOfWorker>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
-    private okhttp3.Call listWorkersAsync(OffsetDateTime asAt, String filter, Integer limit, String page, final ApiCallback<PagedResourceListOfWorker> _callback) throws ApiException {
+    private okhttp3.Call listWorkersAsync(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback<PagedResourceListOfWorker> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = listWorkersValidateBeforeCall(asAt, filter, limit, page, _callback);
+        okhttp3.Call localVarCall = listWorkersValidateBeforeCall(asAt, filter, sortBy, limit, page, _callback);
         Type localVarReturnType = new TypeToken<PagedResourceListOfWorker>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -862,6 +866,7 @@ public class WorkersApi {
     public class APIlistWorkersRequest {
         private OffsetDateTime asAt;
         private String filter;
+        private List<String> sortBy;
         private Integer limit;
         private String page;
 
@@ -885,6 +890,16 @@ public class WorkersApi {
          */
         public APIlistWorkersRequest filter(String filter) {
             this.filter = filter;
+            return this;
+        }
+
+        /**
+         * Set sortBy
+         * @param sortBy A list of field names or properties to sort by, each optionally suffixed by \&quot; ASC\&quot; or \&quot; DESC\&quot; (optional)
+         * @return APIlistWorkersRequest
+         */
+        public APIlistWorkersRequest sortBy(List<String> sortBy) {
+            this.sortBy = sortBy;
             return this;
         }
 
@@ -922,7 +937,7 @@ public class WorkersApi {
          </table>
          */
         public okhttp3.Call buildCall(final ApiCallback _callback) throws ApiException {
-            return listWorkersCall(asAt, filter, limit, page, _callback);
+            return listWorkersCall(asAt, filter, sortBy, limit, page, _callback);
         }
 
         /**
@@ -938,7 +953,7 @@ public class WorkersApi {
          </table>
          */
         public PagedResourceListOfWorker execute() throws ApiException {
-            ApiResponse<PagedResourceListOfWorker> localVarResp = listWorkersWithHttpInfo(asAt, filter, limit, page);
+            ApiResponse<PagedResourceListOfWorker> localVarResp = listWorkersWithHttpInfo(asAt, filter, sortBy, limit, page);
             return localVarResp.getData();
         }
 
@@ -955,7 +970,7 @@ public class WorkersApi {
          </table>
          */
         public ApiResponse<PagedResourceListOfWorker> executeWithHttpInfo() throws ApiException {
-            return listWorkersWithHttpInfo(asAt, filter, limit, page);
+            return listWorkersWithHttpInfo(asAt, filter, sortBy, limit, page);
         }
 
         /**
@@ -972,7 +987,7 @@ public class WorkersApi {
          </table>
          */
         public okhttp3.Call executeAsync(final ApiCallback<PagedResourceListOfWorker> _callback) throws ApiException {
-            return listWorkersAsync(asAt, filter, limit, page, _callback);
+            return listWorkersAsync(asAt, filter, sortBy, limit, page, _callback);
         }
     }
 

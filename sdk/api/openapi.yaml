@@ -6,7 +6,7 @@ info:
     url: https://www.finbourne.com
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1048
+  version: 0.1.1050
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -680,6 +680,18 @@ paths:
           pattern: "^[\\s\\S]*$"
           type: string
         style: form
+      - description: "A list of field names or properties to sort by, each suffixed\
+          \ by \" ASC\" or \" DESC\""
+        explode: true
+        in: query
+        name: sortBy
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+        x-nullable: true
       - description: "When paginating, limit the number of returned results to this\
           \ many."
         explode: true
@@ -2831,6 +2843,18 @@ paths:
           pattern: "^[\\s\\S]*$"
           type: string
         style: form
+      - description: "A list of field names or properties to sort by, each optionally\
+          \ suffixed by \" ASC\" or \" DESC\""
+        explode: true
+        in: query
+        name: sortBy
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+        x-nullable: true
       - description: "When paginating, limit the number of returned results to this\
           \ many."
         explode: true
