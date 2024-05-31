@@ -73,7 +73,7 @@ public class ValueConstraints {
   }
 
    /**
-   * Whether the constraint is a suggestion or should be enforced via validation
+   * Whether the constraint is a suggestion or should be enforced via validation (e.g. Suggested, Validated)
    * @return constraintType
   **/
   @jakarta.annotation.Nonnull
@@ -94,7 +94,7 @@ public class ValueConstraints {
   }
 
    /**
-   * The source of the acceptable values
+   * The source of the acceptable values (e.g. AcceptableValues)
    * @return valueSourceType
   **/
   @jakarta.annotation.Nonnull

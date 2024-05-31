@@ -6,7 +6,7 @@ info:
     url: https://www.finbourne.com
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1050
+  version: 0.1.1082
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -7242,12 +7242,12 @@ components:
         valueSourceType: valueSourceType
       properties:
         constraintType:
-          description: Whether the constraint is a suggestion or should be enforced
-            via validation
+          description: "Whether the constraint is a suggestion or should be enforced\
+            \ via validation (e.g. Suggested, Validated)"
           minLength: 1
           type: string
         valueSourceType:
-          description: The source of the acceptable values
+          description: The source of the acceptable values (e.g. AcceptableValues)
           minLength: 1
           type: string
         acceptableValues:
