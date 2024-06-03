@@ -8,7 +8,7 @@ Define a Task Activity that creates a new task
 
 | Name | Type | Description | Notes |
 |------------ | ------------- | ------------- | -------------|
-|**initialTrigger** | **String** | Trigger to supply to all tasks to be made |  |
+|**initialTrigger** | **String** | Trigger to supply to all tasks to be made |  [optional] |
 |**type** | [**TypeEnum**](#TypeEnum) | The type of task activity |  |
 |**correlationIds** | [**List&lt;EventHandlerMapping&gt;**](EventHandlerMapping.md) | The event to correlation ID mappings |  [optional] |
 |**taskFields** | [**Map&lt;String, FieldMapping&gt;**](FieldMapping.md) | The event to task field mappings |  [optional] |

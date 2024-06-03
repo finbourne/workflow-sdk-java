@@ -6,7 +6,7 @@ info:
     url: https://www.finbourne.com
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1084
+  version: 0.1.1085
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -4156,7 +4156,7 @@ components:
       properties:
         initialTrigger:
           description: Trigger to supply to all tasks to be made
-          minLength: 1
+          nullable: true
           type: string
         type:
           description: The type of task activity
@@ -4178,7 +4178,6 @@ components:
           nullable: true
           type: object
       required:
-      - initialTrigger
       - type
       type: object
     CreateNewTaskActivityResponse:

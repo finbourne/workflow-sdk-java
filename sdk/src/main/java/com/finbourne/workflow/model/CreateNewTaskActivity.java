@@ -130,7 +130,7 @@ public class CreateNewTaskActivity {
    * Trigger to supply to all tasks to be made
    * @return initialTrigger
   **/
-  @jakarta.annotation.Nonnull
+  @jakarta.annotation.Nullable
   public String getInitialTrigger() {
     return initialTrigger;
   }
@@ -289,7 +289,6 @@ public class CreateNewTaskActivity {
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
-    openapiRequiredFields.add("initialTrigger");
     openapiRequiredFields.add("type");
   }
 
@@ -313,7 +312,7 @@ public class CreateNewTaskActivity {
         }
       }
         JsonObject jsonObj = jsonElement.getAsJsonObject();
-      if (!jsonObj.get("initialTrigger").isJsonPrimitive()) {
+      if ((jsonObj.get("initialTrigger") != null && !jsonObj.get("initialTrigger").isJsonNull()) && !jsonObj.get("initialTrigger").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `initialTrigger` to be a primitive type in the JSON string but got `%s`", jsonObj.get("initialTrigger").toString()));
       }
       if (!jsonObj.get("type").isJsonPrimitive()) {
