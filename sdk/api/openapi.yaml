@@ -6,7 +6,7 @@ info:
     url: https://www.finbourne.com
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1158
+  version: 0.1.1171
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -3143,8 +3143,8 @@ paths:
         name: runId
         required: true
         schema:
-          format: int64
-          type: integer
+          format: uuid
+          type: string
         style: simple
       responses:
         "200":
@@ -3654,17 +3654,17 @@ paths:
           content:
             text/plain:
               example:
-                runId: 0
+                runId: 00000000-0000-0000-0000-000000000000
               schema:
                 $ref: '#/components/schemas/RunWorkerResponse'
             application/json:
               example:
-                runId: 0
+                runId: 00000000-0000-0000-0000-000000000000
               schema:
                 $ref: '#/components/schemas/RunWorkerResponse'
             text/json:
               example:
-                runId: 0
+                runId: 00000000-0000-0000-0000-000000000000
               schema:
                 $ref: '#/components/schemas/RunWorkerResponse'
           description: Success
@@ -6239,12 +6239,12 @@ components:
       description: The RunWorker response
       example:
         statusDetail: statusDetail
-        runId: 0
+        runId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
       properties:
         runId:
           description: Identifies a Worker run
-          format: int64
-          type: integer
+          format: uuid
+          type: string
         statusDetail:
           description: Detail on the final status
           nullable: true

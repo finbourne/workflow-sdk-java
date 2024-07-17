@@ -8,7 +8,7 @@ The RunWorker response
 
 | Name | Type | Description | Notes |
 |------------ | ------------- | ------------- | -------------|
-|**runId** | **Long** | Identifies a Worker run |  |
+|**runId** | **UUID** | Identifies a Worker run |  |
 |**statusDetail** | **String** | Detail on the final status |  [optional] |
 
 

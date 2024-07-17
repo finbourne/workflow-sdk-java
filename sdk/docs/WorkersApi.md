@@ -257,7 +257,7 @@ public class Example {
     oauth2.setAccessToken("YOUR ACCESS TOKEN");
 
     WorkersApi apiInstance = new WorkersApi(defaultClient);
-    Long runId = 56L; // Long | The ID returned when calling Run Worker
+    UUID runId = UUID.randomUUID(); // UUID | The ID returned when calling Run Worker
     try {
       GetWorkerResultResponse result = apiInstance.getWorkerResult(runId)
             .execute();
@@ -277,7 +277,7 @@ public class Example {
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **runId** | **Long**| The ID returned when calling Run Worker | |
+| **runId** | **UUID**| The ID returned when calling Run Worker | |
 
 ### Return type
 

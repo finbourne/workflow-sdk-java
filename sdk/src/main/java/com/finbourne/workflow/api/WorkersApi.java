@@ -33,6 +33,7 @@ import java.time.OffsetDateTime;
 import com.finbourne.workflow.model.PagedResourceListOfWorker;
 import com.finbourne.workflow.model.RunWorkerRequest;
 import com.finbourne.workflow.model.RunWorkerResponse;
+import java.util.UUID;
 import com.finbourne.workflow.model.UpdateWorkerRequest;
 import com.finbourne.workflow.model.Worker;
 
@@ -612,7 +613,7 @@ public class WorkersApi {
     public APIgetWorkerRequest getWorker(String scope, String code) {
         return new APIgetWorkerRequest(scope, code);
     }
-    private okhttp3.Call getWorkerResultCall(Long runId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getWorkerResultCall(UUID runId, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -660,7 +661,7 @@ public class WorkersApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getWorkerResultValidateBeforeCall(Long runId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getWorkerResultValidateBeforeCall(UUID runId, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'runId' is set
         if (runId == null) {
             throw new ApiException("Missing the required parameter 'runId' when calling getWorkerResult(Async)");
@@ -671,13 +672,13 @@ public class WorkersApi {
     }
 
 
-    private ApiResponse<GetWorkerResultResponse> getWorkerResultWithHttpInfo(Long runId) throws ApiException {
+    private ApiResponse<GetWorkerResultResponse> getWorkerResultWithHttpInfo(UUID runId) throws ApiException {
         okhttp3.Call localVarCall = getWorkerResultValidateBeforeCall(runId, null);
         Type localVarReturnType = new TypeToken<GetWorkerResultResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
-    private okhttp3.Call getWorkerResultAsync(Long runId, final ApiCallback<GetWorkerResultResponse> _callback) throws ApiException {
+    private okhttp3.Call getWorkerResultAsync(UUID runId, final ApiCallback<GetWorkerResultResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getWorkerResultValidateBeforeCall(runId, _callback);
         Type localVarReturnType = new TypeToken<GetWorkerResultResponse>(){}.getType();
@@ -686,9 +687,9 @@ public class WorkersApi {
     }
 
     public class APIgetWorkerResultRequest {
-        private final Long runId;
+        private final UUID runId;
 
-        private APIgetWorkerResultRequest(Long runId) {
+        private APIgetWorkerResultRequest(UUID runId) {
             this.runId = runId;
         }
 
@@ -773,7 +774,7 @@ public class WorkersApi {
         <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
      </table>
      */
-    public APIgetWorkerResultRequest getWorkerResult(Long runId) {
+    public APIgetWorkerResultRequest getWorkerResult(UUID runId) {
         return new APIgetWorkerResultRequest(runId);
     }
     private okhttp3.Call listWorkersCall(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback _callback) throws ApiException {

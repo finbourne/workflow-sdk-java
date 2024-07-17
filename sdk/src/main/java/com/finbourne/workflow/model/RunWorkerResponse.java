@@ -18,6 +18,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.UUID;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import com.google.gson.Gson;
@@ -52,7 +53,7 @@ import com.finbourne.workflow.JSON;
 public class RunWorkerResponse {
   public static final String SERIALIZED_NAME_RUN_ID = "runId";
   @SerializedName(SERIALIZED_NAME_RUN_ID)
-  private Long runId;
+  private UUID runId;
 
   public static final String SERIALIZED_NAME_STATUS_DETAIL = "statusDetail";
   @SerializedName(SERIALIZED_NAME_STATUS_DETAIL)
@@ -61,7 +62,7 @@ public class RunWorkerResponse {
   public RunWorkerResponse() {
   }
 
-  public RunWorkerResponse runId(Long runId) {
+  public RunWorkerResponse runId(UUID runId) {
     
     this.runId = runId;
     return this;
@@ -72,12 +73,12 @@ public class RunWorkerResponse {
    * @return runId
   **/
   @jakarta.annotation.Nonnull
-  public Long getRunId() {
+  public UUID getRunId() {
     return runId;
   }
 
 
-  public void setRunId(Long runId) {
+  public void setRunId(UUID runId) {
     this.runId = runId;
   }
 
@@ -189,6 +190,9 @@ public class RunWorkerResponse {
         }
       }
         JsonObject jsonObj = jsonElement.getAsJsonObject();
+      if (!jsonObj.get("runId").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `runId` to be a primitive type in the JSON string but got `%s`", jsonObj.get("runId").toString()));
+      }
       if ((jsonObj.get("statusDetail") != null && !jsonObj.get("statusDetail").isJsonNull()) && !jsonObj.get("statusDetail").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `statusDetail` to be a primitive type in the JSON string but got `%s`", jsonObj.get("statusDetail").toString()));
       }
