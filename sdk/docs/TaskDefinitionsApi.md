@@ -12,49 +12,60 @@ All URIs are relative to *https://fbn-prd.lusid.com/workflow*
 | [**updateTaskDefinition**](TaskDefinitionsApi.md#updateTaskDefinition) | **PUT** /api/taskdefinitions/{scope}/{code} | [EXPERIMENTAL] UpdateTaskDefinition: Update an existing Task Definition |
 
 
-<a id="createTaskDefinition"></a>
-# **createTaskDefinition**
-> TaskDefinition createTaskDefinition(createTaskDefinitionRequest).execute();
+
+## createTaskDefinition
+
+> TaskDefinition createTaskDefinition(createTaskDefinitionRequest)
 
 [EXPERIMENTAL] CreateTaskDefinition: Create a new Task Definition
 
 ### Example
+
 ```java
-// Import classes:
-import com.finbourne.workflow.ApiClient;
-import com.finbourne.workflow.ApiException;
-import com.finbourne.workflow.Configuration;
-import com.finbourne.workflow.auth.*;
-import com.finbourne.workflow.models.*;
+import com.finbourne.workflow.model.*;
 import com.finbourne.workflow.api.TaskDefinitionsApi;
+import com.finbourne.workflow.extensions.ApiConfigurationException;
+import com.finbourne.workflow.extensions.ApiFactoryBuilder;
+import com.finbourne.workflow.extensions.auth.FinbourneTokenException;
 
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://fbn-prd.lusid.com/workflow");
-    
-    // Configure OAuth2 access token for authorization: oauth2
-    OAuth oauth2 = (OAuth) defaultClient.getAuthentication("oauth2");
-    oauth2.setAccessToken("YOUR ACCESS TOKEN");
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 
-    TaskDefinitionsApi apiInstance = new TaskDefinitionsApi(defaultClient);
-    CreateTaskDefinitionRequest createTaskDefinitionRequest = new CreateTaskDefinitionRequest(); // CreateTaskDefinitionRequest | The data to create a Task Definition
-    try {
-      TaskDefinition result = apiInstance.createTaskDefinition(createTaskDefinitionRequest)
-            .execute();
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling TaskDefinitionsApi#createTaskDefinition");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
+public class TaskDefinitionsApiExample {
+
+    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, ApiConfigurationException, FinbourneTokenException {
+        String fileName = "secrets.json";
+        try(PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
+          writer.write("{" +
+            "\"api\": {" +
+            "    \"tokenUrl\": \"<your-token-url>\"," +
+            "    \"workflowUrl\": \"https://<your-domain>.lusid.com/workflow\"," +
+            "    \"username\": \"<your-username>\"," +
+            "    \"password\": \"<your-password>\"," +
+            "    \"clientId\": \"<your-client-id>\"," +
+            "    \"clientSecret\": \"<your-client-secret>\"" +
+            "  }" +
+            "}");
+        }
+
+        TaskDefinitionsApi apiInstance = ApiFactoryBuilder.build(fileName).build(TaskDefinitionsApi.class);
+        CreateTaskDefinitionRequest createTaskDefinitionRequest = new CreateTaskDefinitionRequest(); // CreateTaskDefinitionRequest | The data to create a Task Definition
+        try {
+            TaskDefinition result = apiInstance.createTaskDefinition(createTaskDefinitionRequest).execute();
+            System.out.println(result.toJson());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling TaskDefinitionsApi#createTaskDefinition");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
     }
-  }
 }
 ```
 
 ### Parameters
+
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
@@ -64,14 +75,11 @@ public class Example {
 
 [**TaskDefinition**](TaskDefinition.md)
 
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
 ### HTTP request headers
 
- - **Content-Type**: application/json-patch+json, application/json, text/json, application/*+json
- - **Accept**: application/json
+- **Content-Type**: application/json-patch+json, application/json, text/json, application/*+json
+- **Accept**: application/json
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -80,50 +88,63 @@ public class Example {
 | **400** | The details of the input related failure |  -  |
 | **0** | Error response |  -  |
 
-<a id="deleteTaskDefinition"></a>
-# **deleteTaskDefinition**
-> DeletedEntityResponse deleteTaskDefinition(scope, code).execute();
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
+
+
+## deleteTaskDefinition
+
+> DeletedEntityResponse deleteTaskDefinition(scope, code)
 
 [EXPERIMENTAL] DeleteTaskDefinition: Delete a Task Definition
 
 ### Example
+
 ```java
-// Import classes:
-import com.finbourne.workflow.ApiClient;
-import com.finbourne.workflow.ApiException;
-import com.finbourne.workflow.Configuration;
-import com.finbourne.workflow.auth.*;
-import com.finbourne.workflow.models.*;
+import com.finbourne.workflow.model.*;
 import com.finbourne.workflow.api.TaskDefinitionsApi;
+import com.finbourne.workflow.extensions.ApiConfigurationException;
+import com.finbourne.workflow.extensions.ApiFactoryBuilder;
+import com.finbourne.workflow.extensions.auth.FinbourneTokenException;
 
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://fbn-prd.lusid.com/workflow");
-    
-    // Configure OAuth2 access token for authorization: oauth2
-    OAuth oauth2 = (OAuth) defaultClient.getAuthentication("oauth2");
-    oauth2.setAccessToken("YOUR ACCESS TOKEN");
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 
-    TaskDefinitionsApi apiInstance = new TaskDefinitionsApi(defaultClient);
-    String scope = "scope_example"; // String | The scope that identifies a Task Definition
-    String code = "code_example"; // String | The code that identifies a Task Definition
-    try {
-      DeletedEntityResponse result = apiInstance.deleteTaskDefinition(scope, code)
-            .execute();
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling TaskDefinitionsApi#deleteTaskDefinition");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
+public class TaskDefinitionsApiExample {
+
+    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, ApiConfigurationException, FinbourneTokenException {
+        String fileName = "secrets.json";
+        try(PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
+          writer.write("{" +
+            "\"api\": {" +
+            "    \"tokenUrl\": \"<your-token-url>\"," +
+            "    \"workflowUrl\": \"https://<your-domain>.lusid.com/workflow\"," +
+            "    \"username\": \"<your-username>\"," +
+            "    \"password\": \"<your-password>\"," +
+            "    \"clientId\": \"<your-client-id>\"," +
+            "    \"clientSecret\": \"<your-client-secret>\"" +
+            "  }" +
+            "}");
+        }
+
+        TaskDefinitionsApi apiInstance = ApiFactoryBuilder.build(fileName).build(TaskDefinitionsApi.class);
+        String scope = "scope_example"; // String | The scope that identifies a Task Definition
+        String code = "code_example"; // String | The code that identifies a Task Definition
+        try {
+            DeletedEntityResponse result = apiInstance.deleteTaskDefinition(scope, code).execute();
+            System.out.println(result.toJson());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling TaskDefinitionsApi#deleteTaskDefinition");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
     }
-  }
 }
 ```
 
 ### Parameters
+
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
@@ -134,14 +155,11 @@ public class Example {
 
 [**DeletedEntityResponse**](DeletedEntityResponse.md)
 
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -151,52 +169,64 @@ public class Example {
 | **404** | Task Definition not found. |  -  |
 | **0** | Error response |  -  |
 
-<a id="getTaskDefinition"></a>
-# **getTaskDefinition**
-> TaskDefinition getTaskDefinition(scope, code).asAt(asAt).execute();
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
+
+
+## getTaskDefinition
+
+> TaskDefinition getTaskDefinition(scope, code, asAt)
 
 [EXPERIMENTAL] GetTaskDefinition: Get a Task Definition
 
 ### Example
+
 ```java
-// Import classes:
-import com.finbourne.workflow.ApiClient;
-import com.finbourne.workflow.ApiException;
-import com.finbourne.workflow.Configuration;
-import com.finbourne.workflow.auth.*;
-import com.finbourne.workflow.models.*;
+import com.finbourne.workflow.model.*;
 import com.finbourne.workflow.api.TaskDefinitionsApi;
+import com.finbourne.workflow.extensions.ApiConfigurationException;
+import com.finbourne.workflow.extensions.ApiFactoryBuilder;
+import com.finbourne.workflow.extensions.auth.FinbourneTokenException;
 
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://fbn-prd.lusid.com/workflow");
-    
-    // Configure OAuth2 access token for authorization: oauth2
-    OAuth oauth2 = (OAuth) defaultClient.getAuthentication("oauth2");
-    oauth2.setAccessToken("YOUR ACCESS TOKEN");
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 
-    TaskDefinitionsApi apiInstance = new TaskDefinitionsApi(defaultClient);
-    String scope = "scope_example"; // String | The scope that identifies a Task Definition
-    String code = "code_example"; // String | The code that identifies a Task Definition
-    OffsetDateTime asAt = OffsetDateTime.now(); // OffsetDateTime | The asAt datetime at which to retrieve the Task Definition. Defaults to returning the latest version of the Task Definition if not specified.
-    try {
-      TaskDefinition result = apiInstance.getTaskDefinition(scope, code)
-            .asAt(asAt)
-            .execute();
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling TaskDefinitionsApi#getTaskDefinition");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
+public class TaskDefinitionsApiExample {
+
+    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, ApiConfigurationException, FinbourneTokenException {
+        String fileName = "secrets.json";
+        try(PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
+          writer.write("{" +
+            "\"api\": {" +
+            "    \"tokenUrl\": \"<your-token-url>\"," +
+            "    \"workflowUrl\": \"https://<your-domain>.lusid.com/workflow\"," +
+            "    \"username\": \"<your-username>\"," +
+            "    \"password\": \"<your-password>\"," +
+            "    \"clientId\": \"<your-client-id>\"," +
+            "    \"clientSecret\": \"<your-client-secret>\"" +
+            "  }" +
+            "}");
+        }
+
+        TaskDefinitionsApi apiInstance = ApiFactoryBuilder.build(fileName).build(TaskDefinitionsApi.class);
+        String scope = "scope_example"; // String | The scope that identifies a Task Definition
+        String code = "code_example"; // String | The code that identifies a Task Definition
+        OffsetDateTime asAt = OffsetDateTime.now(); // OffsetDateTime | The asAt datetime at which to retrieve the Task Definition. Defaults to returning the latest version of the Task Definition if not specified.
+        try {
+            TaskDefinition result = apiInstance.getTaskDefinition(scope, code, asAt).execute();
+            System.out.println(result.toJson());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling TaskDefinitionsApi#getTaskDefinition");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
     }
-  }
 }
 ```
 
 ### Parameters
+
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
@@ -208,14 +238,11 @@ public class Example {
 
 [**TaskDefinition**](TaskDefinition.md)
 
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -225,58 +252,66 @@ public class Example {
 | **404** | Task Definition not found. |  -  |
 | **0** | Error response |  -  |
 
-<a id="listTaskDefinitions"></a>
-# **listTaskDefinitions**
-> PagedResourceListOfTaskDefinition listTaskDefinitions().asAt(asAt).filter(filter).sortBy(sortBy).limit(limit).page(page).execute();
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
+
+
+## listTaskDefinitions
+
+> PagedResourceListOfTaskDefinition listTaskDefinitions(asAt, filter, sortBy, limit, page)
 
 [EXPERIMENTAL] ListTaskDefinitions: List Task Definitions
 
 ### Example
+
 ```java
-// Import classes:
-import com.finbourne.workflow.ApiClient;
-import com.finbourne.workflow.ApiException;
-import com.finbourne.workflow.Configuration;
-import com.finbourne.workflow.auth.*;
-import com.finbourne.workflow.models.*;
+import com.finbourne.workflow.model.*;
 import com.finbourne.workflow.api.TaskDefinitionsApi;
+import com.finbourne.workflow.extensions.ApiConfigurationException;
+import com.finbourne.workflow.extensions.ApiFactoryBuilder;
+import com.finbourne.workflow.extensions.auth.FinbourneTokenException;
 
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://fbn-prd.lusid.com/workflow");
-    
-    // Configure OAuth2 access token for authorization: oauth2
-    OAuth oauth2 = (OAuth) defaultClient.getAuthentication("oauth2");
-    oauth2.setAccessToken("YOUR ACCESS TOKEN");
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 
-    TaskDefinitionsApi apiInstance = new TaskDefinitionsApi(defaultClient);
-    OffsetDateTime asAt = OffsetDateTime.now(); // OffsetDateTime | The asAt datetime at which to list the Task Definitions. Defaults to return the latest version of each Task Definition if not specified.
-    String filter = "filter_example"; // String | Expression to filter the result set. Read more about filtering results from LUSID here: https://support.lusid.com/filtering-results-from-lusid.
-    List<String> sortBy = Arrays.asList(); // List<String> | A list of field names or properties to sort by, each suffixed by \" ASC\" or \" DESC\"
-    Integer limit = 10; // Integer | When paginating, limit the number of returned results to this many.
-    String page = "page_example"; // String | The pagination token to use to continue listing task definitions from a previous call to list task definitions. This value is returned from the previous call. If a pagination token is provided the sortBy, filter, effectiveAt, and asAt fields must not have changed since the original request.
-    try {
-      PagedResourceListOfTaskDefinition result = apiInstance.listTaskDefinitions()
-            .asAt(asAt)
-            .filter(filter)
-            .sortBy(sortBy)
-            .limit(limit)
-            .page(page)
-            .execute();
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling TaskDefinitionsApi#listTaskDefinitions");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
+public class TaskDefinitionsApiExample {
+
+    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, ApiConfigurationException, FinbourneTokenException {
+        String fileName = "secrets.json";
+        try(PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
+          writer.write("{" +
+            "\"api\": {" +
+            "    \"tokenUrl\": \"<your-token-url>\"," +
+            "    \"workflowUrl\": \"https://<your-domain>.lusid.com/workflow\"," +
+            "    \"username\": \"<your-username>\"," +
+            "    \"password\": \"<your-password>\"," +
+            "    \"clientId\": \"<your-client-id>\"," +
+            "    \"clientSecret\": \"<your-client-secret>\"" +
+            "  }" +
+            "}");
+        }
+
+        TaskDefinitionsApi apiInstance = ApiFactoryBuilder.build(fileName).build(TaskDefinitionsApi.class);
+        OffsetDateTime asAt = OffsetDateTime.now(); // OffsetDateTime | The asAt datetime at which to list the Task Definitions. Defaults to return the latest version of each Task Definition if not specified.
+        String filter = "filter_example"; // String | Expression to filter the result set. Read more about filtering results from LUSID here: https://support.lusid.com/filtering-results-from-lusid.
+        List<String> sortBy = Arrays.asList(); // List<String> | A list of field names or properties to sort by, each suffixed by \" ASC\" or \" DESC\"
+        Integer limit = 10; // Integer | When paginating, limit the number of returned results to this many.
+        String page = "page_example"; // String | The pagination token to use to continue listing task definitions from a previous call to list task definitions. This value is returned from the previous call. If a pagination token is provided the sortBy, filter, effectiveAt, and asAt fields must not have changed since the original request.
+        try {
+            PagedResourceListOfTaskDefinition result = apiInstance.listTaskDefinitions(asAt, filter, sortBy, limit, page).execute();
+            System.out.println(result.toJson());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling TaskDefinitionsApi#listTaskDefinitions");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
     }
-  }
 }
 ```
 
 ### Parameters
+
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
@@ -290,14 +325,11 @@ public class Example {
 
 [**PagedResourceListOfTaskDefinition**](PagedResourceListOfTaskDefinition.md)
 
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -307,52 +339,64 @@ public class Example {
 | **404** | No Task Definitions found. |  -  |
 | **0** | Error response |  -  |
 
-<a id="listTasksForTaskDefinition"></a>
-# **listTasksForTaskDefinition**
-> ResourceListOfTask listTasksForTaskDefinition(scope, code).asAt(asAt).execute();
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
+
+
+## listTasksForTaskDefinition
+
+> ResourceListOfTask listTasksForTaskDefinition(scope, code, asAt)
 
 [EXPERIMENTAL] ListTasksForTaskDefinition: List Tasks for a Task Definition
 
 ### Example
+
 ```java
-// Import classes:
-import com.finbourne.workflow.ApiClient;
-import com.finbourne.workflow.ApiException;
-import com.finbourne.workflow.Configuration;
-import com.finbourne.workflow.auth.*;
-import com.finbourne.workflow.models.*;
+import com.finbourne.workflow.model.*;
 import com.finbourne.workflow.api.TaskDefinitionsApi;
+import com.finbourne.workflow.extensions.ApiConfigurationException;
+import com.finbourne.workflow.extensions.ApiFactoryBuilder;
+import com.finbourne.workflow.extensions.auth.FinbourneTokenException;
 
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://fbn-prd.lusid.com/workflow");
-    
-    // Configure OAuth2 access token for authorization: oauth2
-    OAuth oauth2 = (OAuth) defaultClient.getAuthentication("oauth2");
-    oauth2.setAccessToken("YOUR ACCESS TOKEN");
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 
-    TaskDefinitionsApi apiInstance = new TaskDefinitionsApi(defaultClient);
-    String scope = "scope_example"; // String | The scope that identifies a Task Definition
-    String code = "code_example"; // String | The code that identifies a Task Definition
-    OffsetDateTime asAt = OffsetDateTime.now(); // OffsetDateTime | The asAt datetime at which to list the Tasks. Defaults to return the latest version of each Task if not specified.
-    try {
-      ResourceListOfTask result = apiInstance.listTasksForTaskDefinition(scope, code)
-            .asAt(asAt)
-            .execute();
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling TaskDefinitionsApi#listTasksForTaskDefinition");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
+public class TaskDefinitionsApiExample {
+
+    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, ApiConfigurationException, FinbourneTokenException {
+        String fileName = "secrets.json";
+        try(PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
+          writer.write("{" +
+            "\"api\": {" +
+            "    \"tokenUrl\": \"<your-token-url>\"," +
+            "    \"workflowUrl\": \"https://<your-domain>.lusid.com/workflow\"," +
+            "    \"username\": \"<your-username>\"," +
+            "    \"password\": \"<your-password>\"," +
+            "    \"clientId\": \"<your-client-id>\"," +
+            "    \"clientSecret\": \"<your-client-secret>\"" +
+            "  }" +
+            "}");
+        }
+
+        TaskDefinitionsApi apiInstance = ApiFactoryBuilder.build(fileName).build(TaskDefinitionsApi.class);
+        String scope = "scope_example"; // String | The scope that identifies a Task Definition
+        String code = "code_example"; // String | The code that identifies a Task Definition
+        OffsetDateTime asAt = OffsetDateTime.now(); // OffsetDateTime | The asAt datetime at which to list the Tasks. Defaults to return the latest version of each Task if not specified.
+        try {
+            ResourceListOfTask result = apiInstance.listTasksForTaskDefinition(scope, code, asAt).execute();
+            System.out.println(result.toJson());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling TaskDefinitionsApi#listTasksForTaskDefinition");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
     }
-  }
 }
 ```
 
 ### Parameters
+
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
@@ -364,14 +408,11 @@ public class Example {
 
 [**ResourceListOfTask**](ResourceListOfTask.md)
 
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -381,51 +422,64 @@ public class Example {
 | **404** | No tasks found for this Task Definition. |  -  |
 | **0** | Error response |  -  |
 
-<a id="updateTaskDefinition"></a>
-# **updateTaskDefinition**
-> TaskDefinition updateTaskDefinition(scope, code, updateTaskDefinitionRequest).execute();
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
+
+
+## updateTaskDefinition
+
+> TaskDefinition updateTaskDefinition(scope, code, updateTaskDefinitionRequest)
 
 [EXPERIMENTAL] UpdateTaskDefinition: Update an existing Task Definition
 
 ### Example
+
 ```java
-// Import classes:
-import com.finbourne.workflow.ApiClient;
-import com.finbourne.workflow.ApiException;
-import com.finbourne.workflow.Configuration;
-import com.finbourne.workflow.auth.*;
-import com.finbourne.workflow.models.*;
+import com.finbourne.workflow.model.*;
 import com.finbourne.workflow.api.TaskDefinitionsApi;
+import com.finbourne.workflow.extensions.ApiConfigurationException;
+import com.finbourne.workflow.extensions.ApiFactoryBuilder;
+import com.finbourne.workflow.extensions.auth.FinbourneTokenException;
 
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://fbn-prd.lusid.com/workflow");
-    
-    // Configure OAuth2 access token for authorization: oauth2
-    OAuth oauth2 = (OAuth) defaultClient.getAuthentication("oauth2");
-    oauth2.setAccessToken("YOUR ACCESS TOKEN");
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 
-    TaskDefinitionsApi apiInstance = new TaskDefinitionsApi(defaultClient);
-    String scope = "scope_example"; // String | The scope that identifies a Task Definition
-    String code = "code_example"; // String | The code that identifies a Task Definition
-    UpdateTaskDefinitionRequest updateTaskDefinitionRequest = new UpdateTaskDefinitionRequest(); // UpdateTaskDefinitionRequest | The data to update a Task Definition
-    try {
-      TaskDefinition result = apiInstance.updateTaskDefinition(scope, code, updateTaskDefinitionRequest)
-            .execute();
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling TaskDefinitionsApi#updateTaskDefinition");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
+public class TaskDefinitionsApiExample {
+
+    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, ApiConfigurationException, FinbourneTokenException {
+        String fileName = "secrets.json";
+        try(PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
+          writer.write("{" +
+            "\"api\": {" +
+            "    \"tokenUrl\": \"<your-token-url>\"," +
+            "    \"workflowUrl\": \"https://<your-domain>.lusid.com/workflow\"," +
+            "    \"username\": \"<your-username>\"," +
+            "    \"password\": \"<your-password>\"," +
+            "    \"clientId\": \"<your-client-id>\"," +
+            "    \"clientSecret\": \"<your-client-secret>\"" +
+            "  }" +
+            "}");
+        }
+
+        TaskDefinitionsApi apiInstance = ApiFactoryBuilder.build(fileName).build(TaskDefinitionsApi.class);
+        String scope = "scope_example"; // String | The scope that identifies a Task Definition
+        String code = "code_example"; // String | The code that identifies a Task Definition
+        UpdateTaskDefinitionRequest updateTaskDefinitionRequest = new UpdateTaskDefinitionRequest(); // UpdateTaskDefinitionRequest | The data to update a Task Definition
+        try {
+            TaskDefinition result = apiInstance.updateTaskDefinition(scope, code, updateTaskDefinitionRequest).execute();
+            System.out.println(result.toJson());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling TaskDefinitionsApi#updateTaskDefinition");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
     }
-  }
 }
 ```
 
 ### Parameters
+
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
@@ -437,14 +491,11 @@ public class Example {
 
 [**TaskDefinition**](TaskDefinition.md)
 
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
 ### HTTP request headers
 
- - **Content-Type**: application/json-patch+json, application/json, text/json, application/*+json
- - **Accept**: application/json
+- **Content-Type**: application/json-patch+json, application/json, text/json, application/*+json
+- **Accept**: application/json
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -453,4 +504,6 @@ public class Example {
 | **400** | The details of the input related failure |  -  |
 | **404** | Task Definition not found. |  -  |
 | **0** | Error response |  -  |
+
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 

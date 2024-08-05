@@ -11,49 +11,60 @@ All URIs are relative to *https://fbn-prd.lusid.com/workflow*
 | [**updateEventHandler**](EventHandlersApi.md#updateEventHandler) | **PUT** /api/eventhandlers/{scope}/{code} | [EXPERIMENTAL] UpdateEventHandler: Update an existing Event handler |
 
 
-<a id="createEventHandler"></a>
-# **createEventHandler**
-> EventHandler createEventHandler(createEventHandlerRequest).execute();
+
+## createEventHandler
+
+> EventHandler createEventHandler(createEventHandlerRequest)
 
 [EXPERIMENTAL] CreateEventHandler: Create a new Event Handler
 
 ### Example
+
 ```java
-// Import classes:
-import com.finbourne.workflow.ApiClient;
-import com.finbourne.workflow.ApiException;
-import com.finbourne.workflow.Configuration;
-import com.finbourne.workflow.auth.*;
-import com.finbourne.workflow.models.*;
+import com.finbourne.workflow.model.*;
 import com.finbourne.workflow.api.EventHandlersApi;
+import com.finbourne.workflow.extensions.ApiConfigurationException;
+import com.finbourne.workflow.extensions.ApiFactoryBuilder;
+import com.finbourne.workflow.extensions.auth.FinbourneTokenException;
 
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://fbn-prd.lusid.com/workflow");
-    
-    // Configure OAuth2 access token for authorization: oauth2
-    OAuth oauth2 = (OAuth) defaultClient.getAuthentication("oauth2");
-    oauth2.setAccessToken("YOUR ACCESS TOKEN");
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 
-    EventHandlersApi apiInstance = new EventHandlersApi(defaultClient);
-    CreateEventHandlerRequest createEventHandlerRequest = new CreateEventHandlerRequest(); // CreateEventHandlerRequest | The data to create an Event Handler
-    try {
-      EventHandler result = apiInstance.createEventHandler(createEventHandlerRequest)
-            .execute();
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling EventHandlersApi#createEventHandler");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
+public class EventHandlersApiExample {
+
+    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, ApiConfigurationException, FinbourneTokenException {
+        String fileName = "secrets.json";
+        try(PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
+          writer.write("{" +
+            "\"api\": {" +
+            "    \"tokenUrl\": \"<your-token-url>\"," +
+            "    \"workflowUrl\": \"https://<your-domain>.lusid.com/workflow\"," +
+            "    \"username\": \"<your-username>\"," +
+            "    \"password\": \"<your-password>\"," +
+            "    \"clientId\": \"<your-client-id>\"," +
+            "    \"clientSecret\": \"<your-client-secret>\"" +
+            "  }" +
+            "}");
+        }
+
+        EventHandlersApi apiInstance = ApiFactoryBuilder.build(fileName).build(EventHandlersApi.class);
+        CreateEventHandlerRequest createEventHandlerRequest = new CreateEventHandlerRequest(); // CreateEventHandlerRequest | The data to create an Event Handler
+        try {
+            EventHandler result = apiInstance.createEventHandler(createEventHandlerRequest).execute();
+            System.out.println(result.toJson());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling EventHandlersApi#createEventHandler");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
     }
-  }
 }
 ```
 
 ### Parameters
+
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
@@ -63,14 +74,11 @@ public class Example {
 
 [**EventHandler**](EventHandler.md)
 
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
 ### HTTP request headers
 
- - **Content-Type**: application/json-patch+json, application/json, text/json, application/*+json
- - **Accept**: application/json
+- **Content-Type**: application/json-patch+json, application/json, text/json, application/*+json
+- **Accept**: application/json
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -79,52 +87,65 @@ public class Example {
 | **400** | The details of the input related failure |  -  |
 | **0** | Error response |  -  |
 
-<a id="deleteEventHandler"></a>
-# **deleteEventHandler**
-> DeletedEntityResponse deleteEventHandler(scope, code).execute();
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
+
+
+## deleteEventHandler
+
+> DeletedEntityResponse deleteEventHandler(scope, code)
 
 [EXPERIMENTAL] DeleteEventHandler: Delete an Event Handler
 
 If the Event Handler does not exist a failure will be returned
 
 ### Example
+
 ```java
-// Import classes:
-import com.finbourne.workflow.ApiClient;
-import com.finbourne.workflow.ApiException;
-import com.finbourne.workflow.Configuration;
-import com.finbourne.workflow.auth.*;
-import com.finbourne.workflow.models.*;
+import com.finbourne.workflow.model.*;
 import com.finbourne.workflow.api.EventHandlersApi;
+import com.finbourne.workflow.extensions.ApiConfigurationException;
+import com.finbourne.workflow.extensions.ApiFactoryBuilder;
+import com.finbourne.workflow.extensions.auth.FinbourneTokenException;
 
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://fbn-prd.lusid.com/workflow");
-    
-    // Configure OAuth2 access token for authorization: oauth2
-    OAuth oauth2 = (OAuth) defaultClient.getAuthentication("oauth2");
-    oauth2.setAccessToken("YOUR ACCESS TOKEN");
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 
-    EventHandlersApi apiInstance = new EventHandlersApi(defaultClient);
-    String scope = "scope_example"; // String | Scope of the event handler to be deleted
-    String code = "code_example"; // String | Code of the event handler to be deleted
-    try {
-      DeletedEntityResponse result = apiInstance.deleteEventHandler(scope, code)
-            .execute();
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling EventHandlersApi#deleteEventHandler");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
+public class EventHandlersApiExample {
+
+    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, ApiConfigurationException, FinbourneTokenException {
+        String fileName = "secrets.json";
+        try(PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
+          writer.write("{" +
+            "\"api\": {" +
+            "    \"tokenUrl\": \"<your-token-url>\"," +
+            "    \"workflowUrl\": \"https://<your-domain>.lusid.com/workflow\"," +
+            "    \"username\": \"<your-username>\"," +
+            "    \"password\": \"<your-password>\"," +
+            "    \"clientId\": \"<your-client-id>\"," +
+            "    \"clientSecret\": \"<your-client-secret>\"" +
+            "  }" +
+            "}");
+        }
+
+        EventHandlersApi apiInstance = ApiFactoryBuilder.build(fileName).build(EventHandlersApi.class);
+        String scope = "scope_example"; // String | Scope of the event handler to be deleted
+        String code = "code_example"; // String | Code of the event handler to be deleted
+        try {
+            DeletedEntityResponse result = apiInstance.deleteEventHandler(scope, code).execute();
+            System.out.println(result.toJson());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling EventHandlersApi#deleteEventHandler");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
     }
-  }
 }
 ```
 
 ### Parameters
+
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
@@ -135,14 +156,11 @@ public class Example {
 
 [**DeletedEntityResponse**](DeletedEntityResponse.md)
 
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -152,54 +170,66 @@ public class Example {
 | **404** | Event Handler not found. |  -  |
 | **0** | Error response |  -  |
 
-<a id="getEventHandler"></a>
-# **getEventHandler**
-> EventHandler getEventHandler(scope, code).asAt(asAt).execute();
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
+
+
+## getEventHandler
+
+> EventHandler getEventHandler(scope, code, asAt)
 
 [EXPERIMENTAL] GetEventHandler: Get an Event Handler
 
 Will return a NotFound failure if the event handler does not exist
 
 ### Example
+
 ```java
-// Import classes:
-import com.finbourne.workflow.ApiClient;
-import com.finbourne.workflow.ApiException;
-import com.finbourne.workflow.Configuration;
-import com.finbourne.workflow.auth.*;
-import com.finbourne.workflow.models.*;
+import com.finbourne.workflow.model.*;
 import com.finbourne.workflow.api.EventHandlersApi;
+import com.finbourne.workflow.extensions.ApiConfigurationException;
+import com.finbourne.workflow.extensions.ApiFactoryBuilder;
+import com.finbourne.workflow.extensions.auth.FinbourneTokenException;
 
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://fbn-prd.lusid.com/workflow");
-    
-    // Configure OAuth2 access token for authorization: oauth2
-    OAuth oauth2 = (OAuth) defaultClient.getAuthentication("oauth2");
-    oauth2.setAccessToken("YOUR ACCESS TOKEN");
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 
-    EventHandlersApi apiInstance = new EventHandlersApi(defaultClient);
-    String scope = "scope_example"; // String | Scope of the event handler
-    String code = "code_example"; // String | Code of the event handler
-    OffsetDateTime asAt = OffsetDateTime.now(); // OffsetDateTime | The asAt datetime at which to retrieve the event handler. Defaults to returning the latest version of the event handler if not specified.
-    try {
-      EventHandler result = apiInstance.getEventHandler(scope, code)
-            .asAt(asAt)
-            .execute();
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling EventHandlersApi#getEventHandler");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
+public class EventHandlersApiExample {
+
+    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, ApiConfigurationException, FinbourneTokenException {
+        String fileName = "secrets.json";
+        try(PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
+          writer.write("{" +
+            "\"api\": {" +
+            "    \"tokenUrl\": \"<your-token-url>\"," +
+            "    \"workflowUrl\": \"https://<your-domain>.lusid.com/workflow\"," +
+            "    \"username\": \"<your-username>\"," +
+            "    \"password\": \"<your-password>\"," +
+            "    \"clientId\": \"<your-client-id>\"," +
+            "    \"clientSecret\": \"<your-client-secret>\"" +
+            "  }" +
+            "}");
+        }
+
+        EventHandlersApi apiInstance = ApiFactoryBuilder.build(fileName).build(EventHandlersApi.class);
+        String scope = "scope_example"; // String | Scope of the event handler
+        String code = "code_example"; // String | Code of the event handler
+        OffsetDateTime asAt = OffsetDateTime.now(); // OffsetDateTime | The asAt datetime at which to retrieve the event handler. Defaults to returning the latest version of the event handler if not specified.
+        try {
+            EventHandler result = apiInstance.getEventHandler(scope, code, asAt).execute();
+            System.out.println(result.toJson());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling EventHandlersApi#getEventHandler");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
     }
-  }
 }
 ```
 
 ### Parameters
+
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
@@ -211,14 +241,11 @@ public class Example {
 
 [**EventHandler**](EventHandler.md)
 
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -227,56 +254,65 @@ public class Example {
 | **400** | The details of the input related failure |  -  |
 | **0** | Error response |  -  |
 
-<a id="listEventHandlers"></a>
-# **listEventHandlers**
-> PagedResourceListOfEventHandler listEventHandlers().asAt(asAt).filter(filter).limit(limit).page(page).execute();
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
+
+
+## listEventHandlers
+
+> PagedResourceListOfEventHandler listEventHandlers(asAt, filter, limit, page)
 
 [EXPERIMENTAL] ListEventHandlers: List Event Handlers
 
 ### Example
+
 ```java
-// Import classes:
-import com.finbourne.workflow.ApiClient;
-import com.finbourne.workflow.ApiException;
-import com.finbourne.workflow.Configuration;
-import com.finbourne.workflow.auth.*;
-import com.finbourne.workflow.models.*;
+import com.finbourne.workflow.model.*;
 import com.finbourne.workflow.api.EventHandlersApi;
+import com.finbourne.workflow.extensions.ApiConfigurationException;
+import com.finbourne.workflow.extensions.ApiFactoryBuilder;
+import com.finbourne.workflow.extensions.auth.FinbourneTokenException;
 
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://fbn-prd.lusid.com/workflow");
-    
-    // Configure OAuth2 access token for authorization: oauth2
-    OAuth oauth2 = (OAuth) defaultClient.getAuthentication("oauth2");
-    oauth2.setAccessToken("YOUR ACCESS TOKEN");
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 
-    EventHandlersApi apiInstance = new EventHandlersApi(defaultClient);
-    OffsetDateTime asAt = OffsetDateTime.now(); // OffsetDateTime | The asAt datetime at which to list the Event Handlers. Defaults to return the latest version of each Event Handler if not specified.
-    String filter = "filter_example"; // String | Expression to filter the result set. Read more about filtering results from LUSID here: https://support.lusid.com/filtering-results-from-lusid.
-    Integer limit = 10; // Integer | When paginating, limit the number of returned results to this many.
-    String page = "page_example"; // String | The pagination token to use to continue listing event handlers from a previous call to list event handlers. This value is returned from the previous call. If a pagination token is provided the sortBy, filter, effectiveAt, and asAt fields must not have changed since the original request.
-    try {
-      PagedResourceListOfEventHandler result = apiInstance.listEventHandlers()
-            .asAt(asAt)
-            .filter(filter)
-            .limit(limit)
-            .page(page)
-            .execute();
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling EventHandlersApi#listEventHandlers");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
+public class EventHandlersApiExample {
+
+    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, ApiConfigurationException, FinbourneTokenException {
+        String fileName = "secrets.json";
+        try(PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
+          writer.write("{" +
+            "\"api\": {" +
+            "    \"tokenUrl\": \"<your-token-url>\"," +
+            "    \"workflowUrl\": \"https://<your-domain>.lusid.com/workflow\"," +
+            "    \"username\": \"<your-username>\"," +
+            "    \"password\": \"<your-password>\"," +
+            "    \"clientId\": \"<your-client-id>\"," +
+            "    \"clientSecret\": \"<your-client-secret>\"" +
+            "  }" +
+            "}");
+        }
+
+        EventHandlersApi apiInstance = ApiFactoryBuilder.build(fileName).build(EventHandlersApi.class);
+        OffsetDateTime asAt = OffsetDateTime.now(); // OffsetDateTime | The asAt datetime at which to list the Event Handlers. Defaults to return the latest version of each Event Handler if not specified.
+        String filter = "filter_example"; // String | Expression to filter the result set. Read more about filtering results from LUSID here: https://support.lusid.com/filtering-results-from-lusid.
+        Integer limit = 10; // Integer | When paginating, limit the number of returned results to this many.
+        String page = "page_example"; // String | The pagination token to use to continue listing event handlers from a previous call to list event handlers. This value is returned from the previous call. If a pagination token is provided the sortBy, filter, effectiveAt, and asAt fields must not have changed since the original request.
+        try {
+            PagedResourceListOfEventHandler result = apiInstance.listEventHandlers(asAt, filter, limit, page).execute();
+            System.out.println(result.toJson());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling EventHandlersApi#listEventHandlers");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
     }
-  }
 }
 ```
 
 ### Parameters
+
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
@@ -289,14 +325,11 @@ public class Example {
 
 [**PagedResourceListOfEventHandler**](PagedResourceListOfEventHandler.md)
 
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -305,51 +338,64 @@ public class Example {
 | **400** | The details of the input related failure |  -  |
 | **0** | Error response |  -  |
 
-<a id="updateEventHandler"></a>
-# **updateEventHandler**
-> EventHandler updateEventHandler(scope, code, updateEventHandlerRequest).execute();
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
+
+
+## updateEventHandler
+
+> EventHandler updateEventHandler(scope, code, updateEventHandlerRequest)
 
 [EXPERIMENTAL] UpdateEventHandler: Update an existing Event handler
 
 ### Example
+
 ```java
-// Import classes:
-import com.finbourne.workflow.ApiClient;
-import com.finbourne.workflow.ApiException;
-import com.finbourne.workflow.Configuration;
-import com.finbourne.workflow.auth.*;
-import com.finbourne.workflow.models.*;
+import com.finbourne.workflow.model.*;
 import com.finbourne.workflow.api.EventHandlersApi;
+import com.finbourne.workflow.extensions.ApiConfigurationException;
+import com.finbourne.workflow.extensions.ApiFactoryBuilder;
+import com.finbourne.workflow.extensions.auth.FinbourneTokenException;
 
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://fbn-prd.lusid.com/workflow");
-    
-    // Configure OAuth2 access token for authorization: oauth2
-    OAuth oauth2 = (OAuth) defaultClient.getAuthentication("oauth2");
-    oauth2.setAccessToken("YOUR ACCESS TOKEN");
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 
-    EventHandlersApi apiInstance = new EventHandlersApi(defaultClient);
-    String scope = "scope_example"; // String | The scope that identifies an Event Handler
-    String code = "code_example"; // String | The code that identifies an Event Handler
-    UpdateEventHandlerRequest updateEventHandlerRequest = new UpdateEventHandlerRequest(); // UpdateEventHandlerRequest | The data to update an Event Handler
-    try {
-      EventHandler result = apiInstance.updateEventHandler(scope, code, updateEventHandlerRequest)
-            .execute();
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling EventHandlersApi#updateEventHandler");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
+public class EventHandlersApiExample {
+
+    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, ApiConfigurationException, FinbourneTokenException {
+        String fileName = "secrets.json";
+        try(PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
+          writer.write("{" +
+            "\"api\": {" +
+            "    \"tokenUrl\": \"<your-token-url>\"," +
+            "    \"workflowUrl\": \"https://<your-domain>.lusid.com/workflow\"," +
+            "    \"username\": \"<your-username>\"," +
+            "    \"password\": \"<your-password>\"," +
+            "    \"clientId\": \"<your-client-id>\"," +
+            "    \"clientSecret\": \"<your-client-secret>\"" +
+            "  }" +
+            "}");
+        }
+
+        EventHandlersApi apiInstance = ApiFactoryBuilder.build(fileName).build(EventHandlersApi.class);
+        String scope = "scope_example"; // String | The scope that identifies an Event Handler
+        String code = "code_example"; // String | The code that identifies an Event Handler
+        UpdateEventHandlerRequest updateEventHandlerRequest = new UpdateEventHandlerRequest(); // UpdateEventHandlerRequest | The data to update an Event Handler
+        try {
+            EventHandler result = apiInstance.updateEventHandler(scope, code, updateEventHandlerRequest).execute();
+            System.out.println(result.toJson());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling EventHandlersApi#updateEventHandler");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
     }
-  }
 }
 ```
 
 ### Parameters
+
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
@@ -361,14 +407,11 @@ public class Example {
 
 [**EventHandler**](EventHandler.md)
 
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
 ### HTTP request headers
 
- - **Content-Type**: application/json-patch+json, application/json, text/json, application/*+json
- - **Accept**: application/json
+- **Content-Type**: application/json-patch+json, application/json, text/json, application/*+json
+- **Accept**: application/json
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -377,4 +420,6 @@ public class Example {
 | **400** | The details of the input related failure |  -  |
 | **404** | Event Handler not found. |  -  |
 | **0** | Error response |  -  |
+
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
