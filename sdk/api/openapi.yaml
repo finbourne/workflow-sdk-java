@@ -6,7 +6,7 @@ info:
     url: https://www.finbourne.com
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1181
+  version: 0.1.1182
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -159,10 +159,10 @@ paths:
                 code: YYY
               taskDefinitionAsAt: 9999-12-31T23:59:59.9999999+00:00
               taskActivity:
-                InitialTrigger: InitialTrigger
-                Type: CreateNewTask
-                CorrelationIds: []
-                TaskFields: {}
+                initialTrigger: InitialTrigger
+                type: CreateNewTask
+                correlationIds: []
+                taskFields: {}
             schema:
               $ref: '#/components/schemas/CreateEventHandlerRequest'
           application/json:
@@ -183,10 +183,10 @@ paths:
                 code: YYY
               taskDefinitionAsAt: 9999-12-31T23:59:59.9999999+00:00
               taskActivity:
-                InitialTrigger: InitialTrigger
-                Type: CreateNewTask
-                CorrelationIds: []
-                TaskFields: {}
+                initialTrigger: InitialTrigger
+                type: CreateNewTask
+                correlationIds: []
+                taskFields: {}
             schema:
               $ref: '#/components/schemas/CreateEventHandlerRequest'
           text/json:
@@ -207,10 +207,10 @@ paths:
                 code: YYY
               taskDefinitionAsAt: 9999-12-31T23:59:59.9999999+00:00
               taskActivity:
-                InitialTrigger: InitialTrigger
-                Type: CreateNewTask
-                CorrelationIds: []
-                TaskFields: {}
+                initialTrigger: InitialTrigger
+                type: CreateNewTask
+                correlationIds: []
+                taskFields: {}
             schema:
               $ref: '#/components/schemas/CreateEventHandlerRequest'
           application/*+json:
@@ -231,10 +231,10 @@ paths:
                 code: YYY
               taskDefinitionAsAt: 9999-12-31T23:59:59.9999999+00:00
               taskActivity:
-                InitialTrigger: InitialTrigger
-                Type: CreateNewTask
-                CorrelationIds: []
-                TaskFields: {}
+                initialTrigger: InitialTrigger
+                type: CreateNewTask
+                correlationIds: []
+                taskFields: {}
             schema:
               $ref: '#/components/schemas/CreateEventHandlerRequest'
         description: The data to create an Event Handler
@@ -488,10 +488,10 @@ paths:
                 code: YYY
               taskDefinitionAsAt: 9999-12-31T23:59:59.9999999+00:00
               taskActivity:
-                InitialTrigger: InitialTrigger
-                Type: CreateNewTask
-                CorrelationIds: []
-                TaskFields: {}
+                initialTrigger: InitialTrigger
+                type: CreateNewTask
+                correlationIds: []
+                taskFields: {}
             schema:
               $ref: '#/components/schemas/UpdateEventHandlerRequest'
           application/json:
@@ -509,10 +509,10 @@ paths:
                 code: YYY
               taskDefinitionAsAt: 9999-12-31T23:59:59.9999999+00:00
               taskActivity:
-                InitialTrigger: InitialTrigger
-                Type: CreateNewTask
-                CorrelationIds: []
-                TaskFields: {}
+                initialTrigger: InitialTrigger
+                type: CreateNewTask
+                correlationIds: []
+                taskFields: {}
             schema:
               $ref: '#/components/schemas/UpdateEventHandlerRequest'
           text/json:
@@ -530,10 +530,10 @@ paths:
                 code: YYY
               taskDefinitionAsAt: 9999-12-31T23:59:59.9999999+00:00
               taskActivity:
-                InitialTrigger: InitialTrigger
-                Type: CreateNewTask
-                CorrelationIds: []
-                TaskFields: {}
+                initialTrigger: InitialTrigger
+                type: CreateNewTask
+                correlationIds: []
+                taskFields: {}
             schema:
               $ref: '#/components/schemas/UpdateEventHandlerRequest'
           application/*+json:
@@ -551,10 +551,10 @@ paths:
                 code: YYY
               taskDefinitionAsAt: 9999-12-31T23:59:59.9999999+00:00
               taskActivity:
-                InitialTrigger: InitialTrigger
-                Type: CreateNewTask
-                CorrelationIds: []
-                TaskFields: {}
+                initialTrigger: InitialTrigger
+                type: CreateNewTask
+                correlationIds: []
+                taskFields: {}
             schema:
               $ref: '#/components/schemas/UpdateEventHandlerRequest'
         description: The data to update an Event Handler
@@ -2535,6 +2535,8 @@ paths:
                 taskDefinitionId:
                   scope: A1
                   code: ZZZ
+                taskDefinitionVersion:
+                  asAtModified: 0001-01-01T00:00:00.0000000+00:00
                 taskDefinitionDisplayName: Test Definition
                 state: foo
                 ultimateParentTask:
@@ -2542,6 +2544,8 @@ paths:
                   taskDefinitionId:
                     scope: A1
                     code: ZZZ
+                  taskDefinitionVersion:
+                    asAtModified: 0001-01-01T00:00:00.0000000+00:00
                   taskDefinitionDisplayName: Test Definition
                   state: foo
                 correlationIds:
@@ -2652,6 +2656,8 @@ paths:
                 taskDefinitionId:
                   scope: A1
                   code: ZZZ
+                taskDefinitionVersion:
+                  asAtModified: 0001-01-01T00:00:00.0000000+00:00
                 taskDefinitionDisplayName: Test Definition
                 state: foo
                 ultimateParentTask:
@@ -2659,6 +2665,8 @@ paths:
                   taskDefinitionId:
                     scope: A1
                     code: ZZZ
+                  taskDefinitionVersion:
+                    asAtModified: 0001-01-01T00:00:00.0000000+00:00
                   taskDefinitionDisplayName: Test Definition
                   state: foo
                 correlationIds:
@@ -2774,6 +2782,8 @@ paths:
                 taskDefinitionId:
                   scope: A1
                   code: ZZZ
+                taskDefinitionVersion:
+                  asAtModified: 0001-01-01T00:00:00.0000000+00:00
                 taskDefinitionDisplayName: Test Definition
                 state: foo
                 ultimateParentTask:
@@ -2781,6 +2791,8 @@ paths:
                   taskDefinitionId:
                     scope: A1
                     code: ZZZ
+                  taskDefinitionVersion:
+                    asAtModified: 0001-01-01T00:00:00.0000000+00:00
                   taskDefinitionDisplayName: Test Definition
                   state: foo
                 correlationIds:
@@ -3154,6 +3166,7 @@ paths:
                 workerStatus: CompletedNoResults
                 results:
                 - HttpStatusCode: "200"
+                statusDetail: WorkerStatus
               schema:
                 $ref: '#/components/schemas/GetWorkerResultResponse'
             application/json:
@@ -3161,6 +3174,7 @@ paths:
                 workerStatus: CompletedNoResults
                 results:
                 - HttpStatusCode: "200"
+                statusDetail: WorkerStatus
               schema:
                 $ref: '#/components/schemas/GetWorkerResultResponse'
             text/json:
@@ -3168,6 +3182,7 @@ paths:
                 workerStatus: CompletedNoResults
                 results:
                 - HttpStatusCode: "200"
+                statusDetail: WorkerStatus
               schema:
                 $ref: '#/components/schemas/GetWorkerResultResponse'
           description: Success
@@ -3654,17 +3669,17 @@ paths:
           content:
             text/plain:
               example:
-                runId: 00000000-0000-0000-0000-000000000000
+                runId: 71beb2cb-be3a-4662-b8ee-e5ded63b957a
               schema:
                 $ref: '#/components/schemas/RunWorkerResponse'
             application/json:
               example:
-                runId: 00000000-0000-0000-0000-000000000000
+                runId: 71beb2cb-be3a-4662-b8ee-e5ded63b957a
               schema:
                 $ref: '#/components/schemas/RunWorkerResponse'
             text/json:
               example:
-                runId: 00000000-0000-0000-0000-000000000000
+                runId: 71beb2cb-be3a-4662-b8ee-e5ded63b957a
               schema:
                 $ref: '#/components/schemas/RunWorkerResponse'
           description: Success
