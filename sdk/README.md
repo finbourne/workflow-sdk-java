@@ -20,7 +20,7 @@ Class | Method | HTTP request | Description
 *TasksApi* | [**createTask**](docs/TasksApi.md#createtask) | **POST** /api/tasks | [EXPERIMENTAL] CreateTask: Create a new Task
 *TasksApi* | [**deleteTask**](docs/TasksApi.md#deletetask) | **DELETE** /api/tasks/{id} | [EXPERIMENTAL] DeleteTask: Delete a Task
 *TasksApi* | [**getTask**](docs/TasksApi.md#gettask) | **GET** /api/tasks/{id} | [EXPERIMENTAL] GetTask: Get a Task
-*TasksApi* | [**listTasks**](docs/TasksApi.md#listtasks) | **GET** /api/tasks | [EXPERIMENTAL] ListTasks: List Tasks
+*TasksApi* | [**listTasks**](docs/TasksApi.md#listtasks) | **GET** /api/tasks | ListTasks: List Tasks
 *TasksApi* | [**updateTask**](docs/TasksApi.md#updatetask) | **POST** /api/tasks/{id} | [EXPERIMENTAL] UpdateTask: Update a Task
 *WorkersApi* | [**createWorker**](docs/WorkersApi.md#createworker) | **POST** /api/workers | [EXPERIMENTAL] CreateWorker: Create a new Worker
 *WorkersApi* | [**deleteWorker**](docs/WorkersApi.md#deleteworker) | **DELETE** /api/workers/{scope}/{code} | [EXPERIMENTAL] DeleteWorker: Delete a Worker

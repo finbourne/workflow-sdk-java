@@ -7,7 +7,7 @@ All URIs are relative to *https://fbn-prd.lusid.com/workflow*
 | [**createTask**](TasksApi.md#createTask) | **POST** /api/tasks | [EXPERIMENTAL] CreateTask: Create a new Task |
 | [**deleteTask**](TasksApi.md#deleteTask) | **DELETE** /api/tasks/{id} | [EXPERIMENTAL] DeleteTask: Delete a Task |
 | [**getTask**](TasksApi.md#getTask) | **GET** /api/tasks/{id} | [EXPERIMENTAL] GetTask: Get a Task |
-| [**listTasks**](TasksApi.md#listTasks) | **GET** /api/tasks | [EXPERIMENTAL] ListTasks: List Tasks |
+| [**listTasks**](TasksApi.md#listTasks) | **GET** /api/tasks | ListTasks: List Tasks |
 | [**updateTask**](TasksApi.md#updateTask) | **POST** /api/tasks/{id} | [EXPERIMENTAL] UpdateTask: Update a Task |
 
 
@@ -256,7 +256,7 @@ public class TasksApiExample {
 
 > PagedResourceListOfTask listTasks(asAt, filter, sortBy, limit, page)
 
-[EXPERIMENTAL] ListTasks: List Tasks
+ListTasks: List Tasks
 
 ### Example
 
