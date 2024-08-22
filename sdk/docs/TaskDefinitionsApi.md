@@ -49,9 +49,20 @@ public class TaskDefinitionsApiExample {
             "}");
         }
 
+        // uncomment the below to use configuration overrides
+        // ConfigurationOptions opts = new ConfigurationOptions();
+        // opts.setTotalTimeoutMs(2000);
+        
+        // uncomment the below to use an api factory with overrides
+        // ApiFactory apiFactory = ApiFactoryBuilder.build(fileName, opts);
+        // TaskDefinitionsApi apiInstance = apiFactory.build(TaskDefinitionsApi.class);
+
         TaskDefinitionsApi apiInstance = ApiFactoryBuilder.build(fileName).build(TaskDefinitionsApi.class);
         CreateTaskDefinitionRequest createTaskDefinitionRequest = new CreateTaskDefinitionRequest(); // CreateTaskDefinitionRequest | The data to create a Task Definition
         try {
+            // uncomment the below to set overrides at the request level
+            // TaskDefinition result = apiInstance.createTaskDefinition(createTaskDefinitionRequest).execute(opts);
+
             TaskDefinition result = apiInstance.createTaskDefinition(createTaskDefinitionRequest).execute();
             System.out.println(result.toJson());
         } catch (ApiException e) {
@@ -127,10 +138,21 @@ public class TaskDefinitionsApiExample {
             "}");
         }
 
+        // uncomment the below to use configuration overrides
+        // ConfigurationOptions opts = new ConfigurationOptions();
+        // opts.setTotalTimeoutMs(2000);
+        
+        // uncomment the below to use an api factory with overrides
+        // ApiFactory apiFactory = ApiFactoryBuilder.build(fileName, opts);
+        // TaskDefinitionsApi apiInstance = apiFactory.build(TaskDefinitionsApi.class);
+
         TaskDefinitionsApi apiInstance = ApiFactoryBuilder.build(fileName).build(TaskDefinitionsApi.class);
         String scope = "scope_example"; // String | The scope that identifies a Task Definition
         String code = "code_example"; // String | The code that identifies a Task Definition
         try {
+            // uncomment the below to set overrides at the request level
+            // DeletedEntityResponse result = apiInstance.deleteTaskDefinition(scope, code).execute(opts);
+
             DeletedEntityResponse result = apiInstance.deleteTaskDefinition(scope, code).execute();
             System.out.println(result.toJson());
         } catch (ApiException e) {
@@ -208,11 +230,22 @@ public class TaskDefinitionsApiExample {
             "}");
         }
 
+        // uncomment the below to use configuration overrides
+        // ConfigurationOptions opts = new ConfigurationOptions();
+        // opts.setTotalTimeoutMs(2000);
+        
+        // uncomment the below to use an api factory with overrides
+        // ApiFactory apiFactory = ApiFactoryBuilder.build(fileName, opts);
+        // TaskDefinitionsApi apiInstance = apiFactory.build(TaskDefinitionsApi.class);
+
         TaskDefinitionsApi apiInstance = ApiFactoryBuilder.build(fileName).build(TaskDefinitionsApi.class);
         String scope = "scope_example"; // String | The scope that identifies a Task Definition
         String code = "code_example"; // String | The code that identifies a Task Definition
         OffsetDateTime asAt = OffsetDateTime.now(); // OffsetDateTime | The asAt datetime at which to retrieve the Task Definition. Defaults to returning the latest version of the Task Definition if not specified.
         try {
+            // uncomment the below to set overrides at the request level
+            // TaskDefinition result = apiInstance.getTaskDefinition(scope, code, asAt).execute(opts);
+
             TaskDefinition result = apiInstance.getTaskDefinition(scope, code, asAt).execute();
             System.out.println(result.toJson());
         } catch (ApiException e) {
@@ -291,6 +324,14 @@ public class TaskDefinitionsApiExample {
             "}");
         }
 
+        // uncomment the below to use configuration overrides
+        // ConfigurationOptions opts = new ConfigurationOptions();
+        // opts.setTotalTimeoutMs(2000);
+        
+        // uncomment the below to use an api factory with overrides
+        // ApiFactory apiFactory = ApiFactoryBuilder.build(fileName, opts);
+        // TaskDefinitionsApi apiInstance = apiFactory.build(TaskDefinitionsApi.class);
+
         TaskDefinitionsApi apiInstance = ApiFactoryBuilder.build(fileName).build(TaskDefinitionsApi.class);
         OffsetDateTime asAt = OffsetDateTime.now(); // OffsetDateTime | The asAt datetime at which to list the Task Definitions. Defaults to return the latest version of each Task Definition if not specified.
         String filter = "filter_example"; // String | Expression to filter the result set. Read more about filtering results from LUSID here: https://support.lusid.com/filtering-results-from-lusid.
@@ -298,6 +339,9 @@ public class TaskDefinitionsApiExample {
         Integer limit = 10; // Integer | When paginating, limit the number of returned results to this many.
         String page = "page_example"; // String | The pagination token to use to continue listing task definitions from a previous call to list task definitions. This value is returned from the previous call. If a pagination token is provided the sortBy, filter, effectiveAt, and asAt fields must not have changed since the original request.
         try {
+            // uncomment the below to set overrides at the request level
+            // PagedResourceListOfTaskDefinition result = apiInstance.listTaskDefinitions(asAt, filter, sortBy, limit, page).execute(opts);
+
             PagedResourceListOfTaskDefinition result = apiInstance.listTaskDefinitions(asAt, filter, sortBy, limit, page).execute();
             System.out.println(result.toJson());
         } catch (ApiException e) {
@@ -378,11 +422,22 @@ public class TaskDefinitionsApiExample {
             "}");
         }
 
+        // uncomment the below to use configuration overrides
+        // ConfigurationOptions opts = new ConfigurationOptions();
+        // opts.setTotalTimeoutMs(2000);
+        
+        // uncomment the below to use an api factory with overrides
+        // ApiFactory apiFactory = ApiFactoryBuilder.build(fileName, opts);
+        // TaskDefinitionsApi apiInstance = apiFactory.build(TaskDefinitionsApi.class);
+
         TaskDefinitionsApi apiInstance = ApiFactoryBuilder.build(fileName).build(TaskDefinitionsApi.class);
         String scope = "scope_example"; // String | The scope that identifies a Task Definition
         String code = "code_example"; // String | The code that identifies a Task Definition
         OffsetDateTime asAt = OffsetDateTime.now(); // OffsetDateTime | The asAt datetime at which to list the Tasks. Defaults to return the latest version of each Task if not specified.
         try {
+            // uncomment the below to set overrides at the request level
+            // ResourceListOfTask result = apiInstance.listTasksForTaskDefinition(scope, code, asAt).execute(opts);
+
             ResourceListOfTask result = apiInstance.listTasksForTaskDefinition(scope, code, asAt).execute();
             System.out.println(result.toJson());
         } catch (ApiException e) {
@@ -461,11 +516,22 @@ public class TaskDefinitionsApiExample {
             "}");
         }
 
+        // uncomment the below to use configuration overrides
+        // ConfigurationOptions opts = new ConfigurationOptions();
+        // opts.setTotalTimeoutMs(2000);
+        
+        // uncomment the below to use an api factory with overrides
+        // ApiFactory apiFactory = ApiFactoryBuilder.build(fileName, opts);
+        // TaskDefinitionsApi apiInstance = apiFactory.build(TaskDefinitionsApi.class);
+
         TaskDefinitionsApi apiInstance = ApiFactoryBuilder.build(fileName).build(TaskDefinitionsApi.class);
         String scope = "scope_example"; // String | The scope that identifies a Task Definition
         String code = "code_example"; // String | The code that identifies a Task Definition
         UpdateTaskDefinitionRequest updateTaskDefinitionRequest = new UpdateTaskDefinitionRequest(); // UpdateTaskDefinitionRequest | The data to update a Task Definition
         try {
+            // uncomment the below to set overrides at the request level
+            // TaskDefinition result = apiInstance.updateTaskDefinition(scope, code, updateTaskDefinitionRequest).execute(opts);
+
             TaskDefinition result = apiInstance.updateTaskDefinition(scope, code, updateTaskDefinitionRequest).execute();
             System.out.println(result.toJson());
         } catch (ApiException e) {

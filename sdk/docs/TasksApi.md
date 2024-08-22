@@ -48,10 +48,21 @@ public class TasksApiExample {
             "}");
         }
 
+        // uncomment the below to use configuration overrides
+        // ConfigurationOptions opts = new ConfigurationOptions();
+        // opts.setTotalTimeoutMs(2000);
+        
+        // uncomment the below to use an api factory with overrides
+        // ApiFactory apiFactory = ApiFactoryBuilder.build(fileName, opts);
+        // TasksApi apiInstance = apiFactory.build(TasksApi.class);
+
         TasksApi apiInstance = ApiFactoryBuilder.build(fileName).build(TasksApi.class);
         CreateTaskRequest createTaskRequest = new CreateTaskRequest(); // CreateTaskRequest | Request to create Task
         String trigger = "trigger_example"; // String | The name of the Trigger to invoke
         try {
+            // uncomment the below to set overrides at the request level
+            // Task result = apiInstance.createTask(createTaskRequest, trigger).execute(opts);
+
             Task result = apiInstance.createTask(createTaskRequest, trigger).execute();
             System.out.println(result.toJson());
         } catch (ApiException e) {
@@ -128,9 +139,20 @@ public class TasksApiExample {
             "}");
         }
 
+        // uncomment the below to use configuration overrides
+        // ConfigurationOptions opts = new ConfigurationOptions();
+        // opts.setTotalTimeoutMs(2000);
+        
+        // uncomment the below to use an api factory with overrides
+        // ApiFactory apiFactory = ApiFactoryBuilder.build(fileName, opts);
+        // TasksApi apiInstance = apiFactory.build(TasksApi.class);
+
         TasksApi apiInstance = ApiFactoryBuilder.build(fileName).build(TasksApi.class);
         String id = "id_example"; // String | The identifier for the Task to be deleted.
         try {
+            // uncomment the below to set overrides at the request level
+            // DeletedEntityResponse result = apiInstance.deleteTask(id).execute(opts);
+
             DeletedEntityResponse result = apiInstance.deleteTask(id).execute();
             System.out.println(result.toJson());
         } catch (ApiException e) {
@@ -207,10 +229,21 @@ public class TasksApiExample {
             "}");
         }
 
+        // uncomment the below to use configuration overrides
+        // ConfigurationOptions opts = new ConfigurationOptions();
+        // opts.setTotalTimeoutMs(2000);
+        
+        // uncomment the below to use an api factory with overrides
+        // ApiFactory apiFactory = ApiFactoryBuilder.build(fileName, opts);
+        // TasksApi apiInstance = apiFactory.build(TasksApi.class);
+
         TasksApi apiInstance = ApiFactoryBuilder.build(fileName).build(TasksApi.class);
         String id = "id_example"; // String | Id of the Task to retrieve
         OffsetDateTime asAt = OffsetDateTime.now(); // OffsetDateTime | The asAt datetime at which to retrieve the Task. Defaults to returning the latest version of the Task if not specified.
         try {
+            // uncomment the below to set overrides at the request level
+            // Task result = apiInstance.getTask(id, asAt).execute(opts);
+
             Task result = apiInstance.getTask(id, asAt).execute();
             System.out.println(result.toJson());
         } catch (ApiException e) {
@@ -288,6 +321,14 @@ public class TasksApiExample {
             "}");
         }
 
+        // uncomment the below to use configuration overrides
+        // ConfigurationOptions opts = new ConfigurationOptions();
+        // opts.setTotalTimeoutMs(2000);
+        
+        // uncomment the below to use an api factory with overrides
+        // ApiFactory apiFactory = ApiFactoryBuilder.build(fileName, opts);
+        // TasksApi apiInstance = apiFactory.build(TasksApi.class);
+
         TasksApi apiInstance = ApiFactoryBuilder.build(fileName).build(TasksApi.class);
         OffsetDateTime asAt = OffsetDateTime.now(); // OffsetDateTime | The asAt datetime at which to list the Tasks. Defaults to return the latest version of each Task if not specified.
         String filter = "filter_example"; // String | Expression to filter the result set. Read more about filtering results from LUSID here: https://support.lusid.com/filtering-results-from-lusid.
@@ -295,6 +336,9 @@ public class TasksApiExample {
         Integer limit = 10; // Integer | When paginating, limit the number of returned results to this many.
         String page = "page_example"; // String | The pagination token to use to continue listing tasks from a previous call to list tasks. This value is returned from the previous call. If a pagination token is provided the sortBy, filter, effectiveAt, and asAt fields must not have changed since the original request.
         try {
+            // uncomment the below to set overrides at the request level
+            // PagedResourceListOfTask result = apiInstance.listTasks(asAt, filter, sortBy, limit, page).execute(opts);
+
             PagedResourceListOfTask result = apiInstance.listTasks(asAt, filter, sortBy, limit, page).execute();
             System.out.println(result.toJson());
         } catch (ApiException e) {
@@ -375,11 +419,22 @@ public class TasksApiExample {
             "}");
         }
 
+        // uncomment the below to use configuration overrides
+        // ConfigurationOptions opts = new ConfigurationOptions();
+        // opts.setTotalTimeoutMs(2000);
+        
+        // uncomment the below to use an api factory with overrides
+        // ApiFactory apiFactory = ApiFactoryBuilder.build(fileName, opts);
+        // TasksApi apiInstance = apiFactory.build(TasksApi.class);
+
         TasksApi apiInstance = ApiFactoryBuilder.build(fileName).build(TasksApi.class);
         String id = "id_example"; // String | Id of the Task to act upon
         String trigger = "trigger_example"; // String | 
         UpdateTaskRequest updateTaskRequest = new UpdateTaskRequest(); // UpdateTaskRequest | The details of the request
         try {
+            // uncomment the below to set overrides at the request level
+            // Task result = apiInstance.updateTask(id, trigger, updateTaskRequest).execute(opts);
+
             Task result = apiInstance.updateTask(id, trigger, updateTaskRequest).execute();
             System.out.println(result.toJson());
         } catch (ApiException e) {

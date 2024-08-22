@@ -48,9 +48,20 @@ public class EventHandlersApiExample {
             "}");
         }
 
+        // uncomment the below to use configuration overrides
+        // ConfigurationOptions opts = new ConfigurationOptions();
+        // opts.setTotalTimeoutMs(2000);
+        
+        // uncomment the below to use an api factory with overrides
+        // ApiFactory apiFactory = ApiFactoryBuilder.build(fileName, opts);
+        // EventHandlersApi apiInstance = apiFactory.build(EventHandlersApi.class);
+
         EventHandlersApi apiInstance = ApiFactoryBuilder.build(fileName).build(EventHandlersApi.class);
         CreateEventHandlerRequest createEventHandlerRequest = new CreateEventHandlerRequest(); // CreateEventHandlerRequest | The data to create an Event Handler
         try {
+            // uncomment the below to set overrides at the request level
+            // EventHandler result = apiInstance.createEventHandler(createEventHandlerRequest).execute(opts);
+
             EventHandler result = apiInstance.createEventHandler(createEventHandlerRequest).execute();
             System.out.println(result.toJson());
         } catch (ApiException e) {
@@ -128,10 +139,21 @@ public class EventHandlersApiExample {
             "}");
         }
 
+        // uncomment the below to use configuration overrides
+        // ConfigurationOptions opts = new ConfigurationOptions();
+        // opts.setTotalTimeoutMs(2000);
+        
+        // uncomment the below to use an api factory with overrides
+        // ApiFactory apiFactory = ApiFactoryBuilder.build(fileName, opts);
+        // EventHandlersApi apiInstance = apiFactory.build(EventHandlersApi.class);
+
         EventHandlersApi apiInstance = ApiFactoryBuilder.build(fileName).build(EventHandlersApi.class);
         String scope = "scope_example"; // String | Scope of the event handler to be deleted
         String code = "code_example"; // String | Code of the event handler to be deleted
         try {
+            // uncomment the below to set overrides at the request level
+            // DeletedEntityResponse result = apiInstance.deleteEventHandler(scope, code).execute(opts);
+
             DeletedEntityResponse result = apiInstance.deleteEventHandler(scope, code).execute();
             System.out.println(result.toJson());
         } catch (ApiException e) {
@@ -211,11 +233,22 @@ public class EventHandlersApiExample {
             "}");
         }
 
+        // uncomment the below to use configuration overrides
+        // ConfigurationOptions opts = new ConfigurationOptions();
+        // opts.setTotalTimeoutMs(2000);
+        
+        // uncomment the below to use an api factory with overrides
+        // ApiFactory apiFactory = ApiFactoryBuilder.build(fileName, opts);
+        // EventHandlersApi apiInstance = apiFactory.build(EventHandlersApi.class);
+
         EventHandlersApi apiInstance = ApiFactoryBuilder.build(fileName).build(EventHandlersApi.class);
         String scope = "scope_example"; // String | Scope of the event handler
         String code = "code_example"; // String | Code of the event handler
         OffsetDateTime asAt = OffsetDateTime.now(); // OffsetDateTime | The asAt datetime at which to retrieve the event handler. Defaults to returning the latest version of the event handler if not specified.
         try {
+            // uncomment the below to set overrides at the request level
+            // EventHandler result = apiInstance.getEventHandler(scope, code, asAt).execute(opts);
+
             EventHandler result = apiInstance.getEventHandler(scope, code, asAt).execute();
             System.out.println(result.toJson());
         } catch (ApiException e) {
@@ -293,12 +326,23 @@ public class EventHandlersApiExample {
             "}");
         }
 
+        // uncomment the below to use configuration overrides
+        // ConfigurationOptions opts = new ConfigurationOptions();
+        // opts.setTotalTimeoutMs(2000);
+        
+        // uncomment the below to use an api factory with overrides
+        // ApiFactory apiFactory = ApiFactoryBuilder.build(fileName, opts);
+        // EventHandlersApi apiInstance = apiFactory.build(EventHandlersApi.class);
+
         EventHandlersApi apiInstance = ApiFactoryBuilder.build(fileName).build(EventHandlersApi.class);
         OffsetDateTime asAt = OffsetDateTime.now(); // OffsetDateTime | The asAt datetime at which to list the Event Handlers. Defaults to return the latest version of each Event Handler if not specified.
         String filter = "filter_example"; // String | Expression to filter the result set. Read more about filtering results from LUSID here: https://support.lusid.com/filtering-results-from-lusid.
         Integer limit = 10; // Integer | When paginating, limit the number of returned results to this many.
         String page = "page_example"; // String | The pagination token to use to continue listing event handlers from a previous call to list event handlers. This value is returned from the previous call. If a pagination token is provided the sortBy, filter, effectiveAt, and asAt fields must not have changed since the original request.
         try {
+            // uncomment the below to set overrides at the request level
+            // PagedResourceListOfEventHandler result = apiInstance.listEventHandlers(asAt, filter, limit, page).execute(opts);
+
             PagedResourceListOfEventHandler result = apiInstance.listEventHandlers(asAt, filter, limit, page).execute();
             System.out.println(result.toJson());
         } catch (ApiException e) {
@@ -377,11 +421,22 @@ public class EventHandlersApiExample {
             "}");
         }
 
+        // uncomment the below to use configuration overrides
+        // ConfigurationOptions opts = new ConfigurationOptions();
+        // opts.setTotalTimeoutMs(2000);
+        
+        // uncomment the below to use an api factory with overrides
+        // ApiFactory apiFactory = ApiFactoryBuilder.build(fileName, opts);
+        // EventHandlersApi apiInstance = apiFactory.build(EventHandlersApi.class);
+
         EventHandlersApi apiInstance = ApiFactoryBuilder.build(fileName).build(EventHandlersApi.class);
         String scope = "scope_example"; // String | The scope that identifies an Event Handler
         String code = "code_example"; // String | The code that identifies an Event Handler
         UpdateEventHandlerRequest updateEventHandlerRequest = new UpdateEventHandlerRequest(); // UpdateEventHandlerRequest | The data to update an Event Handler
         try {
+            // uncomment the below to set overrides at the request level
+            // EventHandler result = apiInstance.updateEventHandler(scope, code, updateEventHandlerRequest).execute(opts);
+
             EventHandler result = apiInstance.updateEventHandler(scope, code, updateEventHandlerRequest).execute();
             System.out.println(result.toJson());
         } catch (ApiException e) {

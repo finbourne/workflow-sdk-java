@@ -18,6 +18,7 @@ import com.finbourne.workflow.Configuration;
 import com.finbourne.workflow.Pair;
 import com.finbourne.workflow.ProgressRequestBody;
 import com.finbourne.workflow.ProgressResponseBody;
+import com.finbourne.workflow.extensions.ConfigurationOptions;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -77,6 +78,10 @@ public class EventHandlersApi {
     }
 
     private okhttp3.Call createEventHandlerCall(CreateEventHandlerRequest createEventHandlerRequest, final ApiCallback _callback) throws ApiException {
+        return createEventHandlerCall(createEventHandlerRequest,  _callback, new ConfigurationOptions());
+    }
+
+    private okhttp3.Call createEventHandlerCall(CreateEventHandlerRequest createEventHandlerRequest, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -121,30 +126,44 @@ public class EventHandlersApi {
         }
 
         String[] localVarAuthNames = new String[] { "oauth2" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback, opts);
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call createEventHandlerValidateBeforeCall(CreateEventHandlerRequest createEventHandlerRequest, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call createEventHandlerValidateBeforeCall(CreateEventHandlerRequest createEventHandlerRequest, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         // verify the required parameter 'createEventHandlerRequest' is set
         if (createEventHandlerRequest == null) {
             throw new ApiException("Missing the required parameter 'createEventHandlerRequest' when calling createEventHandler(Async)");
         }
 
-        return createEventHandlerCall(createEventHandlerRequest, _callback);
+        return createEventHandlerCall(createEventHandlerRequest, _callback, opts);
 
     }
 
 
     private ApiResponse<EventHandler> createEventHandlerWithHttpInfo(CreateEventHandlerRequest createEventHandlerRequest) throws ApiException {
-        okhttp3.Call localVarCall = createEventHandlerValidateBeforeCall(createEventHandlerRequest, null);
+        okhttp3.Call localVarCall = createEventHandlerValidateBeforeCall(createEventHandlerRequest, null, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<EventHandler>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private ApiResponse<EventHandler> createEventHandlerWithHttpInfo(CreateEventHandlerRequest createEventHandlerRequest, ConfigurationOptions opts) throws ApiException {
+        okhttp3.Call localVarCall = createEventHandlerValidateBeforeCall(createEventHandlerRequest, null, opts);
         Type localVarReturnType = new TypeToken<EventHandler>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     private okhttp3.Call createEventHandlerAsync(CreateEventHandlerRequest createEventHandlerRequest, final ApiCallback<EventHandler> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = createEventHandlerValidateBeforeCall(createEventHandlerRequest, _callback);
+        okhttp3.Call localVarCall = createEventHandlerValidateBeforeCall(createEventHandlerRequest, _callback, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<EventHandler>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    private okhttp3.Call createEventHandlerAsync(CreateEventHandlerRequest createEventHandlerRequest, final ApiCallback<EventHandler> _callback, ConfigurationOptions opts) throws ApiException {
+
+        okhttp3.Call localVarCall = createEventHandlerValidateBeforeCall(createEventHandlerRequest, _callback, opts);
         Type localVarReturnType = new TypeToken<EventHandler>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -192,6 +211,23 @@ public class EventHandlersApi {
         }
 
         /**
+         * Execute createEventHandler request. Use any specified configuration options to override any other configuration for this request only.
+         * @return EventHandler
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public EventHandler execute(ConfigurationOptions opts) throws ApiException {
+            ApiResponse<EventHandler> localVarResp = createEventHandlerWithHttpInfo(createEventHandlerRequest, opts);
+            return localVarResp.getData();
+        }
+
+        /**
          * Execute createEventHandler request with HTTP info returned
          * @return ApiResponse&lt;EventHandler&gt;
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -205,6 +241,22 @@ public class EventHandlersApi {
          */
         public ApiResponse<EventHandler> executeWithHttpInfo() throws ApiException {
             return createEventHandlerWithHttpInfo(createEventHandlerRequest);
+        }
+
+        /**
+         * Execute createEventHandler request with HTTP info returned. Use any specified configuration options to override any other configuration for this request only.
+         * @return ApiResponse&lt;EventHandler&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<EventHandler> executeWithHttpInfo(ConfigurationOptions opts) throws ApiException {
+            return createEventHandlerWithHttpInfo(createEventHandlerRequest, opts);
         }
 
         /**
@@ -222,6 +274,23 @@ public class EventHandlersApi {
          */
         public okhttp3.Call executeAsync(final ApiCallback<EventHandler> _callback) throws ApiException {
             return createEventHandlerAsync(createEventHandlerRequest, _callback);
+        }
+
+        /**
+         * Execute createEventHandler request (asynchronously). Use any specified configuration options to override any other configuration for this request only.
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<EventHandler> _callback, ConfigurationOptions opts) throws ApiException {
+            return createEventHandlerAsync(createEventHandlerRequest, _callback, opts);
         }
     }
 
@@ -242,6 +311,10 @@ public class EventHandlersApi {
         return new APIcreateEventHandlerRequest(createEventHandlerRequest);
     }
     private okhttp3.Call deleteEventHandlerCall(String scope, String code, final ApiCallback _callback) throws ApiException {
+        return deleteEventHandlerCall(scope, code,  _callback, new ConfigurationOptions());
+    }
+
+    private okhttp3.Call deleteEventHandlerCall(String scope, String code, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -284,11 +357,11 @@ public class EventHandlersApi {
         }
 
         String[] localVarAuthNames = new String[] { "oauth2" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+        return localVarApiClient.buildCall(basePath, localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback, opts);
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call deleteEventHandlerValidateBeforeCall(String scope, String code, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call deleteEventHandlerValidateBeforeCall(String scope, String code, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         // verify the required parameter 'scope' is set
         if (scope == null) {
             throw new ApiException("Missing the required parameter 'scope' when calling deleteEventHandler(Async)");
@@ -299,20 +372,34 @@ public class EventHandlersApi {
             throw new ApiException("Missing the required parameter 'code' when calling deleteEventHandler(Async)");
         }
 
-        return deleteEventHandlerCall(scope, code, _callback);
+        return deleteEventHandlerCall(scope, code, _callback, opts);
 
     }
 
 
     private ApiResponse<DeletedEntityResponse> deleteEventHandlerWithHttpInfo(String scope, String code) throws ApiException {
-        okhttp3.Call localVarCall = deleteEventHandlerValidateBeforeCall(scope, code, null);
+        okhttp3.Call localVarCall = deleteEventHandlerValidateBeforeCall(scope, code, null, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<DeletedEntityResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private ApiResponse<DeletedEntityResponse> deleteEventHandlerWithHttpInfo(String scope, String code, ConfigurationOptions opts) throws ApiException {
+        okhttp3.Call localVarCall = deleteEventHandlerValidateBeforeCall(scope, code, null, opts);
         Type localVarReturnType = new TypeToken<DeletedEntityResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     private okhttp3.Call deleteEventHandlerAsync(String scope, String code, final ApiCallback<DeletedEntityResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = deleteEventHandlerValidateBeforeCall(scope, code, _callback);
+        okhttp3.Call localVarCall = deleteEventHandlerValidateBeforeCall(scope, code, _callback, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<DeletedEntityResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    private okhttp3.Call deleteEventHandlerAsync(String scope, String code, final ApiCallback<DeletedEntityResponse> _callback, ConfigurationOptions opts) throws ApiException {
+
+        okhttp3.Call localVarCall = deleteEventHandlerValidateBeforeCall(scope, code, _callback, opts);
         Type localVarReturnType = new TypeToken<DeletedEntityResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -364,6 +451,24 @@ public class EventHandlersApi {
         }
 
         /**
+         * Execute deleteEventHandler request. Use any specified configuration options to override any other configuration for this request only.
+         * @return DeletedEntityResponse
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Event Handler not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public DeletedEntityResponse execute(ConfigurationOptions opts) throws ApiException {
+            ApiResponse<DeletedEntityResponse> localVarResp = deleteEventHandlerWithHttpInfo(scope, code, opts);
+            return localVarResp.getData();
+        }
+
+        /**
          * Execute deleteEventHandler request with HTTP info returned
          * @return ApiResponse&lt;DeletedEntityResponse&gt;
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -378,6 +483,23 @@ public class EventHandlersApi {
          */
         public ApiResponse<DeletedEntityResponse> executeWithHttpInfo() throws ApiException {
             return deleteEventHandlerWithHttpInfo(scope, code);
+        }
+
+        /**
+         * Execute deleteEventHandler request with HTTP info returned. Use any specified configuration options to override any other configuration for this request only.
+         * @return ApiResponse&lt;DeletedEntityResponse&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Event Handler not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<DeletedEntityResponse> executeWithHttpInfo(ConfigurationOptions opts) throws ApiException {
+            return deleteEventHandlerWithHttpInfo(scope, code, opts);
         }
 
         /**
@@ -396,6 +518,24 @@ public class EventHandlersApi {
          */
         public okhttp3.Call executeAsync(final ApiCallback<DeletedEntityResponse> _callback) throws ApiException {
             return deleteEventHandlerAsync(scope, code, _callback);
+        }
+
+        /**
+         * Execute deleteEventHandler request (asynchronously). Use any specified configuration options to override any other configuration for this request only.
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Event Handler not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<DeletedEntityResponse> _callback, ConfigurationOptions opts) throws ApiException {
+            return deleteEventHandlerAsync(scope, code, _callback, opts);
         }
     }
 
@@ -418,6 +558,10 @@ public class EventHandlersApi {
         return new APIdeleteEventHandlerRequest(scope, code);
     }
     private okhttp3.Call getEventHandlerCall(String scope, String code, OffsetDateTime asAt, final ApiCallback _callback) throws ApiException {
+        return getEventHandlerCall(scope, code, asAt,  _callback, new ConfigurationOptions());
+    }
+
+    private okhttp3.Call getEventHandlerCall(String scope, String code, OffsetDateTime asAt, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -464,11 +608,11 @@ public class EventHandlersApi {
         }
 
         String[] localVarAuthNames = new String[] { "oauth2" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback, opts);
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getEventHandlerValidateBeforeCall(String scope, String code, OffsetDateTime asAt, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getEventHandlerValidateBeforeCall(String scope, String code, OffsetDateTime asAt, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         // verify the required parameter 'scope' is set
         if (scope == null) {
             throw new ApiException("Missing the required parameter 'scope' when calling getEventHandler(Async)");
@@ -479,20 +623,34 @@ public class EventHandlersApi {
             throw new ApiException("Missing the required parameter 'code' when calling getEventHandler(Async)");
         }
 
-        return getEventHandlerCall(scope, code, asAt, _callback);
+        return getEventHandlerCall(scope, code, asAt, _callback, opts);
 
     }
 
 
     private ApiResponse<EventHandler> getEventHandlerWithHttpInfo(String scope, String code, OffsetDateTime asAt) throws ApiException {
-        okhttp3.Call localVarCall = getEventHandlerValidateBeforeCall(scope, code, asAt, null);
+        okhttp3.Call localVarCall = getEventHandlerValidateBeforeCall(scope, code, asAt, null, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<EventHandler>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private ApiResponse<EventHandler> getEventHandlerWithHttpInfo(String scope, String code, OffsetDateTime asAt, ConfigurationOptions opts) throws ApiException {
+        okhttp3.Call localVarCall = getEventHandlerValidateBeforeCall(scope, code, asAt, null, opts);
         Type localVarReturnType = new TypeToken<EventHandler>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     private okhttp3.Call getEventHandlerAsync(String scope, String code, OffsetDateTime asAt, final ApiCallback<EventHandler> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getEventHandlerValidateBeforeCall(scope, code, asAt, _callback);
+        okhttp3.Call localVarCall = getEventHandlerValidateBeforeCall(scope, code, asAt, _callback, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<EventHandler>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    private okhttp3.Call getEventHandlerAsync(String scope, String code, OffsetDateTime asAt, final ApiCallback<EventHandler> _callback, ConfigurationOptions opts) throws ApiException {
+
+        okhttp3.Call localVarCall = getEventHandlerValidateBeforeCall(scope, code, asAt, _callback, opts);
         Type localVarReturnType = new TypeToken<EventHandler>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -553,6 +711,23 @@ public class EventHandlersApi {
         }
 
         /**
+         * Execute getEventHandler request. Use any specified configuration options to override any other configuration for this request only.
+         * @return EventHandler
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public EventHandler execute(ConfigurationOptions opts) throws ApiException {
+            ApiResponse<EventHandler> localVarResp = getEventHandlerWithHttpInfo(scope, code, asAt, opts);
+            return localVarResp.getData();
+        }
+
+        /**
          * Execute getEventHandler request with HTTP info returned
          * @return ApiResponse&lt;EventHandler&gt;
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -566,6 +741,22 @@ public class EventHandlersApi {
          */
         public ApiResponse<EventHandler> executeWithHttpInfo() throws ApiException {
             return getEventHandlerWithHttpInfo(scope, code, asAt);
+        }
+
+        /**
+         * Execute getEventHandler request with HTTP info returned. Use any specified configuration options to override any other configuration for this request only.
+         * @return ApiResponse&lt;EventHandler&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<EventHandler> executeWithHttpInfo(ConfigurationOptions opts) throws ApiException {
+            return getEventHandlerWithHttpInfo(scope, code, asAt, opts);
         }
 
         /**
@@ -583,6 +774,23 @@ public class EventHandlersApi {
          */
         public okhttp3.Call executeAsync(final ApiCallback<EventHandler> _callback) throws ApiException {
             return getEventHandlerAsync(scope, code, asAt, _callback);
+        }
+
+        /**
+         * Execute getEventHandler request (asynchronously). Use any specified configuration options to override any other configuration for this request only.
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<EventHandler> _callback, ConfigurationOptions opts) throws ApiException {
+            return getEventHandlerAsync(scope, code, asAt, _callback, opts);
         }
     }
 
@@ -604,6 +812,10 @@ public class EventHandlersApi {
         return new APIgetEventHandlerRequest(scope, code);
     }
     private okhttp3.Call listEventHandlersCall(OffsetDateTime asAt, String filter, Integer limit, String page, final ApiCallback _callback) throws ApiException {
+        return listEventHandlersCall(asAt, filter, limit, page,  _callback, new ConfigurationOptions());
+    }
+
+    private okhttp3.Call listEventHandlersCall(OffsetDateTime asAt, String filter, Integer limit, String page, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -660,25 +872,39 @@ public class EventHandlersApi {
         }
 
         String[] localVarAuthNames = new String[] { "oauth2" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback, opts);
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call listEventHandlersValidateBeforeCall(OffsetDateTime asAt, String filter, Integer limit, String page, final ApiCallback _callback) throws ApiException {
-        return listEventHandlersCall(asAt, filter, limit, page, _callback);
+    private okhttp3.Call listEventHandlersValidateBeforeCall(OffsetDateTime asAt, String filter, Integer limit, String page, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
+        return listEventHandlersCall(asAt, filter, limit, page, _callback, opts);
 
     }
 
 
     private ApiResponse<PagedResourceListOfEventHandler> listEventHandlersWithHttpInfo(OffsetDateTime asAt, String filter, Integer limit, String page) throws ApiException {
-        okhttp3.Call localVarCall = listEventHandlersValidateBeforeCall(asAt, filter, limit, page, null);
+        okhttp3.Call localVarCall = listEventHandlersValidateBeforeCall(asAt, filter, limit, page, null, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<PagedResourceListOfEventHandler>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private ApiResponse<PagedResourceListOfEventHandler> listEventHandlersWithHttpInfo(OffsetDateTime asAt, String filter, Integer limit, String page, ConfigurationOptions opts) throws ApiException {
+        okhttp3.Call localVarCall = listEventHandlersValidateBeforeCall(asAt, filter, limit, page, null, opts);
         Type localVarReturnType = new TypeToken<PagedResourceListOfEventHandler>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     private okhttp3.Call listEventHandlersAsync(OffsetDateTime asAt, String filter, Integer limit, String page, final ApiCallback<PagedResourceListOfEventHandler> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = listEventHandlersValidateBeforeCall(asAt, filter, limit, page, _callback);
+        okhttp3.Call localVarCall = listEventHandlersValidateBeforeCall(asAt, filter, limit, page, _callback, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<PagedResourceListOfEventHandler>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    private okhttp3.Call listEventHandlersAsync(OffsetDateTime asAt, String filter, Integer limit, String page, final ApiCallback<PagedResourceListOfEventHandler> _callback, ConfigurationOptions opts) throws ApiException {
+
+        okhttp3.Call localVarCall = listEventHandlersValidateBeforeCall(asAt, filter, limit, page, _callback, opts);
         Type localVarReturnType = new TypeToken<PagedResourceListOfEventHandler>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -768,6 +994,23 @@ public class EventHandlersApi {
         }
 
         /**
+         * Execute listEventHandlers request. Use any specified configuration options to override any other configuration for this request only.
+         * @return PagedResourceListOfEventHandler
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> List of Event Handlers </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public PagedResourceListOfEventHandler execute(ConfigurationOptions opts) throws ApiException {
+            ApiResponse<PagedResourceListOfEventHandler> localVarResp = listEventHandlersWithHttpInfo(asAt, filter, limit, page, opts);
+            return localVarResp.getData();
+        }
+
+        /**
          * Execute listEventHandlers request with HTTP info returned
          * @return ApiResponse&lt;PagedResourceListOfEventHandler&gt;
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -781,6 +1024,22 @@ public class EventHandlersApi {
          */
         public ApiResponse<PagedResourceListOfEventHandler> executeWithHttpInfo() throws ApiException {
             return listEventHandlersWithHttpInfo(asAt, filter, limit, page);
+        }
+
+        /**
+         * Execute listEventHandlers request with HTTP info returned. Use any specified configuration options to override any other configuration for this request only.
+         * @return ApiResponse&lt;PagedResourceListOfEventHandler&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> List of Event Handlers </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<PagedResourceListOfEventHandler> executeWithHttpInfo(ConfigurationOptions opts) throws ApiException {
+            return listEventHandlersWithHttpInfo(asAt, filter, limit, page, opts);
         }
 
         /**
@@ -798,6 +1057,23 @@ public class EventHandlersApi {
          */
         public okhttp3.Call executeAsync(final ApiCallback<PagedResourceListOfEventHandler> _callback) throws ApiException {
             return listEventHandlersAsync(asAt, filter, limit, page, _callback);
+        }
+
+        /**
+         * Execute listEventHandlers request (asynchronously). Use any specified configuration options to override any other configuration for this request only.
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> List of Event Handlers </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<PagedResourceListOfEventHandler> _callback, ConfigurationOptions opts) throws ApiException {
+            return listEventHandlersAsync(asAt, filter, limit, page, _callback, opts);
         }
     }
 
@@ -817,6 +1093,10 @@ public class EventHandlersApi {
         return new APIlistEventHandlersRequest();
     }
     private okhttp3.Call updateEventHandlerCall(String scope, String code, UpdateEventHandlerRequest updateEventHandlerRequest, final ApiCallback _callback) throws ApiException {
+        return updateEventHandlerCall(scope, code, updateEventHandlerRequest,  _callback, new ConfigurationOptions());
+    }
+
+    private okhttp3.Call updateEventHandlerCall(String scope, String code, UpdateEventHandlerRequest updateEventHandlerRequest, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -863,11 +1143,11 @@ public class EventHandlersApi {
         }
 
         String[] localVarAuthNames = new String[] { "oauth2" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+        return localVarApiClient.buildCall(basePath, localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback, opts);
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call updateEventHandlerValidateBeforeCall(String scope, String code, UpdateEventHandlerRequest updateEventHandlerRequest, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call updateEventHandlerValidateBeforeCall(String scope, String code, UpdateEventHandlerRequest updateEventHandlerRequest, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         // verify the required parameter 'scope' is set
         if (scope == null) {
             throw new ApiException("Missing the required parameter 'scope' when calling updateEventHandler(Async)");
@@ -883,20 +1163,34 @@ public class EventHandlersApi {
             throw new ApiException("Missing the required parameter 'updateEventHandlerRequest' when calling updateEventHandler(Async)");
         }
 
-        return updateEventHandlerCall(scope, code, updateEventHandlerRequest, _callback);
+        return updateEventHandlerCall(scope, code, updateEventHandlerRequest, _callback, opts);
 
     }
 
 
     private ApiResponse<EventHandler> updateEventHandlerWithHttpInfo(String scope, String code, UpdateEventHandlerRequest updateEventHandlerRequest) throws ApiException {
-        okhttp3.Call localVarCall = updateEventHandlerValidateBeforeCall(scope, code, updateEventHandlerRequest, null);
+        okhttp3.Call localVarCall = updateEventHandlerValidateBeforeCall(scope, code, updateEventHandlerRequest, null, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<EventHandler>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private ApiResponse<EventHandler> updateEventHandlerWithHttpInfo(String scope, String code, UpdateEventHandlerRequest updateEventHandlerRequest, ConfigurationOptions opts) throws ApiException {
+        okhttp3.Call localVarCall = updateEventHandlerValidateBeforeCall(scope, code, updateEventHandlerRequest, null, opts);
         Type localVarReturnType = new TypeToken<EventHandler>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     private okhttp3.Call updateEventHandlerAsync(String scope, String code, UpdateEventHandlerRequest updateEventHandlerRequest, final ApiCallback<EventHandler> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = updateEventHandlerValidateBeforeCall(scope, code, updateEventHandlerRequest, _callback);
+        okhttp3.Call localVarCall = updateEventHandlerValidateBeforeCall(scope, code, updateEventHandlerRequest, _callback, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<EventHandler>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    private okhttp3.Call updateEventHandlerAsync(String scope, String code, UpdateEventHandlerRequest updateEventHandlerRequest, final ApiCallback<EventHandler> _callback, ConfigurationOptions opts) throws ApiException {
+
+        okhttp3.Call localVarCall = updateEventHandlerValidateBeforeCall(scope, code, updateEventHandlerRequest, _callback, opts);
         Type localVarReturnType = new TypeToken<EventHandler>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -950,6 +1244,24 @@ public class EventHandlersApi {
         }
 
         /**
+         * Execute updateEventHandler request. Use any specified configuration options to override any other configuration for this request only.
+         * @return EventHandler
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Event Handler not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public EventHandler execute(ConfigurationOptions opts) throws ApiException {
+            ApiResponse<EventHandler> localVarResp = updateEventHandlerWithHttpInfo(scope, code, updateEventHandlerRequest, opts);
+            return localVarResp.getData();
+        }
+
+        /**
          * Execute updateEventHandler request with HTTP info returned
          * @return ApiResponse&lt;EventHandler&gt;
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -964,6 +1276,23 @@ public class EventHandlersApi {
          */
         public ApiResponse<EventHandler> executeWithHttpInfo() throws ApiException {
             return updateEventHandlerWithHttpInfo(scope, code, updateEventHandlerRequest);
+        }
+
+        /**
+         * Execute updateEventHandler request with HTTP info returned. Use any specified configuration options to override any other configuration for this request only.
+         * @return ApiResponse&lt;EventHandler&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Event Handler not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<EventHandler> executeWithHttpInfo(ConfigurationOptions opts) throws ApiException {
+            return updateEventHandlerWithHttpInfo(scope, code, updateEventHandlerRequest, opts);
         }
 
         /**
@@ -982,6 +1311,24 @@ public class EventHandlersApi {
          */
         public okhttp3.Call executeAsync(final ApiCallback<EventHandler> _callback) throws ApiException {
             return updateEventHandlerAsync(scope, code, updateEventHandlerRequest, _callback);
+        }
+
+        /**
+         * Execute updateEventHandler request (asynchronously). Use any specified configuration options to override any other configuration for this request only.
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Event Handler not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<EventHandler> _callback, ConfigurationOptions opts) throws ApiException {
+            return updateEventHandlerAsync(scope, code, updateEventHandlerRequest, _callback, opts);
         }
     }
 

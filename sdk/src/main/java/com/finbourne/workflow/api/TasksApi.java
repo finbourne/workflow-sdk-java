@@ -18,6 +18,7 @@ import com.finbourne.workflow.Configuration;
 import com.finbourne.workflow.Pair;
 import com.finbourne.workflow.ProgressRequestBody;
 import com.finbourne.workflow.ProgressResponseBody;
+import com.finbourne.workflow.extensions.ConfigurationOptions;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -77,6 +78,10 @@ public class TasksApi {
     }
 
     private okhttp3.Call createTaskCall(CreateTaskRequest createTaskRequest, String trigger, final ApiCallback _callback) throws ApiException {
+        return createTaskCall(createTaskRequest, trigger,  _callback, new ConfigurationOptions());
+    }
+
+    private okhttp3.Call createTaskCall(CreateTaskRequest createTaskRequest, String trigger, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -125,30 +130,44 @@ public class TasksApi {
         }
 
         String[] localVarAuthNames = new String[] { "oauth2" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback, opts);
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call createTaskValidateBeforeCall(CreateTaskRequest createTaskRequest, String trigger, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call createTaskValidateBeforeCall(CreateTaskRequest createTaskRequest, String trigger, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         // verify the required parameter 'createTaskRequest' is set
         if (createTaskRequest == null) {
             throw new ApiException("Missing the required parameter 'createTaskRequest' when calling createTask(Async)");
         }
 
-        return createTaskCall(createTaskRequest, trigger, _callback);
+        return createTaskCall(createTaskRequest, trigger, _callback, opts);
 
     }
 
 
     private ApiResponse<Task> createTaskWithHttpInfo(CreateTaskRequest createTaskRequest, String trigger) throws ApiException {
-        okhttp3.Call localVarCall = createTaskValidateBeforeCall(createTaskRequest, trigger, null);
+        okhttp3.Call localVarCall = createTaskValidateBeforeCall(createTaskRequest, trigger, null, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<Task>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private ApiResponse<Task> createTaskWithHttpInfo(CreateTaskRequest createTaskRequest, String trigger, ConfigurationOptions opts) throws ApiException {
+        okhttp3.Call localVarCall = createTaskValidateBeforeCall(createTaskRequest, trigger, null, opts);
         Type localVarReturnType = new TypeToken<Task>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     private okhttp3.Call createTaskAsync(CreateTaskRequest createTaskRequest, String trigger, final ApiCallback<Task> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = createTaskValidateBeforeCall(createTaskRequest, trigger, _callback);
+        okhttp3.Call localVarCall = createTaskValidateBeforeCall(createTaskRequest, trigger, _callback, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<Task>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    private okhttp3.Call createTaskAsync(CreateTaskRequest createTaskRequest, String trigger, final ApiCallback<Task> _callback, ConfigurationOptions opts) throws ApiException {
+
+        okhttp3.Call localVarCall = createTaskValidateBeforeCall(createTaskRequest, trigger, _callback, opts);
         Type localVarReturnType = new TypeToken<Task>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -207,6 +226,23 @@ public class TasksApi {
         }
 
         /**
+         * Execute createTask request. Use any specified configuration options to override any other configuration for this request only.
+         * @return Task
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public Task execute(ConfigurationOptions opts) throws ApiException {
+            ApiResponse<Task> localVarResp = createTaskWithHttpInfo(createTaskRequest, trigger, opts);
+            return localVarResp.getData();
+        }
+
+        /**
          * Execute createTask request with HTTP info returned
          * @return ApiResponse&lt;Task&gt;
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -220,6 +256,22 @@ public class TasksApi {
          */
         public ApiResponse<Task> executeWithHttpInfo() throws ApiException {
             return createTaskWithHttpInfo(createTaskRequest, trigger);
+        }
+
+        /**
+         * Execute createTask request with HTTP info returned. Use any specified configuration options to override any other configuration for this request only.
+         * @return ApiResponse&lt;Task&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<Task> executeWithHttpInfo(ConfigurationOptions opts) throws ApiException {
+            return createTaskWithHttpInfo(createTaskRequest, trigger, opts);
         }
 
         /**
@@ -237,6 +289,23 @@ public class TasksApi {
          */
         public okhttp3.Call executeAsync(final ApiCallback<Task> _callback) throws ApiException {
             return createTaskAsync(createTaskRequest, trigger, _callback);
+        }
+
+        /**
+         * Execute createTask request (asynchronously). Use any specified configuration options to override any other configuration for this request only.
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<Task> _callback, ConfigurationOptions opts) throws ApiException {
+            return createTaskAsync(createTaskRequest, trigger, _callback, opts);
         }
     }
 
@@ -257,6 +326,10 @@ public class TasksApi {
         return new APIcreateTaskRequest(createTaskRequest);
     }
     private okhttp3.Call deleteTaskCall(String id, final ApiCallback _callback) throws ApiException {
+        return deleteTaskCall(id,  _callback, new ConfigurationOptions());
+    }
+
+    private okhttp3.Call deleteTaskCall(String id, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -298,30 +371,44 @@ public class TasksApi {
         }
 
         String[] localVarAuthNames = new String[] { "oauth2" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+        return localVarApiClient.buildCall(basePath, localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback, opts);
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call deleteTaskValidateBeforeCall(String id, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call deleteTaskValidateBeforeCall(String id, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         // verify the required parameter 'id' is set
         if (id == null) {
             throw new ApiException("Missing the required parameter 'id' when calling deleteTask(Async)");
         }
 
-        return deleteTaskCall(id, _callback);
+        return deleteTaskCall(id, _callback, opts);
 
     }
 
 
     private ApiResponse<DeletedEntityResponse> deleteTaskWithHttpInfo(String id) throws ApiException {
-        okhttp3.Call localVarCall = deleteTaskValidateBeforeCall(id, null);
+        okhttp3.Call localVarCall = deleteTaskValidateBeforeCall(id, null, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<DeletedEntityResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private ApiResponse<DeletedEntityResponse> deleteTaskWithHttpInfo(String id, ConfigurationOptions opts) throws ApiException {
+        okhttp3.Call localVarCall = deleteTaskValidateBeforeCall(id, null, opts);
         Type localVarReturnType = new TypeToken<DeletedEntityResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     private okhttp3.Call deleteTaskAsync(String id, final ApiCallback<DeletedEntityResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = deleteTaskValidateBeforeCall(id, _callback);
+        okhttp3.Call localVarCall = deleteTaskValidateBeforeCall(id, _callback, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<DeletedEntityResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    private okhttp3.Call deleteTaskAsync(String id, final ApiCallback<DeletedEntityResponse> _callback, ConfigurationOptions opts) throws ApiException {
+
+        okhttp3.Call localVarCall = deleteTaskValidateBeforeCall(id, _callback, opts);
         Type localVarReturnType = new TypeToken<DeletedEntityResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -371,6 +458,24 @@ public class TasksApi {
         }
 
         /**
+         * Execute deleteTask request. Use any specified configuration options to override any other configuration for this request only.
+         * @return DeletedEntityResponse
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Task not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public DeletedEntityResponse execute(ConfigurationOptions opts) throws ApiException {
+            ApiResponse<DeletedEntityResponse> localVarResp = deleteTaskWithHttpInfo(id, opts);
+            return localVarResp.getData();
+        }
+
+        /**
          * Execute deleteTask request with HTTP info returned
          * @return ApiResponse&lt;DeletedEntityResponse&gt;
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -385,6 +490,23 @@ public class TasksApi {
          */
         public ApiResponse<DeletedEntityResponse> executeWithHttpInfo() throws ApiException {
             return deleteTaskWithHttpInfo(id);
+        }
+
+        /**
+         * Execute deleteTask request with HTTP info returned. Use any specified configuration options to override any other configuration for this request only.
+         * @return ApiResponse&lt;DeletedEntityResponse&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Task not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<DeletedEntityResponse> executeWithHttpInfo(ConfigurationOptions opts) throws ApiException {
+            return deleteTaskWithHttpInfo(id, opts);
         }
 
         /**
@@ -403,6 +525,24 @@ public class TasksApi {
          */
         public okhttp3.Call executeAsync(final ApiCallback<DeletedEntityResponse> _callback) throws ApiException {
             return deleteTaskAsync(id, _callback);
+        }
+
+        /**
+         * Execute deleteTask request (asynchronously). Use any specified configuration options to override any other configuration for this request only.
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Task not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<DeletedEntityResponse> _callback, ConfigurationOptions opts) throws ApiException {
+            return deleteTaskAsync(id, _callback, opts);
         }
     }
 
@@ -424,6 +564,10 @@ public class TasksApi {
         return new APIdeleteTaskRequest(id);
     }
     private okhttp3.Call getTaskCall(String id, OffsetDateTime asAt, final ApiCallback _callback) throws ApiException {
+        return getTaskCall(id, asAt,  _callback, new ConfigurationOptions());
+    }
+
+    private okhttp3.Call getTaskCall(String id, OffsetDateTime asAt, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -469,30 +613,44 @@ public class TasksApi {
         }
 
         String[] localVarAuthNames = new String[] { "oauth2" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback, opts);
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getTaskValidateBeforeCall(String id, OffsetDateTime asAt, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getTaskValidateBeforeCall(String id, OffsetDateTime asAt, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         // verify the required parameter 'id' is set
         if (id == null) {
             throw new ApiException("Missing the required parameter 'id' when calling getTask(Async)");
         }
 
-        return getTaskCall(id, asAt, _callback);
+        return getTaskCall(id, asAt, _callback, opts);
 
     }
 
 
     private ApiResponse<Task> getTaskWithHttpInfo(String id, OffsetDateTime asAt) throws ApiException {
-        okhttp3.Call localVarCall = getTaskValidateBeforeCall(id, asAt, null);
+        okhttp3.Call localVarCall = getTaskValidateBeforeCall(id, asAt, null, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<Task>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private ApiResponse<Task> getTaskWithHttpInfo(String id, OffsetDateTime asAt, ConfigurationOptions opts) throws ApiException {
+        okhttp3.Call localVarCall = getTaskValidateBeforeCall(id, asAt, null, opts);
         Type localVarReturnType = new TypeToken<Task>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     private okhttp3.Call getTaskAsync(String id, OffsetDateTime asAt, final ApiCallback<Task> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getTaskValidateBeforeCall(id, asAt, _callback);
+        okhttp3.Call localVarCall = getTaskValidateBeforeCall(id, asAt, _callback, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<Task>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    private okhttp3.Call getTaskAsync(String id, OffsetDateTime asAt, final ApiCallback<Task> _callback, ConfigurationOptions opts) throws ApiException {
+
+        okhttp3.Call localVarCall = getTaskValidateBeforeCall(id, asAt, _callback, opts);
         Type localVarReturnType = new TypeToken<Task>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -553,6 +711,24 @@ public class TasksApi {
         }
 
         /**
+         * Execute getTask request. Use any specified configuration options to override any other configuration for this request only.
+         * @return Task
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Task not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public Task execute(ConfigurationOptions opts) throws ApiException {
+            ApiResponse<Task> localVarResp = getTaskWithHttpInfo(id, asAt, opts);
+            return localVarResp.getData();
+        }
+
+        /**
          * Execute getTask request with HTTP info returned
          * @return ApiResponse&lt;Task&gt;
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -567,6 +743,23 @@ public class TasksApi {
          */
         public ApiResponse<Task> executeWithHttpInfo() throws ApiException {
             return getTaskWithHttpInfo(id, asAt);
+        }
+
+        /**
+         * Execute getTask request with HTTP info returned. Use any specified configuration options to override any other configuration for this request only.
+         * @return ApiResponse&lt;Task&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Task not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<Task> executeWithHttpInfo(ConfigurationOptions opts) throws ApiException {
+            return getTaskWithHttpInfo(id, asAt, opts);
         }
 
         /**
@@ -585,6 +778,24 @@ public class TasksApi {
          */
         public okhttp3.Call executeAsync(final ApiCallback<Task> _callback) throws ApiException {
             return getTaskAsync(id, asAt, _callback);
+        }
+
+        /**
+         * Execute getTask request (asynchronously). Use any specified configuration options to override any other configuration for this request only.
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Task not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<Task> _callback, ConfigurationOptions opts) throws ApiException {
+            return getTaskAsync(id, asAt, _callback, opts);
         }
     }
 
@@ -606,6 +817,10 @@ public class TasksApi {
         return new APIgetTaskRequest(id);
     }
     private okhttp3.Call listTasksCall(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback _callback) throws ApiException {
+        return listTasksCall(asAt, filter, sortBy, limit, page,  _callback, new ConfigurationOptions());
+    }
+
+    private okhttp3.Call listTasksCall(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -666,25 +881,39 @@ public class TasksApi {
         }
 
         String[] localVarAuthNames = new String[] { "oauth2" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback, opts);
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call listTasksValidateBeforeCall(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback _callback) throws ApiException {
-        return listTasksCall(asAt, filter, sortBy, limit, page, _callback);
+    private okhttp3.Call listTasksValidateBeforeCall(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
+        return listTasksCall(asAt, filter, sortBy, limit, page, _callback, opts);
 
     }
 
 
     private ApiResponse<PagedResourceListOfTask> listTasksWithHttpInfo(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page) throws ApiException {
-        okhttp3.Call localVarCall = listTasksValidateBeforeCall(asAt, filter, sortBy, limit, page, null);
+        okhttp3.Call localVarCall = listTasksValidateBeforeCall(asAt, filter, sortBy, limit, page, null, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<PagedResourceListOfTask>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private ApiResponse<PagedResourceListOfTask> listTasksWithHttpInfo(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, ConfigurationOptions opts) throws ApiException {
+        okhttp3.Call localVarCall = listTasksValidateBeforeCall(asAt, filter, sortBy, limit, page, null, opts);
         Type localVarReturnType = new TypeToken<PagedResourceListOfTask>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     private okhttp3.Call listTasksAsync(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback<PagedResourceListOfTask> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = listTasksValidateBeforeCall(asAt, filter, sortBy, limit, page, _callback);
+        okhttp3.Call localVarCall = listTasksValidateBeforeCall(asAt, filter, sortBy, limit, page, _callback, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<PagedResourceListOfTask>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    private okhttp3.Call listTasksAsync(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback<PagedResourceListOfTask> _callback, ConfigurationOptions opts) throws ApiException {
+
+        okhttp3.Call localVarCall = listTasksValidateBeforeCall(asAt, filter, sortBy, limit, page, _callback, opts);
         Type localVarReturnType = new TypeToken<PagedResourceListOfTask>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -787,6 +1016,24 @@ public class TasksApi {
         }
 
         /**
+         * Execute listTasks request. Use any specified configuration options to override any other configuration for this request only.
+         * @return PagedResourceListOfTask
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> No Tasks found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public PagedResourceListOfTask execute(ConfigurationOptions opts) throws ApiException {
+            ApiResponse<PagedResourceListOfTask> localVarResp = listTasksWithHttpInfo(asAt, filter, sortBy, limit, page, opts);
+            return localVarResp.getData();
+        }
+
+        /**
          * Execute listTasks request with HTTP info returned
          * @return ApiResponse&lt;PagedResourceListOfTask&gt;
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -801,6 +1048,23 @@ public class TasksApi {
          */
         public ApiResponse<PagedResourceListOfTask> executeWithHttpInfo() throws ApiException {
             return listTasksWithHttpInfo(asAt, filter, sortBy, limit, page);
+        }
+
+        /**
+         * Execute listTasks request with HTTP info returned. Use any specified configuration options to override any other configuration for this request only.
+         * @return ApiResponse&lt;PagedResourceListOfTask&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> No Tasks found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<PagedResourceListOfTask> executeWithHttpInfo(ConfigurationOptions opts) throws ApiException {
+            return listTasksWithHttpInfo(asAt, filter, sortBy, limit, page, opts);
         }
 
         /**
@@ -819,6 +1083,24 @@ public class TasksApi {
          */
         public okhttp3.Call executeAsync(final ApiCallback<PagedResourceListOfTask> _callback) throws ApiException {
             return listTasksAsync(asAt, filter, sortBy, limit, page, _callback);
+        }
+
+        /**
+         * Execute listTasks request (asynchronously). Use any specified configuration options to override any other configuration for this request only.
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> No Tasks found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<PagedResourceListOfTask> _callback, ConfigurationOptions opts) throws ApiException {
+            return listTasksAsync(asAt, filter, sortBy, limit, page, _callback, opts);
         }
     }
 
@@ -839,6 +1121,10 @@ public class TasksApi {
         return new APIlistTasksRequest();
     }
     private okhttp3.Call updateTaskCall(String id, String trigger, UpdateTaskRequest updateTaskRequest, final ApiCallback _callback) throws ApiException {
+        return updateTaskCall(id, trigger, updateTaskRequest,  _callback, new ConfigurationOptions());
+    }
+
+    private okhttp3.Call updateTaskCall(String id, String trigger, UpdateTaskRequest updateTaskRequest, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -888,30 +1174,44 @@ public class TasksApi {
         }
 
         String[] localVarAuthNames = new String[] { "oauth2" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback, opts);
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call updateTaskValidateBeforeCall(String id, String trigger, UpdateTaskRequest updateTaskRequest, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call updateTaskValidateBeforeCall(String id, String trigger, UpdateTaskRequest updateTaskRequest, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         // verify the required parameter 'id' is set
         if (id == null) {
             throw new ApiException("Missing the required parameter 'id' when calling updateTask(Async)");
         }
 
-        return updateTaskCall(id, trigger, updateTaskRequest, _callback);
+        return updateTaskCall(id, trigger, updateTaskRequest, _callback, opts);
 
     }
 
 
     private ApiResponse<Task> updateTaskWithHttpInfo(String id, String trigger, UpdateTaskRequest updateTaskRequest) throws ApiException {
-        okhttp3.Call localVarCall = updateTaskValidateBeforeCall(id, trigger, updateTaskRequest, null);
+        okhttp3.Call localVarCall = updateTaskValidateBeforeCall(id, trigger, updateTaskRequest, null, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<Task>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private ApiResponse<Task> updateTaskWithHttpInfo(String id, String trigger, UpdateTaskRequest updateTaskRequest, ConfigurationOptions opts) throws ApiException {
+        okhttp3.Call localVarCall = updateTaskValidateBeforeCall(id, trigger, updateTaskRequest, null, opts);
         Type localVarReturnType = new TypeToken<Task>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     private okhttp3.Call updateTaskAsync(String id, String trigger, UpdateTaskRequest updateTaskRequest, final ApiCallback<Task> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = updateTaskValidateBeforeCall(id, trigger, updateTaskRequest, _callback);
+        okhttp3.Call localVarCall = updateTaskValidateBeforeCall(id, trigger, updateTaskRequest, _callback, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<Task>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    private okhttp3.Call updateTaskAsync(String id, String trigger, UpdateTaskRequest updateTaskRequest, final ApiCallback<Task> _callback, ConfigurationOptions opts) throws ApiException {
+
+        okhttp3.Call localVarCall = updateTaskValidateBeforeCall(id, trigger, updateTaskRequest, _callback, opts);
         Type localVarReturnType = new TypeToken<Task>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -983,6 +1283,24 @@ public class TasksApi {
         }
 
         /**
+         * Execute updateTask request. Use any specified configuration options to override any other configuration for this request only.
+         * @return Task
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Task not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public Task execute(ConfigurationOptions opts) throws ApiException {
+            ApiResponse<Task> localVarResp = updateTaskWithHttpInfo(id, trigger, updateTaskRequest, opts);
+            return localVarResp.getData();
+        }
+
+        /**
          * Execute updateTask request with HTTP info returned
          * @return ApiResponse&lt;Task&gt;
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -997,6 +1315,23 @@ public class TasksApi {
          */
         public ApiResponse<Task> executeWithHttpInfo() throws ApiException {
             return updateTaskWithHttpInfo(id, trigger, updateTaskRequest);
+        }
+
+        /**
+         * Execute updateTask request with HTTP info returned. Use any specified configuration options to override any other configuration for this request only.
+         * @return ApiResponse&lt;Task&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Task not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<Task> executeWithHttpInfo(ConfigurationOptions opts) throws ApiException {
+            return updateTaskWithHttpInfo(id, trigger, updateTaskRequest, opts);
         }
 
         /**
@@ -1015,6 +1350,24 @@ public class TasksApi {
          */
         public okhttp3.Call executeAsync(final ApiCallback<Task> _callback) throws ApiException {
             return updateTaskAsync(id, trigger, updateTaskRequest, _callback);
+        }
+
+        /**
+         * Execute updateTask request (asynchronously). Use any specified configuration options to override any other configuration for this request only.
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Task not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<Task> _callback, ConfigurationOptions opts) throws ApiException {
+            return updateTaskAsync(id, trigger, updateTaskRequest, _callback, opts);
         }
     }
 

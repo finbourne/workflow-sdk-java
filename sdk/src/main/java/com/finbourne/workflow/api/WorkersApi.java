@@ -18,6 +18,7 @@ import com.finbourne.workflow.Configuration;
 import com.finbourne.workflow.Pair;
 import com.finbourne.workflow.ProgressRequestBody;
 import com.finbourne.workflow.ProgressResponseBody;
+import com.finbourne.workflow.extensions.ConfigurationOptions;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -81,6 +82,10 @@ public class WorkersApi {
     }
 
     private okhttp3.Call createWorkerCall(CreateWorkerRequest createWorkerRequest, final ApiCallback _callback) throws ApiException {
+        return createWorkerCall(createWorkerRequest,  _callback, new ConfigurationOptions());
+    }
+
+    private okhttp3.Call createWorkerCall(CreateWorkerRequest createWorkerRequest, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -127,30 +132,44 @@ public class WorkersApi {
         }
 
         String[] localVarAuthNames = new String[] { "oauth2" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback, opts);
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call createWorkerValidateBeforeCall(CreateWorkerRequest createWorkerRequest, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call createWorkerValidateBeforeCall(CreateWorkerRequest createWorkerRequest, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         // verify the required parameter 'createWorkerRequest' is set
         if (createWorkerRequest == null) {
             throw new ApiException("Missing the required parameter 'createWorkerRequest' when calling createWorker(Async)");
         }
 
-        return createWorkerCall(createWorkerRequest, _callback);
+        return createWorkerCall(createWorkerRequest, _callback, opts);
 
     }
 
 
     private ApiResponse<Worker> createWorkerWithHttpInfo(CreateWorkerRequest createWorkerRequest) throws ApiException {
-        okhttp3.Call localVarCall = createWorkerValidateBeforeCall(createWorkerRequest, null);
+        okhttp3.Call localVarCall = createWorkerValidateBeforeCall(createWorkerRequest, null, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<Worker>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private ApiResponse<Worker> createWorkerWithHttpInfo(CreateWorkerRequest createWorkerRequest, ConfigurationOptions opts) throws ApiException {
+        okhttp3.Call localVarCall = createWorkerValidateBeforeCall(createWorkerRequest, null, opts);
         Type localVarReturnType = new TypeToken<Worker>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     private okhttp3.Call createWorkerAsync(CreateWorkerRequest createWorkerRequest, final ApiCallback<Worker> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = createWorkerValidateBeforeCall(createWorkerRequest, _callback);
+        okhttp3.Call localVarCall = createWorkerValidateBeforeCall(createWorkerRequest, _callback, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<Worker>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    private okhttp3.Call createWorkerAsync(CreateWorkerRequest createWorkerRequest, final ApiCallback<Worker> _callback, ConfigurationOptions opts) throws ApiException {
+
+        okhttp3.Call localVarCall = createWorkerValidateBeforeCall(createWorkerRequest, _callback, opts);
         Type localVarReturnType = new TypeToken<Worker>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -198,6 +217,23 @@ public class WorkersApi {
         }
 
         /**
+         * Execute createWorker request. Use any specified configuration options to override any other configuration for this request only.
+         * @return Worker
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public Worker execute(ConfigurationOptions opts) throws ApiException {
+            ApiResponse<Worker> localVarResp = createWorkerWithHttpInfo(createWorkerRequest, opts);
+            return localVarResp.getData();
+        }
+
+        /**
          * Execute createWorker request with HTTP info returned
          * @return ApiResponse&lt;Worker&gt;
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -211,6 +247,22 @@ public class WorkersApi {
          */
         public ApiResponse<Worker> executeWithHttpInfo() throws ApiException {
             return createWorkerWithHttpInfo(createWorkerRequest);
+        }
+
+        /**
+         * Execute createWorker request with HTTP info returned. Use any specified configuration options to override any other configuration for this request only.
+         * @return ApiResponse&lt;Worker&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<Worker> executeWithHttpInfo(ConfigurationOptions opts) throws ApiException {
+            return createWorkerWithHttpInfo(createWorkerRequest, opts);
         }
 
         /**
@@ -228,6 +280,23 @@ public class WorkersApi {
          */
         public okhttp3.Call executeAsync(final ApiCallback<Worker> _callback) throws ApiException {
             return createWorkerAsync(createWorkerRequest, _callback);
+        }
+
+        /**
+         * Execute createWorker request (asynchronously). Use any specified configuration options to override any other configuration for this request only.
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<Worker> _callback, ConfigurationOptions opts) throws ApiException {
+            return createWorkerAsync(createWorkerRequest, _callback, opts);
         }
     }
 
@@ -248,6 +317,10 @@ public class WorkersApi {
         return new APIcreateWorkerRequest(createWorkerRequest);
     }
     private okhttp3.Call deleteWorkerCall(String scope, String code, final ApiCallback _callback) throws ApiException {
+        return deleteWorkerCall(scope, code,  _callback, new ConfigurationOptions());
+    }
+
+    private okhttp3.Call deleteWorkerCall(String scope, String code, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -292,11 +365,11 @@ public class WorkersApi {
         }
 
         String[] localVarAuthNames = new String[] { "oauth2" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+        return localVarApiClient.buildCall(basePath, localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback, opts);
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call deleteWorkerValidateBeforeCall(String scope, String code, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call deleteWorkerValidateBeforeCall(String scope, String code, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         // verify the required parameter 'scope' is set
         if (scope == null) {
             throw new ApiException("Missing the required parameter 'scope' when calling deleteWorker(Async)");
@@ -307,20 +380,34 @@ public class WorkersApi {
             throw new ApiException("Missing the required parameter 'code' when calling deleteWorker(Async)");
         }
 
-        return deleteWorkerCall(scope, code, _callback);
+        return deleteWorkerCall(scope, code, _callback, opts);
 
     }
 
 
     private ApiResponse<DeletedEntityResponse> deleteWorkerWithHttpInfo(String scope, String code) throws ApiException {
-        okhttp3.Call localVarCall = deleteWorkerValidateBeforeCall(scope, code, null);
+        okhttp3.Call localVarCall = deleteWorkerValidateBeforeCall(scope, code, null, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<DeletedEntityResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private ApiResponse<DeletedEntityResponse> deleteWorkerWithHttpInfo(String scope, String code, ConfigurationOptions opts) throws ApiException {
+        okhttp3.Call localVarCall = deleteWorkerValidateBeforeCall(scope, code, null, opts);
         Type localVarReturnType = new TypeToken<DeletedEntityResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     private okhttp3.Call deleteWorkerAsync(String scope, String code, final ApiCallback<DeletedEntityResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = deleteWorkerValidateBeforeCall(scope, code, _callback);
+        okhttp3.Call localVarCall = deleteWorkerValidateBeforeCall(scope, code, _callback, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<DeletedEntityResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    private okhttp3.Call deleteWorkerAsync(String scope, String code, final ApiCallback<DeletedEntityResponse> _callback, ConfigurationOptions opts) throws ApiException {
+
+        okhttp3.Call localVarCall = deleteWorkerValidateBeforeCall(scope, code, _callback, opts);
         Type localVarReturnType = new TypeToken<DeletedEntityResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -372,6 +459,24 @@ public class WorkersApi {
         }
 
         /**
+         * Execute deleteWorker request. Use any specified configuration options to override any other configuration for this request only.
+         * @return DeletedEntityResponse
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Worker not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public DeletedEntityResponse execute(ConfigurationOptions opts) throws ApiException {
+            ApiResponse<DeletedEntityResponse> localVarResp = deleteWorkerWithHttpInfo(scope, code, opts);
+            return localVarResp.getData();
+        }
+
+        /**
          * Execute deleteWorker request with HTTP info returned
          * @return ApiResponse&lt;DeletedEntityResponse&gt;
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -386,6 +491,23 @@ public class WorkersApi {
          */
         public ApiResponse<DeletedEntityResponse> executeWithHttpInfo() throws ApiException {
             return deleteWorkerWithHttpInfo(scope, code);
+        }
+
+        /**
+         * Execute deleteWorker request with HTTP info returned. Use any specified configuration options to override any other configuration for this request only.
+         * @return ApiResponse&lt;DeletedEntityResponse&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Worker not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<DeletedEntityResponse> executeWithHttpInfo(ConfigurationOptions opts) throws ApiException {
+            return deleteWorkerWithHttpInfo(scope, code, opts);
         }
 
         /**
@@ -404,6 +526,24 @@ public class WorkersApi {
          */
         public okhttp3.Call executeAsync(final ApiCallback<DeletedEntityResponse> _callback) throws ApiException {
             return deleteWorkerAsync(scope, code, _callback);
+        }
+
+        /**
+         * Execute deleteWorker request (asynchronously). Use any specified configuration options to override any other configuration for this request only.
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Worker not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<DeletedEntityResponse> _callback, ConfigurationOptions opts) throws ApiException {
+            return deleteWorkerAsync(scope, code, _callback, opts);
         }
     }
 
@@ -426,6 +566,10 @@ public class WorkersApi {
         return new APIdeleteWorkerRequest(scope, code);
     }
     private okhttp3.Call getWorkerCall(String scope, String code, OffsetDateTime asAt, final ApiCallback _callback) throws ApiException {
+        return getWorkerCall(scope, code, asAt,  _callback, new ConfigurationOptions());
+    }
+
+    private okhttp3.Call getWorkerCall(String scope, String code, OffsetDateTime asAt, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -474,11 +618,11 @@ public class WorkersApi {
         }
 
         String[] localVarAuthNames = new String[] { "oauth2" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback, opts);
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getWorkerValidateBeforeCall(String scope, String code, OffsetDateTime asAt, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getWorkerValidateBeforeCall(String scope, String code, OffsetDateTime asAt, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         // verify the required parameter 'scope' is set
         if (scope == null) {
             throw new ApiException("Missing the required parameter 'scope' when calling getWorker(Async)");
@@ -489,20 +633,34 @@ public class WorkersApi {
             throw new ApiException("Missing the required parameter 'code' when calling getWorker(Async)");
         }
 
-        return getWorkerCall(scope, code, asAt, _callback);
+        return getWorkerCall(scope, code, asAt, _callback, opts);
 
     }
 
 
     private ApiResponse<Worker> getWorkerWithHttpInfo(String scope, String code, OffsetDateTime asAt) throws ApiException {
-        okhttp3.Call localVarCall = getWorkerValidateBeforeCall(scope, code, asAt, null);
+        okhttp3.Call localVarCall = getWorkerValidateBeforeCall(scope, code, asAt, null, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<Worker>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private ApiResponse<Worker> getWorkerWithHttpInfo(String scope, String code, OffsetDateTime asAt, ConfigurationOptions opts) throws ApiException {
+        okhttp3.Call localVarCall = getWorkerValidateBeforeCall(scope, code, asAt, null, opts);
         Type localVarReturnType = new TypeToken<Worker>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     private okhttp3.Call getWorkerAsync(String scope, String code, OffsetDateTime asAt, final ApiCallback<Worker> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getWorkerValidateBeforeCall(scope, code, asAt, _callback);
+        okhttp3.Call localVarCall = getWorkerValidateBeforeCall(scope, code, asAt, _callback, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<Worker>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    private okhttp3.Call getWorkerAsync(String scope, String code, OffsetDateTime asAt, final ApiCallback<Worker> _callback, ConfigurationOptions opts) throws ApiException {
+
+        okhttp3.Call localVarCall = getWorkerValidateBeforeCall(scope, code, asAt, _callback, opts);
         Type localVarReturnType = new TypeToken<Worker>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -563,6 +721,23 @@ public class WorkersApi {
         }
 
         /**
+         * Execute getWorker request. Use any specified configuration options to override any other configuration for this request only.
+         * @return Worker
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public Worker execute(ConfigurationOptions opts) throws ApiException {
+            ApiResponse<Worker> localVarResp = getWorkerWithHttpInfo(scope, code, asAt, opts);
+            return localVarResp.getData();
+        }
+
+        /**
          * Execute getWorker request with HTTP info returned
          * @return ApiResponse&lt;Worker&gt;
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -576,6 +751,22 @@ public class WorkersApi {
          */
         public ApiResponse<Worker> executeWithHttpInfo() throws ApiException {
             return getWorkerWithHttpInfo(scope, code, asAt);
+        }
+
+        /**
+         * Execute getWorker request with HTTP info returned. Use any specified configuration options to override any other configuration for this request only.
+         * @return ApiResponse&lt;Worker&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<Worker> executeWithHttpInfo(ConfigurationOptions opts) throws ApiException {
+            return getWorkerWithHttpInfo(scope, code, asAt, opts);
         }
 
         /**
@@ -593,6 +784,23 @@ public class WorkersApi {
          */
         public okhttp3.Call executeAsync(final ApiCallback<Worker> _callback) throws ApiException {
             return getWorkerAsync(scope, code, asAt, _callback);
+        }
+
+        /**
+         * Execute getWorker request (asynchronously). Use any specified configuration options to override any other configuration for this request only.
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<Worker> _callback, ConfigurationOptions opts) throws ApiException {
+            return getWorkerAsync(scope, code, asAt, _callback, opts);
         }
     }
 
@@ -614,6 +822,10 @@ public class WorkersApi {
         return new APIgetWorkerRequest(scope, code);
     }
     private okhttp3.Call getWorkerResultCall(UUID runId, final ApiCallback _callback) throws ApiException {
+        return getWorkerResultCall(runId,  _callback, new ConfigurationOptions());
+    }
+
+    private okhttp3.Call getWorkerResultCall(UUID runId, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -657,30 +869,44 @@ public class WorkersApi {
         }
 
         String[] localVarAuthNames = new String[] { "oauth2" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback, opts);
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getWorkerResultValidateBeforeCall(UUID runId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getWorkerResultValidateBeforeCall(UUID runId, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         // verify the required parameter 'runId' is set
         if (runId == null) {
             throw new ApiException("Missing the required parameter 'runId' when calling getWorkerResult(Async)");
         }
 
-        return getWorkerResultCall(runId, _callback);
+        return getWorkerResultCall(runId, _callback, opts);
 
     }
 
 
     private ApiResponse<GetWorkerResultResponse> getWorkerResultWithHttpInfo(UUID runId) throws ApiException {
-        okhttp3.Call localVarCall = getWorkerResultValidateBeforeCall(runId, null);
+        okhttp3.Call localVarCall = getWorkerResultValidateBeforeCall(runId, null, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<GetWorkerResultResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private ApiResponse<GetWorkerResultResponse> getWorkerResultWithHttpInfo(UUID runId, ConfigurationOptions opts) throws ApiException {
+        okhttp3.Call localVarCall = getWorkerResultValidateBeforeCall(runId, null, opts);
         Type localVarReturnType = new TypeToken<GetWorkerResultResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     private okhttp3.Call getWorkerResultAsync(UUID runId, final ApiCallback<GetWorkerResultResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getWorkerResultValidateBeforeCall(runId, _callback);
+        okhttp3.Call localVarCall = getWorkerResultValidateBeforeCall(runId, _callback, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<GetWorkerResultResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    private okhttp3.Call getWorkerResultAsync(UUID runId, final ApiCallback<GetWorkerResultResponse> _callback, ConfigurationOptions opts) throws ApiException {
+
+        okhttp3.Call localVarCall = getWorkerResultValidateBeforeCall(runId, _callback, opts);
         Type localVarReturnType = new TypeToken<GetWorkerResultResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -728,6 +954,23 @@ public class WorkersApi {
         }
 
         /**
+         * Execute getWorkerResult request. Use any specified configuration options to override any other configuration for this request only.
+         * @return GetWorkerResultResponse
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public GetWorkerResultResponse execute(ConfigurationOptions opts) throws ApiException {
+            ApiResponse<GetWorkerResultResponse> localVarResp = getWorkerResultWithHttpInfo(runId, opts);
+            return localVarResp.getData();
+        }
+
+        /**
          * Execute getWorkerResult request with HTTP info returned
          * @return ApiResponse&lt;GetWorkerResultResponse&gt;
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -741,6 +984,22 @@ public class WorkersApi {
          */
         public ApiResponse<GetWorkerResultResponse> executeWithHttpInfo() throws ApiException {
             return getWorkerResultWithHttpInfo(runId);
+        }
+
+        /**
+         * Execute getWorkerResult request with HTTP info returned. Use any specified configuration options to override any other configuration for this request only.
+         * @return ApiResponse&lt;GetWorkerResultResponse&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<GetWorkerResultResponse> executeWithHttpInfo(ConfigurationOptions opts) throws ApiException {
+            return getWorkerResultWithHttpInfo(runId, opts);
         }
 
         /**
@@ -758,6 +1017,23 @@ public class WorkersApi {
          */
         public okhttp3.Call executeAsync(final ApiCallback<GetWorkerResultResponse> _callback) throws ApiException {
             return getWorkerResultAsync(runId, _callback);
+        }
+
+        /**
+         * Execute getWorkerResult request (asynchronously). Use any specified configuration options to override any other configuration for this request only.
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<GetWorkerResultResponse> _callback, ConfigurationOptions opts) throws ApiException {
+            return getWorkerResultAsync(runId, _callback, opts);
         }
     }
 
@@ -778,6 +1054,10 @@ public class WorkersApi {
         return new APIgetWorkerResultRequest(runId);
     }
     private okhttp3.Call listWorkersCall(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback _callback) throws ApiException {
+        return listWorkersCall(asAt, filter, sortBy, limit, page,  _callback, new ConfigurationOptions());
+    }
+
+    private okhttp3.Call listWorkersCall(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -840,25 +1120,39 @@ public class WorkersApi {
         }
 
         String[] localVarAuthNames = new String[] { "oauth2" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback, opts);
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call listWorkersValidateBeforeCall(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback _callback) throws ApiException {
-        return listWorkersCall(asAt, filter, sortBy, limit, page, _callback);
+    private okhttp3.Call listWorkersValidateBeforeCall(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
+        return listWorkersCall(asAt, filter, sortBy, limit, page, _callback, opts);
 
     }
 
 
     private ApiResponse<PagedResourceListOfWorker> listWorkersWithHttpInfo(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page) throws ApiException {
-        okhttp3.Call localVarCall = listWorkersValidateBeforeCall(asAt, filter, sortBy, limit, page, null);
+        okhttp3.Call localVarCall = listWorkersValidateBeforeCall(asAt, filter, sortBy, limit, page, null, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<PagedResourceListOfWorker>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private ApiResponse<PagedResourceListOfWorker> listWorkersWithHttpInfo(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, ConfigurationOptions opts) throws ApiException {
+        okhttp3.Call localVarCall = listWorkersValidateBeforeCall(asAt, filter, sortBy, limit, page, null, opts);
         Type localVarReturnType = new TypeToken<PagedResourceListOfWorker>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     private okhttp3.Call listWorkersAsync(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback<PagedResourceListOfWorker> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = listWorkersValidateBeforeCall(asAt, filter, sortBy, limit, page, _callback);
+        okhttp3.Call localVarCall = listWorkersValidateBeforeCall(asAt, filter, sortBy, limit, page, _callback, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<PagedResourceListOfWorker>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    private okhttp3.Call listWorkersAsync(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback<PagedResourceListOfWorker> _callback, ConfigurationOptions opts) throws ApiException {
+
+        okhttp3.Call localVarCall = listWorkersValidateBeforeCall(asAt, filter, sortBy, limit, page, _callback, opts);
         Type localVarReturnType = new TypeToken<PagedResourceListOfWorker>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -959,6 +1253,23 @@ public class WorkersApi {
         }
 
         /**
+         * Execute listWorkers request. Use any specified configuration options to override any other configuration for this request only.
+         * @return PagedResourceListOfWorker
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public PagedResourceListOfWorker execute(ConfigurationOptions opts) throws ApiException {
+            ApiResponse<PagedResourceListOfWorker> localVarResp = listWorkersWithHttpInfo(asAt, filter, sortBy, limit, page, opts);
+            return localVarResp.getData();
+        }
+
+        /**
          * Execute listWorkers request with HTTP info returned
          * @return ApiResponse&lt;PagedResourceListOfWorker&gt;
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -972,6 +1283,22 @@ public class WorkersApi {
          */
         public ApiResponse<PagedResourceListOfWorker> executeWithHttpInfo() throws ApiException {
             return listWorkersWithHttpInfo(asAt, filter, sortBy, limit, page);
+        }
+
+        /**
+         * Execute listWorkers request with HTTP info returned. Use any specified configuration options to override any other configuration for this request only.
+         * @return ApiResponse&lt;PagedResourceListOfWorker&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<PagedResourceListOfWorker> executeWithHttpInfo(ConfigurationOptions opts) throws ApiException {
+            return listWorkersWithHttpInfo(asAt, filter, sortBy, limit, page, opts);
         }
 
         /**
@@ -989,6 +1316,23 @@ public class WorkersApi {
          */
         public okhttp3.Call executeAsync(final ApiCallback<PagedResourceListOfWorker> _callback) throws ApiException {
             return listWorkersAsync(asAt, filter, sortBy, limit, page, _callback);
+        }
+
+        /**
+         * Execute listWorkers request (asynchronously). Use any specified configuration options to override any other configuration for this request only.
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<PagedResourceListOfWorker> _callback, ConfigurationOptions opts) throws ApiException {
+            return listWorkersAsync(asAt, filter, sortBy, limit, page, _callback, opts);
         }
     }
 
@@ -1008,6 +1352,10 @@ public class WorkersApi {
         return new APIlistWorkersRequest();
     }
     private okhttp3.Call runWorkerCall(String scope, String code, RunWorkerRequest runWorkerRequest, OffsetDateTime asAt, final ApiCallback _callback) throws ApiException {
+        return runWorkerCall(scope, code, runWorkerRequest, asAt,  _callback, new ConfigurationOptions());
+    }
+
+    private okhttp3.Call runWorkerCall(String scope, String code, RunWorkerRequest runWorkerRequest, OffsetDateTime asAt, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1060,11 +1408,11 @@ public class WorkersApi {
         }
 
         String[] localVarAuthNames = new String[] { "oauth2" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback, opts);
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call runWorkerValidateBeforeCall(String scope, String code, RunWorkerRequest runWorkerRequest, OffsetDateTime asAt, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call runWorkerValidateBeforeCall(String scope, String code, RunWorkerRequest runWorkerRequest, OffsetDateTime asAt, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         // verify the required parameter 'scope' is set
         if (scope == null) {
             throw new ApiException("Missing the required parameter 'scope' when calling runWorker(Async)");
@@ -1080,20 +1428,34 @@ public class WorkersApi {
             throw new ApiException("Missing the required parameter 'runWorkerRequest' when calling runWorker(Async)");
         }
 
-        return runWorkerCall(scope, code, runWorkerRequest, asAt, _callback);
+        return runWorkerCall(scope, code, runWorkerRequest, asAt, _callback, opts);
 
     }
 
 
     private ApiResponse<RunWorkerResponse> runWorkerWithHttpInfo(String scope, String code, RunWorkerRequest runWorkerRequest, OffsetDateTime asAt) throws ApiException {
-        okhttp3.Call localVarCall = runWorkerValidateBeforeCall(scope, code, runWorkerRequest, asAt, null);
+        okhttp3.Call localVarCall = runWorkerValidateBeforeCall(scope, code, runWorkerRequest, asAt, null, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<RunWorkerResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private ApiResponse<RunWorkerResponse> runWorkerWithHttpInfo(String scope, String code, RunWorkerRequest runWorkerRequest, OffsetDateTime asAt, ConfigurationOptions opts) throws ApiException {
+        okhttp3.Call localVarCall = runWorkerValidateBeforeCall(scope, code, runWorkerRequest, asAt, null, opts);
         Type localVarReturnType = new TypeToken<RunWorkerResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     private okhttp3.Call runWorkerAsync(String scope, String code, RunWorkerRequest runWorkerRequest, OffsetDateTime asAt, final ApiCallback<RunWorkerResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = runWorkerValidateBeforeCall(scope, code, runWorkerRequest, asAt, _callback);
+        okhttp3.Call localVarCall = runWorkerValidateBeforeCall(scope, code, runWorkerRequest, asAt, _callback, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<RunWorkerResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    private okhttp3.Call runWorkerAsync(String scope, String code, RunWorkerRequest runWorkerRequest, OffsetDateTime asAt, final ApiCallback<RunWorkerResponse> _callback, ConfigurationOptions opts) throws ApiException {
+
+        okhttp3.Call localVarCall = runWorkerValidateBeforeCall(scope, code, runWorkerRequest, asAt, _callback, opts);
         Type localVarReturnType = new TypeToken<RunWorkerResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1156,6 +1518,23 @@ public class WorkersApi {
         }
 
         /**
+         * Execute runWorker request. Use any specified configuration options to override any other configuration for this request only.
+         * @return RunWorkerResponse
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public RunWorkerResponse execute(ConfigurationOptions opts) throws ApiException {
+            ApiResponse<RunWorkerResponse> localVarResp = runWorkerWithHttpInfo(scope, code, runWorkerRequest, asAt, opts);
+            return localVarResp.getData();
+        }
+
+        /**
          * Execute runWorker request with HTTP info returned
          * @return ApiResponse&lt;RunWorkerResponse&gt;
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1169,6 +1548,22 @@ public class WorkersApi {
          */
         public ApiResponse<RunWorkerResponse> executeWithHttpInfo() throws ApiException {
             return runWorkerWithHttpInfo(scope, code, runWorkerRequest, asAt);
+        }
+
+        /**
+         * Execute runWorker request with HTTP info returned. Use any specified configuration options to override any other configuration for this request only.
+         * @return ApiResponse&lt;RunWorkerResponse&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<RunWorkerResponse> executeWithHttpInfo(ConfigurationOptions opts) throws ApiException {
+            return runWorkerWithHttpInfo(scope, code, runWorkerRequest, asAt, opts);
         }
 
         /**
@@ -1186,6 +1581,23 @@ public class WorkersApi {
          */
         public okhttp3.Call executeAsync(final ApiCallback<RunWorkerResponse> _callback) throws ApiException {
             return runWorkerAsync(scope, code, runWorkerRequest, asAt, _callback);
+        }
+
+        /**
+         * Execute runWorker request (asynchronously). Use any specified configuration options to override any other configuration for this request only.
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<RunWorkerResponse> _callback, ConfigurationOptions opts) throws ApiException {
+            return runWorkerAsync(scope, code, runWorkerRequest, asAt, _callback, opts);
         }
     }
 
@@ -1208,6 +1620,10 @@ public class WorkersApi {
         return new APIrunWorkerRequest(scope, code, runWorkerRequest);
     }
     private okhttp3.Call updateWorkerCall(String scope, String code, UpdateWorkerRequest updateWorkerRequest, final ApiCallback _callback) throws ApiException {
+        return updateWorkerCall(scope, code, updateWorkerRequest,  _callback, new ConfigurationOptions());
+    }
+
+    private okhttp3.Call updateWorkerCall(String scope, String code, UpdateWorkerRequest updateWorkerRequest, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1256,11 +1672,11 @@ public class WorkersApi {
         }
 
         String[] localVarAuthNames = new String[] { "oauth2" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+        return localVarApiClient.buildCall(basePath, localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback, opts);
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call updateWorkerValidateBeforeCall(String scope, String code, UpdateWorkerRequest updateWorkerRequest, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call updateWorkerValidateBeforeCall(String scope, String code, UpdateWorkerRequest updateWorkerRequest, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         // verify the required parameter 'scope' is set
         if (scope == null) {
             throw new ApiException("Missing the required parameter 'scope' when calling updateWorker(Async)");
@@ -1276,20 +1692,34 @@ public class WorkersApi {
             throw new ApiException("Missing the required parameter 'updateWorkerRequest' when calling updateWorker(Async)");
         }
 
-        return updateWorkerCall(scope, code, updateWorkerRequest, _callback);
+        return updateWorkerCall(scope, code, updateWorkerRequest, _callback, opts);
 
     }
 
 
     private ApiResponse<Worker> updateWorkerWithHttpInfo(String scope, String code, UpdateWorkerRequest updateWorkerRequest) throws ApiException {
-        okhttp3.Call localVarCall = updateWorkerValidateBeforeCall(scope, code, updateWorkerRequest, null);
+        okhttp3.Call localVarCall = updateWorkerValidateBeforeCall(scope, code, updateWorkerRequest, null, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<Worker>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private ApiResponse<Worker> updateWorkerWithHttpInfo(String scope, String code, UpdateWorkerRequest updateWorkerRequest, ConfigurationOptions opts) throws ApiException {
+        okhttp3.Call localVarCall = updateWorkerValidateBeforeCall(scope, code, updateWorkerRequest, null, opts);
         Type localVarReturnType = new TypeToken<Worker>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     private okhttp3.Call updateWorkerAsync(String scope, String code, UpdateWorkerRequest updateWorkerRequest, final ApiCallback<Worker> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = updateWorkerValidateBeforeCall(scope, code, updateWorkerRequest, _callback);
+        okhttp3.Call localVarCall = updateWorkerValidateBeforeCall(scope, code, updateWorkerRequest, _callback, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<Worker>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    private okhttp3.Call updateWorkerAsync(String scope, String code, UpdateWorkerRequest updateWorkerRequest, final ApiCallback<Worker> _callback, ConfigurationOptions opts) throws ApiException {
+
+        okhttp3.Call localVarCall = updateWorkerValidateBeforeCall(scope, code, updateWorkerRequest, _callback, opts);
         Type localVarReturnType = new TypeToken<Worker>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1343,6 +1773,24 @@ public class WorkersApi {
         }
 
         /**
+         * Execute updateWorker request. Use any specified configuration options to override any other configuration for this request only.
+         * @return Worker
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Worker not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public Worker execute(ConfigurationOptions opts) throws ApiException {
+            ApiResponse<Worker> localVarResp = updateWorkerWithHttpInfo(scope, code, updateWorkerRequest, opts);
+            return localVarResp.getData();
+        }
+
+        /**
          * Execute updateWorker request with HTTP info returned
          * @return ApiResponse&lt;Worker&gt;
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1357,6 +1805,23 @@ public class WorkersApi {
          */
         public ApiResponse<Worker> executeWithHttpInfo() throws ApiException {
             return updateWorkerWithHttpInfo(scope, code, updateWorkerRequest);
+        }
+
+        /**
+         * Execute updateWorker request with HTTP info returned. Use any specified configuration options to override any other configuration for this request only.
+         * @return ApiResponse&lt;Worker&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Worker not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<Worker> executeWithHttpInfo(ConfigurationOptions opts) throws ApiException {
+            return updateWorkerWithHttpInfo(scope, code, updateWorkerRequest, opts);
         }
 
         /**
@@ -1375,6 +1840,24 @@ public class WorkersApi {
          */
         public okhttp3.Call executeAsync(final ApiCallback<Worker> _callback) throws ApiException {
             return updateWorkerAsync(scope, code, updateWorkerRequest, _callback);
+        }
+
+        /**
+         * Execute updateWorker request (asynchronously). Use any specified configuration options to override any other configuration for this request only.
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Worker not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<Worker> _callback, ConfigurationOptions opts) throws ApiException {
+            return updateWorkerAsync(scope, code, updateWorkerRequest, _callback, opts);
         }
     }
 

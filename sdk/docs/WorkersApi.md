@@ -52,9 +52,20 @@ public class WorkersApiExample {
             "}");
         }
 
+        // uncomment the below to use configuration overrides
+        // ConfigurationOptions opts = new ConfigurationOptions();
+        // opts.setTotalTimeoutMs(2000);
+        
+        // uncomment the below to use an api factory with overrides
+        // ApiFactory apiFactory = ApiFactoryBuilder.build(fileName, opts);
+        // WorkersApi apiInstance = apiFactory.build(WorkersApi.class);
+
         WorkersApi apiInstance = ApiFactoryBuilder.build(fileName).build(WorkersApi.class);
         CreateWorkerRequest createWorkerRequest = new CreateWorkerRequest(); // CreateWorkerRequest | Worker to be created
         try {
+            // uncomment the below to set overrides at the request level
+            // Worker result = apiInstance.createWorker(createWorkerRequest).execute(opts);
+
             Worker result = apiInstance.createWorker(createWorkerRequest).execute();
             System.out.println(result.toJson());
         } catch (ApiException e) {
@@ -132,10 +143,21 @@ public class WorkersApiExample {
             "}");
         }
 
+        // uncomment the below to use configuration overrides
+        // ConfigurationOptions opts = new ConfigurationOptions();
+        // opts.setTotalTimeoutMs(2000);
+        
+        // uncomment the below to use an api factory with overrides
+        // ApiFactory apiFactory = ApiFactoryBuilder.build(fileName, opts);
+        // WorkersApi apiInstance = apiFactory.build(WorkersApi.class);
+
         WorkersApi apiInstance = ApiFactoryBuilder.build(fileName).build(WorkersApi.class);
         String scope = "scope_example"; // String | Scope of the worker to be deleted
         String code = "code_example"; // String | Code of the worker to be deleted
         try {
+            // uncomment the below to set overrides at the request level
+            // DeletedEntityResponse result = apiInstance.deleteWorker(scope, code).execute(opts);
+
             DeletedEntityResponse result = apiInstance.deleteWorker(scope, code).execute();
             System.out.println(result.toJson());
         } catch (ApiException e) {
@@ -215,11 +237,22 @@ public class WorkersApiExample {
             "}");
         }
 
+        // uncomment the below to use configuration overrides
+        // ConfigurationOptions opts = new ConfigurationOptions();
+        // opts.setTotalTimeoutMs(2000);
+        
+        // uncomment the below to use an api factory with overrides
+        // ApiFactory apiFactory = ApiFactoryBuilder.build(fileName, opts);
+        // WorkersApi apiInstance = apiFactory.build(WorkersApi.class);
+
         WorkersApi apiInstance = ApiFactoryBuilder.build(fileName).build(WorkersApi.class);
         String scope = "scope_example"; // String | Scope of the worker
         String code = "code_example"; // String | Code of the worker
         OffsetDateTime asAt = OffsetDateTime.now(); // OffsetDateTime | The asAt datetime at which to retrieve the Worker. Defaults to returning the latest version of the Worker if not specified.
         try {
+            // uncomment the below to set overrides at the request level
+            // Worker result = apiInstance.getWorker(scope, code, asAt).execute(opts);
+
             Worker result = apiInstance.getWorker(scope, code, asAt).execute();
             System.out.println(result.toJson());
         } catch (ApiException e) {
@@ -297,9 +330,20 @@ public class WorkersApiExample {
             "}");
         }
 
+        // uncomment the below to use configuration overrides
+        // ConfigurationOptions opts = new ConfigurationOptions();
+        // opts.setTotalTimeoutMs(2000);
+        
+        // uncomment the below to use an api factory with overrides
+        // ApiFactory apiFactory = ApiFactoryBuilder.build(fileName, opts);
+        // WorkersApi apiInstance = apiFactory.build(WorkersApi.class);
+
         WorkersApi apiInstance = ApiFactoryBuilder.build(fileName).build(WorkersApi.class);
         UUID runId = UUID.randomUUID(); // UUID | The ID returned when calling Run Worker
         try {
+            // uncomment the below to set overrides at the request level
+            // GetWorkerResultResponse result = apiInstance.getWorkerResult(runId).execute(opts);
+
             GetWorkerResultResponse result = apiInstance.getWorkerResult(runId).execute();
             System.out.println(result.toJson());
         } catch (ApiException e) {
@@ -375,6 +419,14 @@ public class WorkersApiExample {
             "}");
         }
 
+        // uncomment the below to use configuration overrides
+        // ConfigurationOptions opts = new ConfigurationOptions();
+        // opts.setTotalTimeoutMs(2000);
+        
+        // uncomment the below to use an api factory with overrides
+        // ApiFactory apiFactory = ApiFactoryBuilder.build(fileName, opts);
+        // WorkersApi apiInstance = apiFactory.build(WorkersApi.class);
+
         WorkersApi apiInstance = ApiFactoryBuilder.build(fileName).build(WorkersApi.class);
         OffsetDateTime asAt = OffsetDateTime.now(); // OffsetDateTime | The asAt datetime at which to list the Workers. Defaults to return the latest version of each Worker if not specified.
         String filter = "filter_example"; // String | Expression to filter the result set. Read more about filtering results from LUSID here: https://support.lusid.com/filtering-results-from-lusid.
@@ -382,6 +434,9 @@ public class WorkersApiExample {
         Integer limit = 10; // Integer | When paginating, limit the number of returned results to this many.
         String page = "page_example"; // String | The pagination token to use to continue listing workers from a previous call to list workers. This value is returned from the previous call. If a pagination token is provided the sortBy, filter, effectiveAt, and asAt fields must not have changed since the original request.
         try {
+            // uncomment the below to set overrides at the request level
+            // PagedResourceListOfWorker result = apiInstance.listWorkers(asAt, filter, sortBy, limit, page).execute(opts);
+
             PagedResourceListOfWorker result = apiInstance.listWorkers(asAt, filter, sortBy, limit, page).execute();
             System.out.println(result.toJson());
         } catch (ApiException e) {
@@ -461,12 +516,23 @@ public class WorkersApiExample {
             "}");
         }
 
+        // uncomment the below to use configuration overrides
+        // ConfigurationOptions opts = new ConfigurationOptions();
+        // opts.setTotalTimeoutMs(2000);
+        
+        // uncomment the below to use an api factory with overrides
+        // ApiFactory apiFactory = ApiFactoryBuilder.build(fileName, opts);
+        // WorkersApi apiInstance = apiFactory.build(WorkersApi.class);
+
         WorkersApi apiInstance = ApiFactoryBuilder.build(fileName).build(WorkersApi.class);
         String scope = "scope_example"; // String | Scope of the worker
         String code = "code_example"; // String | Code of the worker
         RunWorkerRequest runWorkerRequest = new RunWorkerRequest(); // RunWorkerRequest | 
         OffsetDateTime asAt = OffsetDateTime.now(); // OffsetDateTime | The asAt datetime at which to retrieve the Worker. Defaults to returning the latest version of the Worker if not specified.
         try {
+            // uncomment the below to set overrides at the request level
+            // RunWorkerResponse result = apiInstance.runWorker(scope, code, runWorkerRequest, asAt).execute(opts);
+
             RunWorkerResponse result = apiInstance.runWorker(scope, code, runWorkerRequest, asAt).execute();
             System.out.println(result.toJson());
         } catch (ApiException e) {
@@ -547,11 +613,22 @@ public class WorkersApiExample {
             "}");
         }
 
+        // uncomment the below to use configuration overrides
+        // ConfigurationOptions opts = new ConfigurationOptions();
+        // opts.setTotalTimeoutMs(2000);
+        
+        // uncomment the below to use an api factory with overrides
+        // ApiFactory apiFactory = ApiFactoryBuilder.build(fileName, opts);
+        // WorkersApi apiInstance = apiFactory.build(WorkersApi.class);
+
         WorkersApi apiInstance = ApiFactoryBuilder.build(fileName).build(WorkersApi.class);
         String scope = "scope_example"; // String | Scope of the worker to be updated
         String code = "code_example"; // String | Code of the worker to be updated
         UpdateWorkerRequest updateWorkerRequest = new UpdateWorkerRequest(); // UpdateWorkerRequest | State of the updated worker
         try {
+            // uncomment the below to set overrides at the request level
+            // Worker result = apiInstance.updateWorker(scope, code, updateWorkerRequest).execute(opts);
+
             Worker result = apiInstance.updateWorker(scope, code, updateWorkerRequest).execute();
             System.out.println(result.toJson());
         } catch (ApiException e) {
