@@ -31,6 +31,7 @@ import com.finbourne.workflow.model.LusidProblemDetails;
 import com.finbourne.workflow.model.LusidValidationProblemDetails;
 import java.time.OffsetDateTime;
 import com.finbourne.workflow.model.PagedResourceListOfTask;
+import com.finbourne.workflow.model.ResourceListOfChangeItem;
 import com.finbourne.workflow.model.Task;
 import com.finbourne.workflow.model.UpdateTaskRequest;
 
@@ -815,6 +816,259 @@ public class TasksApi {
      */
     public APIgetTaskRequest getTask(String id) {
         return new APIgetTaskRequest(id);
+    }
+    private okhttp3.Call getTaskHistoryCall(String id, OffsetDateTime asAt, final ApiCallback _callback) throws ApiException {
+        return getTaskHistoryCall(id, asAt,  _callback, new ConfigurationOptions());
+    }
+
+    private okhttp3.Call getTaskHistoryCall(String id, OffsetDateTime asAt, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/api/tasks/{id}/history"
+            .replace("{" + "id" + "}", localVarApiClient.escapeString(id.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        if (asAt != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("asAt", asAt));
+        }
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "oauth2" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback, opts);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call getTaskHistoryValidateBeforeCall(String id, OffsetDateTime asAt, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
+        // verify the required parameter 'id' is set
+        if (id == null) {
+            throw new ApiException("Missing the required parameter 'id' when calling getTaskHistory(Async)");
+        }
+
+        return getTaskHistoryCall(id, asAt, _callback, opts);
+
+    }
+
+
+    private ApiResponse<ResourceListOfChangeItem> getTaskHistoryWithHttpInfo(String id, OffsetDateTime asAt) throws ApiException {
+        okhttp3.Call localVarCall = getTaskHistoryValidateBeforeCall(id, asAt, null, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<ResourceListOfChangeItem>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private ApiResponse<ResourceListOfChangeItem> getTaskHistoryWithHttpInfo(String id, OffsetDateTime asAt, ConfigurationOptions opts) throws ApiException {
+        okhttp3.Call localVarCall = getTaskHistoryValidateBeforeCall(id, asAt, null, opts);
+        Type localVarReturnType = new TypeToken<ResourceListOfChangeItem>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private okhttp3.Call getTaskHistoryAsync(String id, OffsetDateTime asAt, final ApiCallback<ResourceListOfChangeItem> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = getTaskHistoryValidateBeforeCall(id, asAt, _callback, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<ResourceListOfChangeItem>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    private okhttp3.Call getTaskHistoryAsync(String id, OffsetDateTime asAt, final ApiCallback<ResourceListOfChangeItem> _callback, ConfigurationOptions opts) throws ApiException {
+
+        okhttp3.Call localVarCall = getTaskHistoryValidateBeforeCall(id, asAt, _callback, opts);
+        Type localVarReturnType = new TypeToken<ResourceListOfChangeItem>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    public class APIgetTaskHistoryRequest {
+        private final String id;
+        private OffsetDateTime asAt;
+
+        private APIgetTaskHistoryRequest(String id) {
+            this.id = id;
+        }
+
+        /**
+         * Set asAt
+         * @param asAt The asAt datetime of the oldest change to retrieve. Defaults to returning the latest version of the Task if not specified. (optional)
+         * @return APIgetTaskHistoryRequest
+         */
+        public APIgetTaskHistoryRequest asAt(OffsetDateTime asAt) {
+            this.asAt = asAt;
+            return this;
+        }
+
+        /**
+         * Build call for getTaskHistory
+         * @param _callback ApiCallback API callback
+         * @return Call to execute
+         * @throws ApiException If fail to serialize the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Task not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call buildCall(final ApiCallback _callback) throws ApiException {
+            return getTaskHistoryCall(id, asAt, _callback);
+        }
+
+        /**
+         * Execute getTaskHistory request
+         * @return ResourceListOfChangeItem
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Task not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ResourceListOfChangeItem execute() throws ApiException {
+            ApiResponse<ResourceListOfChangeItem> localVarResp = getTaskHistoryWithHttpInfo(id, asAt);
+            return localVarResp.getData();
+        }
+
+        /**
+         * Execute getTaskHistory request. Use any specified configuration options to override any other configuration for this request only.
+         * @return ResourceListOfChangeItem
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Task not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ResourceListOfChangeItem execute(ConfigurationOptions opts) throws ApiException {
+            ApiResponse<ResourceListOfChangeItem> localVarResp = getTaskHistoryWithHttpInfo(id, asAt, opts);
+            return localVarResp.getData();
+        }
+
+        /**
+         * Execute getTaskHistory request with HTTP info returned
+         * @return ApiResponse&lt;ResourceListOfChangeItem&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Task not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<ResourceListOfChangeItem> executeWithHttpInfo() throws ApiException {
+            return getTaskHistoryWithHttpInfo(id, asAt);
+        }
+
+        /**
+         * Execute getTaskHistory request with HTTP info returned. Use any specified configuration options to override any other configuration for this request only.
+         * @return ApiResponse&lt;ResourceListOfChangeItem&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Task not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<ResourceListOfChangeItem> executeWithHttpInfo(ConfigurationOptions opts) throws ApiException {
+            return getTaskHistoryWithHttpInfo(id, asAt, opts);
+        }
+
+        /**
+         * Execute getTaskHistory request (asynchronously)
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Task not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<ResourceListOfChangeItem> _callback) throws ApiException {
+            return getTaskHistoryAsync(id, asAt, _callback);
+        }
+
+        /**
+         * Execute getTaskHistory request (asynchronously). Use any specified configuration options to override any other configuration for this request only.
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Task not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<ResourceListOfChangeItem> _callback, ConfigurationOptions opts) throws ApiException {
+            return getTaskHistoryAsync(id, asAt, _callback, opts);
+        }
+    }
+
+    /**
+     * [EXPERIMENTAL] GetTaskHistory: Get the history of a Task
+     * 
+     * @param id The Task Id for which to get the history (required)
+     * @return APIgetTaskHistoryRequest
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Success </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Task not found. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+     </table>
+     */
+    public APIgetTaskHistoryRequest getTaskHistory(String id) {
+        return new APIgetTaskHistoryRequest(id);
     }
     private okhttp3.Call listTasksCall(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback _callback) throws ApiException {
         return listTasksCall(asAt, filter, sortBy, limit, page,  _callback, new ConfigurationOptions());

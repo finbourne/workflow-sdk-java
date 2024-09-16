@@ -20,6 +20,7 @@ Class | Method | HTTP request | Description
 *TasksApi* | [**createTask**](docs/TasksApi.md#createtask) | **POST** /api/tasks | [EXPERIMENTAL] CreateTask: Create a new Task
 *TasksApi* | [**deleteTask**](docs/TasksApi.md#deletetask) | **DELETE** /api/tasks/{id} | [EXPERIMENTAL] DeleteTask: Delete a Task
 *TasksApi* | [**getTask**](docs/TasksApi.md#gettask) | **GET** /api/tasks/{id} | [EXPERIMENTAL] GetTask: Get a Task
+*TasksApi* | [**getTaskHistory**](docs/TasksApi.md#gettaskhistory) | **GET** /api/tasks/{id}/history | [EXPERIMENTAL] GetTaskHistory: Get the history of a Task
 *TasksApi* | [**listTasks**](docs/TasksApi.md#listtasks) | **GET** /api/tasks | ListTasks: List Tasks
 *TasksApi* | [**updateTask**](docs/TasksApi.md#updatetask) | **POST** /api/tasks/{id} | [EXPERIMENTAL] UpdateTask: Update a Task
 *WorkersApi* | [**createWorker**](docs/WorkersApi.md#createworker) | **POST** /api/workers | [EXPERIMENTAL] CreateWorker: Create a new Worker
@@ -41,6 +42,7 @@ Class | Method | HTTP request | Description
  - [ActionDetails](docs/ActionDetails.md)
  - [ActionDetailsResponse](docs/ActionDetailsResponse.md)
  - [ActionId](docs/ActionId.md)
+ - [ChangeItem](docs/ChangeItem.md)
  - [CreateChildTaskConfiguration](docs/CreateChildTaskConfiguration.md)
  - [CreateChildTasksAction](docs/CreateChildTasksAction.md)
  - [CreateChildTasksActionResponse](docs/CreateChildTasksActionResponse.md)
@@ -77,6 +79,7 @@ Class | Method | HTTP request | Description
  - [ReadOnlyStates](docs/ReadOnlyStates.md)
  - [ResourceId](docs/ResourceId.md)
  - [ResourceListOfAccessControlledResource](docs/ResourceListOfAccessControlledResource.md)
+ - [ResourceListOfChangeItem](docs/ResourceListOfChangeItem.md)
  - [ResourceListOfTask](docs/ResourceListOfTask.md)
  - [ResultField](docs/ResultField.md)
  - [ResultMatchingPattern](docs/ResultMatchingPattern.md)
