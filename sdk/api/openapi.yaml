@@ -26,7 +26,7 @@ info:
     \ Handler.| |\n"
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1239
+  version: 0.1.1242
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
