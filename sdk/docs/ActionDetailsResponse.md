@@ -14,6 +14,7 @@ Abstracts the kinds of Actions available in a read-only form
 |**workerAsAt** | **OffsetDateTime** | Worker AsAt |  [optional] |
 |**workerParameters** | [**Map&lt;String, FieldMapping&gt;**](FieldMapping.md) | Parameters for this Worker |  [optional] |
 |**workerStatusTriggers** | [**WorkerStatusTriggers**](WorkerStatusTriggers.md) |  |  [optional] |
+|**workerTimeout** | **Integer** | Worker timeout in seconds |  [optional] |
 |**trigger** | **String** | Trigger on parent task to be invoked |  [optional] |
 
 

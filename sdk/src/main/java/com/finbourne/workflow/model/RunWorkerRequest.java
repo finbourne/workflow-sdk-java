@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.openapitools.jackson.nullable.JsonNullable;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -56,6 +57,10 @@ public class RunWorkerRequest {
   @SerializedName(SERIALIZED_NAME_PARAMETERS)
   private List<ParameterValue> parameters = new ArrayList<>();
 
+  public static final String SERIALIZED_NAME_WORKER_TIMEOUT = "workerTimeout";
+  @SerializedName(SERIALIZED_NAME_WORKER_TIMEOUT)
+  private Integer workerTimeout;
+
   public RunWorkerRequest() {
   }
 
@@ -88,6 +93,27 @@ public class RunWorkerRequest {
   }
 
 
+  public RunWorkerRequest workerTimeout(Integer workerTimeout) {
+    
+    this.workerTimeout = workerTimeout;
+    return this;
+  }
+
+   /**
+   * The timeout in seconds for the worker
+   * @return workerTimeout
+  **/
+  @jakarta.annotation.Nullable
+  public Integer getWorkerTimeout() {
+    return workerTimeout;
+  }
+
+
+  public void setWorkerTimeout(Integer workerTimeout) {
+    this.workerTimeout = workerTimeout;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -98,12 +124,24 @@ public class RunWorkerRequest {
       return false;
     }
     RunWorkerRequest runWorkerRequest = (RunWorkerRequest) o;
-    return Objects.equals(this.parameters, runWorkerRequest.parameters);
+    return Objects.equals(this.parameters, runWorkerRequest.parameters) &&
+        Objects.equals(this.workerTimeout, runWorkerRequest.workerTimeout);
+  }
+
+  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
+    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(parameters);
+    return Objects.hash(parameters, workerTimeout);
+  }
+
+  private static <T> int hashCodeNullable(JsonNullable<T> a) {
+    if (a == null) {
+      return 1;
+    }
+    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
   }
 
   @Override
@@ -111,6 +149,7 @@ public class RunWorkerRequest {
     StringBuilder sb = new StringBuilder();
     sb.append("class RunWorkerRequest {\n");
     sb.append("    parameters: ").append(toIndentedString(parameters)).append("\n");
+    sb.append("    workerTimeout: ").append(toIndentedString(workerTimeout)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -134,6 +173,7 @@ public class RunWorkerRequest {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
     openapiFields.add("parameters");
+    openapiFields.add("workerTimeout");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();

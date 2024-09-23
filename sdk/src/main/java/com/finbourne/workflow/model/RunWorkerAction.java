@@ -128,6 +128,10 @@ public class RunWorkerAction {
   @SerializedName(SERIALIZED_NAME_CHILD_TASK_CONFIGURATIONS)
   private List<ResultantChildTaskConfiguration> childTaskConfigurations;
 
+  public static final String SERIALIZED_NAME_WORKER_TIMEOUT = "workerTimeout";
+  @SerializedName(SERIALIZED_NAME_WORKER_TIMEOUT)
+  private Integer workerTimeout;
+
   public RunWorkerAction() {
   }
 
@@ -273,6 +277,27 @@ public class RunWorkerAction {
   }
 
 
+  public RunWorkerAction workerTimeout(Integer workerTimeout) {
+    
+    this.workerTimeout = workerTimeout;
+    return this;
+  }
+
+   /**
+   * Worker WorkerTimeout in seconds
+   * @return workerTimeout
+  **/
+  @jakarta.annotation.Nullable
+  public Integer getWorkerTimeout() {
+    return workerTimeout;
+  }
+
+
+  public void setWorkerTimeout(Integer workerTimeout) {
+    this.workerTimeout = workerTimeout;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -288,7 +313,8 @@ public class RunWorkerAction {
         Objects.equals(this.workerAsAt, runWorkerAction.workerAsAt) &&
         Objects.equals(this.workerParameters, runWorkerAction.workerParameters) &&
         Objects.equals(this.workerStatusTriggers, runWorkerAction.workerStatusTriggers) &&
-        Objects.equals(this.childTaskConfigurations, runWorkerAction.childTaskConfigurations);
+        Objects.equals(this.childTaskConfigurations, runWorkerAction.childTaskConfigurations) &&
+        Objects.equals(this.workerTimeout, runWorkerAction.workerTimeout);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -297,7 +323,7 @@ public class RunWorkerAction {
 
   @Override
   public int hashCode() {
-    return Objects.hash(type, workerId, workerAsAt, workerParameters, workerStatusTriggers, childTaskConfigurations);
+    return Objects.hash(type, workerId, workerAsAt, workerParameters, workerStatusTriggers, childTaskConfigurations, workerTimeout);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -317,6 +343,7 @@ public class RunWorkerAction {
     sb.append("    workerParameters: ").append(toIndentedString(workerParameters)).append("\n");
     sb.append("    workerStatusTriggers: ").append(toIndentedString(workerStatusTriggers)).append("\n");
     sb.append("    childTaskConfigurations: ").append(toIndentedString(childTaskConfigurations)).append("\n");
+    sb.append("    workerTimeout: ").append(toIndentedString(workerTimeout)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -345,6 +372,7 @@ public class RunWorkerAction {
     openapiFields.add("workerParameters");
     openapiFields.add("workerStatusTriggers");
     openapiFields.add("childTaskConfigurations");
+    openapiFields.add("workerTimeout");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();

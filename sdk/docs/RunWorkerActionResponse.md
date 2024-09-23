@@ -14,6 +14,7 @@ Defines a read-only Run Worker Action
 |**workerParameters** | [**Map&lt;String, FieldMapping&gt;**](FieldMapping.md) | Parameters for this Worker |  [optional] |
 |**workerStatusTriggers** | [**WorkerStatusTriggers**](WorkerStatusTriggers.md) |  |  [optional] |
 |**childTaskConfigurations** | [**List&lt;ResultantChildTaskConfiguration&gt;**](ResultantChildTaskConfiguration.md) | Tasks can be generated from run worker results; this is the configuration |  [optional] |
+|**workerTimeout** | **Integer** | Worker timeout in seconds |  [optional] |
 
 
 

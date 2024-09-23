@@ -26,7 +26,7 @@ info:
     \ Handler.| |\n"
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1223
+  version: 0.1.1239
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -832,6 +832,7 @@ paths:
                         resultMatchingPattern: null
                         taskDefinitionAsAt: null
                         initialTrigger: test-trigger
+                      workerTimeout: 120
                   transitions:
                   - fromState: Submitted
                     toState: InProgress
@@ -997,6 +998,7 @@ paths:
                     resultMatchingPattern: null
                     taskDefinitionAsAt: null
                     initialTrigger: test-trigger
+                  workerTimeout: 120
             schema:
               $ref: '#/components/schemas/CreateTaskDefinitionRequest'
           application/json:
@@ -1105,6 +1107,7 @@ paths:
                     resultMatchingPattern: null
                     taskDefinitionAsAt: null
                     initialTrigger: test-trigger
+                  workerTimeout: 120
             schema:
               $ref: '#/components/schemas/CreateTaskDefinitionRequest'
           text/json:
@@ -1213,6 +1216,7 @@ paths:
                     resultMatchingPattern: null
                     taskDefinitionAsAt: null
                     initialTrigger: test-trigger
+                  workerTimeout: 120
             schema:
               $ref: '#/components/schemas/CreateTaskDefinitionRequest'
           application/*+json:
@@ -1321,6 +1325,7 @@ paths:
                     resultMatchingPattern: null
                     taskDefinitionAsAt: null
                     initialTrigger: test-trigger
+                  workerTimeout: 120
             schema:
               $ref: '#/components/schemas/CreateTaskDefinitionRequest'
         description: The data to create a Task Definition
@@ -1417,6 +1422,7 @@ paths:
                       resultMatchingPattern: null
                       taskDefinitionAsAt: null
                       initialTrigger: test-trigger
+                    workerTimeout: 120
                 transitions:
                 - fromState: Submitted
                   toState: InProgress
@@ -1652,6 +1658,7 @@ paths:
                       resultMatchingPattern: null
                       taskDefinitionAsAt: null
                       initialTrigger: test-trigger
+                    workerTimeout: 120
                 transitions:
                 - fromState: Submitted
                   toState: InProgress
@@ -1836,6 +1843,7 @@ paths:
                     resultMatchingPattern: null
                     taskDefinitionAsAt: null
                     initialTrigger: test-trigger
+                  workerTimeout: 120
             schema:
               $ref: '#/components/schemas/UpdateTaskDefinitionRequest'
           application/json:
@@ -1941,6 +1949,7 @@ paths:
                     resultMatchingPattern: null
                     taskDefinitionAsAt: null
                     initialTrigger: test-trigger
+                  workerTimeout: 120
             schema:
               $ref: '#/components/schemas/UpdateTaskDefinitionRequest'
           text/json:
@@ -2046,6 +2055,7 @@ paths:
                     resultMatchingPattern: null
                     taskDefinitionAsAt: null
                     initialTrigger: test-trigger
+                  workerTimeout: 120
             schema:
               $ref: '#/components/schemas/UpdateTaskDefinitionRequest'
           application/*+json:
@@ -2151,6 +2161,7 @@ paths:
                     resultMatchingPattern: null
                     taskDefinitionAsAt: null
                     initialTrigger: test-trigger
+                  workerTimeout: 120
             schema:
               $ref: '#/components/schemas/UpdateTaskDefinitionRequest'
         description: The data to update a Task Definition
@@ -2247,6 +2258,7 @@ paths:
                       resultMatchingPattern: null
                       taskDefinitionAsAt: null
                       initialTrigger: test-trigger
+                    workerTimeout: 120
                 transitions:
                 - fromState: Submitted
                   toState: InProgress
@@ -3717,6 +3729,7 @@ paths:
               parameters:
               - name: test-parameter
                 value: true
+              workerTimeout: 120
             schema:
               $ref: '#/components/schemas/RunWorkerRequest'
           application/json:
@@ -3724,6 +3737,7 @@ paths:
               parameters:
               - name: test-parameter
                 value: true
+              workerTimeout: 120
             schema:
               $ref: '#/components/schemas/RunWorkerRequest'
           text/json:
@@ -3731,6 +3745,7 @@ paths:
               parameters:
               - name: test-parameter
                 value: true
+              workerTimeout: 120
             schema:
               $ref: '#/components/schemas/RunWorkerRequest'
           application/*+json:
@@ -3738,6 +3753,7 @@ paths:
               parameters:
               - name: test-parameter
                 value: true
+              workerTimeout: 120
             schema:
               $ref: '#/components/schemas/RunWorkerRequest'
         description: ""
@@ -6378,6 +6394,11 @@ components:
             $ref: '#/components/schemas/ResultantChildTaskConfiguration'
           nullable: true
           type: array
+        workerTimeout:
+          description: Worker WorkerTimeout in seconds
+          format: int32
+          nullable: true
+          type: integer
       required:
       - type
       - workerId
@@ -6414,11 +6435,17 @@ components:
             $ref: '#/components/schemas/ResultantChildTaskConfiguration'
           nullable: true
           type: array
+        workerTimeout:
+          description: Worker timeout in seconds
+          format: int32
+          nullable: true
+          type: integer
       type: object
     RunWorkerRequest:
       additionalProperties: false
       description: Request to Create a new worker
       example:
+        workerTimeout: 0
         parameters:
         - name: name
           value: ""
@@ -6430,6 +6457,11 @@ components:
           items:
             $ref: '#/components/schemas/ParameterValue'
           type: array
+        workerTimeout:
+          description: The timeout in seconds for the worker
+          format: int32
+          nullable: true
+          type: integer
       required:
       - parameters
       type: object
