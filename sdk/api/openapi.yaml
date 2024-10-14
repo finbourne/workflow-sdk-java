@@ -17,16 +17,16 @@ info:
     \ not be created.| |\n| <a name=\"827\">827</a>|Task could not raise onward Notifications.|\
     \ |\n| <a name=\"862\">862</a>|Worker not found.| |\n| <a name=\"863\">863</a>|Illogical\
     \ Task Definition.| |\n| <a name=\"864\">864</a>|Invalid Task Definition.| |\n\
-    | <a name=\"865\">865</a>|Action Queue failure.| |\n| <a name=\"866\">866</a>|Luminesce\
+    | <a name=\"865\">865</a>|Action processing failure.| |\n| <a name=\"866\">866</a>|Luminesce\
     \ Lookup failure.| |\n| <a name=\"867\">867</a>|Worker failure.| |\n| <a name=\"\
     868\">868</a>|Worker creation failure.| |\n| <a name=\"871\">871</a>|The specified\
     \ impersonated user does not exist| |\n| <a name=\"872\">872</a>|Worker Run not\
-    \ found.| |\n| <a name=\"873\">873</a>|Action Queue item not found.| |\n| <a name=\"\
-    893\">893</a>|Event Handler not found.| |\n| <a name=\"894\">894</a>|Invalid Event\
+    \ found.| |\n| <a name=\"873\">873</a>|Action not found.| |\n| <a name=\"893\"\
+    >893</a>|Event Handler not found.| |\n| <a name=\"894\">894</a>|Invalid Event\
     \ Handler.| |\n"
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1252
+  version: 0.1.1271
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -35,6 +35,8 @@ servers:
 security:
 - {}
 tags:
+- description: Endpoints for retrieving Action Logs
+  name: Action Logs
 - description: Methods for querying Workflow application metadata
   name: Application Metadata
 - description: Workflow endpoint for managing Event Handlers
@@ -46,6 +48,71 @@ tags:
 - description: Workflow endpoint for managing and running Workers
   name: Workers
 paths:
+  /api/actionlogs/{id}:
+    get:
+      operationId: GetActionLogs
+      parameters:
+      - description: The Action Id
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          maxLength: 40
+          minLength: 30
+          pattern: "^[a-zA-Z0-9\\-]+$"
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ActionLog'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionLog'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ActionLog'
+          description: Success
+        "400":
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        "404":
+          content:
+            text/plain:
+              schema:
+                type: string
+            application/json:
+              schema:
+                type: string
+            text/json:
+              schema:
+                type: string
+          description: Action Log not found.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] GetActionLogs: Get the Action Logs for an Action Id"
+      tags:
+      - Action Logs
+      x-fbn-apistatus: Experimental
+      x-accepts: application/json
   /api/eventhandlers:
     get:
       operationId: ListEventHandlers
@@ -2890,6 +2957,33 @@ paths:
         "200":
           content:
             application/json:
+              example:
+                values:
+                - asAtModified: 2024-01-02T03:00:00.0000000+00:00
+                  userIdModified: UserId1
+                  requestIdModified: RequestId1
+                  asAtVersionNumber: 2
+                  action: Update
+                  attributeName: State
+                  previousValue: Ready
+                  newValue: Started
+                - asAtModified: 2024-01-02T03:00:00.0000000+00:00
+                  userIdModified: UserId1
+                  requestIdModified: RequestId1
+                  asAtVersionNumber: 2
+                  action: Update
+                  attributeName: "Fields[FieldA]"
+                  previousValue: A
+                  newValue: B
+                - asAtModified: 2024-01-02T03:01:00.0000000+00:00
+                  userIdModified: UserId2
+                  requestIdModified: RequestId2
+                  asAtVersionNumber: 3
+                  action: Update
+                  attributeName: "Fields[FieldA]"
+                  previousValue: B
+                  newValue: C
+                links: []
               schema:
                 $ref: '#/components/schemas/ResourceListOfChangeItem'
           description: Success
@@ -4032,7 +4126,6 @@ components:
             \ If not specified, the actions will be performed by the \"current user\"\
             ."
           maxLength: 1024
-          minLength: 0
           nullable: true
           pattern: "^[a-zA-Z0-9\\-_]+$"
           type: string
@@ -4112,13 +4205,106 @@ components:
           minLength: 3
           type: string
         entity:
-          maxLength: 25
+          maxLength: 40
           minLength: 3
           type: string
       required:
       - activity
       - entity
       - scope
+      type: object
+    ActionLog:
+      additionalProperties: false
+      description: An Action Log contains the processing history of an Action
+      example:
+        actionType: actionType
+        loggedItems:
+        - logType: logType
+          details: details
+          timestamp: 2000-01-23T04:56:07.000+00:00
+        - logType: logType
+          details: details
+          timestamp: 2000-01-23T04:56:07.000+00:00
+        origin:
+          requestId: requestId
+          taskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        runAsUserId: runAsUserId
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        id:
+          description: Unique identifier of the Action
+          format: uuid
+          pattern: "^[a-zA-Z0-9\\-]+$"
+          type: string
+        origin:
+          $ref: '#/components/schemas/ActionLogOrigin'
+        actionType:
+          description: The type of the Action
+          minLength: 1
+          type: string
+        runAsUserId:
+          description: "The ID of the user that the Action was performed by.\r\nIf\
+            \ not specified, the actions were performed by the \"current user\"."
+          maxLength: 1024
+          nullable: true
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        loggedItems:
+          description: The logged items for this Action
+          items:
+            $ref: '#/components/schemas/ActionLogItem'
+          type: array
+      required:
+      - actionType
+      - id
+      - loggedItems
+      - origin
+      type: object
+    ActionLogItem:
+      additionalProperties: false
+      description: A log item for a given Action Log
+      example:
+        logType: logType
+        details: details
+        timestamp: 2000-01-23T04:56:07.000+00:00
+      properties:
+        timestamp:
+          description: The timestamp of the log item
+          format: date-time
+          type: string
+        logType:
+          description: The type of log item
+          minLength: 1
+          type: string
+        details:
+          description: The details of the log item
+          nullable: true
+          type: string
+      required:
+      - logType
+      - timestamp
+      type: object
+    ActionLogOrigin:
+      additionalProperties: false
+      description: The Action Log Origin contains information about how the Action
+        was created
+      example:
+        requestId: requestId
+        taskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        taskId:
+          description: The Id of the Task that created this Action
+          format: uuid
+          nullable: true
+          type: string
+        requestId:
+          description: "The request Id of the request that caused this Action to be\
+            \ triggered.\r\nThis could be the original request that caused a sequence\
+            \ of Actions that resulted in this Action"
+          minLength: 1
+          type: string
+      required:
+      - requestId
       type: object
     ChangeItem:
       additionalProperties: false
@@ -5210,6 +5396,7 @@ components:
             taskDefinitionId:
               code: code
               scope: scope
+          actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           version:
             asAtModified: 2000-01-23T04:56:07.000+00:00
             userIdModified: userIdModified
@@ -5222,6 +5409,7 @@ components:
             code: code
             scope: scope
           stackingKey: stackingKey
+          actionLogIdModified: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           childTasks:
           - taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -5240,6 +5428,7 @@ components:
               code: code
               scope: scope
           asAtLastTransition: 2000-01-23T04:56:07.000+00:00
+          actionLogIdSubmitted: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           ultimateParentTask:
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -5281,6 +5470,7 @@ components:
             taskDefinitionId:
               code: code
               scope: scope
+          actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           version:
             asAtModified: 2000-01-23T04:56:07.000+00:00
             userIdModified: userIdModified
@@ -5293,6 +5483,7 @@ components:
             code: code
             scope: scope
           stackingKey: stackingKey
+          actionLogIdModified: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           childTasks:
           - taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -5311,6 +5502,7 @@ components:
               code: code
               scope: scope
           asAtLastTransition: 2000-01-23T04:56:07.000+00:00
+          actionLogIdSubmitted: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           ultimateParentTask:
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -6132,6 +6324,7 @@ components:
             taskDefinitionId:
               code: code
               scope: scope
+          actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           version:
             asAtModified: 2000-01-23T04:56:07.000+00:00
             userIdModified: userIdModified
@@ -6144,6 +6337,7 @@ components:
             code: code
             scope: scope
           stackingKey: stackingKey
+          actionLogIdModified: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           childTasks:
           - taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -6162,6 +6356,7 @@ components:
               code: code
               scope: scope
           asAtLastTransition: 2000-01-23T04:56:07.000+00:00
+          actionLogIdSubmitted: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           ultimateParentTask:
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -6203,6 +6398,7 @@ components:
             taskDefinitionId:
               code: code
               scope: scope
+          actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           version:
             asAtModified: 2000-01-23T04:56:07.000+00:00
             userIdModified: userIdModified
@@ -6215,6 +6411,7 @@ components:
             code: code
             scope: scope
           stackingKey: stackingKey
+          actionLogIdModified: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           childTasks:
           - taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -6233,6 +6430,7 @@ components:
               code: code
               scope: scope
           asAtLastTransition: 2000-01-23T04:56:07.000+00:00
+          actionLogIdSubmitted: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           ultimateParentTask:
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -6611,6 +6809,7 @@ components:
           taskDefinitionId:
             code: code
             scope: scope
+        actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         version:
           asAtModified: 2000-01-23T04:56:07.000+00:00
           userIdModified: userIdModified
@@ -6623,6 +6822,7 @@ components:
           code: code
           scope: scope
         stackingKey: stackingKey
+        actionLogIdModified: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         childTasks:
         - taskDefinitionVersion:
             asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -6641,6 +6841,7 @@ components:
             code: code
             scope: scope
         asAtLastTransition: 2000-01-23T04:56:07.000+00:00
+        actionLogIdSubmitted: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         ultimateParentTask:
           taskDefinitionVersion:
             asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -6719,6 +6920,21 @@ components:
           type: string
         stack:
           $ref: '#/components/schemas/Stack'
+        actionLogIdCreated:
+          description: The Id of the Action that created this Task
+          format: uuid
+          nullable: true
+          type: string
+        actionLogIdModified:
+          description: The Id of the Action that last modified this Task
+          format: uuid
+          nullable: true
+          type: string
+        actionLogIdSubmitted:
+          description: The Id of the last Action submitted by this Task
+          format: uuid
+          nullable: true
+          type: string
       required:
       - id
       - state
@@ -7685,6 +7901,7 @@ components:
 x-tagGroups:
   name: API
   tags:
+  - Action Logs
   - Application Metadata
   - Event Handlers
   - Task Definitions

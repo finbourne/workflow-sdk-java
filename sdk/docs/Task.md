@@ -23,6 +23,9 @@ Defines a Task created based on a Task Definition
 |**fields** | [**List&lt;TaskInstanceField&gt;**](TaskInstanceField.md) | Fields and their latest values - should correspond with the Task Definition field schema |  [optional] |
 |**stackingKey** | **String** | The key used to determine which stack to add the Task to |  [optional] |
 |**stack** | [**Stack**](Stack.md) |  |  [optional] |
+|**actionLogIdCreated** | **UUID** | The Id of the Action that created this Task |  [optional] |
+|**actionLogIdModified** | **UUID** | The Id of the Action that last modified this Task |  [optional] |
+|**actionLogIdSubmitted** | **UUID** | The Id of the last Action submitted by this Task |  [optional] |
 
 
 

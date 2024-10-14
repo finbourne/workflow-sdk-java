@@ -1,0 +1,21 @@
+
+
+# ActionLog
+
+An Action Log contains the processing history of an Action
+
+## Properties
+
+| Name | Type | Description | Notes |
+|------------ | ------------- | ------------- | -------------|
+|**id** | **UUID** | Unique identifier of the Action |  |
+|**origin** | [**ActionLogOrigin**](ActionLogOrigin.md) |  |  |
+|**actionType** | **String** | The type of the Action |  |
+|**runAsUserId** | **String** | The ID of the user that the Action was performed by.  If not specified, the actions were performed by the \&quot;current user\&quot;. |  [optional] |
+|**loggedItems** | [**List&lt;ActionLogItem&gt;**](ActionLogItem.md) | The logged items for this Action |  |
+
+
+
+[Back to Model list](../README.md#documentation-for-models) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to README](../README.md)
+
+

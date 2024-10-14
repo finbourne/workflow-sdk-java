@@ -120,6 +120,18 @@ public class Task {
   @SerializedName(SERIALIZED_NAME_STACK)
   private Stack stack;
 
+  public static final String SERIALIZED_NAME_ACTION_LOG_ID_CREATED = "actionLogIdCreated";
+  @SerializedName(SERIALIZED_NAME_ACTION_LOG_ID_CREATED)
+  private UUID actionLogIdCreated;
+
+  public static final String SERIALIZED_NAME_ACTION_LOG_ID_MODIFIED = "actionLogIdModified";
+  @SerializedName(SERIALIZED_NAME_ACTION_LOG_ID_MODIFIED)
+  private UUID actionLogIdModified;
+
+  public static final String SERIALIZED_NAME_ACTION_LOG_ID_SUBMITTED = "actionLogIdSubmitted";
+  @SerializedName(SERIALIZED_NAME_ACTION_LOG_ID_SUBMITTED)
+  private UUID actionLogIdSubmitted;
+
   public Task() {
   }
 
@@ -462,6 +474,69 @@ public class Task {
   }
 
 
+  public Task actionLogIdCreated(UUID actionLogIdCreated) {
+    
+    this.actionLogIdCreated = actionLogIdCreated;
+    return this;
+  }
+
+   /**
+   * The Id of the Action that created this Task
+   * @return actionLogIdCreated
+  **/
+  @jakarta.annotation.Nullable
+  public UUID getActionLogIdCreated() {
+    return actionLogIdCreated;
+  }
+
+
+  public void setActionLogIdCreated(UUID actionLogIdCreated) {
+    this.actionLogIdCreated = actionLogIdCreated;
+  }
+
+
+  public Task actionLogIdModified(UUID actionLogIdModified) {
+    
+    this.actionLogIdModified = actionLogIdModified;
+    return this;
+  }
+
+   /**
+   * The Id of the Action that last modified this Task
+   * @return actionLogIdModified
+  **/
+  @jakarta.annotation.Nullable
+  public UUID getActionLogIdModified() {
+    return actionLogIdModified;
+  }
+
+
+  public void setActionLogIdModified(UUID actionLogIdModified) {
+    this.actionLogIdModified = actionLogIdModified;
+  }
+
+
+  public Task actionLogIdSubmitted(UUID actionLogIdSubmitted) {
+    
+    this.actionLogIdSubmitted = actionLogIdSubmitted;
+    return this;
+  }
+
+   /**
+   * The Id of the last Action submitted by this Task
+   * @return actionLogIdSubmitted
+  **/
+  @jakarta.annotation.Nullable
+  public UUID getActionLogIdSubmitted() {
+    return actionLogIdSubmitted;
+  }
+
+
+  public void setActionLogIdSubmitted(UUID actionLogIdSubmitted) {
+    this.actionLogIdSubmitted = actionLogIdSubmitted;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -486,7 +561,10 @@ public class Task {
         Objects.equals(this.asAtLastTransition, task.asAtLastTransition) &&
         Objects.equals(this.fields, task.fields) &&
         Objects.equals(this.stackingKey, task.stackingKey) &&
-        Objects.equals(this.stack, task.stack);
+        Objects.equals(this.stack, task.stack) &&
+        Objects.equals(this.actionLogIdCreated, task.actionLogIdCreated) &&
+        Objects.equals(this.actionLogIdModified, task.actionLogIdModified) &&
+        Objects.equals(this.actionLogIdSubmitted, task.actionLogIdSubmitted);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -495,7 +573,7 @@ public class Task {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, taskDefinitionId, taskDefinitionVersion, taskDefinitionDisplayName, state, ultimateParentTask, parentTask, childTasks, correlationIds, version, terminalState, asAtLastTransition, fields, stackingKey, stack);
+    return Objects.hash(id, taskDefinitionId, taskDefinitionVersion, taskDefinitionDisplayName, state, ultimateParentTask, parentTask, childTasks, correlationIds, version, terminalState, asAtLastTransition, fields, stackingKey, stack, actionLogIdCreated, actionLogIdModified, actionLogIdSubmitted);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -524,6 +602,9 @@ public class Task {
     sb.append("    fields: ").append(toIndentedString(fields)).append("\n");
     sb.append("    stackingKey: ").append(toIndentedString(stackingKey)).append("\n");
     sb.append("    stack: ").append(toIndentedString(stack)).append("\n");
+    sb.append("    actionLogIdCreated: ").append(toIndentedString(actionLogIdCreated)).append("\n");
+    sb.append("    actionLogIdModified: ").append(toIndentedString(actionLogIdModified)).append("\n");
+    sb.append("    actionLogIdSubmitted: ").append(toIndentedString(actionLogIdSubmitted)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -561,6 +642,9 @@ public class Task {
     openapiFields.add("fields");
     openapiFields.add("stackingKey");
     openapiFields.add("stack");
+    openapiFields.add("actionLogIdCreated");
+    openapiFields.add("actionLogIdModified");
+    openapiFields.add("actionLogIdSubmitted");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -654,6 +738,15 @@ public class Task {
       // validate the optional field `stack`
       if (jsonObj.get("stack") != null && !jsonObj.get("stack").isJsonNull()) {
         Stack.validateJsonElement(jsonObj.get("stack"));
+      }
+      if ((jsonObj.get("actionLogIdCreated") != null && !jsonObj.get("actionLogIdCreated").isJsonNull()) && !jsonObj.get("actionLogIdCreated").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `actionLogIdCreated` to be a primitive type in the JSON string but got `%s`", jsonObj.get("actionLogIdCreated").toString()));
+      }
+      if ((jsonObj.get("actionLogIdModified") != null && !jsonObj.get("actionLogIdModified").isJsonNull()) && !jsonObj.get("actionLogIdModified").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `actionLogIdModified` to be a primitive type in the JSON string but got `%s`", jsonObj.get("actionLogIdModified").toString()));
+      }
+      if ((jsonObj.get("actionLogIdSubmitted") != null && !jsonObj.get("actionLogIdSubmitted").isJsonNull()) && !jsonObj.get("actionLogIdSubmitted").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `actionLogIdSubmitted` to be a primitive type in the JSON string but got `%s`", jsonObj.get("actionLogIdSubmitted").toString()));
       }
   }
 
