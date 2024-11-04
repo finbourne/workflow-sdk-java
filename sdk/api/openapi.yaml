@@ -4,32 +4,96 @@ info:
     email: info@finbourne.com
     name: FINBOURNE Technology
     url: https://www.finbourne.com
-  description: "### Introduction \n\n# Error Codes\n\n | Code|Name|Description |\n\
-    | ---|---|--- |\n| <a name=\"-1\">-1</a>|Unknown error|An unexpected error was\
-    \ encountered on our side. |\n| <a name=\"144\">144</a>|Duplicate In Parameter\
-    \ Set| |\n| <a name=\"151\">151</a>|Invalid Parameter Value| |\n| <a name=\"689\"\
-    >689</a>|The supplied pagination token is invalid| |\n| <a name=\"692\">692</a>|This\
-    \ endpoint does not support impersonation| |\n| <a name=\"743\">743</a>|Task Definition\
-    \ not found.| |\n| <a name=\"744\">744</a>|Task not found.| |\n| <a name=\"745\"\
-    >745</a>|Task Definition could not be serialised.| |\n| <a name=\"750\">750</a>|A\
-    \ Guard clause rejected the Transition of a Task.| |\n| <a name=\"825\">825</a>|An\
-    \ Update operation on a Task failed.| |\n| <a name=\"826\">826</a>|Task could\
-    \ not be created.| |\n| <a name=\"827\">827</a>|Task could not raise onward Notifications.|\
-    \ |\n| <a name=\"862\">862</a>|Worker not found.| |\n| <a name=\"863\">863</a>|Illogical\
-    \ Task Definition.| |\n| <a name=\"864\">864</a>|Invalid Task Definition.| |\n\
-    | <a name=\"865\">865</a>|Action processing failure.| |\n| <a name=\"866\">866</a>|Luminesce\
-    \ Lookup failure.| |\n| <a name=\"867\">867</a>|Worker failure.| |\n| <a name=\"\
-    868\">868</a>|Worker creation failure.| |\n| <a name=\"871\">871</a>|The specified\
-    \ impersonated user does not exist| |\n| <a name=\"872\">872</a>|Worker Run not\
-    \ found.| |\n| <a name=\"873\">873</a>|Action not found.| |\n| <a name=\"893\"\
-    >893</a>|Event Handler not found.| |\n| <a name=\"894\">894</a>|Invalid Event\
-    \ Handler.| |\n"
+  description: |
+    The Workflow Service enables you to create data and business operational controls for LUSID by modelling workflows, defining tasks, and setting state transitions with triggers and actions.
+
+    ### Error Codes
+
+    | Code|Name|Description |
+    | ---|---|--- |
+    | <a name="-1">-1</a>|Unknown error|An unexpected error was encountered on our side. |
+    | <a name="144">144</a>|Duplicate In Parameter Set| |
+    | <a name="151">151</a>|Invalid Parameter Value| |
+    | <a name="689">689</a>|The supplied pagination token is invalid| |
+    | <a name="692">692</a>|This endpoint does not support impersonation| |
+    | <a name="743">743</a>|Task Definition not found.| |
+    | <a name="744">744</a>|Task not found.| |
+    | <a name="745">745</a>|Task Definition could not be serialised.| |
+    | <a name="750">750</a>|A Guard clause rejected the Transition of a Task.| |
+    | <a name="825">825</a>|An Update operation on a Task failed.| |
+    | <a name="826">826</a>|Task could not be created.| |
+    | <a name="827">827</a>|Task could not raise onward Notifications.| |
+    | <a name="862">862</a>|Worker not found.| |
+    | <a name="863">863</a>|Illogical Task Definition.| |
+    | <a name="864">864</a>|Invalid Task Definition.| |
+    | <a name="865">865</a>|Action processing failure.| |
+    | <a name="866">866</a>|Luminesce Lookup failure.| |
+    | <a name="867">867</a>|Worker failure.| |
+    | <a name="868">868</a>|Worker creation failure.| |
+    | <a name="871">871</a>|The specified impersonated user does not exist| |
+    | <a name="872">872</a>|Worker Run not found.| |
+    | <a name="873">873</a>|Action not found.| |
+    | <a name="893">893</a>|Event Handler not found.| |
+    | <a name="894">894</a>|Invalid Event Handler.| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1298
+  version: 0.1.1318
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
+  x-fbn-error-codes:
+    "-1":
+      title: Unknown error
+      description: An unexpected error was encountered on our side.
+    "144":
+      title: Duplicate In Parameter Set
+    "151":
+      title: Invalid Parameter Value
+    "689":
+      title: The supplied pagination token is invalid
+    "692":
+      title: This endpoint does not support impersonation
+    "743":
+      title: Task Definition not found.
+    "744":
+      title: Task not found.
+    "745":
+      title: Task Definition could not be serialised.
+    "750":
+      title: A Guard clause rejected the Transition of a Task.
+    "825":
+      title: An Update operation on a Task failed.
+    "826":
+      title: Task could not be created.
+    "827":
+      title: Task could not raise onward Notifications.
+    "862":
+      title: Worker not found.
+    "863":
+      title: Illogical Task Definition.
+    "864":
+      title: Invalid Task Definition.
+    "865":
+      title: Action processing failure.
+    "866":
+      title: Luminesce Lookup failure.
+    "867":
+      title: Worker failure.
+    "868":
+      title: Worker creation failure.
+    "871":
+      title: The specified impersonated user does not exist
+    "872":
+      title: Worker Run not found.
+    "873":
+      title: Action not found.
+    "893":
+      title: Event Handler not found.
+    "894":
+      title: Invalid Event Handler.
+  x-fbn-description: "The Workflow Service enables you to create data and business\
+    \ operational controls for LUSID by modelling workflows, defining tasks, and setting\
+    \ state transitions with triggers and actions."
 servers:
 - url: https://fbn-prd.lusid.com/workflow
 security:
@@ -58,8 +122,8 @@ paths:
         name: id
         required: true
         schema:
-          maxLength: 40
-          minLength: 30
+          maxLength: 36
+          minLength: 36
           pattern: "^[a-zA-Z0-9\\-]+$"
           type: string
         style: simple
@@ -2731,6 +2795,69 @@ paths:
       x-fbn-apistatus: Experimental
       x-content-type: application/json-patch+json
       x-accepts: application/json
+  /api/tasks/$delete:
+    post:
+      operationId: DeleteTasks
+      requestBody:
+        content:
+          application/json-patch+json:
+            example:
+              taskIds:
+              - TaskInstanceId
+            schema:
+              $ref: '#/components/schemas/DeleteTasksRequest'
+          application/json:
+            example:
+              taskIds:
+              - TaskInstanceId
+            schema:
+              $ref: '#/components/schemas/DeleteTasksRequest'
+          text/json:
+            example:
+              taskIds:
+              - TaskInstanceId
+            schema:
+              $ref: '#/components/schemas/DeleteTasksRequest'
+          application/*+json:
+            example:
+              taskIds:
+              - TaskInstanceId
+            schema:
+              $ref: '#/components/schemas/DeleteTasksRequest'
+        description: Request with the task instance ids to delete.
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletedEntityResponse'
+          description: Success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        "404":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Task not found.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] DeleteTasks: Batch Delete Tasks"
+      tags:
+      - Tasks
+      x-fbn-apistatus: Experimental
+      x-content-type: application/json-patch+json
+      x-accepts: application/json
   /api/tasks/{id}:
     delete:
       operationId: DeleteTask
@@ -2741,8 +2868,8 @@ paths:
         name: id
         required: true
         schema:
-          maxLength: 40
-          minLength: 30
+          maxLength: 36
+          minLength: 36
           pattern: "^[a-zA-Z0-9\\-]+$"
           type: string
         style: simple
@@ -2787,8 +2914,8 @@ paths:
         name: id
         required: true
         schema:
-          maxLength: 40
-          minLength: 30
+          maxLength: 36
+          minLength: 36
           pattern: "^[a-zA-Z0-9\\-]+$"
           type: string
         style: simple
@@ -2866,8 +2993,8 @@ paths:
         name: id
         required: true
         schema:
-          maxLength: 40
-          minLength: 30
+          maxLength: 36
+          minLength: 36
           pattern: "^[a-zA-Z0-9\\-]+$"
           type: string
         style: simple
@@ -2994,8 +3121,8 @@ paths:
         name: id
         required: true
         schema:
-          maxLength: 40
-          minLength: 30
+          maxLength: 36
+          minLength: 36
           pattern: "^[a-zA-Z0-9\\-]+$"
           type: string
         style: simple
@@ -4842,6 +4969,21 @@ components:
           type: array
       required:
       - asAt
+      type: object
+    DeleteTasksRequest:
+      additionalProperties: false
+      description: Contains required info to delete Tasks
+      example:
+        taskIds:
+        - taskIds
+        - taskIds
+      properties:
+        taskIds:
+          description: The Ids of the Tasks to delete
+          items:
+            type: string
+          nullable: true
+          type: array
       type: object
     EventHandler:
       additionalProperties: false

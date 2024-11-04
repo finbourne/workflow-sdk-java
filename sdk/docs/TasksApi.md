@@ -6,6 +6,7 @@ All URIs are relative to *https://fbn-prd.lusid.com/workflow*
 |------------- | ------------- | -------------|
 | [**createTask**](TasksApi.md#createTask) | **POST** /api/tasks | [EXPERIMENTAL] CreateTask: Create a new Task |
 | [**deleteTask**](TasksApi.md#deleteTask) | **DELETE** /api/tasks/{id} | [EXPERIMENTAL] DeleteTask: Delete a Task |
+| [**deleteTasks**](TasksApi.md#deleteTasks) | **POST** /api/tasks/$delete | [EXPERIMENTAL] DeleteTasks: Batch Delete Tasks |
 | [**getTask**](TasksApi.md#getTask) | **GET** /api/tasks/{id} | [EXPERIMENTAL] GetTask: Get a Task |
 | [**getTaskHistory**](TasksApi.md#getTaskHistory) | **GET** /api/tasks/{id}/history | [EXPERIMENTAL] GetTaskHistory: Get the history of a Task |
 | [**listTasks**](TasksApi.md#listTasks) | **GET** /api/tasks | ListTasks: List Tasks |
@@ -180,6 +181,96 @@ public class TasksApiExample {
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Success |  -  |
+| **400** | The details of the input related failure |  -  |
+| **404** | Task not found. |  -  |
+| **0** | Error response |  -  |
+
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
+
+
+## deleteTasks
+
+> DeletedEntityResponse deleteTasks(deleteTasksRequest)
+
+[EXPERIMENTAL] DeleteTasks: Batch Delete Tasks
+
+### Example
+
+```java
+import com.finbourne.workflow.model.*;
+import com.finbourne.workflow.api.TasksApi;
+import com.finbourne.workflow.extensions.ApiConfigurationException;
+import com.finbourne.workflow.extensions.ApiFactoryBuilder;
+import com.finbourne.workflow.extensions.auth.FinbourneTokenException;
+
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+
+public class TasksApiExample {
+
+    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, ApiConfigurationException, FinbourneTokenException {
+        String fileName = "secrets.json";
+        try(PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
+          writer.write("{" +
+            "\"api\": {" +
+            "    \"tokenUrl\": \"<your-token-url>\"," +
+            "    \"workflowUrl\": \"https://<your-domain>.lusid.com/workflow\"," +
+            "    \"username\": \"<your-username>\"," +
+            "    \"password\": \"<your-password>\"," +
+            "    \"clientId\": \"<your-client-id>\"," +
+            "    \"clientSecret\": \"<your-client-secret>\"" +
+            "  }" +
+            "}");
+        }
+
+        // uncomment the below to use configuration overrides
+        // ConfigurationOptions opts = new ConfigurationOptions();
+        // opts.setTotalTimeoutMs(2000);
+        
+        // uncomment the below to use an api factory with overrides
+        // ApiFactory apiFactory = ApiFactoryBuilder.build(fileName, opts);
+        // TasksApi apiInstance = apiFactory.build(TasksApi.class);
+
+        TasksApi apiInstance = ApiFactoryBuilder.build(fileName).build(TasksApi.class);
+        DeleteTasksRequest deleteTasksRequest = new DeleteTasksRequest(); // DeleteTasksRequest | Request with the task instance ids to delete.
+        try {
+            // uncomment the below to set overrides at the request level
+            // DeletedEntityResponse result = apiInstance.deleteTasks(deleteTasksRequest).execute(opts);
+
+            DeletedEntityResponse result = apiInstance.deleteTasks(deleteTasksRequest).execute();
+            System.out.println(result.toJson());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling TasksApi#deleteTasks");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **deleteTasksRequest** | [**DeleteTasksRequest**](DeleteTasksRequest.md)| Request with the task instance ids to delete. | [optional] |
+
+### Return type
+
+[**DeletedEntityResponse**](DeletedEntityResponse.md)
+
+### HTTP request headers
+
+- **Content-Type**: application/json-patch+json, application/json, text/json, application/*+json
 - **Accept**: application/json
 
 
