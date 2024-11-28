@@ -66,6 +66,8 @@ Class | Method | HTTP request | Description
  - [FailResponse](docs/FailResponse.md)
  - [FieldMapping](docs/FieldMapping.md)
  - [GetWorkerResultResponse](docs/GetWorkerResultResponse.md)
+ - [GroupReconciliation](docs/GroupReconciliation.md)
+ - [GroupReconciliationResponse](docs/GroupReconciliationResponse.md)
  - [HealthCheck](docs/HealthCheck.md)
  - [HealthCheckResponse](docs/HealthCheckResponse.md)
  - [IdSelectorDefinition](docs/IdSelectorDefinition.md)

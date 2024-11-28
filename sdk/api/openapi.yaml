@@ -37,7 +37,7 @@ info:
     | <a name="894">894</a>|Invalid Event Handler.| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1339
+  version: 0.1.1347
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -5110,6 +5110,7 @@ components:
           description: The type of worker
           enum:
           - Fail
+          - GroupReconciliation
           - HealthCheck
           - LuminesceView
           - SchedulerJob
@@ -5127,6 +5128,7 @@ components:
           description: The type of worker
           enum:
           - Fail
+          - GroupReconciliation
           - HealthCheck
           - LuminesceView
           - SchedulerJob
@@ -5179,6 +5181,31 @@ components:
       required:
       - results
       - workerStatus
+      type: object
+    GroupReconciliation:
+      additionalProperties: false
+      description: Configuration for a Worker that calls runs a Group Reconciliation
+        in LUSID
+      properties:
+        type:
+          description: The type of worker
+          enum:
+          - GroupReconciliation
+          minLength: 1
+          type: string
+      required:
+      - type
+      type: object
+    GroupReconciliationResponse:
+      additionalProperties: false
+      description: Readonly configuration for the Group Reconciliation Worker
+      properties:
+        type:
+          description: The type of worker
+          enum:
+          - GroupReconciliation
+          nullable: true
+          type: string
       type: object
     HealthCheck:
       additionalProperties: false
@@ -8042,6 +8069,7 @@ components:
         type: type
       oneOf:
       - $ref: '#/components/schemas/Fail'
+      - $ref: '#/components/schemas/GroupReconciliation'
       - $ref: '#/components/schemas/HealthCheck'
       - $ref: '#/components/schemas/LuminesceView'
       - $ref: '#/components/schemas/SchedulerJob'
@@ -8059,6 +8087,7 @@ components:
       description: Readonly information about how the worker should be executed
       oneOf:
       - $ref: '#/components/schemas/FailResponse'
+      - $ref: '#/components/schemas/GroupReconciliationResponse'
       - $ref: '#/components/schemas/HealthCheckResponse'
       - $ref: '#/components/schemas/LuminesceViewResponse'
       - $ref: '#/components/schemas/SchedulerJobResponse'

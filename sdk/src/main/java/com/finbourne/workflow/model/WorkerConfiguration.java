@@ -12,6 +12,7 @@ package com.finbourne.workflow.model;
 
 import java.util.Objects;
 import com.finbourne.workflow.model.Fail;
+import com.finbourne.workflow.model.GroupReconciliation;
 import com.finbourne.workflow.model.HealthCheck;
 import com.finbourne.workflow.model.LuminesceView;
 import com.finbourne.workflow.model.ResourceId;
@@ -74,6 +75,7 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
             }
             final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
             final TypeAdapter<Fail> adapterFail = gson.getDelegateAdapter(this, TypeToken.get(Fail.class));
+            final TypeAdapter<GroupReconciliation> adapterGroupReconciliation = gson.getDelegateAdapter(this, TypeToken.get(GroupReconciliation.class));
             final TypeAdapter<HealthCheck> adapterHealthCheck = gson.getDelegateAdapter(this, TypeToken.get(HealthCheck.class));
             final TypeAdapter<LuminesceView> adapterLuminesceView = gson.getDelegateAdapter(this, TypeToken.get(LuminesceView.class));
             final TypeAdapter<SchedulerJob> adapterSchedulerJob = gson.getDelegateAdapter(this, TypeToken.get(SchedulerJob.class));
@@ -90,6 +92,12 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
                     // check if the actual instance is of the type `Fail`
                     if (value.getActualInstance() instanceof Fail) {
                       JsonElement element = adapterFail.toJsonTree((Fail)value.getActualInstance());
+                      elementAdapter.write(out, element);
+                      return;
+                    }
+                    // check if the actual instance is of the type `GroupReconciliation`
+                    if (value.getActualInstance() instanceof GroupReconciliation) {
+                      JsonElement element = adapterGroupReconciliation.toJsonTree((GroupReconciliation)value.getActualInstance());
                       elementAdapter.write(out, element);
                       return;
                     }
@@ -117,7 +125,7 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
                       elementAdapter.write(out, element);
                       return;
                     }
-                    throw new IOException("Failed to serialize as the type doesn't match oneOf schemas: Fail, HealthCheck, LuminesceView, SchedulerJob, Sleep");
+                    throw new IOException("Failed to serialize as the type doesn't match oneOf schemas: Fail, GroupReconciliation, HealthCheck, LuminesceView, SchedulerJob, Sleep");
                 }
 
                 @Override
@@ -140,6 +148,18 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
                       // deserialization failed, continue
                       errorMessages.add(String.format("Deserialization for Fail failed with `%s`.", e.getMessage()));
                       log.log(Level.FINER, "Input data does not match schema 'Fail'", e);
+                    }
+                    // deserialize GroupReconciliation
+                    try {
+                      // validate the JSON object to see if any exception is thrown
+                      GroupReconciliation.validateJsonElement(jsonElement);
+                      actualAdapter = adapterGroupReconciliation;
+                      match++;
+                      log.log(Level.FINER, "Input data matches schema 'GroupReconciliation'");
+                    } catch (Exception e) {
+                      // deserialization failed, continue
+                      errorMessages.add(String.format("Deserialization for GroupReconciliation failed with `%s`.", e.getMessage()));
+                      log.log(Level.FINER, "Input data does not match schema 'GroupReconciliation'", e);
                     }
                     // deserialize HealthCheck
                     try {
@@ -214,6 +234,11 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
         setActualInstance(o);
     }
 
+    public WorkerConfiguration(GroupReconciliation o) {
+        super("oneOf", Boolean.FALSE);
+        setActualInstance(o);
+    }
+
     public WorkerConfiguration(HealthCheck o) {
         super("oneOf", Boolean.FALSE);
         setActualInstance(o);
@@ -236,6 +261,7 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
 
     static {
         schemas.put("Fail", Fail.class);
+        schemas.put("GroupReconciliation", GroupReconciliation.class);
         schemas.put("HealthCheck", HealthCheck.class);
         schemas.put("LuminesceView", LuminesceView.class);
         schemas.put("SchedulerJob", SchedulerJob.class);
@@ -250,13 +276,18 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
     /**
      * Set the instance that matches the oneOf child schema, check
      * the instance parameter is valid against the oneOf child schemas:
-     * Fail, HealthCheck, LuminesceView, SchedulerJob, Sleep
+     * Fail, GroupReconciliation, HealthCheck, LuminesceView, SchedulerJob, Sleep
      *
      * It could be an instance of the 'oneOf' schemas.
      */
     @Override
     public void setActualInstance(Object instance) {
         if (instance instanceof Fail) {
+            super.setActualInstance(instance);
+            return;
+        }
+
+        if (instance instanceof GroupReconciliation) {
             super.setActualInstance(instance);
             return;
         }
@@ -281,14 +312,14 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
             return;
         }
 
-        throw new RuntimeException("Invalid instance type. Must be Fail, HealthCheck, LuminesceView, SchedulerJob, Sleep");
+        throw new RuntimeException("Invalid instance type. Must be Fail, GroupReconciliation, HealthCheck, LuminesceView, SchedulerJob, Sleep");
     }
 
     /**
      * Get the actual instance, which can be the following:
-     * Fail, HealthCheck, LuminesceView, SchedulerJob, Sleep
+     * Fail, GroupReconciliation, HealthCheck, LuminesceView, SchedulerJob, Sleep
      *
-     * @return The actual instance (Fail, HealthCheck, LuminesceView, SchedulerJob, Sleep)
+     * @return The actual instance (Fail, GroupReconciliation, HealthCheck, LuminesceView, SchedulerJob, Sleep)
      */
     @Override
     public Object getActualInstance() {
@@ -304,6 +335,16 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
      */
     public Fail getFail() throws ClassCastException {
         return (Fail)super.getActualInstance();
+    }
+    /**
+     * Get the actual instance of `GroupReconciliation`. If the actual instance is not `GroupReconciliation`,
+     * the ClassCastException will be thrown.
+     *
+     * @return The actual instance of `GroupReconciliation`
+     * @throws ClassCastException if the instance is not `GroupReconciliation`
+     */
+    public GroupReconciliation getGroupReconciliation() throws ClassCastException {
+        return (GroupReconciliation)super.getActualInstance();
     }
     /**
      * Get the actual instance of `HealthCheck`. If the actual instance is not `HealthCheck`,
@@ -364,6 +405,14 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
       errorMessages.add(String.format("Deserialization for Fail failed with `%s`.", e.getMessage()));
       // continue to the next one
     }
+    // validate the json string with GroupReconciliation
+    try {
+      GroupReconciliation.validateJsonElement(jsonElement);
+      validCount++;
+    } catch (Exception e) {
+      errorMessages.add(String.format("Deserialization for GroupReconciliation failed with `%s`.", e.getMessage()));
+      // continue to the next one
+    }
     // validate the json string with HealthCheck
     try {
       HealthCheck.validateJsonElement(jsonElement);
@@ -397,7 +446,7 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
       // continue to the next one
     }
     if (validCount != 1) {
-      throw new IOException(String.format("The JSON string is invalid for WorkerConfiguration with oneOf schemas: Fail, HealthCheck, LuminesceView, SchedulerJob, Sleep. %d class(es) match the result, expected 1. Detailed failure message for oneOf schemas: %s. JSON: %s", validCount, errorMessages, jsonElement.toString()));
+      throw new IOException(String.format("The JSON string is invalid for WorkerConfiguration with oneOf schemas: Fail, GroupReconciliation, HealthCheck, LuminesceView, SchedulerJob, Sleep. %d class(es) match the result, expected 1. Detailed failure message for oneOf schemas: %s. JSON: %s", validCount, errorMessages, jsonElement.toString()));
     }
   }
 

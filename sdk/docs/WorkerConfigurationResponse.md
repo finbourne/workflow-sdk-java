@@ -20,6 +20,7 @@ Readonly information about how the worker should be executed
 | Name | Value |
 |---- | -----|
 | FAIL | &quot;Fail&quot; |
+| GROUPRECONCILIATION | &quot;GroupReconciliation&quot; |
 | HEALTHCHECK | &quot;HealthCheck&quot; |
 | LUMINESCEVIEW | &quot;LuminesceView&quot; |
 | SCHEDULERJOB | &quot;SchedulerJob&quot; |

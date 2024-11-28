@@ -12,6 +12,7 @@ package com.finbourne.workflow.model;
 
 import java.util.Objects;
 import com.finbourne.workflow.model.FailResponse;
+import com.finbourne.workflow.model.GroupReconciliationResponse;
 import com.finbourne.workflow.model.HealthCheckResponse;
 import com.finbourne.workflow.model.LuminesceViewResponse;
 import com.finbourne.workflow.model.ResourceId;
@@ -74,6 +75,7 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
             }
             final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
             final TypeAdapter<FailResponse> adapterFailResponse = gson.getDelegateAdapter(this, TypeToken.get(FailResponse.class));
+            final TypeAdapter<GroupReconciliationResponse> adapterGroupReconciliationResponse = gson.getDelegateAdapter(this, TypeToken.get(GroupReconciliationResponse.class));
             final TypeAdapter<HealthCheckResponse> adapterHealthCheckResponse = gson.getDelegateAdapter(this, TypeToken.get(HealthCheckResponse.class));
             final TypeAdapter<LuminesceViewResponse> adapterLuminesceViewResponse = gson.getDelegateAdapter(this, TypeToken.get(LuminesceViewResponse.class));
             final TypeAdapter<SchedulerJobResponse> adapterSchedulerJobResponse = gson.getDelegateAdapter(this, TypeToken.get(SchedulerJobResponse.class));
@@ -90,6 +92,12 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
                     // check if the actual instance is of the type `FailResponse`
                     if (value.getActualInstance() instanceof FailResponse) {
                       JsonElement element = adapterFailResponse.toJsonTree((FailResponse)value.getActualInstance());
+                      elementAdapter.write(out, element);
+                      return;
+                    }
+                    // check if the actual instance is of the type `GroupReconciliationResponse`
+                    if (value.getActualInstance() instanceof GroupReconciliationResponse) {
+                      JsonElement element = adapterGroupReconciliationResponse.toJsonTree((GroupReconciliationResponse)value.getActualInstance());
                       elementAdapter.write(out, element);
                       return;
                     }
@@ -117,7 +125,7 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
                       elementAdapter.write(out, element);
                       return;
                     }
-                    throw new IOException("Failed to serialize as the type doesn't match oneOf schemas: FailResponse, HealthCheckResponse, LuminesceViewResponse, SchedulerJobResponse, SleepResponse");
+                    throw new IOException("Failed to serialize as the type doesn't match oneOf schemas: FailResponse, GroupReconciliationResponse, HealthCheckResponse, LuminesceViewResponse, SchedulerJobResponse, SleepResponse");
                 }
 
                 @Override
@@ -140,6 +148,18 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
                       // deserialization failed, continue
                       errorMessages.add(String.format("Deserialization for FailResponse failed with `%s`.", e.getMessage()));
                       log.log(Level.FINER, "Input data does not match schema 'FailResponse'", e);
+                    }
+                    // deserialize GroupReconciliationResponse
+                    try {
+                      // validate the JSON object to see if any exception is thrown
+                      GroupReconciliationResponse.validateJsonElement(jsonElement);
+                      actualAdapter = adapterGroupReconciliationResponse;
+                      match++;
+                      log.log(Level.FINER, "Input data matches schema 'GroupReconciliationResponse'");
+                    } catch (Exception e) {
+                      // deserialization failed, continue
+                      errorMessages.add(String.format("Deserialization for GroupReconciliationResponse failed with `%s`.", e.getMessage()));
+                      log.log(Level.FINER, "Input data does not match schema 'GroupReconciliationResponse'", e);
                     }
                     // deserialize HealthCheckResponse
                     try {
@@ -214,6 +234,11 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
         setActualInstance(o);
     }
 
+    public WorkerConfigurationResponse(GroupReconciliationResponse o) {
+        super("oneOf", Boolean.FALSE);
+        setActualInstance(o);
+    }
+
     public WorkerConfigurationResponse(HealthCheckResponse o) {
         super("oneOf", Boolean.FALSE);
         setActualInstance(o);
@@ -236,6 +261,7 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
 
     static {
         schemas.put("FailResponse", FailResponse.class);
+        schemas.put("GroupReconciliationResponse", GroupReconciliationResponse.class);
         schemas.put("HealthCheckResponse", HealthCheckResponse.class);
         schemas.put("LuminesceViewResponse", LuminesceViewResponse.class);
         schemas.put("SchedulerJobResponse", SchedulerJobResponse.class);
@@ -250,13 +276,18 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
     /**
      * Set the instance that matches the oneOf child schema, check
      * the instance parameter is valid against the oneOf child schemas:
-     * FailResponse, HealthCheckResponse, LuminesceViewResponse, SchedulerJobResponse, SleepResponse
+     * FailResponse, GroupReconciliationResponse, HealthCheckResponse, LuminesceViewResponse, SchedulerJobResponse, SleepResponse
      *
      * It could be an instance of the 'oneOf' schemas.
      */
     @Override
     public void setActualInstance(Object instance) {
         if (instance instanceof FailResponse) {
+            super.setActualInstance(instance);
+            return;
+        }
+
+        if (instance instanceof GroupReconciliationResponse) {
             super.setActualInstance(instance);
             return;
         }
@@ -281,14 +312,14 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
             return;
         }
 
-        throw new RuntimeException("Invalid instance type. Must be FailResponse, HealthCheckResponse, LuminesceViewResponse, SchedulerJobResponse, SleepResponse");
+        throw new RuntimeException("Invalid instance type. Must be FailResponse, GroupReconciliationResponse, HealthCheckResponse, LuminesceViewResponse, SchedulerJobResponse, SleepResponse");
     }
 
     /**
      * Get the actual instance, which can be the following:
-     * FailResponse, HealthCheckResponse, LuminesceViewResponse, SchedulerJobResponse, SleepResponse
+     * FailResponse, GroupReconciliationResponse, HealthCheckResponse, LuminesceViewResponse, SchedulerJobResponse, SleepResponse
      *
-     * @return The actual instance (FailResponse, HealthCheckResponse, LuminesceViewResponse, SchedulerJobResponse, SleepResponse)
+     * @return The actual instance (FailResponse, GroupReconciliationResponse, HealthCheckResponse, LuminesceViewResponse, SchedulerJobResponse, SleepResponse)
      */
     @Override
     public Object getActualInstance() {
@@ -304,6 +335,16 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
      */
     public FailResponse getFailResponse() throws ClassCastException {
         return (FailResponse)super.getActualInstance();
+    }
+    /**
+     * Get the actual instance of `GroupReconciliationResponse`. If the actual instance is not `GroupReconciliationResponse`,
+     * the ClassCastException will be thrown.
+     *
+     * @return The actual instance of `GroupReconciliationResponse`
+     * @throws ClassCastException if the instance is not `GroupReconciliationResponse`
+     */
+    public GroupReconciliationResponse getGroupReconciliationResponse() throws ClassCastException {
+        return (GroupReconciliationResponse)super.getActualInstance();
     }
     /**
      * Get the actual instance of `HealthCheckResponse`. If the actual instance is not `HealthCheckResponse`,
@@ -364,6 +405,14 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
       errorMessages.add(String.format("Deserialization for FailResponse failed with `%s`.", e.getMessage()));
       // continue to the next one
     }
+    // validate the json string with GroupReconciliationResponse
+    try {
+      GroupReconciliationResponse.validateJsonElement(jsonElement);
+      validCount++;
+    } catch (Exception e) {
+      errorMessages.add(String.format("Deserialization for GroupReconciliationResponse failed with `%s`.", e.getMessage()));
+      // continue to the next one
+    }
     // validate the json string with HealthCheckResponse
     try {
       HealthCheckResponse.validateJsonElement(jsonElement);
@@ -397,7 +446,7 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
       // continue to the next one
     }
     if (validCount != 1) {
-      throw new IOException(String.format("The JSON string is invalid for WorkerConfigurationResponse with oneOf schemas: FailResponse, HealthCheckResponse, LuminesceViewResponse, SchedulerJobResponse, SleepResponse. %d class(es) match the result, expected 1. Detailed failure message for oneOf schemas: %s. JSON: %s", validCount, errorMessages, jsonElement.toString()));
+      throw new IOException(String.format("The JSON string is invalid for WorkerConfigurationResponse with oneOf schemas: FailResponse, GroupReconciliationResponse, HealthCheckResponse, LuminesceViewResponse, SchedulerJobResponse, SleepResponse. %d class(es) match the result, expected 1. Detailed failure message for oneOf schemas: %s. JSON: %s", validCount, errorMessages, jsonElement.toString()));
     }
   }
 
