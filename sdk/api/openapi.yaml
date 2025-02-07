@@ -35,9 +35,10 @@ info:
     | <a name="873">873</a>|Action not found.| |
     | <a name="893">893</a>|Event Handler not found.| |
     | <a name="894">894</a>|Invalid Event Handler.| |
+    | <a name="939">939</a>|Blocked by a Network Zone| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1359
+  version: 0.1.1407
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -91,6 +92,8 @@ info:
       title: Event Handler not found.
     "894":
       title: Invalid Event Handler.
+    "939":
+      title: Blocked by a Network Zone
   x-fbn-description: "The Workflow Service enables you to create data and business\
     \ operational controls for LUSID by modelling workflows, defining tasks, and setting\
     \ state transitions with triggers and actions."
@@ -196,7 +199,7 @@ paths:
                   logType: ActionSuccessful
               schema:
                 $ref: '#/components/schemas/ActionLog'
-          description: Success
+          description: OK
         "400":
           content:
             text/plain:
@@ -536,7 +539,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeletedEntityResponse'
-          description: Success
+          description: OK
         "400":
           content:
             application/json:
@@ -802,7 +805,7 @@ paths:
                   taskFields: {}
               schema:
                 $ref: '#/components/schemas/EventHandler'
-          description: Success
+          description: OK
         "400":
           content:
             application/json:
@@ -846,7 +849,7 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ResourceListOfAccessControlledResource'
-          description: Success
+          description: OK
         default:
           content:
             application/json:
@@ -1692,7 +1695,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeletedEntityResponse'
-          description: Success
+          description: OK
         "400":
           content:
             application/json:
@@ -1875,7 +1878,7 @@ paths:
                     \ NOT eq ''"
               schema:
                 $ref: '#/components/schemas/TaskDefinition'
-          description: Success
+          description: OK
         "400":
           content:
             application/json:
@@ -2475,7 +2478,7 @@ paths:
                     \ NOT eq ''"
               schema:
                 $ref: '#/components/schemas/TaskDefinition'
-          description: Success
+          description: OK
         "400":
           content:
             application/json:
@@ -2545,7 +2548,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResourceListOfTask'
-          description: Success
+          description: OK
         "400":
           content:
             application/json:
@@ -2642,7 +2645,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedResourceListOfTask'
-          description: Success
+          description: OK
         "400":
           content:
             application/json:
@@ -2831,7 +2834,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeletedEntityResponse'
-          description: Success
+          description: OK
         "400":
           content:
             application/json:
@@ -2879,7 +2882,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeletedEntityResponse'
-          description: Success
+          description: OK
         "400":
           content:
             application/json:
@@ -2958,7 +2961,7 @@ paths:
                 asAtLastTransition: 2022-01-01T01:02:03.0000000+00:00
               schema:
                 $ref: '#/components/schemas/Task'
-          description: Success
+          description: OK
         "400":
           content:
             application/json:
@@ -3084,7 +3087,7 @@ paths:
                 asAtLastTransition: 2022-01-01T01:02:03.0000000+00:00
               schema:
                 $ref: '#/components/schemas/Task'
-          description: Success
+          description: OK
         "400":
           content:
             application/json:
@@ -3170,7 +3173,7 @@ paths:
                 links: []
               schema:
                 $ref: '#/components/schemas/ResourceListOfChangeItem'
-          description: Success
+          description: OK
         "400":
           content:
             application/json:
@@ -3336,7 +3339,7 @@ paths:
                 links: []
               schema:
                 $ref: '#/components/schemas/PagedResourceListOfWorker'
-          description: Success
+          description: OK
         "400":
           content:
             text/plain:
@@ -3553,7 +3556,7 @@ paths:
                 statusDetail: WorkerStatus
               schema:
                 $ref: '#/components/schemas/GetWorkerResultResponse'
-          description: Success
+          description: OK
         "400":
           content:
             text/plain:
@@ -3619,7 +3622,7 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/DeletedEntityResponse'
-          description: Success
+          description: OK
         "400":
           content:
             text/plain:
@@ -3924,7 +3927,7 @@ paths:
                 resultFields: []
               schema:
                 $ref: '#/components/schemas/Worker'
-          description: Success
+          description: OK
         "400":
           content:
             text/plain:
@@ -4054,7 +4057,7 @@ paths:
                 runId: 71beb2cb-be3a-4662-b8ee-e5ded63b957a
               schema:
                 $ref: '#/components/schemas/RunWorkerResponse'
-          description: Success
+          description: OK
         "400":
           content:
             text/plain:
@@ -5305,6 +5308,7 @@ components:
       properties:
         identifier:
           additionalProperties:
+            nullable: true
             type: string
           minLength: 1
           type: object
