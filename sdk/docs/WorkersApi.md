@@ -4,13 +4,13 @@ All URIs are relative to *https://fbn-prd.lusid.com/workflow*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**createWorker**](WorkersApi.md#createWorker) | **POST** /api/workers | [EXPERIMENTAL] CreateWorker: Create a new Worker |
-| [**deleteWorker**](WorkersApi.md#deleteWorker) | **DELETE** /api/workers/{scope}/{code} | [EXPERIMENTAL] DeleteWorker: Delete a Worker |
-| [**getWorker**](WorkersApi.md#getWorker) | **GET** /api/workers/{scope}/{code} | [EXPERIMENTAL] GetWorker: Get a Worker |
-| [**getWorkerResult**](WorkersApi.md#getWorkerResult) | **GET** /api/workers/{runId}/$result | [EXPERIMENTAL] GetWorkerResult: Get the status of a specific run of a worker with any relevant results |
-| [**listWorkers**](WorkersApi.md#listWorkers) | **GET** /api/workers | [EXPERIMENTAL] ListWorkers: List Workers |
-| [**runWorker**](WorkersApi.md#runWorker) | **POST** /api/workers/{scope}/{code}/$run | [EXPERIMENTAL] RunWorker: Run a Worker |
-| [**updateWorker**](WorkersApi.md#updateWorker) | **PUT** /api/workers/{scope}/{code} | [EXPERIMENTAL] UpdateWorker: Update a Worker |
+| [**createWorker**](WorkersApi.md#createWorker) | **POST** /api/workers | CreateWorker: Create a new Worker |
+| [**deleteWorker**](WorkersApi.md#deleteWorker) | **DELETE** /api/workers/{scope}/{code} | DeleteWorker: Delete a Worker |
+| [**getWorker**](WorkersApi.md#getWorker) | **GET** /api/workers/{scope}/{code} | GetWorker: Get a Worker |
+| [**getWorkerResult**](WorkersApi.md#getWorkerResult) | **GET** /api/workers/{runId}/$result | GetWorkerResult: Get the status of a specific run of a worker with any relevant results |
+| [**listWorkers**](WorkersApi.md#listWorkers) | **GET** /api/workers | ListWorkers: List Workers |
+| [**runWorker**](WorkersApi.md#runWorker) | **POST** /api/workers/{scope}/{code}/$run | RunWorker: Run a Worker |
+| [**updateWorker**](WorkersApi.md#updateWorker) | **PUT** /api/workers/{scope}/{code} | UpdateWorker: Update a Worker |
 
 
 
@@ -18,7 +18,7 @@ All URIs are relative to *https://fbn-prd.lusid.com/workflow*
 
 > Worker createWorker(createWorkerRequest)
 
-[EXPERIMENTAL] CreateWorker: Create a new Worker
+CreateWorker: Create a new Worker
 
 If the Worker already exists a failure will be returned
 
@@ -109,7 +109,7 @@ public class WorkersApiExample {
 
 > DeletedEntityResponse deleteWorker(scope, code)
 
-[EXPERIMENTAL] DeleteWorker: Delete a Worker
+DeleteWorker: Delete a Worker
 
 If the Worker does not exist a failure will be returned
 
@@ -203,7 +203,7 @@ public class WorkersApiExample {
 
 > Worker getWorker(scope, code, asAt)
 
-[EXPERIMENTAL] GetWorker: Get a Worker
+GetWorker: Get a Worker
 
 Will return a NotFound failure if the Worker does not exist
 
@@ -298,7 +298,7 @@ public class WorkersApiExample {
 
 > GetWorkerResultResponse getWorkerResult(runId)
 
-[EXPERIMENTAL] GetWorkerResult: Get the status of a specific run of a worker with any relevant results
+GetWorkerResult: Get the status of a specific run of a worker with any relevant results
 
 ### Example
 
@@ -387,7 +387,7 @@ public class WorkersApiExample {
 
 > PagedResourceListOfWorker listWorkers(asAt, filter, sortBy, limit, page)
 
-[EXPERIMENTAL] ListWorkers: List Workers
+ListWorkers: List Workers
 
 ### Example
 
@@ -484,7 +484,7 @@ public class WorkersApiExample {
 
 > RunWorkerResponse runWorker(scope, code, runWorkerRequest, asAt)
 
-[EXPERIMENTAL] RunWorker: Run a Worker
+RunWorker: Run a Worker
 
 ### Example
 
@@ -579,7 +579,7 @@ public class WorkersApiExample {
 
 > Worker updateWorker(scope, code, updateWorkerRequest)
 
-[EXPERIMENTAL] UpdateWorker: Update a Worker
+UpdateWorker: Update a Worker
 
 If the Worker does not exist a failure will be returned
 

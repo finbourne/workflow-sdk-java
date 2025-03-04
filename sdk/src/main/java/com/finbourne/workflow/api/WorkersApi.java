@@ -301,7 +301,7 @@ public class WorkersApi {
     }
 
     /**
-     * [EXPERIMENTAL] CreateWorker: Create a new Worker
+     * CreateWorker: Create a new Worker
      * If the Worker already exists a failure will be returned
      * @param createWorkerRequest Worker to be created (required)
      * @return APIcreateWorkerRequest
@@ -548,7 +548,7 @@ public class WorkersApi {
     }
 
     /**
-     * [EXPERIMENTAL] DeleteWorker: Delete a Worker
+     * DeleteWorker: Delete a Worker
      * If the Worker does not exist a failure will be returned
      * @param scope Scope of the worker to be deleted (required)
      * @param code Code of the worker to be deleted (required)
@@ -805,7 +805,7 @@ public class WorkersApi {
     }
 
     /**
-     * [EXPERIMENTAL] GetWorker: Get a Worker
+     * GetWorker: Get a Worker
      * Will return a NotFound failure if the Worker does not exist
      * @param scope Scope of the worker (required)
      * @param code Code of the worker (required)
@@ -1038,7 +1038,7 @@ public class WorkersApi {
     }
 
     /**
-     * [EXPERIMENTAL] GetWorkerResult: Get the status of a specific run of a worker with any relevant results
+     * GetWorkerResult: Get the status of a specific run of a worker with any relevant results
      * 
      * @param runId The ID returned when calling Run Worker (required)
      * @return APIgetWorkerResultRequest
@@ -1337,7 +1337,7 @@ public class WorkersApi {
     }
 
     /**
-     * [EXPERIMENTAL] ListWorkers: List Workers
+     * ListWorkers: List Workers
      * 
      * @return APIlistWorkersRequest
      * @http.response.details
@@ -1602,7 +1602,7 @@ public class WorkersApi {
     }
 
     /**
-     * [EXPERIMENTAL] RunWorker: Run a Worker
+     * RunWorker: Run a Worker
      * 
      * @param scope Scope of the worker (required)
      * @param code Code of the worker (required)
@@ -1862,7 +1862,7 @@ public class WorkersApi {
     }
 
     /**
-     * [EXPERIMENTAL] UpdateWorker: Update a Worker
+     * UpdateWorker: Update a Worker
      * If the Worker does not exist a failure will be returned
      * @param scope Scope of the worker to be updated (required)
      * @param code Code of the worker to be updated (required)

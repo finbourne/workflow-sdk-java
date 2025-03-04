@@ -296,7 +296,7 @@ public class TaskDefinitionsApi {
     }
 
     /**
-     * [EXPERIMENTAL] CreateTaskDefinition: Create a new Task Definition
+     * CreateTaskDefinition: Create a new Task Definition
      * 
      * @param createTaskDefinitionRequest The data to create a Task Definition (required)
      * @return APIcreateTaskDefinitionRequest
@@ -541,7 +541,7 @@ public class TaskDefinitionsApi {
     }
 
     /**
-     * [EXPERIMENTAL] DeleteTaskDefinition: Delete a Task Definition
+     * DeleteTaskDefinition: Delete a Task Definition
      * 
      * @param scope The scope that identifies a Task Definition (required)
      * @param code The code that identifies a Task Definition (required)
@@ -803,7 +803,7 @@ public class TaskDefinitionsApi {
     }
 
     /**
-     * [EXPERIMENTAL] GetTaskDefinition: Get a Task Definition
+     * GetTaskDefinition: Get a Task Definition
      * 
      * @param scope The scope that identifies a Task Definition (required)
      * @param code The code that identifies a Task Definition (required)
@@ -1109,7 +1109,7 @@ public class TaskDefinitionsApi {
     }
 
     /**
-     * [EXPERIMENTAL] ListTaskDefinitions: List Task Definitions
+     * ListTaskDefinitions: List Task Definitions
      * 
      * @return APIlistTaskDefinitionsRequest
      * @http.response.details
@@ -1369,7 +1369,7 @@ public class TaskDefinitionsApi {
     }
 
     /**
-     * [EXPERIMENTAL] ListTasksForTaskDefinition: List Tasks for a Task Definition
+     * ListTasksForTaskDefinition: List Tasks for a Task Definition
      * 
      * @param scope The scope that identifies a Task Definition (required)
      * @param code The code that identifies a Task Definition (required)
@@ -1627,7 +1627,7 @@ public class TaskDefinitionsApi {
     }
 
     /**
-     * [EXPERIMENTAL] UpdateTaskDefinition: Update an existing Task Definition
+     * UpdateTaskDefinition: Update an existing Task Definition
      * 
      * @param scope The scope that identifies a Task Definition (required)
      * @param code The code that identifies a Task Definition (required)

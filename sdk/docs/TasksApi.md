@@ -4,13 +4,13 @@ All URIs are relative to *https://fbn-prd.lusid.com/workflow*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**createTask**](TasksApi.md#createTask) | **POST** /api/tasks | [EXPERIMENTAL] CreateTask: Create a new Task |
-| [**deleteTask**](TasksApi.md#deleteTask) | **DELETE** /api/tasks/{id} | [EXPERIMENTAL] DeleteTask: Delete a Task |
-| [**deleteTasks**](TasksApi.md#deleteTasks) | **POST** /api/tasks/$delete | [EXPERIMENTAL] DeleteTasks: Batch Delete Tasks |
-| [**getTask**](TasksApi.md#getTask) | **GET** /api/tasks/{id} | [EXPERIMENTAL] GetTask: Get a Task |
-| [**getTaskHistory**](TasksApi.md#getTaskHistory) | **GET** /api/tasks/{id}/history | [EXPERIMENTAL] GetTaskHistory: Get the history of a Task |
+| [**createTask**](TasksApi.md#createTask) | **POST** /api/tasks | CreateTask: Create a new Task |
+| [**deleteTask**](TasksApi.md#deleteTask) | **DELETE** /api/tasks/{id} | DeleteTask: Delete a Task |
+| [**deleteTasks**](TasksApi.md#deleteTasks) | **POST** /api/tasks/$delete | DeleteTasks: Batch Delete Tasks |
+| [**getTask**](TasksApi.md#getTask) | **GET** /api/tasks/{id} | GetTask: Get a Task |
+| [**getTaskHistory**](TasksApi.md#getTaskHistory) | **GET** /api/tasks/{id}/history | GetTaskHistory: Get the history of a Task |
 | [**listTasks**](TasksApi.md#listTasks) | **GET** /api/tasks | ListTasks: List Tasks |
-| [**updateTask**](TasksApi.md#updateTask) | **POST** /api/tasks/{id} | [EXPERIMENTAL] UpdateTask: Update a Task |
+| [**updateTask**](TasksApi.md#updateTask) | **POST** /api/tasks/{id} | UpdateTask: Update a Task |
 
 
 
@@ -18,7 +18,7 @@ All URIs are relative to *https://fbn-prd.lusid.com/workflow*
 
 > Task createTask(createTaskRequest, trigger)
 
-[EXPERIMENTAL] CreateTask: Create a new Task
+CreateTask: Create a new Task
 
 ### Example
 
@@ -109,7 +109,7 @@ public class TasksApiExample {
 
 > DeletedEntityResponse deleteTask(id)
 
-[EXPERIMENTAL] DeleteTask: Delete a Task
+DeleteTask: Delete a Task
 
 ### Example
 
@@ -199,7 +199,7 @@ public class TasksApiExample {
 
 > DeletedEntityResponse deleteTasks(deleteTasksRequest)
 
-[EXPERIMENTAL] DeleteTasks: Batch Delete Tasks
+DeleteTasks: Batch Delete Tasks
 
 ### Example
 
@@ -289,7 +289,7 @@ public class TasksApiExample {
 
 > Task getTask(id, asAt)
 
-[EXPERIMENTAL] GetTask: Get a Task
+GetTask: Get a Task
 
 ### Example
 
@@ -381,7 +381,7 @@ public class TasksApiExample {
 
 > ResourceListOfChangeItem getTaskHistory(id, asAt)
 
-[EXPERIMENTAL] GetTaskHistory: Get the history of a Task
+GetTaskHistory: Get the history of a Task
 
 ### Example
 
@@ -571,7 +571,7 @@ public class TasksApiExample {
 
 > Task updateTask(id, trigger, updateTaskRequest)
 
-[EXPERIMENTAL] UpdateTask: Update a Task
+UpdateTask: Update a Task
 
 ### Example
 

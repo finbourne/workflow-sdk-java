@@ -4,12 +4,12 @@ All URIs are relative to *https://fbn-prd.lusid.com/workflow*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**createTaskDefinition**](TaskDefinitionsApi.md#createTaskDefinition) | **POST** /api/taskdefinitions | [EXPERIMENTAL] CreateTaskDefinition: Create a new Task Definition |
-| [**deleteTaskDefinition**](TaskDefinitionsApi.md#deleteTaskDefinition) | **DELETE** /api/taskdefinitions/{scope}/{code} | [EXPERIMENTAL] DeleteTaskDefinition: Delete a Task Definition |
-| [**getTaskDefinition**](TaskDefinitionsApi.md#getTaskDefinition) | **GET** /api/taskdefinitions/{scope}/{code} | [EXPERIMENTAL] GetTaskDefinition: Get a Task Definition |
-| [**listTaskDefinitions**](TaskDefinitionsApi.md#listTaskDefinitions) | **GET** /api/taskdefinitions | [EXPERIMENTAL] ListTaskDefinitions: List Task Definitions |
-| [**listTasksForTaskDefinition**](TaskDefinitionsApi.md#listTasksForTaskDefinition) | **GET** /api/taskdefinitions/{scope}/{code}/tasks | [EXPERIMENTAL] ListTasksForTaskDefinition: List Tasks for a Task Definition |
-| [**updateTaskDefinition**](TaskDefinitionsApi.md#updateTaskDefinition) | **PUT** /api/taskdefinitions/{scope}/{code} | [EXPERIMENTAL] UpdateTaskDefinition: Update an existing Task Definition |
+| [**createTaskDefinition**](TaskDefinitionsApi.md#createTaskDefinition) | **POST** /api/taskdefinitions | CreateTaskDefinition: Create a new Task Definition |
+| [**deleteTaskDefinition**](TaskDefinitionsApi.md#deleteTaskDefinition) | **DELETE** /api/taskdefinitions/{scope}/{code} | DeleteTaskDefinition: Delete a Task Definition |
+| [**getTaskDefinition**](TaskDefinitionsApi.md#getTaskDefinition) | **GET** /api/taskdefinitions/{scope}/{code} | GetTaskDefinition: Get a Task Definition |
+| [**listTaskDefinitions**](TaskDefinitionsApi.md#listTaskDefinitions) | **GET** /api/taskdefinitions | ListTaskDefinitions: List Task Definitions |
+| [**listTasksForTaskDefinition**](TaskDefinitionsApi.md#listTasksForTaskDefinition) | **GET** /api/taskdefinitions/{scope}/{code}/tasks | ListTasksForTaskDefinition: List Tasks for a Task Definition |
+| [**updateTaskDefinition**](TaskDefinitionsApi.md#updateTaskDefinition) | **PUT** /api/taskdefinitions/{scope}/{code} | UpdateTaskDefinition: Update an existing Task Definition |
 
 
 
@@ -17,7 +17,7 @@ All URIs are relative to *https://fbn-prd.lusid.com/workflow*
 
 > TaskDefinition createTaskDefinition(createTaskDefinitionRequest)
 
-[EXPERIMENTAL] CreateTaskDefinition: Create a new Task Definition
+CreateTaskDefinition: Create a new Task Definition
 
 ### Example
 
@@ -106,7 +106,7 @@ public class TaskDefinitionsApiExample {
 
 > DeletedEntityResponse deleteTaskDefinition(scope, code)
 
-[EXPERIMENTAL] DeleteTaskDefinition: Delete a Task Definition
+DeleteTaskDefinition: Delete a Task Definition
 
 ### Example
 
@@ -198,7 +198,7 @@ public class TaskDefinitionsApiExample {
 
 > TaskDefinition getTaskDefinition(scope, code, asAt)
 
-[EXPERIMENTAL] GetTaskDefinition: Get a Task Definition
+GetTaskDefinition: Get a Task Definition
 
 ### Example
 
@@ -292,7 +292,7 @@ public class TaskDefinitionsApiExample {
 
 > PagedResourceListOfTaskDefinition listTaskDefinitions(asAt, filter, sortBy, limit, page)
 
-[EXPERIMENTAL] ListTaskDefinitions: List Task Definitions
+ListTaskDefinitions: List Task Definitions
 
 ### Example
 
@@ -390,7 +390,7 @@ public class TaskDefinitionsApiExample {
 
 > ResourceListOfTask listTasksForTaskDefinition(scope, code, asAt)
 
-[EXPERIMENTAL] ListTasksForTaskDefinition: List Tasks for a Task Definition
+ListTasksForTaskDefinition: List Tasks for a Task Definition
 
 ### Example
 
@@ -484,7 +484,7 @@ public class TaskDefinitionsApiExample {
 
 > TaskDefinition updateTaskDefinition(scope, code, updateTaskDefinitionRequest)
 
-[EXPERIMENTAL] UpdateTaskDefinition: Update an existing Task Definition
+UpdateTaskDefinition: Update an existing Task Definition
 
 ### Example
 

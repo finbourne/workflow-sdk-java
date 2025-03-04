@@ -38,7 +38,7 @@ info:
     | <a name="939">939</a>|Blocked by a Network Zone| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1431
+  version: 0.1.1438
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -1074,10 +1074,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: "[EXPERIMENTAL] ListTaskDefinitions: List Task Definitions"
+      summary: "ListTaskDefinitions: List Task Definitions"
       tags:
       - Task Definitions
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: Stable
       x-accepts: application/json
     post:
       operationId: CreateTaskDefinition
@@ -1657,10 +1657,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: "[EXPERIMENTAL] CreateTaskDefinition: Create a new Task Definition"
+      summary: "CreateTaskDefinition: Create a new Task Definition"
       tags:
       - Task Definitions
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: Stable
       x-content-type: application/json-patch+json
       x-accepts: application/json
   /api/taskdefinitions/{scope}/{code}:
@@ -1716,10 +1716,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: "[EXPERIMENTAL] DeleteTaskDefinition: Delete a Task Definition"
+      summary: "DeleteTaskDefinition: Delete a Task Definition"
       tags:
       - Task Definitions
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: Stable
       x-accepts: application/json
     get:
       operationId: GetTaskDefinition
@@ -1899,10 +1899,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: "[EXPERIMENTAL] GetTaskDefinition: Get a Task Definition"
+      summary: "GetTaskDefinition: Get a Task Definition"
       tags:
       - Task Definitions
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: Stable
       x-accepts: application/json
     put:
       operationId: UpdateTaskDefinition
@@ -2499,10 +2499,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: "[EXPERIMENTAL] UpdateTaskDefinition: Update an existing Task Definition"
+      summary: "UpdateTaskDefinition: Update an existing Task Definition"
       tags:
       - Task Definitions
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: Stable
       x-content-type: application/json-patch+json
       x-accepts: application/json
   /api/taskdefinitions/{scope}/{code}/tasks:
@@ -2569,10 +2569,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: "[EXPERIMENTAL] ListTasksForTaskDefinition: List Tasks for a Task Definition"
+      summary: "ListTasksForTaskDefinition: List Tasks for a Task Definition"
       tags:
       - Task Definitions
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: Stable
       x-accepts: application/json
   /api/tasks:
     get:
@@ -2792,10 +2792,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: "[EXPERIMENTAL] CreateTask: Create a new Task"
+      summary: "CreateTask: Create a new Task"
       tags:
       - Tasks
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: Stable
       x-content-type: application/json-patch+json
       x-accepts: application/json
   /api/tasks/$delete:
@@ -2855,10 +2855,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: "[EXPERIMENTAL] DeleteTasks: Batch Delete Tasks"
+      summary: "DeleteTasks: Batch Delete Tasks"
       tags:
       - Tasks
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: Stable
       x-content-type: application/json-patch+json
       x-accepts: application/json
   /api/tasks/{id}:
@@ -2903,10 +2903,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: "[EXPERIMENTAL] DeleteTask: Delete a Task"
+      summary: "DeleteTask: Delete a Task"
       tags:
       - Tasks
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: Stable
       x-accepts: application/json
     get:
       operationId: GetTask
@@ -2982,10 +2982,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: "[EXPERIMENTAL] GetTask: Get a Task"
+      summary: "GetTask: Get a Task"
       tags:
       - Tasks
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: Stable
       x-accepts: application/json
     post:
       operationId: UpdateTask
@@ -3108,10 +3108,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: "[EXPERIMENTAL] UpdateTask: Update a Task"
+      summary: "UpdateTask: Update a Task"
       tags:
       - Tasks
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: Stable
       x-content-type: application/json-patch+json
       x-accepts: application/json
   /api/tasks/{id}/history:
@@ -3194,10 +3194,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: "[EXPERIMENTAL] GetTaskHistory: Get the history of a Task"
+      summary: "GetTaskHistory: Get the history of a Task"
       tags:
       - Tasks
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: Stable
       x-accepts: application/json
   /api/workers:
     get:
@@ -3360,10 +3360,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: "[EXPERIMENTAL] ListWorkers: List Workers"
+      summary: "ListWorkers: List Workers"
       tags:
       - Workers
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: Stable
       x-accepts: application/json
     post:
       description: If the Worker already exists a failure will be returned
@@ -3510,10 +3510,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: "[EXPERIMENTAL] CreateWorker: Create a new Worker"
+      summary: "CreateWorker: Create a new Worker"
       tags:
       - Workers
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: Stable
       x-content-type: application/json-patch+json
       x-accepts: application/json
   /api/workers/{runId}/$result:
@@ -3577,11 +3577,11 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: "[EXPERIMENTAL] GetWorkerResult: Get the status of a specific run of\
-        \ a worker with any relevant results"
+      summary: "GetWorkerResult: Get the status of a specific run of a worker with\
+        \ any relevant results"
       tags:
       - Workers
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: Stable
       x-accepts: application/json
   /api/workers/{scope}/{code}:
     delete:
@@ -3654,10 +3654,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: "[EXPERIMENTAL] DeleteWorker: Delete a Worker"
+      summary: "DeleteWorker: Delete a Worker"
       tags:
       - Workers
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: Stable
       x-accepts: application/json
     get:
       description: Will return a NotFound failure if the Worker does not exist
@@ -3785,10 +3785,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: "[EXPERIMENTAL] GetWorker: Get a Worker"
+      summary: "GetWorker: Get a Worker"
       tags:
       - Workers
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: Stable
       x-accepts: application/json
     put:
       description: If the Worker does not exist a failure will be returned
@@ -3957,10 +3957,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: "[EXPERIMENTAL] UpdateWorker: Update a Worker"
+      summary: "UpdateWorker: Update a Worker"
       tags:
       - Workers
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: Stable
       x-content-type: application/json-patch+json
       x-accepts: application/json
   /api/workers/{scope}/{code}/$run:
@@ -4074,10 +4074,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: "[EXPERIMENTAL] RunWorker: Run a Worker"
+      summary: "RunWorker: Run a Worker"
       tags:
       - Workers
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: Stable
       x-content-type: application/json-patch+json
       x-accepts: application/json
 components:

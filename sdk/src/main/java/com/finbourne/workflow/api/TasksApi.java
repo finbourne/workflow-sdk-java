@@ -312,7 +312,7 @@ public class TasksApi {
     }
 
     /**
-     * [EXPERIMENTAL] CreateTask: Create a new Task
+     * CreateTask: Create a new Task
      * 
      * @param createTaskRequest Request to create Task (required)
      * @return APIcreateTaskRequest
@@ -549,7 +549,7 @@ public class TasksApi {
     }
 
     /**
-     * [EXPERIMENTAL] DeleteTask: Delete a Task
+     * DeleteTask: Delete a Task
      * 
      * @param id The identifier for the Task to be deleted. (required)
      * @return APIdeleteTaskRequest
@@ -794,7 +794,7 @@ public class TasksApi {
     }
 
     /**
-     * [EXPERIMENTAL] DeleteTasks: Batch Delete Tasks
+     * DeleteTasks: Batch Delete Tasks
      * 
      * @return APIdeleteTasksRequest
      * @http.response.details
@@ -1046,7 +1046,7 @@ public class TasksApi {
     }
 
     /**
-     * [EXPERIMENTAL] GetTask: Get a Task
+     * GetTask: Get a Task
      * 
      * @param id Id of the Task to retrieve (required)
      * @return APIgetTaskRequest
@@ -1299,7 +1299,7 @@ public class TasksApi {
     }
 
     /**
-     * [EXPERIMENTAL] GetTaskHistory: Get the history of a Task
+     * GetTaskHistory: Get the history of a Task
      * 
      * @param id The Task Id for which to get the history (required)
      * @return APIgetTaskHistoryRequest
@@ -1871,7 +1871,7 @@ public class TasksApi {
     }
 
     /**
-     * [EXPERIMENTAL] UpdateTask: Update a Task
+     * UpdateTask: Update a Task
      * 
      * @param id Id of the Task to act upon (required)
      * @return APIupdateTaskRequest
