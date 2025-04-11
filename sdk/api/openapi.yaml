@@ -38,7 +38,7 @@ info:
     | <a name="939">939</a>|Blocked by a Network Zone| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1447
+  version: 0.1.1469
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -2861,6 +2861,144 @@ paths:
       x-fbn-apistatus: Stable
       x-content-type: application/json-patch+json
       x-accepts: application/json
+  /api/tasks/$update:
+    patch:
+      operationId: BatchUpdateTasks
+      requestBody:
+        content:
+          application/json-patch+json:
+            example:
+              updateTasks:
+              - taskInstanceId: 4AA4B4E1-866A-493E-8D33-51F9E47A0843
+                correlationIds:
+                - ExampleCorrelationId
+                fields:
+                - name: ExampleFieldName
+                  value: ExampleFieldValue
+                stackingKey: ExampleStackingKey
+                triggerName: ExampleTrigger
+              - taskInstanceId: ef697f61-2f10-4543-ad91-d6a92a2efd14
+                correlationIds:
+                - ExampleCorrelationId
+                fields:
+                - name: ExampleFieldName
+                  value: ExampleFieldValue
+                stackingKey: ExampleStackingKey
+                triggerName: ExampleTrigger
+            schema:
+              $ref: '#/components/schemas/BatchUpdateTasksRequest'
+          application/json:
+            example:
+              updateTasks:
+              - taskInstanceId: 4AA4B4E1-866A-493E-8D33-51F9E47A0843
+                correlationIds:
+                - ExampleCorrelationId
+                fields:
+                - name: ExampleFieldName
+                  value: ExampleFieldValue
+                stackingKey: ExampleStackingKey
+                triggerName: ExampleTrigger
+              - taskInstanceId: ef697f61-2f10-4543-ad91-d6a92a2efd14
+                correlationIds:
+                - ExampleCorrelationId
+                fields:
+                - name: ExampleFieldName
+                  value: ExampleFieldValue
+                stackingKey: ExampleStackingKey
+                triggerName: ExampleTrigger
+            schema:
+              $ref: '#/components/schemas/BatchUpdateTasksRequest'
+          text/json:
+            example:
+              updateTasks:
+              - taskInstanceId: 4AA4B4E1-866A-493E-8D33-51F9E47A0843
+                correlationIds:
+                - ExampleCorrelationId
+                fields:
+                - name: ExampleFieldName
+                  value: ExampleFieldValue
+                stackingKey: ExampleStackingKey
+                triggerName: ExampleTrigger
+              - taskInstanceId: ef697f61-2f10-4543-ad91-d6a92a2efd14
+                correlationIds:
+                - ExampleCorrelationId
+                fields:
+                - name: ExampleFieldName
+                  value: ExampleFieldValue
+                stackingKey: ExampleStackingKey
+                triggerName: ExampleTrigger
+            schema:
+              $ref: '#/components/schemas/BatchUpdateTasksRequest'
+          application/*+json:
+            example:
+              updateTasks:
+              - taskInstanceId: 4AA4B4E1-866A-493E-8D33-51F9E47A0843
+                correlationIds:
+                - ExampleCorrelationId
+                fields:
+                - name: ExampleFieldName
+                  value: ExampleFieldValue
+                stackingKey: ExampleStackingKey
+                triggerName: ExampleTrigger
+              - taskInstanceId: ef697f61-2f10-4543-ad91-d6a92a2efd14
+                correlationIds:
+                - ExampleCorrelationId
+                fields:
+                - name: ExampleFieldName
+                  value: ExampleFieldValue
+                stackingKey: ExampleStackingKey
+                triggerName: ExampleTrigger
+            schema:
+              $ref: '#/components/schemas/BatchUpdateTasksRequest'
+        description: The details of the request
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                values:
+                - id: ef697f61-2f10-4543-ad91-d6a92a2efd14
+                  taskDefinitionId:
+                    scope: A1
+                    code: ZZZ
+                  taskDefinitionVersion:
+                    asAtModified: 0001-01-01T00:00:00.0000000+00:00
+                  taskDefinitionDisplayName: Test Definition
+                  state: foo
+                  correlationIds:
+                  - correlation-id
+                  terminalState: false
+                  asAtLastTransition: 2022-01-01T01:02:03.0000000+00:00
+                  fields:
+                  - name: Example Field
+                    value: Example Value
+                failed:
+                - id: 4aa4b4e1-866a-493e-8d33-51f9e47a0843
+                  type: BatchUpdateTasksFailure
+                  detail: "[TaskValidationFaillure] The task validation failed."
+              schema:
+                $ref: '#/components/schemas/BatchUpdateTasksResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] BatchUpdateTasks: Batch update tasks"
+      tags:
+      - Tasks
+      x-fbn-apistatus: Experimental
+      x-content-type: application/json-patch+json
+      x-accepts: application/json
   /api/tasks/{id}:
     delete:
       operationId: DeleteTask
@@ -3099,7 +3237,7 @@ paths:
             application/json:
               schema:
                 type: string
-          description: Task not found.
+          description: Tasks not found.
         default:
           content:
             application/json:
@@ -4489,6 +4627,238 @@ components:
       required:
       - requestId
       type: object
+    BatchUpdateTasksRequest:
+      additionalProperties: false
+      description: A request to update multiple Tasks
+      example:
+        updateTasks:
+        - triggerName: triggerName
+          correlationIds:
+          - correlationIds
+          - correlationIds
+          taskInstanceId: taskInstanceId
+          fields:
+          - name: name
+            value: ""
+          - name: name
+            value: ""
+          stackingKey: stackingKey
+        - triggerName: triggerName
+          correlationIds:
+          - correlationIds
+          - correlationIds
+          taskInstanceId: taskInstanceId
+          fields:
+          - name: name
+            value: ""
+          - name: name
+            value: ""
+          stackingKey: stackingKey
+      properties:
+        updateTasks:
+          description: A Dictionary of task IDs to UpdateTaskRequest
+          items:
+            $ref: '#/components/schemas/UpdateTaskWithIdAndTriggerRequest'
+          nullable: true
+          type: array
+      type: object
+    BatchUpdateTasksResponse:
+      additionalProperties: false
+      description: Defines a representation of tasks that have been updated
+      example:
+        values:
+        - terminalState: true
+          stack:
+            stackMembershipType: stackMembershipType
+            stackOpenedAsAt: 2000-01-23T04:56:07.000+00:00
+            stackClosedAsAt: 2000-01-23T04:56:07.000+00:00
+            leadTaskState: leadTaskState
+            stackStatus: stackStatus
+            leadTaskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            tasksInStack: 0
+            memberAddedAsAt: 2000-01-23T04:56:07.000+00:00
+          parentTask:
+            taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
+          actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          version:
+            asAtModified: 2000-01-23T04:56:07.000+00:00
+            userIdModified: userIdModified
+            asAtVersionNumber: 0
+            asAtCreated: 2000-01-23T04:56:07.000+00:00
+            requestIdCreated: requestIdCreated
+            userIdCreated: userIdCreated
+            requestIdModified: requestIdModified
+          taskDefinitionId:
+            code: code
+            scope: scope
+          stackingKey: stackingKey
+          actionLogIdModified: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          childTasks:
+          - taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
+          - taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
+          asAtLastTransition: 2000-01-23T04:56:07.000+00:00
+          actionLogIdSubmitted: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          ultimateParentTask:
+            taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
+          correlationIds:
+          - correlationIds
+          - correlationIds
+          taskDefinitionVersion:
+            asAtModified: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: state
+          taskDefinitionDisplayName: taskDefinitionDisplayName
+          fields:
+          - name: name
+            value: ""
+          - name: name
+            value: ""
+        - terminalState: true
+          stack:
+            stackMembershipType: stackMembershipType
+            stackOpenedAsAt: 2000-01-23T04:56:07.000+00:00
+            stackClosedAsAt: 2000-01-23T04:56:07.000+00:00
+            leadTaskState: leadTaskState
+            stackStatus: stackStatus
+            leadTaskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            tasksInStack: 0
+            memberAddedAsAt: 2000-01-23T04:56:07.000+00:00
+          parentTask:
+            taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
+          actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          version:
+            asAtModified: 2000-01-23T04:56:07.000+00:00
+            userIdModified: userIdModified
+            asAtVersionNumber: 0
+            asAtCreated: 2000-01-23T04:56:07.000+00:00
+            requestIdCreated: requestIdCreated
+            userIdCreated: userIdCreated
+            requestIdModified: requestIdModified
+          taskDefinitionId:
+            code: code
+            scope: scope
+          stackingKey: stackingKey
+          actionLogIdModified: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          childTasks:
+          - taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
+          - taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
+          asAtLastTransition: 2000-01-23T04:56:07.000+00:00
+          actionLogIdSubmitted: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          ultimateParentTask:
+            taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
+          correlationIds:
+          - correlationIds
+          - correlationIds
+          taskDefinitionVersion:
+            asAtModified: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: state
+          taskDefinitionDisplayName: taskDefinitionDisplayName
+          fields:
+          - name: name
+            value: ""
+          - name: name
+            value: ""
+        links:
+        - method: method
+          description: description
+          href: https://openapi-generator.tech
+          relation: relation
+        - method: method
+          description: description
+          href: https://openapi-generator.tech
+          relation: relation
+        failed:
+        - id: id
+          detail: detail
+          type: type
+          errorDetails:
+          - key: errorDetails
+          - key: errorDetails
+        - id: id
+          detail: detail
+          type: type
+          errorDetails:
+          - key: errorDetails
+          - key: errorDetails
+      properties:
+        values:
+          description: Successful tasks brought back from the BatchUpdate call
+          items:
+            $ref: '#/components/schemas/Task'
+          nullable: true
+          readOnly: true
+          type: array
+        failed:
+          description: Individual failures for each task returned from the BatchUpdate
+            call
+          items:
+            $ref: '#/components/schemas/ErrorDetail'
+          nullable: true
+          readOnly: true
+          type: array
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          nullable: true
+          type: array
+      type: object
     ChangeItem:
       additionalProperties: false
       description: Defines a change that occured to a Task
@@ -4981,6 +5351,39 @@ components:
           description: The Ids of the Tasks to delete
           items:
             type: string
+          nullable: true
+          type: array
+      type: object
+    ErrorDetail:
+      additionalProperties: false
+      description: Defines a Failure Response as a DTO
+      example:
+        id: id
+        detail: detail
+        type: type
+        errorDetails:
+        - key: errorDetails
+        - key: errorDetails
+      properties:
+        id:
+          description: The id of the failed item that this error relates to.
+          nullable: true
+          type: string
+        type:
+          description: The type of failure that occurred.
+          nullable: true
+          type: string
+        detail:
+          description: Description of the failure that occurred.
+          nullable: true
+          type: string
+        errorDetails:
+          description: Information about the particular instance of the failure (supplied
+            information depends on the type of failure).
+          items:
+            additionalProperties:
+              type: string
+            type: object
           nullable: true
           type: array
       type: object
@@ -7428,6 +7831,8 @@ components:
       properties:
         name:
           description: The name of this Field
+          maxLength: 1024
+          minLength: 0
           pattern: "^[a-zA-Z0-9\\-_]+$"
           type: string
         value:
@@ -7872,6 +8277,56 @@ components:
           type: array
         stackingKey:
           description: The key for the Stack that this Task should be added to
+          nullable: true
+          type: string
+      type: object
+    UpdateTaskWithIdAndTriggerRequest:
+      additionalProperties: false
+      description: "A request to update multiple Tasks\r\nIncludes a trigger which\
+        \ is supplied from route in single update request"
+      example:
+        triggerName: triggerName
+        correlationIds:
+        - correlationIds
+        - correlationIds
+        taskInstanceId: taskInstanceId
+        fields:
+        - name: name
+          value: ""
+        - name: name
+          value: ""
+        stackingKey: stackingKey
+      properties:
+        taskInstanceId:
+          description: The ID of the task instance
+          maxLength: 36
+          minLength: 36
+          nullable: true
+          pattern: "^[a-zA-Z0-9\\-]+$"
+          type: string
+        correlationIds:
+          description: A set of guid identifiers that allow correlation across the
+            application tier
+          items:
+            type: string
+          nullable: true
+          type: array
+        fields:
+          description: Defines the fields associated with the update
+          items:
+            $ref: '#/components/schemas/TaskInstanceField'
+          nullable: true
+          type: array
+        stackingKey:
+          description: The key for the Stack that this Task should be added to
+          maxLength: 1024
+          minLength: 0
+          nullable: true
+          type: string
+        triggerName:
+          description: The trigger we want to update the task with
+          maxLength: 1024
+          minLength: 0
           nullable: true
           type: string
       type: object

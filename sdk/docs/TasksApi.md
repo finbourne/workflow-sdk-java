@@ -4,6 +4,7 @@ All URIs are relative to *https://fbn-prd.lusid.com/workflow*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
+| [**batchUpdateTasks**](TasksApi.md#batchUpdateTasks) | **PATCH** /api/tasks/$update | [EXPERIMENTAL] BatchUpdateTasks: Batch update tasks |
 | [**createTask**](TasksApi.md#createTask) | **POST** /api/tasks | CreateTask: Create a new Task |
 | [**deleteTask**](TasksApi.md#deleteTask) | **DELETE** /api/tasks/{id} | DeleteTask: Delete a Task |
 | [**deleteTasks**](TasksApi.md#deleteTasks) | **POST** /api/tasks/$delete | DeleteTasks: Batch Delete Tasks |
@@ -12,6 +13,95 @@ All URIs are relative to *https://fbn-prd.lusid.com/workflow*
 | [**listTasks**](TasksApi.md#listTasks) | **GET** /api/tasks | ListTasks: List Tasks |
 | [**updateTask**](TasksApi.md#updateTask) | **POST** /api/tasks/{id} | UpdateTask: Update a Task |
 
+
+
+## batchUpdateTasks
+
+> BatchUpdateTasksResponse batchUpdateTasks(batchUpdateTasksRequest)
+
+[EXPERIMENTAL] BatchUpdateTasks: Batch update tasks
+
+### Example
+
+```java
+import com.finbourne.workflow.model.*;
+import com.finbourne.workflow.api.TasksApi;
+import com.finbourne.workflow.extensions.ApiConfigurationException;
+import com.finbourne.workflow.extensions.ApiFactoryBuilder;
+import com.finbourne.workflow.extensions.auth.FinbourneTokenException;
+
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+
+public class TasksApiExample {
+
+    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, ApiConfigurationException, FinbourneTokenException {
+        String fileName = "secrets.json";
+        try(PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
+          writer.write("{" +
+            "\"api\": {" +
+            "    \"tokenUrl\": \"<your-token-url>\"," +
+            "    \"workflowUrl\": \"https://<your-domain>.lusid.com/workflow\"," +
+            "    \"username\": \"<your-username>\"," +
+            "    \"password\": \"<your-password>\"," +
+            "    \"clientId\": \"<your-client-id>\"," +
+            "    \"clientSecret\": \"<your-client-secret>\"" +
+            "  }" +
+            "}");
+        }
+
+        // uncomment the below to use configuration overrides
+        // ConfigurationOptions opts = new ConfigurationOptions();
+        // opts.setTotalTimeoutMs(2000);
+        
+        // uncomment the below to use an api factory with overrides
+        // ApiFactory apiFactory = ApiFactoryBuilder.build(fileName, opts);
+        // TasksApi apiInstance = apiFactory.build(TasksApi.class);
+
+        TasksApi apiInstance = ApiFactoryBuilder.build(fileName).build(TasksApi.class);
+        BatchUpdateTasksRequest batchUpdateTasksRequest = new BatchUpdateTasksRequest(); // BatchUpdateTasksRequest | The details of the request
+        try {
+            // uncomment the below to set overrides at the request level
+            // BatchUpdateTasksResponse result = apiInstance.batchUpdateTasks(batchUpdateTasksRequest).execute(opts);
+
+            BatchUpdateTasksResponse result = apiInstance.batchUpdateTasks(batchUpdateTasksRequest).execute();
+            System.out.println(result.toJson());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling TasksApi#batchUpdateTasks");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **batchUpdateTasksRequest** | [**BatchUpdateTasksRequest**](BatchUpdateTasksRequest.md)| The details of the request | [optional] |
+
+### Return type
+
+[**BatchUpdateTasksResponse**](BatchUpdateTasksResponse.md)
+
+### HTTP request headers
+
+- **Content-Type**: application/json-patch+json, application/json, text/json, application/*+json
+- **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+| **400** | The details of the input related failure |  -  |
+| **0** | Error response |  -  |
+
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
 
 
 ## createTask
@@ -655,7 +745,7 @@ public class TasksApiExample {
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
 | **400** | The details of the input related failure |  -  |
-| **404** | Task not found. |  -  |
+| **404** | Tasks not found. |  -  |
 | **0** | Error response |  -  |
 
 [Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)

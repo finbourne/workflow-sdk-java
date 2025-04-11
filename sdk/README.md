@@ -18,6 +18,7 @@ Class | Method | HTTP request | Description
 *TaskDefinitionsApi* | [**listTaskDefinitions**](docs/TaskDefinitionsApi.md#listtaskdefinitions) | **GET** /api/taskdefinitions | ListTaskDefinitions: List Task Definitions
 *TaskDefinitionsApi* | [**listTasksForTaskDefinition**](docs/TaskDefinitionsApi.md#listtasksfortaskdefinition) | **GET** /api/taskdefinitions/{scope}/{code}/tasks | ListTasksForTaskDefinition: List Tasks for a Task Definition
 *TaskDefinitionsApi* | [**updateTaskDefinition**](docs/TaskDefinitionsApi.md#updatetaskdefinition) | **PUT** /api/taskdefinitions/{scope}/{code} | UpdateTaskDefinition: Update an existing Task Definition
+*TasksApi* | [**batchUpdateTasks**](docs/TasksApi.md#batchupdatetasks) | **PATCH** /api/tasks/$update | [EXPERIMENTAL] BatchUpdateTasks: Batch update tasks
 *TasksApi* | [**createTask**](docs/TasksApi.md#createtask) | **POST** /api/tasks | CreateTask: Create a new Task
 *TasksApi* | [**deleteTask**](docs/TasksApi.md#deletetask) | **DELETE** /api/tasks/{id} | DeleteTask: Delete a Task
 *TasksApi* | [**deleteTasks**](docs/TasksApi.md#deletetasks) | **POST** /api/tasks/$delete | DeleteTasks: Batch Delete Tasks
@@ -47,6 +48,8 @@ Class | Method | HTTP request | Description
  - [ActionLog](docs/ActionLog.md)
  - [ActionLogItem](docs/ActionLogItem.md)
  - [ActionLogOrigin](docs/ActionLogOrigin.md)
+ - [BatchUpdateTasksRequest](docs/BatchUpdateTasksRequest.md)
+ - [BatchUpdateTasksResponse](docs/BatchUpdateTasksResponse.md)
  - [ChangeItem](docs/ChangeItem.md)
  - [CreateChildTaskConfiguration](docs/CreateChildTaskConfiguration.md)
  - [CreateChildTasksAction](docs/CreateChildTasksAction.md)
@@ -59,6 +62,7 @@ Class | Method | HTTP request | Description
  - [CreateWorkerRequest](docs/CreateWorkerRequest.md)
  - [DeleteTasksRequest](docs/DeleteTasksRequest.md)
  - [DeletedEntityResponse](docs/DeletedEntityResponse.md)
+ - [ErrorDetail](docs/ErrorDetail.md)
  - [EventHandler](docs/EventHandler.md)
  - [EventHandlerMapping](docs/EventHandlerMapping.md)
  - [EventMatchingPattern](docs/EventMatchingPattern.md)
@@ -120,6 +124,7 @@ Class | Method | HTTP request | Description
  - [UpdateMatchingTasksActivityResponse](docs/UpdateMatchingTasksActivityResponse.md)
  - [UpdateTaskDefinitionRequest](docs/UpdateTaskDefinitionRequest.md)
  - [UpdateTaskRequest](docs/UpdateTaskRequest.md)
+ - [UpdateTaskWithIdAndTriggerRequest](docs/UpdateTaskWithIdAndTriggerRequest.md)
  - [UpdateWorkerRequest](docs/UpdateWorkerRequest.md)
  - [ValueConstraints](docs/ValueConstraints.md)
  - [VersionInfo](docs/VersionInfo.md)

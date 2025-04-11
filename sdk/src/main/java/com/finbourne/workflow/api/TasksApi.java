@@ -25,6 +25,8 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import com.finbourne.workflow.model.BatchUpdateTasksRequest;
+import com.finbourne.workflow.model.BatchUpdateTasksResponse;
 import com.finbourne.workflow.model.CreateTaskRequest;
 import com.finbourne.workflow.model.DeleteTasksRequest;
 import com.finbourne.workflow.model.DeletedEntityResponse;
@@ -79,6 +81,242 @@ public class TasksApi {
         this.localCustomBaseUrl = customBaseUrl;
     }
 
+    private okhttp3.Call batchUpdateTasksCall(BatchUpdateTasksRequest batchUpdateTasksRequest, final ApiCallback _callback) throws ApiException {
+        return batchUpdateTasksCall(batchUpdateTasksRequest,  _callback, new ConfigurationOptions());
+    }
+
+    private okhttp3.Call batchUpdateTasksCall(BatchUpdateTasksRequest batchUpdateTasksRequest, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = batchUpdateTasksRequest;
+
+        // create path and map variables
+        String localVarPath = "/api/tasks/$update";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json-patch+json",
+            "application/json",
+            "text/json",
+            "application/*+json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "oauth2" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "PATCH", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback, opts);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call batchUpdateTasksValidateBeforeCall(BatchUpdateTasksRequest batchUpdateTasksRequest, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
+        return batchUpdateTasksCall(batchUpdateTasksRequest, _callback, opts);
+
+    }
+
+
+    private ApiResponse<BatchUpdateTasksResponse> batchUpdateTasksWithHttpInfo(BatchUpdateTasksRequest batchUpdateTasksRequest) throws ApiException {
+        okhttp3.Call localVarCall = batchUpdateTasksValidateBeforeCall(batchUpdateTasksRequest, null, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<BatchUpdateTasksResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private ApiResponse<BatchUpdateTasksResponse> batchUpdateTasksWithHttpInfo(BatchUpdateTasksRequest batchUpdateTasksRequest, ConfigurationOptions opts) throws ApiException {
+        okhttp3.Call localVarCall = batchUpdateTasksValidateBeforeCall(batchUpdateTasksRequest, null, opts);
+        Type localVarReturnType = new TypeToken<BatchUpdateTasksResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private okhttp3.Call batchUpdateTasksAsync(BatchUpdateTasksRequest batchUpdateTasksRequest, final ApiCallback<BatchUpdateTasksResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = batchUpdateTasksValidateBeforeCall(batchUpdateTasksRequest, _callback, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<BatchUpdateTasksResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    private okhttp3.Call batchUpdateTasksAsync(BatchUpdateTasksRequest batchUpdateTasksRequest, final ApiCallback<BatchUpdateTasksResponse> _callback, ConfigurationOptions opts) throws ApiException {
+
+        okhttp3.Call localVarCall = batchUpdateTasksValidateBeforeCall(batchUpdateTasksRequest, _callback, opts);
+        Type localVarReturnType = new TypeToken<BatchUpdateTasksResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    public class APIbatchUpdateTasksRequest {
+        private BatchUpdateTasksRequest batchUpdateTasksRequest;
+
+        private APIbatchUpdateTasksRequest() {
+        }
+
+        /**
+         * Set batchUpdateTasksRequest
+         * @param batchUpdateTasksRequest The details of the request (optional)
+         * @return APIbatchUpdateTasksRequest
+         */
+        public APIbatchUpdateTasksRequest batchUpdateTasksRequest(BatchUpdateTasksRequest batchUpdateTasksRequest) {
+            this.batchUpdateTasksRequest = batchUpdateTasksRequest;
+            return this;
+        }
+
+        /**
+         * Build call for batchUpdateTasks
+         * @param _callback ApiCallback API callback
+         * @return Call to execute
+         * @throws ApiException If fail to serialize the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call buildCall(final ApiCallback _callback) throws ApiException {
+            return batchUpdateTasksCall(batchUpdateTasksRequest, _callback);
+        }
+
+        /**
+         * Execute batchUpdateTasks request
+         * @return BatchUpdateTasksResponse
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public BatchUpdateTasksResponse execute() throws ApiException {
+            ApiResponse<BatchUpdateTasksResponse> localVarResp = batchUpdateTasksWithHttpInfo(batchUpdateTasksRequest);
+            return localVarResp.getData();
+        }
+
+        /**
+         * Execute batchUpdateTasks request. Use any specified configuration options to override any other configuration for this request only.
+         * @return BatchUpdateTasksResponse
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public BatchUpdateTasksResponse execute(ConfigurationOptions opts) throws ApiException {
+            ApiResponse<BatchUpdateTasksResponse> localVarResp = batchUpdateTasksWithHttpInfo(batchUpdateTasksRequest, opts);
+            return localVarResp.getData();
+        }
+
+        /**
+         * Execute batchUpdateTasks request with HTTP info returned
+         * @return ApiResponse&lt;BatchUpdateTasksResponse&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<BatchUpdateTasksResponse> executeWithHttpInfo() throws ApiException {
+            return batchUpdateTasksWithHttpInfo(batchUpdateTasksRequest);
+        }
+
+        /**
+         * Execute batchUpdateTasks request with HTTP info returned. Use any specified configuration options to override any other configuration for this request only.
+         * @return ApiResponse&lt;BatchUpdateTasksResponse&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<BatchUpdateTasksResponse> executeWithHttpInfo(ConfigurationOptions opts) throws ApiException {
+            return batchUpdateTasksWithHttpInfo(batchUpdateTasksRequest, opts);
+        }
+
+        /**
+         * Execute batchUpdateTasks request (asynchronously)
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<BatchUpdateTasksResponse> _callback) throws ApiException {
+            return batchUpdateTasksAsync(batchUpdateTasksRequest, _callback);
+        }
+
+        /**
+         * Execute batchUpdateTasks request (asynchronously). Use any specified configuration options to override any other configuration for this request only.
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<BatchUpdateTasksResponse> _callback, ConfigurationOptions opts) throws ApiException {
+            return batchUpdateTasksAsync(batchUpdateTasksRequest, _callback, opts);
+        }
+    }
+
+    /**
+     * [EXPERIMENTAL] BatchUpdateTasks: Batch update tasks
+     * 
+     * @return APIbatchUpdateTasksRequest
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+     </table>
+     */
+    public APIbatchUpdateTasksRequest batchUpdateTasks() {
+        return new APIbatchUpdateTasksRequest();
+    }
     private okhttp3.Call createTaskCall(CreateTaskRequest createTaskRequest, String trigger, final ApiCallback _callback) throws ApiException {
         return createTaskCall(createTaskRequest, trigger,  _callback, new ConfigurationOptions());
     }
@@ -1755,7 +1993,7 @@ public class TasksApi {
             <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
             <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
             <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
-            <tr><td> 404 </td><td> Task not found. </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Tasks not found. </td><td>  -  </td></tr>
             <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
          </table>
          */
@@ -1772,7 +2010,7 @@ public class TasksApi {
             <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
             <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
             <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
-            <tr><td> 404 </td><td> Task not found. </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Tasks not found. </td><td>  -  </td></tr>
             <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
          </table>
          */
@@ -1790,7 +2028,7 @@ public class TasksApi {
             <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
             <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
             <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
-            <tr><td> 404 </td><td> Task not found. </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Tasks not found. </td><td>  -  </td></tr>
             <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
          </table>
          */
@@ -1808,7 +2046,7 @@ public class TasksApi {
             <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
             <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
             <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
-            <tr><td> 404 </td><td> Task not found. </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Tasks not found. </td><td>  -  </td></tr>
             <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
          </table>
          */
@@ -1825,7 +2063,7 @@ public class TasksApi {
             <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
             <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
             <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
-            <tr><td> 404 </td><td> Task not found. </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Tasks not found. </td><td>  -  </td></tr>
             <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
          </table>
          */
@@ -1843,7 +2081,7 @@ public class TasksApi {
             <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
             <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
             <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
-            <tr><td> 404 </td><td> Task not found. </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Tasks not found. </td><td>  -  </td></tr>
             <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
          </table>
          */
@@ -1861,7 +2099,7 @@ public class TasksApi {
             <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
             <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
             <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
-            <tr><td> 404 </td><td> Task not found. </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Tasks not found. </td><td>  -  </td></tr>
             <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
          </table>
          */
@@ -1880,7 +2118,7 @@ public class TasksApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> Task not found. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Tasks not found. </td><td>  -  </td></tr>
         <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
      </table>
      */
