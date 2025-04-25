@@ -38,7 +38,7 @@ info:
     | <a name="939">939</a>|Blocked by a Network Zone| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1474
+  version: 0.1.1482
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -2965,6 +2965,15 @@ paths:
                     asAtModified: 0001-01-01T00:00:00.0000000+00:00
                   taskDefinitionDisplayName: Test Definition
                   state: foo
+                  ultimateParentTask:
+                    id: 123e4567-e89b-12d3-a456-426614174000
+                    taskDefinitionId:
+                      scope: ProjectA
+                      code: Task001
+                    taskDefinitionVersion:
+                      asAtModified: 2023-10-01T12:00:00.0000000+00:00
+                    taskDefinitionDisplayName: Sample Task Definition
+                    state: InProgress
                   correlationIds:
                   - correlation-id
                   terminalState: false
