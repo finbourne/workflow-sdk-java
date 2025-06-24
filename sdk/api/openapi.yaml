@@ -38,7 +38,7 @@ info:
     | <a name="939">939</a>|Blocked by a Network Zone| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1521
+  version: 0.1.1526
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -4868,6 +4868,29 @@ components:
           nullable: true
           type: array
       type: object
+    CalendarReference:
+      additionalProperties: false
+      description: Reference to a Calendar in LUSID
+      example:
+        code: code
+        scope: scope
+      properties:
+        scope:
+          description: The scope of the Calendar
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        code:
+          description: The code of the Calendar
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+      required:
+      - code
+      - scope
+      type: object
     ChangeItem:
       additionalProperties: false
       description: Defines a change that occured to a Task
@@ -5016,6 +5039,33 @@ components:
         id:
           code: code
           scope: scope
+        scheduleMatchingPattern:
+          recurrencePattern:
+            timeConstraints:
+              endDate: endDate
+              timesOfDay:
+              - type: type
+              - type: type
+              - type: type
+              - type: type
+              - type: type
+              startDate: startDate
+            dateRegularity:
+              type: type
+            businessDayAdjustment: businessDayAdjustment
+          context:
+            holidayCalendars:
+            - code: code
+              scope: scope
+            - code: code
+              scope: scope
+            - code: code
+              scope: scope
+            - code: code
+              scope: scope
+            - code: code
+              scope: scope
+            timeZone: timeZone
         taskDefinitionId:
           code: code
           scope: scope
@@ -5038,6 +5088,8 @@ components:
           type: string
         eventMatchingPattern:
           $ref: '#/components/schemas/EventMatchingPattern'
+        scheduleMatchingPattern:
+          $ref: '#/components/schemas/ScheduleMatchingPattern'
         runAsUserId:
           $ref: '#/components/schemas/EventHandlerMapping'
         taskDefinitionId:
@@ -5051,7 +5103,6 @@ components:
           $ref: '#/components/schemas/TaskActivity'
       required:
       - displayName
-      - eventMatchingPattern
       - id
       - runAsUserId
       - status
@@ -5310,6 +5361,81 @@ components:
       - id
       - workerConfiguration
       type: object
+    CutLabelReference:
+      additionalProperties: false
+      description: A reference to a Cut Label in LUSID
+      properties:
+        code:
+          description: Code of the Cut Label
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        type:
+          description: The type of Time of Day
+          minLength: 1
+          type: string
+      required:
+      - code
+      - type
+      type: object
+    DateRegularity:
+      additionalProperties: false
+      description: A Date Regularity
+      example:
+        type: type
+      oneOf:
+      - $ref: '#/components/schemas/DayRegularity'
+      - $ref: '#/components/schemas/RelativeMonthRegularity'
+      - $ref: '#/components/schemas/SpecificMonthRegularity'
+      - $ref: '#/components/schemas/WeekRegularity'
+      - $ref: '#/components/schemas/YearRegularity'
+      properties:
+        type:
+          description: The type of Date Regularity
+          minLength: 1
+          type: string
+      required:
+      - type
+      type: object
+    DayOfYear:
+      additionalProperties: false
+      description: A day in the year
+      properties:
+        month:
+          description: Month in the year
+          format: int32
+          maximum: 12
+          minimum: 1
+          type: integer
+        day:
+          description: Day in the month
+          format: int32
+          maximum: 31
+          minimum: 1
+          type: integer
+      required:
+      - day
+      - month
+      type: object
+    DayRegularity:
+      additionalProperties: false
+      description: Day Regularity
+      properties:
+        frequency:
+          description: The frequency of the Day Regularity
+          format: int32
+          maximum: 1000
+          minimum: 1
+          type: integer
+        type:
+          description: The type of Date Regularity
+          minLength: 1
+          type: string
+      required:
+      - frequency
+      - type
+      type: object
     DeletedEntityResponse:
       additionalProperties: false
       example:
@@ -5430,6 +5556,33 @@ components:
           requestIdCreated: requestIdCreated
           userIdCreated: userIdCreated
           requestIdModified: requestIdModified
+        scheduleMatchingPattern:
+          recurrencePattern:
+            timeConstraints:
+              endDate: endDate
+              timesOfDay:
+              - type: type
+              - type: type
+              - type: type
+              - type: type
+              - type: type
+              startDate: startDate
+            dateRegularity:
+              type: type
+            businessDayAdjustment: businessDayAdjustment
+          context:
+            holidayCalendars:
+            - code: code
+              scope: scope
+            - code: code
+              scope: scope
+            - code: code
+              scope: scope
+            - code: code
+              scope: scope
+            - code: code
+              scope: scope
+            timeZone: timeZone
         taskDefinitionId:
           code: code
           scope: scope
@@ -5454,6 +5607,8 @@ components:
           type: string
         eventMatchingPattern:
           $ref: '#/components/schemas/EventMatchingPattern'
+        scheduleMatchingPattern:
+          $ref: '#/components/schemas/ScheduleMatchingPattern'
         runAsUserId:
           $ref: '#/components/schemas/EventHandlerMapping'
         taskDefinitionId:
@@ -5467,7 +5622,6 @@ components:
           $ref: '#/components/schemas/TaskActivityResponse'
       required:
       - displayName
-      - eventMatchingPattern
       - id
       - runAsUserId
       - status
@@ -5935,6 +6089,33 @@ components:
             requestIdCreated: requestIdCreated
             userIdCreated: userIdCreated
             requestIdModified: requestIdModified
+          scheduleMatchingPattern:
+            recurrencePattern:
+              timeConstraints:
+                endDate: endDate
+                timesOfDay:
+                - type: type
+                - type: type
+                - type: type
+                - type: type
+                - type: type
+                startDate: startDate
+              dateRegularity:
+                type: type
+              businessDayAdjustment: businessDayAdjustment
+            context:
+              holidayCalendars:
+              - code: code
+                scope: scope
+              - code: code
+                scope: scope
+              - code: code
+                scope: scope
+              - code: code
+                scope: scope
+              - code: code
+                scope: scope
+              timeZone: timeZone
           taskDefinitionId:
             code: code
             scope: scope
@@ -5970,6 +6151,33 @@ components:
             requestIdCreated: requestIdCreated
             userIdCreated: userIdCreated
             requestIdModified: requestIdModified
+          scheduleMatchingPattern:
+            recurrencePattern:
+              timeConstraints:
+                endDate: endDate
+                timesOfDay:
+                - type: type
+                - type: type
+                - type: type
+                - type: type
+                - type: type
+                startDate: startDate
+              dateRegularity:
+                type: type
+              businessDayAdjustment: businessDayAdjustment
+            context:
+              holidayCalendars:
+              - code: code
+                scope: scope
+              - code: code
+                scope: scope
+              - code: code
+                scope: scope
+              - code: code
+                scope: scope
+              - code: code
+                scope: scope
+              timeZone: timeZone
           taskDefinitionId:
             code: code
             scope: scope
@@ -6595,6 +6803,67 @@ components:
           type: array
       required:
       - stateType
+      type: object
+    RecurrencePattern:
+      additionalProperties: false
+      description: The Recurrence Pattern
+      example:
+        timeConstraints:
+          endDate: endDate
+          timesOfDay:
+          - type: type
+          - type: type
+          - type: type
+          - type: type
+          - type: type
+          startDate: startDate
+        dateRegularity:
+          type: type
+        businessDayAdjustment: businessDayAdjustment
+      properties:
+        timeConstraints:
+          $ref: '#/components/schemas/TimeConstraints'
+        dateRegularity:
+          $ref: '#/components/schemas/DateRegularity'
+        businessDayAdjustment:
+          description: The Business Day Adjustment
+          minLength: 1
+          type: string
+      required:
+      - businessDayAdjustment
+      - dateRegularity
+      - timeConstraints
+      type: object
+    RelativeMonthRegularity:
+      additionalProperties: false
+      description: Relative Month Regularity
+      properties:
+        frequency:
+          description: The frequency of the Relative Month Regularity
+          format: int32
+          maximum: 100
+          minimum: 1
+          type: integer
+        daysOfWeek:
+          description: Days of the week
+          items:
+            type: string
+          maxItems: 7
+          minItems: 1
+          type: array
+        index:
+          description: Relative index in the month
+          minLength: 1
+          type: string
+        type:
+          description: The type of Date Regularity
+          minLength: 1
+          type: string
+      required:
+      - daysOfWeek
+      - frequency
+      - index
+      - type
       type: object
     ResourceId:
       additionalProperties: false
@@ -7318,6 +7587,78 @@ components:
       required:
       - runId
       type: object
+    ScheduleMatchingPattern:
+      additionalProperties: false
+      description: The Schedule Matching Pattern to trigger on
+      example:
+        recurrencePattern:
+          timeConstraints:
+            endDate: endDate
+            timesOfDay:
+            - type: type
+            - type: type
+            - type: type
+            - type: type
+            - type: type
+            startDate: startDate
+          dateRegularity:
+            type: type
+          businessDayAdjustment: businessDayAdjustment
+        context:
+          holidayCalendars:
+          - code: code
+            scope: scope
+          - code: code
+            scope: scope
+          - code: code
+            scope: scope
+          - code: code
+            scope: scope
+          - code: code
+            scope: scope
+          timeZone: timeZone
+      properties:
+        context:
+          $ref: '#/components/schemas/ScheduleMatchingPatternContext'
+        recurrencePattern:
+          $ref: '#/components/schemas/RecurrencePattern'
+      required:
+      - context
+      - recurrencePattern
+      type: object
+    ScheduleMatchingPatternContext:
+      additionalProperties: false
+      description: Context for a Schedule Matching Pattern
+      example:
+        holidayCalendars:
+        - code: code
+          scope: scope
+        - code: code
+          scope: scope
+        - code: code
+          scope: scope
+        - code: code
+          scope: scope
+        - code: code
+          scope: scope
+        timeZone: timeZone
+      properties:
+        timeZone:
+          description: The time zone to use
+          maxLength: 100
+          minLength: 1
+          type: string
+        holidayCalendars:
+          description: References to any Holiday Calendars to use
+          items:
+            $ref: '#/components/schemas/CalendarReference'
+          maxItems: 5
+          minItems: 0
+          nullable: true
+          type: array
+      required:
+      - timeZone
+      type: object
     SchedulerJob:
       additionalProperties: false
       description: Configuration for a Worker that calls a Scheduler Job
@@ -7373,6 +7714,58 @@ components:
           minLength: 1
           type: string
       required:
+      - type
+      type: object
+    SpecificMonthRegularity:
+      additionalProperties: false
+      description: Specific Month Regularity
+      properties:
+        frequency:
+          description: The frequency of the Specific Month Regularity
+          format: int32
+          maximum: 100
+          minimum: 1
+          type: integer
+        daysOfMonth:
+          description: Days of the month
+          items:
+            format: int32
+            type: integer
+          maxItems: 31
+          minItems: 1
+          type: array
+        type:
+          description: The type of Date Regularity
+          minLength: 1
+          type: string
+      required:
+      - daysOfMonth
+      - frequency
+      - type
+      type: object
+    SpecifiedTime:
+      additionalProperties: false
+      description: A specified time in the day
+      properties:
+        hours:
+          description: Hours
+          format: int32
+          maximum: 23
+          minimum: 0
+          type: integer
+        minutes:
+          description: Minutes
+          format: int32
+          maximum: 59
+          minimum: 0
+          type: integer
+        type:
+          description: The type of Time of Day
+          minLength: 1
+          type: string
+      required:
+      - hours
+      - minutes
       - type
       type: object
     Stack:
@@ -7948,6 +8341,57 @@ components:
       - toState
       - trigger
       type: object
+    TimeConstraints:
+      additionalProperties: false
+      description: Time constraints for a Recurrence Pattern
+      example:
+        endDate: endDate
+        timesOfDay:
+        - type: type
+        - type: type
+        - type: type
+        - type: type
+        - type: type
+        startDate: startDate
+      properties:
+        startDate:
+          description: Start date of the Recurrence Pattern
+          maxLength: 20
+          minLength: 0
+          type: string
+        endDate:
+          description: Optional end date of the Recurrence Pattern
+          maxLength: 20
+          minLength: 0
+          nullable: true
+          type: string
+        timesOfDay:
+          description: Times of the day to run the Recurrence Pattern
+          items:
+            $ref: '#/components/schemas/TimeOfDay'
+          maxItems: 5
+          minItems: 1
+          type: array
+      required:
+      - startDate
+      - timesOfDay
+      type: object
+    TimeOfDay:
+      additionalProperties: false
+      description: A time of the day
+      example:
+        type: type
+      oneOf:
+      - $ref: '#/components/schemas/CutLabelReference'
+      - $ref: '#/components/schemas/SpecifiedTime'
+      properties:
+        type:
+          description: The type of Time of Day
+          minLength: 1
+          type: string
+      required:
+      - type
+      type: object
     TransitionTriggerDefinition:
       additionalProperties: false
       description: State changes happen in response to Triggers
@@ -8439,6 +8883,32 @@ components:
           nullable: true
           type: integer
       type: object
+    WeekRegularity:
+      additionalProperties: false
+      description: Week Regularity
+      properties:
+        frequency:
+          description: The frequency of the Week Regularity
+          format: int32
+          maximum: 100
+          minimum: 1
+          type: integer
+        daysOfWeek:
+          description: Days of the week
+          items:
+            type: string
+          maxItems: 7
+          minItems: 1
+          type: array
+        type:
+          description: The type of Date Regularity
+          minLength: 1
+          type: string
+      required:
+      - daysOfWeek
+      - frequency
+      - type
+      type: object
     Worker:
       additionalProperties: false
       description: Information about the Worker
@@ -8580,6 +9050,25 @@ components:
           description: Trigger to invoke when the Worker has Failed to Complete
           nullable: true
           type: string
+      type: object
+    YearRegularity:
+      additionalProperties: false
+      description: Year Regularity
+      properties:
+        dates:
+          description: The dates in the year
+          items:
+            $ref: '#/components/schemas/DayOfYear'
+          maxItems: 366
+          minItems: 1
+          type: array
+        type:
+          description: The type of Date Regularity
+          minLength: 1
+          type: string
+      required:
+      - dates
+      - type
       type: object
   securitySchemes:
     oauth2:
