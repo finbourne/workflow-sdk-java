@@ -11,6 +11,8 @@ Defines the Actions for a Task
 |**name** | **String** | The Name of this Action |  |
 |**runAsUserId** | **String** | The ID of the user that this action will be performed by. If not specified, the actions will be performed by the \&quot;current user\&quot;. |  [optional] |
 |**actionDetails** | [**ActionDetails**](ActionDetails.md) |  |  |
+|**displayName** | **String** | The display name of this Action |  [optional] |
+|**description** | **String** | The description of this Action |  [optional] |
 
 
 

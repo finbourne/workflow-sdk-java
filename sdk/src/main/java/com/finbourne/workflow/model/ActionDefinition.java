@@ -63,6 +63,14 @@ public class ActionDefinition {
   @SerializedName(SERIALIZED_NAME_ACTION_DETAILS)
   private ActionDetails actionDetails;
 
+  public static final String SERIALIZED_NAME_DISPLAY_NAME = "displayName";
+  @SerializedName(SERIALIZED_NAME_DISPLAY_NAME)
+  private String displayName;
+
+  public static final String SERIALIZED_NAME_DESCRIPTION = "description";
+  @SerializedName(SERIALIZED_NAME_DESCRIPTION)
+  private String description;
+
   public ActionDefinition() {
   }
 
@@ -129,6 +137,48 @@ public class ActionDefinition {
   }
 
 
+  public ActionDefinition displayName(String displayName) {
+    
+    this.displayName = displayName;
+    return this;
+  }
+
+   /**
+   * The display name of this Action
+   * @return displayName
+  **/
+  @jakarta.annotation.Nullable
+  public String getDisplayName() {
+    return displayName;
+  }
+
+
+  public void setDisplayName(String displayName) {
+    this.displayName = displayName;
+  }
+
+
+  public ActionDefinition description(String description) {
+    
+    this.description = description;
+    return this;
+  }
+
+   /**
+   * The description of this Action
+   * @return description
+  **/
+  @jakarta.annotation.Nullable
+  public String getDescription() {
+    return description;
+  }
+
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -141,7 +191,9 @@ public class ActionDefinition {
     ActionDefinition actionDefinition = (ActionDefinition) o;
     return Objects.equals(this.name, actionDefinition.name) &&
         Objects.equals(this.runAsUserId, actionDefinition.runAsUserId) &&
-        Objects.equals(this.actionDetails, actionDefinition.actionDetails);
+        Objects.equals(this.actionDetails, actionDefinition.actionDetails) &&
+        Objects.equals(this.displayName, actionDefinition.displayName) &&
+        Objects.equals(this.description, actionDefinition.description);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -150,7 +202,7 @@ public class ActionDefinition {
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, runAsUserId, actionDetails);
+    return Objects.hash(name, runAsUserId, actionDetails, displayName, description);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -167,6 +219,8 @@ public class ActionDefinition {
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    runAsUserId: ").append(toIndentedString(runAsUserId)).append("\n");
     sb.append("    actionDetails: ").append(toIndentedString(actionDetails)).append("\n");
+    sb.append("    displayName: ").append(toIndentedString(displayName)).append("\n");
+    sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -192,6 +246,8 @@ public class ActionDefinition {
     openapiFields.add("name");
     openapiFields.add("runAsUserId");
     openapiFields.add("actionDetails");
+    openapiFields.add("displayName");
+    openapiFields.add("description");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -227,6 +283,12 @@ public class ActionDefinition {
       }
       // validate the required field `actionDetails`
       ActionDetails.validateJsonElement(jsonObj.get("actionDetails"));
+      if ((jsonObj.get("displayName") != null && !jsonObj.get("displayName").isJsonNull()) && !jsonObj.get("displayName").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `displayName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("displayName").toString()));
+      }
+      if ((jsonObj.get("description") != null && !jsonObj.get("description").isJsonNull()) && !jsonObj.get("description").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `description` to be a primitive type in the JSON string but got `%s`", jsonObj.get("description").toString()));
+      }
   }
 
   public static class CustomTypeAdapterFactory implements TypeAdapterFactory {

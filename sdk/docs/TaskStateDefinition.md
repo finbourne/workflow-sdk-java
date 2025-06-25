@@ -9,6 +9,9 @@ A Task Definition/Task has a given set of States
 | Name | Type | Description | Notes |
 |------------ | ------------- | ------------- | -------------|
 |**name** | **String** | The Name of this State |  |
+|**displayName** | **String** | The display name of this State |  [optional] |
+|**description** | **String** | The description of this State |  [optional] |
+|**category** | **String** | The category of this State |  [optional] |
 
 
 

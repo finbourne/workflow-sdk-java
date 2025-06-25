@@ -12,6 +12,10 @@ Defines a Task Definition Field
 |**type** | **String** | The value type for the field. Available values are: \&quot;String\&quot;, \&quot;Decimal\&quot;, \&quot;DateTime\&quot;, \&quot;Boolean\&quot;) |  |
 |**readOnlyStates** | [**ReadOnlyStates**](ReadOnlyStates.md) |  |  [optional] |
 |**valueConstraints** | [**ValueConstraints**](ValueConstraints.md) |  |  [optional] |
+|**displayName** | **String** | Display name for field definition |  [optional] |
+|**description** | **String** | Description for field definition |  [optional] |
+|**category** | **String** | Category for field definition |  [optional] |
+|**containsUrl** | **Boolean** | Field contains url |  [optional] |
 
 
 

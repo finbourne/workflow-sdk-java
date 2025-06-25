@@ -70,6 +70,22 @@ public class TaskTransitionDefinition {
   @SerializedName(SERIALIZED_NAME_ACTION)
   private String action;
 
+  public static final String SERIALIZED_NAME_DISPLAY_NAME = "displayName";
+  @SerializedName(SERIALIZED_NAME_DISPLAY_NAME)
+  private String displayName;
+
+  public static final String SERIALIZED_NAME_DESCRIPTION = "description";
+  @SerializedName(SERIALIZED_NAME_DESCRIPTION)
+  private String description;
+
+  public static final String SERIALIZED_NAME_GUARD_DESCRIPTION = "guardDescription";
+  @SerializedName(SERIALIZED_NAME_GUARD_DESCRIPTION)
+  private String guardDescription;
+
+  public static final String SERIALIZED_NAME_GUARD_CONDITION_NOT_MET_MESSAGE = "guardConditionNotMetMessage";
+  @SerializedName(SERIALIZED_NAME_GUARD_CONDITION_NOT_MET_MESSAGE)
+  private String guardConditionNotMetMessage;
+
   public TaskTransitionDefinition() {
   }
 
@@ -178,6 +194,90 @@ public class TaskTransitionDefinition {
   }
 
 
+  public TaskTransitionDefinition displayName(String displayName) {
+    
+    this.displayName = displayName;
+    return this;
+  }
+
+   /**
+   * Display name for transition
+   * @return displayName
+  **/
+  @jakarta.annotation.Nullable
+  public String getDisplayName() {
+    return displayName;
+  }
+
+
+  public void setDisplayName(String displayName) {
+    this.displayName = displayName;
+  }
+
+
+  public TaskTransitionDefinition description(String description) {
+    
+    this.description = description;
+    return this;
+  }
+
+   /**
+   * Description for transition
+   * @return description
+  **/
+  @jakarta.annotation.Nullable
+  public String getDescription() {
+    return description;
+  }
+
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+
+  public TaskTransitionDefinition guardDescription(String guardDescription) {
+    
+    this.guardDescription = guardDescription;
+    return this;
+  }
+
+   /**
+   * Guard description for transition
+   * @return guardDescription
+  **/
+  @jakarta.annotation.Nullable
+  public String getGuardDescription() {
+    return guardDescription;
+  }
+
+
+  public void setGuardDescription(String guardDescription) {
+    this.guardDescription = guardDescription;
+  }
+
+
+  public TaskTransitionDefinition guardConditionNotMetMessage(String guardConditionNotMetMessage) {
+    
+    this.guardConditionNotMetMessage = guardConditionNotMetMessage;
+    return this;
+  }
+
+   /**
+   * Message when guard has not been met
+   * @return guardConditionNotMetMessage
+  **/
+  @jakarta.annotation.Nullable
+  public String getGuardConditionNotMetMessage() {
+    return guardConditionNotMetMessage;
+  }
+
+
+  public void setGuardConditionNotMetMessage(String guardConditionNotMetMessage) {
+    this.guardConditionNotMetMessage = guardConditionNotMetMessage;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -192,7 +292,11 @@ public class TaskTransitionDefinition {
         Objects.equals(this.toState, taskTransitionDefinition.toState) &&
         Objects.equals(this.trigger, taskTransitionDefinition.trigger) &&
         Objects.equals(this.guard, taskTransitionDefinition.guard) &&
-        Objects.equals(this.action, taskTransitionDefinition.action);
+        Objects.equals(this.action, taskTransitionDefinition.action) &&
+        Objects.equals(this.displayName, taskTransitionDefinition.displayName) &&
+        Objects.equals(this.description, taskTransitionDefinition.description) &&
+        Objects.equals(this.guardDescription, taskTransitionDefinition.guardDescription) &&
+        Objects.equals(this.guardConditionNotMetMessage, taskTransitionDefinition.guardConditionNotMetMessage);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -201,7 +305,7 @@ public class TaskTransitionDefinition {
 
   @Override
   public int hashCode() {
-    return Objects.hash(fromState, toState, trigger, guard, action);
+    return Objects.hash(fromState, toState, trigger, guard, action, displayName, description, guardDescription, guardConditionNotMetMessage);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -220,6 +324,10 @@ public class TaskTransitionDefinition {
     sb.append("    trigger: ").append(toIndentedString(trigger)).append("\n");
     sb.append("    guard: ").append(toIndentedString(guard)).append("\n");
     sb.append("    action: ").append(toIndentedString(action)).append("\n");
+    sb.append("    displayName: ").append(toIndentedString(displayName)).append("\n");
+    sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    guardDescription: ").append(toIndentedString(guardDescription)).append("\n");
+    sb.append("    guardConditionNotMetMessage: ").append(toIndentedString(guardConditionNotMetMessage)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -247,6 +355,10 @@ public class TaskTransitionDefinition {
     openapiFields.add("trigger");
     openapiFields.add("guard");
     openapiFields.add("action");
+    openapiFields.add("displayName");
+    openapiFields.add("description");
+    openapiFields.add("guardDescription");
+    openapiFields.add("guardConditionNotMetMessage");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -289,6 +401,18 @@ public class TaskTransitionDefinition {
       }
       if ((jsonObj.get("action") != null && !jsonObj.get("action").isJsonNull()) && !jsonObj.get("action").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `action` to be a primitive type in the JSON string but got `%s`", jsonObj.get("action").toString()));
+      }
+      if ((jsonObj.get("displayName") != null && !jsonObj.get("displayName").isJsonNull()) && !jsonObj.get("displayName").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `displayName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("displayName").toString()));
+      }
+      if ((jsonObj.get("description") != null && !jsonObj.get("description").isJsonNull()) && !jsonObj.get("description").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `description` to be a primitive type in the JSON string but got `%s`", jsonObj.get("description").toString()));
+      }
+      if ((jsonObj.get("guardDescription") != null && !jsonObj.get("guardDescription").isJsonNull()) && !jsonObj.get("guardDescription").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `guardDescription` to be a primitive type in the JSON string but got `%s`", jsonObj.get("guardDescription").toString()));
+      }
+      if ((jsonObj.get("guardConditionNotMetMessage") != null && !jsonObj.get("guardConditionNotMetMessage").isJsonNull()) && !jsonObj.get("guardConditionNotMetMessage").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `guardConditionNotMetMessage` to be a primitive type in the JSON string but got `%s`", jsonObj.get("guardConditionNotMetMessage").toString()));
       }
   }
 

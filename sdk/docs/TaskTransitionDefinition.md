@@ -13,6 +13,10 @@ Defines a State change
 |**trigger** | **String** | The Trigger for this Transition |  |
 |**guard** | **String** | The Guard for this Transition, if any |  [optional] |
 |**action** | **String** | The Action to invoke on successful Transition |  [optional] |
+|**displayName** | **String** | Display name for transition |  [optional] |
+|**description** | **String** | Description for transition |  [optional] |
+|**guardDescription** | **String** | Guard description for transition |  [optional] |
+|**guardConditionNotMetMessage** | **String** | Message when guard has not been met |  [optional] |
 
 
 

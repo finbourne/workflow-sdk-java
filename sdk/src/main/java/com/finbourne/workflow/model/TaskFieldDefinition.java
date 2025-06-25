@@ -20,6 +20,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.util.Arrays;
+import org.openapitools.jackson.nullable.JsonNullable;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -66,6 +67,22 @@ public class TaskFieldDefinition {
   public static final String SERIALIZED_NAME_VALUE_CONSTRAINTS = "valueConstraints";
   @SerializedName(SERIALIZED_NAME_VALUE_CONSTRAINTS)
   private ValueConstraints valueConstraints;
+
+  public static final String SERIALIZED_NAME_DISPLAY_NAME = "displayName";
+  @SerializedName(SERIALIZED_NAME_DISPLAY_NAME)
+  private String displayName;
+
+  public static final String SERIALIZED_NAME_DESCRIPTION = "description";
+  @SerializedName(SERIALIZED_NAME_DESCRIPTION)
+  private String description;
+
+  public static final String SERIALIZED_NAME_CATEGORY = "category";
+  @SerializedName(SERIALIZED_NAME_CATEGORY)
+  private String category;
+
+  public static final String SERIALIZED_NAME_CONTAINS_URL = "containsUrl";
+  @SerializedName(SERIALIZED_NAME_CONTAINS_URL)
+  private Boolean containsUrl;
 
   public TaskFieldDefinition() {
   }
@@ -154,6 +171,90 @@ public class TaskFieldDefinition {
   }
 
 
+  public TaskFieldDefinition displayName(String displayName) {
+    
+    this.displayName = displayName;
+    return this;
+  }
+
+   /**
+   * Display name for field definition
+   * @return displayName
+  **/
+  @jakarta.annotation.Nullable
+  public String getDisplayName() {
+    return displayName;
+  }
+
+
+  public void setDisplayName(String displayName) {
+    this.displayName = displayName;
+  }
+
+
+  public TaskFieldDefinition description(String description) {
+    
+    this.description = description;
+    return this;
+  }
+
+   /**
+   * Description for field definition
+   * @return description
+  **/
+  @jakarta.annotation.Nullable
+  public String getDescription() {
+    return description;
+  }
+
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+
+  public TaskFieldDefinition category(String category) {
+    
+    this.category = category;
+    return this;
+  }
+
+   /**
+   * Category for field definition
+   * @return category
+  **/
+  @jakarta.annotation.Nullable
+  public String getCategory() {
+    return category;
+  }
+
+
+  public void setCategory(String category) {
+    this.category = category;
+  }
+
+
+  public TaskFieldDefinition containsUrl(Boolean containsUrl) {
+    
+    this.containsUrl = containsUrl;
+    return this;
+  }
+
+   /**
+   * Field contains url
+   * @return containsUrl
+  **/
+  @jakarta.annotation.Nullable
+  public Boolean getContainsUrl() {
+    return containsUrl;
+  }
+
+
+  public void setContainsUrl(Boolean containsUrl) {
+    this.containsUrl = containsUrl;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -167,12 +268,27 @@ public class TaskFieldDefinition {
     return Objects.equals(this.name, taskFieldDefinition.name) &&
         Objects.equals(this.type, taskFieldDefinition.type) &&
         Objects.equals(this.readOnlyStates, taskFieldDefinition.readOnlyStates) &&
-        Objects.equals(this.valueConstraints, taskFieldDefinition.valueConstraints);
+        Objects.equals(this.valueConstraints, taskFieldDefinition.valueConstraints) &&
+        Objects.equals(this.displayName, taskFieldDefinition.displayName) &&
+        Objects.equals(this.description, taskFieldDefinition.description) &&
+        Objects.equals(this.category, taskFieldDefinition.category) &&
+        Objects.equals(this.containsUrl, taskFieldDefinition.containsUrl);
+  }
+
+  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
+    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, type, readOnlyStates, valueConstraints);
+    return Objects.hash(name, type, readOnlyStates, valueConstraints, displayName, description, category, containsUrl);
+  }
+
+  private static <T> int hashCodeNullable(JsonNullable<T> a) {
+    if (a == null) {
+      return 1;
+    }
+    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
   }
 
   @Override
@@ -183,6 +299,10 @@ public class TaskFieldDefinition {
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    readOnlyStates: ").append(toIndentedString(readOnlyStates)).append("\n");
     sb.append("    valueConstraints: ").append(toIndentedString(valueConstraints)).append("\n");
+    sb.append("    displayName: ").append(toIndentedString(displayName)).append("\n");
+    sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    category: ").append(toIndentedString(category)).append("\n");
+    sb.append("    containsUrl: ").append(toIndentedString(containsUrl)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -209,6 +329,10 @@ public class TaskFieldDefinition {
     openapiFields.add("type");
     openapiFields.add("readOnlyStates");
     openapiFields.add("valueConstraints");
+    openapiFields.add("displayName");
+    openapiFields.add("description");
+    openapiFields.add("category");
+    openapiFields.add("containsUrl");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -249,6 +373,15 @@ public class TaskFieldDefinition {
       // validate the optional field `valueConstraints`
       if (jsonObj.get("valueConstraints") != null && !jsonObj.get("valueConstraints").isJsonNull()) {
         ValueConstraints.validateJsonElement(jsonObj.get("valueConstraints"));
+      }
+      if ((jsonObj.get("displayName") != null && !jsonObj.get("displayName").isJsonNull()) && !jsonObj.get("displayName").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `displayName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("displayName").toString()));
+      }
+      if ((jsonObj.get("description") != null && !jsonObj.get("description").isJsonNull()) && !jsonObj.get("description").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `description` to be a primitive type in the JSON string but got `%s`", jsonObj.get("description").toString()));
+      }
+      if ((jsonObj.get("category") != null && !jsonObj.get("category").isJsonNull()) && !jsonObj.get("category").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `category` to be a primitive type in the JSON string but got `%s`", jsonObj.get("category").toString()));
       }
   }
 

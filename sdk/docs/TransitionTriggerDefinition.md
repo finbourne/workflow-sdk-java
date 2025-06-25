@@ -10,6 +10,8 @@ State changes happen in response to Triggers
 |------------ | ------------- | ------------- | -------------|
 |**name** | **String** | The key/Name of this Trigger |  |
 |**trigger** | [**TriggerSchema**](TriggerSchema.md) |  |  |
+|**displayName** | **String** | Display name for trigger |  [optional] |
+|**description** | **String** | Description of trigger |  [optional] |
 
 
 

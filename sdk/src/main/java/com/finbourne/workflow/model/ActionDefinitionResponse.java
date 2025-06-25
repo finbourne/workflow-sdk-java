@@ -63,6 +63,18 @@ public class ActionDefinitionResponse {
   @SerializedName(SERIALIZED_NAME_ACTION_DETAILS)
   private ActionDetailsResponse actionDetails;
 
+  public static final String SERIALIZED_NAME_DISPLAY_NAME = "displayName";
+  @SerializedName(SERIALIZED_NAME_DISPLAY_NAME)
+  private String displayName;
+
+  public static final String SERIALIZED_NAME_DESCRIPTION = "description";
+  @SerializedName(SERIALIZED_NAME_DESCRIPTION)
+  private String description;
+
+  public static final String SERIALIZED_NAME_CATEGORY = "category";
+  @SerializedName(SERIALIZED_NAME_CATEGORY)
+  private String category;
+
   public ActionDefinitionResponse() {
   }
 
@@ -129,6 +141,69 @@ public class ActionDefinitionResponse {
   }
 
 
+  public ActionDefinitionResponse displayName(String displayName) {
+    
+    this.displayName = displayName;
+    return this;
+  }
+
+   /**
+   * Schema for the Action
+   * @return displayName
+  **/
+  @jakarta.annotation.Nullable
+  public String getDisplayName() {
+    return displayName;
+  }
+
+
+  public void setDisplayName(String displayName) {
+    this.displayName = displayName;
+  }
+
+
+  public ActionDefinitionResponse description(String description) {
+    
+    this.description = description;
+    return this;
+  }
+
+   /**
+   * Schema for the Action
+   * @return description
+  **/
+  @jakarta.annotation.Nullable
+  public String getDescription() {
+    return description;
+  }
+
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+
+  public ActionDefinitionResponse category(String category) {
+    
+    this.category = category;
+    return this;
+  }
+
+   /**
+   * Schema for the Action
+   * @return category
+  **/
+  @jakarta.annotation.Nullable
+  public String getCategory() {
+    return category;
+  }
+
+
+  public void setCategory(String category) {
+    this.category = category;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -141,7 +216,10 @@ public class ActionDefinitionResponse {
     ActionDefinitionResponse actionDefinitionResponse = (ActionDefinitionResponse) o;
     return Objects.equals(this.name, actionDefinitionResponse.name) &&
         Objects.equals(this.runAsUserId, actionDefinitionResponse.runAsUserId) &&
-        Objects.equals(this.actionDetails, actionDefinitionResponse.actionDetails);
+        Objects.equals(this.actionDetails, actionDefinitionResponse.actionDetails) &&
+        Objects.equals(this.displayName, actionDefinitionResponse.displayName) &&
+        Objects.equals(this.description, actionDefinitionResponse.description) &&
+        Objects.equals(this.category, actionDefinitionResponse.category);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -150,7 +228,7 @@ public class ActionDefinitionResponse {
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, runAsUserId, actionDetails);
+    return Objects.hash(name, runAsUserId, actionDetails, displayName, description, category);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -167,6 +245,9 @@ public class ActionDefinitionResponse {
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    runAsUserId: ").append(toIndentedString(runAsUserId)).append("\n");
     sb.append("    actionDetails: ").append(toIndentedString(actionDetails)).append("\n");
+    sb.append("    displayName: ").append(toIndentedString(displayName)).append("\n");
+    sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    category: ").append(toIndentedString(category)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -192,6 +273,9 @@ public class ActionDefinitionResponse {
     openapiFields.add("name");
     openapiFields.add("runAsUserId");
     openapiFields.add("actionDetails");
+    openapiFields.add("displayName");
+    openapiFields.add("description");
+    openapiFields.add("category");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -219,6 +303,15 @@ public class ActionDefinitionResponse {
       // validate the optional field `actionDetails`
       if (jsonObj.get("actionDetails") != null && !jsonObj.get("actionDetails").isJsonNull()) {
         ActionDetailsResponse.validateJsonElement(jsonObj.get("actionDetails"));
+      }
+      if ((jsonObj.get("displayName") != null && !jsonObj.get("displayName").isJsonNull()) && !jsonObj.get("displayName").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `displayName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("displayName").toString()));
+      }
+      if ((jsonObj.get("description") != null && !jsonObj.get("description").isJsonNull()) && !jsonObj.get("description").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `description` to be a primitive type in the JSON string but got `%s`", jsonObj.get("description").toString()));
+      }
+      if ((jsonObj.get("category") != null && !jsonObj.get("category").isJsonNull()) && !jsonObj.get("category").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `category` to be a primitive type in the JSON string but got `%s`", jsonObj.get("category").toString()));
       }
   }
 

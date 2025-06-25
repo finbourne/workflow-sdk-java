@@ -19,6 +19,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.util.Arrays;
+import org.openapitools.jackson.nullable.JsonNullable;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -57,6 +58,14 @@ public class TransitionTriggerDefinition {
   public static final String SERIALIZED_NAME_TRIGGER = "trigger";
   @SerializedName(SERIALIZED_NAME_TRIGGER)
   private TriggerSchema trigger;
+
+  public static final String SERIALIZED_NAME_DISPLAY_NAME = "displayName";
+  @SerializedName(SERIALIZED_NAME_DISPLAY_NAME)
+  private String displayName;
+
+  public static final String SERIALIZED_NAME_DESCRIPTION = "description";
+  @SerializedName(SERIALIZED_NAME_DESCRIPTION)
+  private String description;
 
   public TransitionTriggerDefinition() {
   }
@@ -103,6 +112,48 @@ public class TransitionTriggerDefinition {
   }
 
 
+  public TransitionTriggerDefinition displayName(String displayName) {
+    
+    this.displayName = displayName;
+    return this;
+  }
+
+   /**
+   * Display name for trigger
+   * @return displayName
+  **/
+  @jakarta.annotation.Nullable
+  public String getDisplayName() {
+    return displayName;
+  }
+
+
+  public void setDisplayName(String displayName) {
+    this.displayName = displayName;
+  }
+
+
+  public TransitionTriggerDefinition description(String description) {
+    
+    this.description = description;
+    return this;
+  }
+
+   /**
+   * Description of trigger
+   * @return description
+  **/
+  @jakarta.annotation.Nullable
+  public String getDescription() {
+    return description;
+  }
+
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -114,12 +165,25 @@ public class TransitionTriggerDefinition {
     }
     TransitionTriggerDefinition transitionTriggerDefinition = (TransitionTriggerDefinition) o;
     return Objects.equals(this.name, transitionTriggerDefinition.name) &&
-        Objects.equals(this.trigger, transitionTriggerDefinition.trigger);
+        Objects.equals(this.trigger, transitionTriggerDefinition.trigger) &&
+        Objects.equals(this.displayName, transitionTriggerDefinition.displayName) &&
+        Objects.equals(this.description, transitionTriggerDefinition.description);
+  }
+
+  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
+    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, trigger);
+    return Objects.hash(name, trigger, displayName, description);
+  }
+
+  private static <T> int hashCodeNullable(JsonNullable<T> a) {
+    if (a == null) {
+      return 1;
+    }
+    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
   }
 
   @Override
@@ -128,6 +192,8 @@ public class TransitionTriggerDefinition {
     sb.append("class TransitionTriggerDefinition {\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    trigger: ").append(toIndentedString(trigger)).append("\n");
+    sb.append("    displayName: ").append(toIndentedString(displayName)).append("\n");
+    sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -152,6 +218,8 @@ public class TransitionTriggerDefinition {
     openapiFields = new HashSet<String>();
     openapiFields.add("name");
     openapiFields.add("trigger");
+    openapiFields.add("displayName");
+    openapiFields.add("description");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -184,6 +252,12 @@ public class TransitionTriggerDefinition {
       }
       // validate the required field `trigger`
       TriggerSchema.validateJsonElement(jsonObj.get("trigger"));
+      if ((jsonObj.get("displayName") != null && !jsonObj.get("displayName").isJsonNull()) && !jsonObj.get("displayName").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `displayName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("displayName").toString()));
+      }
+      if ((jsonObj.get("description") != null && !jsonObj.get("description").isJsonNull()) && !jsonObj.get("description").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `description` to be a primitive type in the JSON string but got `%s`", jsonObj.get("description").toString()));
+      }
   }
 
   public static class CustomTypeAdapterFactory implements TypeAdapterFactory {

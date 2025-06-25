@@ -38,7 +38,7 @@ info:
     | <a name="939">939</a>|Blocked by a Network Zone| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1526
+  version: 0.1.1529
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -951,14 +951,35 @@ paths:
                   description: Test
                   states:
                   - name: Submitted
+                    displayName: Submitted
+                    description: Submitted ready to start
+                    category: NotStarted
                   - name: InProgress
+                    displayName: In progress
+                    description: In progress
+                    category: InProgress
                   - name: SendingSurvey
+                    displayName: In Progress sending survey
+                    description: Sending survey
+                    category: InProgress
                   - name: Done
+                    displayName: Done
+                    description: Task has finished successfully
+                    category: CompletedSuccess
                   - name: SurveyNotSent
+                    displayName: Survey Not Sent
+                    description: Survey has not been sent
+                    category: InProgress
                   - name: NotDone
+                    displayName: Not Done
+                    description: Task is not done
+                    category: Other
                   fieldSchema:
                   - name: clientId
                     type: String
+                    displayName: Client Id
+                    description: Id for the client
+                    containsUrl: false
                   - name: assignee
                     type: String
                     readOnlyStates:
@@ -972,6 +993,7 @@ paths:
                     type: String
                     readOnlyStates:
                       stateType: TerminalState
+                    category: LargetextArea
                   initialState:
                     name: Submitted
                     requiredFields:
@@ -980,6 +1002,8 @@ paths:
                   - name: start
                     trigger:
                       type: External
+                    displayName: Start
+                    description: Start the task
                   - name: cancel
                     trigger:
                       type: External
@@ -1024,12 +1048,18 @@ paths:
                         taskDefinitionAsAt: null
                         initialTrigger: test-trigger
                       workerTimeout: 120
+                    displayName: Health Check
+                    description: Health check
                   transitions:
                   - fromState: Submitted
                     toState: InProgress
                     trigger: start
                     guard: "fields['assignee'] exists AND fields['assignee'] NOT eq\
                       \ ''"
+                    displayName: Start
+                    description: Start the worker
+                    guardDescription: Field assignee exists
+                    guardConditionNotMetMessage: Assignee does not exist
                   - fromState: InProgress
                     toState: SendingSurvey
                     trigger: resolve
@@ -1092,14 +1122,35 @@ paths:
               description: Test
               states:
               - name: Submitted
+                displayName: Submitted
+                description: Submitted ready to start
+                category: NotStarted
               - name: InProgress
+                displayName: In progress
+                description: In progress
+                category: InProgress
               - name: SendingSurvey
+                displayName: In Progress sending survey
+                description: Sending survey
+                category: InProgress
               - name: Done
+                displayName: Done
+                description: Task has finished successfully
+                category: CompletedSuccess
               - name: SurveyNotSent
+                displayName: Survey Not Sent
+                description: Survey has not been sent
+                category: InProgress
               - name: NotDone
+                displayName: Not Done
+                description: Task is not done
+                category: Other
               fieldSchema:
               - name: clientId
                 type: String
+                displayName: Client Id
+                description: Id for the client
+                containsUrl: false
               - name: assignee
                 type: String
                 readOnlyStates:
@@ -1113,6 +1164,7 @@ paths:
                 type: String
                 readOnlyStates:
                   stateType: TerminalState
+                category: LargetextArea
               initialState:
                 name: Submitted
                 requiredFields:
@@ -1121,6 +1173,8 @@ paths:
               - name: start
                 trigger:
                   type: External
+                displayName: Start
+                description: Start the task
               - name: cancel
                 trigger:
                   type: External
@@ -1141,6 +1195,10 @@ paths:
                 toState: InProgress
                 trigger: start
                 guard: "fields['assignee'] exists AND fields['assignee'] NOT eq ''"
+                displayName: Start
+                description: Start the worker
+                guardDescription: Field assignee exists
+                guardConditionNotMetMessage: Assignee does not exist
               - fromState: InProgress
                 toState: SendingSurvey
                 trigger: resolve
@@ -1190,6 +1248,8 @@ paths:
                     taskDefinitionAsAt: null
                     initialTrigger: test-trigger
                   workerTimeout: 120
+                displayName: Health Check
+                description: Health check
             schema:
               $ref: '#/components/schemas/CreateTaskDefinitionRequest'
           application/json:
@@ -1201,14 +1261,35 @@ paths:
               description: Test
               states:
               - name: Submitted
+                displayName: Submitted
+                description: Submitted ready to start
+                category: NotStarted
               - name: InProgress
+                displayName: In progress
+                description: In progress
+                category: InProgress
               - name: SendingSurvey
+                displayName: In Progress sending survey
+                description: Sending survey
+                category: InProgress
               - name: Done
+                displayName: Done
+                description: Task has finished successfully
+                category: CompletedSuccess
               - name: SurveyNotSent
+                displayName: Survey Not Sent
+                description: Survey has not been sent
+                category: InProgress
               - name: NotDone
+                displayName: Not Done
+                description: Task is not done
+                category: Other
               fieldSchema:
               - name: clientId
                 type: String
+                displayName: Client Id
+                description: Id for the client
+                containsUrl: false
               - name: assignee
                 type: String
                 readOnlyStates:
@@ -1222,6 +1303,7 @@ paths:
                 type: String
                 readOnlyStates:
                   stateType: TerminalState
+                category: LargetextArea
               initialState:
                 name: Submitted
                 requiredFields:
@@ -1230,6 +1312,8 @@ paths:
               - name: start
                 trigger:
                   type: External
+                displayName: Start
+                description: Start the task
               - name: cancel
                 trigger:
                   type: External
@@ -1250,6 +1334,10 @@ paths:
                 toState: InProgress
                 trigger: start
                 guard: "fields['assignee'] exists AND fields['assignee'] NOT eq ''"
+                displayName: Start
+                description: Start the worker
+                guardDescription: Field assignee exists
+                guardConditionNotMetMessage: Assignee does not exist
               - fromState: InProgress
                 toState: SendingSurvey
                 trigger: resolve
@@ -1299,6 +1387,8 @@ paths:
                     taskDefinitionAsAt: null
                     initialTrigger: test-trigger
                   workerTimeout: 120
+                displayName: Health Check
+                description: Health check
             schema:
               $ref: '#/components/schemas/CreateTaskDefinitionRequest'
           text/json:
@@ -1310,14 +1400,35 @@ paths:
               description: Test
               states:
               - name: Submitted
+                displayName: Submitted
+                description: Submitted ready to start
+                category: NotStarted
               - name: InProgress
+                displayName: In progress
+                description: In progress
+                category: InProgress
               - name: SendingSurvey
+                displayName: In Progress sending survey
+                description: Sending survey
+                category: InProgress
               - name: Done
+                displayName: Done
+                description: Task has finished successfully
+                category: CompletedSuccess
               - name: SurveyNotSent
+                displayName: Survey Not Sent
+                description: Survey has not been sent
+                category: InProgress
               - name: NotDone
+                displayName: Not Done
+                description: Task is not done
+                category: Other
               fieldSchema:
               - name: clientId
                 type: String
+                displayName: Client Id
+                description: Id for the client
+                containsUrl: false
               - name: assignee
                 type: String
                 readOnlyStates:
@@ -1331,6 +1442,7 @@ paths:
                 type: String
                 readOnlyStates:
                   stateType: TerminalState
+                category: LargetextArea
               initialState:
                 name: Submitted
                 requiredFields:
@@ -1339,6 +1451,8 @@ paths:
               - name: start
                 trigger:
                   type: External
+                displayName: Start
+                description: Start the task
               - name: cancel
                 trigger:
                   type: External
@@ -1359,6 +1473,10 @@ paths:
                 toState: InProgress
                 trigger: start
                 guard: "fields['assignee'] exists AND fields['assignee'] NOT eq ''"
+                displayName: Start
+                description: Start the worker
+                guardDescription: Field assignee exists
+                guardConditionNotMetMessage: Assignee does not exist
               - fromState: InProgress
                 toState: SendingSurvey
                 trigger: resolve
@@ -1408,6 +1526,8 @@ paths:
                     taskDefinitionAsAt: null
                     initialTrigger: test-trigger
                   workerTimeout: 120
+                displayName: Health Check
+                description: Health check
             schema:
               $ref: '#/components/schemas/CreateTaskDefinitionRequest'
           application/*+json:
@@ -1419,14 +1539,35 @@ paths:
               description: Test
               states:
               - name: Submitted
+                displayName: Submitted
+                description: Submitted ready to start
+                category: NotStarted
               - name: InProgress
+                displayName: In progress
+                description: In progress
+                category: InProgress
               - name: SendingSurvey
+                displayName: In Progress sending survey
+                description: Sending survey
+                category: InProgress
               - name: Done
+                displayName: Done
+                description: Task has finished successfully
+                category: CompletedSuccess
               - name: SurveyNotSent
+                displayName: Survey Not Sent
+                description: Survey has not been sent
+                category: InProgress
               - name: NotDone
+                displayName: Not Done
+                description: Task is not done
+                category: Other
               fieldSchema:
               - name: clientId
                 type: String
+                displayName: Client Id
+                description: Id for the client
+                containsUrl: false
               - name: assignee
                 type: String
                 readOnlyStates:
@@ -1440,6 +1581,7 @@ paths:
                 type: String
                 readOnlyStates:
                   stateType: TerminalState
+                category: LargetextArea
               initialState:
                 name: Submitted
                 requiredFields:
@@ -1448,6 +1590,8 @@ paths:
               - name: start
                 trigger:
                   type: External
+                displayName: Start
+                description: Start the task
               - name: cancel
                 trigger:
                   type: External
@@ -1468,6 +1612,10 @@ paths:
                 toState: InProgress
                 trigger: start
                 guard: "fields['assignee'] exists AND fields['assignee'] NOT eq ''"
+                displayName: Start
+                description: Start the worker
+                guardDescription: Field assignee exists
+                guardConditionNotMetMessage: Assignee does not exist
               - fromState: InProgress
                 toState: SendingSurvey
                 trigger: resolve
@@ -1517,6 +1665,8 @@ paths:
                     taskDefinitionAsAt: null
                     initialTrigger: test-trigger
                   workerTimeout: 120
+                displayName: Health Check
+                description: Health check
             schema:
               $ref: '#/components/schemas/CreateTaskDefinitionRequest'
         description: The data to create a Task Definition
@@ -1541,14 +1691,35 @@ paths:
                 description: Test
                 states:
                 - name: Submitted
+                  displayName: Submitted
+                  description: Submitted ready to start
+                  category: NotStarted
                 - name: InProgress
+                  displayName: In progress
+                  description: In progress
+                  category: InProgress
                 - name: SendingSurvey
+                  displayName: In Progress sending survey
+                  description: Sending survey
+                  category: InProgress
                 - name: Done
+                  displayName: Done
+                  description: Task has finished successfully
+                  category: CompletedSuccess
                 - name: SurveyNotSent
+                  displayName: Survey Not Sent
+                  description: Survey has not been sent
+                  category: InProgress
                 - name: NotDone
+                  displayName: Not Done
+                  description: Task is not done
+                  category: Other
                 fieldSchema:
                 - name: clientId
                   type: String
+                  displayName: Client Id
+                  description: Id for the client
+                  containsUrl: false
                 - name: assignee
                   type: String
                   readOnlyStates:
@@ -1562,6 +1733,7 @@ paths:
                   type: String
                   readOnlyStates:
                     stateType: TerminalState
+                  category: LargetextArea
                 initialState:
                   name: Submitted
                   requiredFields:
@@ -1570,6 +1742,8 @@ paths:
                 - name: start
                   trigger:
                     type: External
+                  displayName: Start
+                  description: Start the task
                 - name: cancel
                   trigger:
                     type: External
@@ -1614,12 +1788,18 @@ paths:
                       taskDefinitionAsAt: null
                       initialTrigger: test-trigger
                     workerTimeout: 120
+                  displayName: Health Check
+                  description: Health check
                 transitions:
                 - fromState: Submitted
                   toState: InProgress
                   trigger: start
                   guard: "fields['assignee'] exists AND fields['assignee'] NOT eq\
                     \ ''"
+                  displayName: Start
+                  description: Start the worker
+                  guardDescription: Field assignee exists
+                  guardConditionNotMetMessage: Assignee does not exist
                 - fromState: InProgress
                   toState: SendingSurvey
                   trigger: resolve
@@ -1777,14 +1957,35 @@ paths:
                 description: Test
                 states:
                 - name: Submitted
+                  displayName: Submitted
+                  description: Submitted ready to start
+                  category: NotStarted
                 - name: InProgress
+                  displayName: In progress
+                  description: In progress
+                  category: InProgress
                 - name: SendingSurvey
+                  displayName: In Progress sending survey
+                  description: Sending survey
+                  category: InProgress
                 - name: Done
+                  displayName: Done
+                  description: Task has finished successfully
+                  category: CompletedSuccess
                 - name: SurveyNotSent
+                  displayName: Survey Not Sent
+                  description: Survey has not been sent
+                  category: InProgress
                 - name: NotDone
+                  displayName: Not Done
+                  description: Task is not done
+                  category: Other
                 fieldSchema:
                 - name: clientId
                   type: String
+                  displayName: Client Id
+                  description: Id for the client
+                  containsUrl: false
                 - name: assignee
                   type: String
                   readOnlyStates:
@@ -1798,6 +1999,7 @@ paths:
                   type: String
                   readOnlyStates:
                     stateType: TerminalState
+                  category: LargetextArea
                 initialState:
                   name: Submitted
                   requiredFields:
@@ -1806,6 +2008,8 @@ paths:
                 - name: start
                   trigger:
                     type: External
+                  displayName: Start
+                  description: Start the task
                 - name: cancel
                   trigger:
                     type: External
@@ -1850,12 +2054,18 @@ paths:
                       taskDefinitionAsAt: null
                       initialTrigger: test-trigger
                     workerTimeout: 120
+                  displayName: Health Check
+                  description: Health check
                 transitions:
                 - fromState: Submitted
                   toState: InProgress
                   trigger: start
                   guard: "fields['assignee'] exists AND fields['assignee'] NOT eq\
                     \ ''"
+                  displayName: Start
+                  description: Start the worker
+                  guardDescription: Field assignee exists
+                  guardConditionNotMetMessage: Assignee does not exist
                 - fromState: InProgress
                   toState: SendingSurvey
                   trigger: resolve
@@ -1937,14 +2147,35 @@ paths:
               description: Test
               states:
               - name: Submitted
+                displayName: Submitted
+                description: Submitted ready to start
+                category: NotStarted
               - name: InProgress
+                displayName: In progress
+                description: In progress
+                category: InProgress
               - name: SendingSurvey
+                displayName: In Progress sending survey
+                description: Sending survey
+                category: InProgress
               - name: Done
+                displayName: Done
+                description: Task has finished successfully
+                category: CompletedSuccess
               - name: SurveyNotSent
+                displayName: Survey Not Sent
+                description: Survey has not been sent
+                category: InProgress
               - name: NotDone
+                displayName: Not Done
+                description: Task is not done
+                category: Other
               fieldSchema:
               - name: clientId
                 type: String
+                displayName: Client Id
+                description: Id for the client
+                containsUrl: false
               - name: assignee
                 type: String
                 readOnlyStates:
@@ -1958,6 +2189,7 @@ paths:
                 type: String
                 readOnlyStates:
                   stateType: TerminalState
+                category: LargetextArea
               initialState:
                 name: Submitted
                 requiredFields:
@@ -1966,6 +2198,8 @@ paths:
               - name: start
                 trigger:
                   type: External
+                displayName: Start
+                description: Start the task
               - name: cancel
                 trigger:
                   type: External
@@ -1986,6 +2220,10 @@ paths:
                 toState: InProgress
                 trigger: start
                 guard: "fields['assignee'] exists AND fields['assignee'] NOT eq ''"
+                displayName: Start
+                description: Start the worker
+                guardDescription: Field assignee exists
+                guardConditionNotMetMessage: Assignee does not exist
               - fromState: InProgress
                 toState: SendingSurvey
                 trigger: resolve
@@ -2035,6 +2273,8 @@ paths:
                     taskDefinitionAsAt: null
                     initialTrigger: test-trigger
                   workerTimeout: 120
+                displayName: Health Check
+                description: Health check
             schema:
               $ref: '#/components/schemas/UpdateTaskDefinitionRequest'
           application/json:
@@ -2043,14 +2283,35 @@ paths:
               description: Test
               states:
               - name: Submitted
+                displayName: Submitted
+                description: Submitted ready to start
+                category: NotStarted
               - name: InProgress
+                displayName: In progress
+                description: In progress
+                category: InProgress
               - name: SendingSurvey
+                displayName: In Progress sending survey
+                description: Sending survey
+                category: InProgress
               - name: Done
+                displayName: Done
+                description: Task has finished successfully
+                category: CompletedSuccess
               - name: SurveyNotSent
+                displayName: Survey Not Sent
+                description: Survey has not been sent
+                category: InProgress
               - name: NotDone
+                displayName: Not Done
+                description: Task is not done
+                category: Other
               fieldSchema:
               - name: clientId
                 type: String
+                displayName: Client Id
+                description: Id for the client
+                containsUrl: false
               - name: assignee
                 type: String
                 readOnlyStates:
@@ -2064,6 +2325,7 @@ paths:
                 type: String
                 readOnlyStates:
                   stateType: TerminalState
+                category: LargetextArea
               initialState:
                 name: Submitted
                 requiredFields:
@@ -2072,6 +2334,8 @@ paths:
               - name: start
                 trigger:
                   type: External
+                displayName: Start
+                description: Start the task
               - name: cancel
                 trigger:
                   type: External
@@ -2092,6 +2356,10 @@ paths:
                 toState: InProgress
                 trigger: start
                 guard: "fields['assignee'] exists AND fields['assignee'] NOT eq ''"
+                displayName: Start
+                description: Start the worker
+                guardDescription: Field assignee exists
+                guardConditionNotMetMessage: Assignee does not exist
               - fromState: InProgress
                 toState: SendingSurvey
                 trigger: resolve
@@ -2141,6 +2409,8 @@ paths:
                     taskDefinitionAsAt: null
                     initialTrigger: test-trigger
                   workerTimeout: 120
+                displayName: Health Check
+                description: Health check
             schema:
               $ref: '#/components/schemas/UpdateTaskDefinitionRequest'
           text/json:
@@ -2149,14 +2419,35 @@ paths:
               description: Test
               states:
               - name: Submitted
+                displayName: Submitted
+                description: Submitted ready to start
+                category: NotStarted
               - name: InProgress
+                displayName: In progress
+                description: In progress
+                category: InProgress
               - name: SendingSurvey
+                displayName: In Progress sending survey
+                description: Sending survey
+                category: InProgress
               - name: Done
+                displayName: Done
+                description: Task has finished successfully
+                category: CompletedSuccess
               - name: SurveyNotSent
+                displayName: Survey Not Sent
+                description: Survey has not been sent
+                category: InProgress
               - name: NotDone
+                displayName: Not Done
+                description: Task is not done
+                category: Other
               fieldSchema:
               - name: clientId
                 type: String
+                displayName: Client Id
+                description: Id for the client
+                containsUrl: false
               - name: assignee
                 type: String
                 readOnlyStates:
@@ -2170,6 +2461,7 @@ paths:
                 type: String
                 readOnlyStates:
                   stateType: TerminalState
+                category: LargetextArea
               initialState:
                 name: Submitted
                 requiredFields:
@@ -2178,6 +2470,8 @@ paths:
               - name: start
                 trigger:
                   type: External
+                displayName: Start
+                description: Start the task
               - name: cancel
                 trigger:
                   type: External
@@ -2198,6 +2492,10 @@ paths:
                 toState: InProgress
                 trigger: start
                 guard: "fields['assignee'] exists AND fields['assignee'] NOT eq ''"
+                displayName: Start
+                description: Start the worker
+                guardDescription: Field assignee exists
+                guardConditionNotMetMessage: Assignee does not exist
               - fromState: InProgress
                 toState: SendingSurvey
                 trigger: resolve
@@ -2247,6 +2545,8 @@ paths:
                     taskDefinitionAsAt: null
                     initialTrigger: test-trigger
                   workerTimeout: 120
+                displayName: Health Check
+                description: Health check
             schema:
               $ref: '#/components/schemas/UpdateTaskDefinitionRequest'
           application/*+json:
@@ -2255,14 +2555,35 @@ paths:
               description: Test
               states:
               - name: Submitted
+                displayName: Submitted
+                description: Submitted ready to start
+                category: NotStarted
               - name: InProgress
+                displayName: In progress
+                description: In progress
+                category: InProgress
               - name: SendingSurvey
+                displayName: In Progress sending survey
+                description: Sending survey
+                category: InProgress
               - name: Done
+                displayName: Done
+                description: Task has finished successfully
+                category: CompletedSuccess
               - name: SurveyNotSent
+                displayName: Survey Not Sent
+                description: Survey has not been sent
+                category: InProgress
               - name: NotDone
+                displayName: Not Done
+                description: Task is not done
+                category: Other
               fieldSchema:
               - name: clientId
                 type: String
+                displayName: Client Id
+                description: Id for the client
+                containsUrl: false
               - name: assignee
                 type: String
                 readOnlyStates:
@@ -2276,6 +2597,7 @@ paths:
                 type: String
                 readOnlyStates:
                   stateType: TerminalState
+                category: LargetextArea
               initialState:
                 name: Submitted
                 requiredFields:
@@ -2284,6 +2606,8 @@ paths:
               - name: start
                 trigger:
                   type: External
+                displayName: Start
+                description: Start the task
               - name: cancel
                 trigger:
                   type: External
@@ -2304,6 +2628,10 @@ paths:
                 toState: InProgress
                 trigger: start
                 guard: "fields['assignee'] exists AND fields['assignee'] NOT eq ''"
+                displayName: Start
+                description: Start the worker
+                guardDescription: Field assignee exists
+                guardConditionNotMetMessage: Assignee does not exist
               - fromState: InProgress
                 toState: SendingSurvey
                 trigger: resolve
@@ -2353,6 +2681,8 @@ paths:
                     taskDefinitionAsAt: null
                     initialTrigger: test-trigger
                   workerTimeout: 120
+                displayName: Health Check
+                description: Health check
             schema:
               $ref: '#/components/schemas/UpdateTaskDefinitionRequest'
         description: The data to update a Task Definition
@@ -2377,14 +2707,35 @@ paths:
                 description: Test
                 states:
                 - name: Submitted
+                  displayName: Submitted
+                  description: Submitted ready to start
+                  category: NotStarted
                 - name: InProgress
+                  displayName: In progress
+                  description: In progress
+                  category: InProgress
                 - name: SendingSurvey
+                  displayName: In Progress sending survey
+                  description: Sending survey
+                  category: InProgress
                 - name: Done
+                  displayName: Done
+                  description: Task has finished successfully
+                  category: CompletedSuccess
                 - name: SurveyNotSent
+                  displayName: Survey Not Sent
+                  description: Survey has not been sent
+                  category: InProgress
                 - name: NotDone
+                  displayName: Not Done
+                  description: Task is not done
+                  category: Other
                 fieldSchema:
                 - name: clientId
                   type: String
+                  displayName: Client Id
+                  description: Id for the client
+                  containsUrl: false
                 - name: assignee
                   type: String
                   readOnlyStates:
@@ -2398,6 +2749,7 @@ paths:
                   type: String
                   readOnlyStates:
                     stateType: TerminalState
+                  category: LargetextArea
                 initialState:
                   name: Submitted
                   requiredFields:
@@ -2406,6 +2758,8 @@ paths:
                 - name: start
                   trigger:
                     type: External
+                  displayName: Start
+                  description: Start the task
                 - name: cancel
                   trigger:
                     type: External
@@ -2450,12 +2804,18 @@ paths:
                       taskDefinitionAsAt: null
                       initialTrigger: test-trigger
                     workerTimeout: 120
+                  displayName: Health Check
+                  description: Health check
                 transitions:
                 - fromState: Submitted
                   toState: InProgress
                   trigger: start
                   guard: "fields['assignee'] exists AND fields['assignee'] NOT eq\
                     \ ''"
+                  displayName: Start
+                  description: Start the worker
+                  guardDescription: Field assignee exists
+                  guardConditionNotMetMessage: Assignee does not exist
                 - fromState: InProgress
                   toState: SendingSurvey
                   trigger: resolve
@@ -4440,7 +4800,9 @@ components:
       additionalProperties: false
       description: Defines the Actions for a Task
       example:
+        displayName: displayName
         name: name
+        description: description
         runAsUserId: runAsUserId
         actionDetails:
           type: type
@@ -4461,6 +4823,19 @@ components:
           type: string
         actionDetails:
           $ref: '#/components/schemas/ActionDetails'
+        displayName:
+          description: The display name of this Action
+          maxLength: 1024
+          minLength: 1
+          nullable: true
+          type: string
+        description:
+          description: The description of this Action
+          maxLength: 1024
+          minLength: 0
+          nullable: true
+          pattern: "^[\\s\\S]*$"
+          type: string
       required:
       - actionDetails
       - name
@@ -4469,10 +4844,13 @@ components:
       additionalProperties: false
       description: Defines the Actions for a Task in a read-only form
       example:
+        displayName: displayName
         name: name
+        description: description
         runAsUserId: runAsUserId
         actionDetails:
           type: type
+        category: category
       properties:
         name:
           description: The Name of this Action
@@ -4486,6 +4864,23 @@ components:
           type: string
         actionDetails:
           $ref: '#/components/schemas/ActionDetailsResponse'
+        displayName:
+          description: Schema for the Action
+          maxLength: 1024
+          minLength: 1
+          nullable: true
+          type: string
+        description:
+          description: Schema for the Action
+          maxLength: 1024
+          minLength: 0
+          nullable: true
+          pattern: "^[\\s\\S]*$"
+          type: string
+        category:
+          description: Schema for the Action
+          nullable: true
+          type: string
       type: object
     ActionDetails:
       additionalProperties: false
@@ -5184,7 +5579,10 @@ components:
             selectedStates:
             - selectedStates
             - selectedStates
+          displayName: displayName
+          containsUrl: true
           name: name
+          description: description
           valueConstraints:
             acceptableValues:
             - ""
@@ -5192,12 +5590,16 @@ components:
             constraintType: constraintType
             valueSourceType: valueSourceType
           type: type
+          category: category
         - readOnlyStates:
             stateType: stateType
             selectedStates:
             - selectedStates
             - selectedStates
+          displayName: displayName
+          containsUrl: true
           name: name
+          description: description
           valueConstraints:
             acceptableValues:
             - ""
@@ -5205,39 +5607,62 @@ components:
             constraintType: constraintType
             valueSourceType: valueSourceType
           type: type
+          category: category
         id:
           code: code
           scope: scope
         triggers:
-        - name: name
+        - displayName: displayName
+          name: name
+          description: description
           trigger:
             type: type
-        - name: name
+        - displayName: displayName
+          name: name
+          description: description
           trigger:
             type: type
         transitions:
         - fromState: fromState
           toState: toState
+          displayName: displayName
           guard: guard
           action: action
+          description: description
+          guardDescription: guardDescription
+          guardConditionNotMetMessage: guardConditionNotMetMessage
           trigger: trigger
         - fromState: fromState
           toState: toState
+          displayName: displayName
           guard: guard
           action: action
+          description: description
+          guardDescription: guardDescription
+          guardConditionNotMetMessage: guardConditionNotMetMessage
           trigger: trigger
         actions:
-        - name: name
+        - displayName: displayName
+          name: name
+          description: description
           runAsUserId: runAsUserId
           actionDetails:
             type: type
-        - name: name
+        - displayName: displayName
+          name: name
+          description: description
           runAsUserId: runAsUserId
           actionDetails:
             type: type
         states:
-        - name: name
-        - name: name
+        - displayName: displayName
+          name: name
+          description: description
+          category: category
+        - displayName: displayName
+          name: name
+          description: description
+          category: category
       properties:
         id:
           $ref: '#/components/schemas/ResourceId'
@@ -6422,7 +6847,10 @@ components:
               selectedStates:
               - selectedStates
               - selectedStates
+            displayName: displayName
+            containsUrl: true
             name: name
+            description: description
             valueConstraints:
               acceptableValues:
               - ""
@@ -6430,12 +6858,16 @@ components:
               constraintType: constraintType
               valueSourceType: valueSourceType
             type: type
+            category: category
           - readOnlyStates:
               stateType: stateType
               selectedStates:
               - selectedStates
               - selectedStates
+            displayName: displayName
+            containsUrl: true
             name: name
+            description: description
             valueConstraints:
               acceptableValues:
               - ""
@@ -6443,26 +6875,39 @@ components:
               constraintType: constraintType
               valueSourceType: valueSourceType
             type: type
+            category: category
           id:
             code: code
             scope: scope
           triggers:
-          - name: name
+          - displayName: displayName
+            name: name
+            description: description
             trigger:
               type: type
-          - name: name
+          - displayName: displayName
+            name: name
+            description: description
             trigger:
               type: type
           transitions:
           - fromState: fromState
             toState: toState
+            displayName: displayName
             guard: guard
             action: action
+            description: description
+            guardDescription: guardDescription
+            guardConditionNotMetMessage: guardConditionNotMetMessage
             trigger: trigger
           - fromState: fromState
             toState: toState
+            displayName: displayName
             guard: guard
             action: action
+            description: description
+            guardDescription: guardDescription
+            guardConditionNotMetMessage: guardConditionNotMetMessage
             trigger: trigger
           version:
             asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -6473,17 +6918,29 @@ components:
             userIdCreated: userIdCreated
             requestIdModified: requestIdModified
           actions:
-          - name: name
+          - displayName: displayName
+            name: name
+            description: description
             runAsUserId: runAsUserId
             actionDetails:
               type: type
-          - name: name
+            category: category
+          - displayName: displayName
+            name: name
+            description: description
             runAsUserId: runAsUserId
             actionDetails:
               type: type
+            category: category
           states:
-          - name: name
-          - name: name
+          - displayName: displayName
+            name: name
+            description: description
+            category: category
+          - displayName: displayName
+            name: name
+            description: description
+            category: category
         - initialState:
             requiredFields:
             - requiredFields
@@ -6497,7 +6954,10 @@ components:
               selectedStates:
               - selectedStates
               - selectedStates
+            displayName: displayName
+            containsUrl: true
             name: name
+            description: description
             valueConstraints:
               acceptableValues:
               - ""
@@ -6505,12 +6965,16 @@ components:
               constraintType: constraintType
               valueSourceType: valueSourceType
             type: type
+            category: category
           - readOnlyStates:
               stateType: stateType
               selectedStates:
               - selectedStates
               - selectedStates
+            displayName: displayName
+            containsUrl: true
             name: name
+            description: description
             valueConstraints:
               acceptableValues:
               - ""
@@ -6518,26 +6982,39 @@ components:
               constraintType: constraintType
               valueSourceType: valueSourceType
             type: type
+            category: category
           id:
             code: code
             scope: scope
           triggers:
-          - name: name
+          - displayName: displayName
+            name: name
+            description: description
             trigger:
               type: type
-          - name: name
+          - displayName: displayName
+            name: name
+            description: description
             trigger:
               type: type
           transitions:
           - fromState: fromState
             toState: toState
+            displayName: displayName
             guard: guard
             action: action
+            description: description
+            guardDescription: guardDescription
+            guardConditionNotMetMessage: guardConditionNotMetMessage
             trigger: trigger
           - fromState: fromState
             toState: toState
+            displayName: displayName
             guard: guard
             action: action
+            description: description
+            guardDescription: guardDescription
+            guardConditionNotMetMessage: guardConditionNotMetMessage
             trigger: trigger
           version:
             asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -6548,17 +7025,29 @@ components:
             userIdCreated: userIdCreated
             requestIdModified: requestIdModified
           actions:
-          - name: name
+          - displayName: displayName
+            name: name
+            description: description
             runAsUserId: runAsUserId
             actionDetails:
               type: type
-          - name: name
+            category: category
+          - displayName: displayName
+            name: name
+            description: description
             runAsUserId: runAsUserId
             actionDetails:
               type: type
+            category: category
           states:
-          - name: name
-          - name: name
+          - displayName: displayName
+            name: name
+            description: description
+            category: category
+          - displayName: displayName
+            name: name
+            description: description
+            category: category
         links:
         - method: method
           description: description
@@ -8063,7 +8552,10 @@ components:
             selectedStates:
             - selectedStates
             - selectedStates
+          displayName: displayName
+          containsUrl: true
           name: name
+          description: description
           valueConstraints:
             acceptableValues:
             - ""
@@ -8071,12 +8563,16 @@ components:
             constraintType: constraintType
             valueSourceType: valueSourceType
           type: type
+          category: category
         - readOnlyStates:
             stateType: stateType
             selectedStates:
             - selectedStates
             - selectedStates
+          displayName: displayName
+          containsUrl: true
           name: name
+          description: description
           valueConstraints:
             acceptableValues:
             - ""
@@ -8084,26 +8580,39 @@ components:
             constraintType: constraintType
             valueSourceType: valueSourceType
           type: type
+          category: category
         id:
           code: code
           scope: scope
         triggers:
-        - name: name
+        - displayName: displayName
+          name: name
+          description: description
           trigger:
             type: type
-        - name: name
+        - displayName: displayName
+          name: name
+          description: description
           trigger:
             type: type
         transitions:
         - fromState: fromState
           toState: toState
+          displayName: displayName
           guard: guard
           action: action
+          description: description
+          guardDescription: guardDescription
+          guardConditionNotMetMessage: guardConditionNotMetMessage
           trigger: trigger
         - fromState: fromState
           toState: toState
+          displayName: displayName
           guard: guard
           action: action
+          description: description
+          guardDescription: guardDescription
+          guardConditionNotMetMessage: guardConditionNotMetMessage
           trigger: trigger
         version:
           asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -8114,17 +8623,29 @@ components:
           userIdCreated: userIdCreated
           requestIdModified: requestIdModified
         actions:
-        - name: name
+        - displayName: displayName
+          name: name
+          description: description
           runAsUserId: runAsUserId
           actionDetails:
             type: type
-        - name: name
+          category: category
+        - displayName: displayName
+          name: name
+          description: description
           runAsUserId: runAsUserId
           actionDetails:
             type: type
+          category: category
         states:
-        - name: name
-        - name: name
+        - displayName: displayName
+          name: name
+          description: description
+          category: category
+        - displayName: displayName
+          name: name
+          description: description
+          category: category
       properties:
         id:
           $ref: '#/components/schemas/ResourceId'
@@ -8196,7 +8717,10 @@ components:
           selectedStates:
           - selectedStates
           - selectedStates
+        displayName: displayName
+        containsUrl: true
         name: name
+        description: description
         valueConstraints:
           acceptableValues:
           - ""
@@ -8204,6 +8728,7 @@ components:
           constraintType: constraintType
           valueSourceType: valueSourceType
         type: type
+        category: category
       properties:
         name:
           description: The name of this Field
@@ -8220,6 +8745,27 @@ components:
           $ref: '#/components/schemas/ReadOnlyStates'
         valueConstraints:
           $ref: '#/components/schemas/ValueConstraints'
+        displayName:
+          description: Display name for field definition
+          maxLength: 1024
+          minLength: 1
+          nullable: true
+          type: string
+        description:
+          description: Description for field definition
+          maxLength: 1024
+          minLength: 0
+          nullable: true
+          pattern: "^[\\s\\S]*$"
+          type: string
+        category:
+          description: Category for field definition
+          nullable: true
+          type: string
+        containsUrl:
+          description: Field contains url
+          nullable: true
+          type: boolean
       required:
       - name
       - type
@@ -8247,13 +8793,33 @@ components:
       additionalProperties: false
       description: A Task Definition/Task has a given set of States
       example:
+        displayName: displayName
         name: name
+        description: description
+        category: category
       properties:
         name:
           description: The Name of this State
           maxLength: 1024
           minLength: 1
           pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        displayName:
+          description: The display name of this State
+          maxLength: 1024
+          minLength: 0
+          nullable: true
+          type: string
+        description:
+          description: The description of this State
+          maxLength: 1024
+          minLength: 0
+          nullable: true
+          pattern: "^[\\s\\S]*$"
+          type: string
+        category:
+          description: The category of this State
+          nullable: true
           type: string
       required:
       - name
@@ -8300,8 +8866,12 @@ components:
       example:
         fromState: fromState
         toState: toState
+        displayName: displayName
         guard: guard
         action: action
+        description: description
+        guardDescription: guardDescription
+        guardConditionNotMetMessage: guardConditionNotMetMessage
         trigger: trigger
       properties:
         fromState:
@@ -8335,6 +8905,32 @@ components:
           minLength: 1
           nullable: true
           pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        displayName:
+          description: Display name for transition
+          maxLength: 1024
+          minLength: 1
+          nullable: true
+          type: string
+        description:
+          description: Description for transition
+          maxLength: 1024
+          minLength: 0
+          nullable: true
+          pattern: "^[\\s\\S]*$"
+          type: string
+        guardDescription:
+          description: Guard description for transition
+          maxLength: 1024
+          minLength: 0
+          nullable: true
+          pattern: "^[\\s\\S]*$"
+          type: string
+        guardConditionNotMetMessage:
+          description: Message when guard has not been met
+          maxLength: 1024
+          minLength: 1
+          nullable: true
           type: string
       required:
       - fromState
@@ -8396,7 +8992,9 @@ components:
       additionalProperties: false
       description: State changes happen in response to Triggers
       example:
+        displayName: displayName
         name: name
+        description: description
         trigger:
           type: type
       properties:
@@ -8408,6 +9006,19 @@ components:
           type: string
         trigger:
           $ref: '#/components/schemas/TriggerSchema'
+        displayName:
+          description: Display name for trigger
+          maxLength: 1024
+          minLength: 1
+          nullable: true
+          type: string
+        description:
+          description: Description of trigger
+          maxLength: 1024
+          minLength: 0
+          nullable: true
+          pattern: "^[\\s\\S]*$"
+          type: string
       required:
       - name
       - trigger
@@ -8604,7 +9215,10 @@ components:
             selectedStates:
             - selectedStates
             - selectedStates
+          displayName: displayName
+          containsUrl: true
           name: name
+          description: description
           valueConstraints:
             acceptableValues:
             - ""
@@ -8612,12 +9226,16 @@ components:
             constraintType: constraintType
             valueSourceType: valueSourceType
           type: type
+          category: category
         - readOnlyStates:
             stateType: stateType
             selectedStates:
             - selectedStates
             - selectedStates
+          displayName: displayName
+          containsUrl: true
           name: name
+          description: description
           valueConstraints:
             acceptableValues:
             - ""
@@ -8625,36 +9243,59 @@ components:
             constraintType: constraintType
             valueSourceType: valueSourceType
           type: type
+          category: category
         triggers:
-        - name: name
+        - displayName: displayName
+          name: name
+          description: description
           trigger:
             type: type
-        - name: name
+        - displayName: displayName
+          name: name
+          description: description
           trigger:
             type: type
         transitions:
         - fromState: fromState
           toState: toState
+          displayName: displayName
           guard: guard
           action: action
+          description: description
+          guardDescription: guardDescription
+          guardConditionNotMetMessage: guardConditionNotMetMessage
           trigger: trigger
         - fromState: fromState
           toState: toState
+          displayName: displayName
           guard: guard
           action: action
+          description: description
+          guardDescription: guardDescription
+          guardConditionNotMetMessage: guardConditionNotMetMessage
           trigger: trigger
         actions:
-        - name: name
+        - displayName: displayName
+          name: name
+          description: description
           runAsUserId: runAsUserId
           actionDetails:
             type: type
-        - name: name
+        - displayName: displayName
+          name: name
+          description: description
           runAsUserId: runAsUserId
           actionDetails:
             type: type
         states:
-        - name: name
-        - name: name
+        - displayName: displayName
+          name: name
+          description: description
+          category: category
+        - displayName: displayName
+          name: name
+          description: description
+          category: category
       properties:
         displayName:
           description: Human readable name
