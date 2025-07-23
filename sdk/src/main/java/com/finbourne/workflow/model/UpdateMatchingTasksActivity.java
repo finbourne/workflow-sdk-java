@@ -13,6 +13,7 @@ package com.finbourne.workflow.model;
 import java.util.Objects;
 import com.finbourne.workflow.model.EventHandlerMapping;
 import com.finbourne.workflow.model.FieldMapping;
+import com.finbourne.workflow.model.ScheduledTimeAdjustment;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -120,6 +121,10 @@ public class UpdateMatchingTasksActivity {
   public static final String SERIALIZED_NAME_TASK_FIELDS = "taskFields";
   @SerializedName(SERIALIZED_NAME_TASK_FIELDS)
   private Map<String, FieldMapping> taskFields;
+
+  public static final String SERIALIZED_NAME_SCHEDULE_DEPENDENT_TASK_FIELDS = "scheduleDependentTaskFields";
+  @SerializedName(SERIALIZED_NAME_SCHEDULE_DEPENDENT_TASK_FIELDS)
+  private Map<String, ScheduledTimeAdjustment> scheduleDependentTaskFields;
 
   public UpdateMatchingTasksActivity() {
   }
@@ -245,6 +250,35 @@ public class UpdateMatchingTasksActivity {
   }
 
 
+  public UpdateMatchingTasksActivity scheduleDependentTaskFields(Map<String, ScheduledTimeAdjustment> scheduleDependentTaskFields) {
+    
+    this.scheduleDependentTaskFields = scheduleDependentTaskFields;
+    return this;
+  }
+
+  public UpdateMatchingTasksActivity putScheduleDependentTaskFieldsItem(String key, ScheduledTimeAdjustment scheduleDependentTaskFieldsItem) {
+    if (this.scheduleDependentTaskFields == null) {
+      this.scheduleDependentTaskFields = new HashMap<>();
+    }
+    this.scheduleDependentTaskFields.put(key, scheduleDependentTaskFieldsItem);
+    return this;
+  }
+
+   /**
+   * The Schedule dependent task field mappings. Only relevant if a Finbourne.Workflow.WebApi.Common.Dto.Json.EventHandlers.ScheduleMatchingPattern is  specified
+   * @return scheduleDependentTaskFields
+  **/
+  @jakarta.annotation.Nullable
+  public Map<String, ScheduledTimeAdjustment> getScheduleDependentTaskFields() {
+    return scheduleDependentTaskFields;
+  }
+
+
+  public void setScheduleDependentTaskFields(Map<String, ScheduledTimeAdjustment> scheduleDependentTaskFields) {
+    this.scheduleDependentTaskFields = scheduleDependentTaskFields;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -259,7 +293,8 @@ public class UpdateMatchingTasksActivity {
         Objects.equals(this.filter, updateMatchingTasksActivity.filter) &&
         Objects.equals(this.trigger, updateMatchingTasksActivity.trigger) &&
         Objects.equals(this.correlationIds, updateMatchingTasksActivity.correlationIds) &&
-        Objects.equals(this.taskFields, updateMatchingTasksActivity.taskFields);
+        Objects.equals(this.taskFields, updateMatchingTasksActivity.taskFields) &&
+        Objects.equals(this.scheduleDependentTaskFields, updateMatchingTasksActivity.scheduleDependentTaskFields);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -268,7 +303,7 @@ public class UpdateMatchingTasksActivity {
 
   @Override
   public int hashCode() {
-    return Objects.hash(type, filter, trigger, correlationIds, taskFields);
+    return Objects.hash(type, filter, trigger, correlationIds, taskFields, scheduleDependentTaskFields);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -287,6 +322,7 @@ public class UpdateMatchingTasksActivity {
     sb.append("    trigger: ").append(toIndentedString(trigger)).append("\n");
     sb.append("    correlationIds: ").append(toIndentedString(correlationIds)).append("\n");
     sb.append("    taskFields: ").append(toIndentedString(taskFields)).append("\n");
+    sb.append("    scheduleDependentTaskFields: ").append(toIndentedString(scheduleDependentTaskFields)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -314,6 +350,7 @@ public class UpdateMatchingTasksActivity {
     openapiFields.add("trigger");
     openapiFields.add("correlationIds");
     openapiFields.add("taskFields");
+    openapiFields.add("scheduleDependentTaskFields");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();

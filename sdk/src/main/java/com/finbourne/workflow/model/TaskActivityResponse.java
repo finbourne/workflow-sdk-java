@@ -14,6 +14,7 @@ import java.util.Objects;
 import com.finbourne.workflow.model.CreateNewTaskActivityResponse;
 import com.finbourne.workflow.model.EventHandlerMapping;
 import com.finbourne.workflow.model.FieldMapping;
+import com.finbourne.workflow.model.ScheduledTimeAdjustment;
 import com.finbourne.workflow.model.UpdateMatchingTasksActivityResponse;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
