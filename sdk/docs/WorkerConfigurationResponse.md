@@ -22,6 +22,7 @@ Readonly information about how the worker should be executed
 | FAIL | &quot;Fail&quot; |
 | GROUPRECONCILIATION | &quot;GroupReconciliation&quot; |
 | HEALTHCHECK | &quot;HealthCheck&quot; |
+| LIBRARY | &quot;Library&quot; |
 | LUMINESCEVIEW | &quot;LuminesceView&quot; |
 | SCHEDULERJOB | &quot;SchedulerJob&quot; |
 | SLEEP | &quot;Sleep&quot; |

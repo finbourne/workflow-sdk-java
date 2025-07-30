@@ -83,6 +83,7 @@ Class | Method | HTTP request | Description
  - [IdSelectorDefinition](docs/IdSelectorDefinition.md)
  - [IdentifierPartSchema](docs/IdentifierPartSchema.md)
  - [InitialState](docs/InitialState.md)
+ - [LibraryResponse](docs/LibraryResponse.md)
  - [Link](docs/Link.md)
  - [LuminesceView](docs/LuminesceView.md)
  - [LuminesceViewResponse](docs/LuminesceViewResponse.md)

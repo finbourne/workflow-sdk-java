@@ -38,7 +38,7 @@ info:
     | <a name="939">939</a>|Blocked by a Network Zone| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1546
+  version: 0.1.1547
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -6187,6 +6187,7 @@ components:
           - Fail
           - GroupReconciliation
           - HealthCheck
+          - Library
           - LuminesceView
           - SchedulerJob
           - Sleep
@@ -6407,6 +6408,17 @@ components:
           type: array
       required:
       - name
+      type: object
+    LibraryResponse:
+      additionalProperties: false
+      description: Readonly configuration for any Library Worker
+      properties:
+        type:
+          description: The type of worker
+          enum:
+          - Library
+          nullable: true
+          type: string
       type: object
     Link:
       additionalProperties: false
@@ -9853,6 +9865,7 @@ components:
       - $ref: '#/components/schemas/FailResponse'
       - $ref: '#/components/schemas/GroupReconciliationResponse'
       - $ref: '#/components/schemas/HealthCheckResponse'
+      - $ref: '#/components/schemas/LibraryResponse'
       - $ref: '#/components/schemas/LuminesceViewResponse'
       - $ref: '#/components/schemas/SchedulerJobResponse'
       - $ref: '#/components/schemas/SleepResponse'
