@@ -14,6 +14,7 @@ import java.util.Objects;
 import com.finbourne.workflow.model.EventHandlerMapping;
 import com.finbourne.workflow.model.EventMatchingPattern;
 import com.finbourne.workflow.model.ResourceId;
+import com.finbourne.workflow.model.ScheduleMatchingPattern;
 import com.finbourne.workflow.model.TaskActivity;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
@@ -70,6 +71,10 @@ public class UpdateEventHandlerRequest {
   public static final String SERIALIZED_NAME_EVENT_MATCHING_PATTERN = "eventMatchingPattern";
   @SerializedName(SERIALIZED_NAME_EVENT_MATCHING_PATTERN)
   private EventMatchingPattern eventMatchingPattern;
+
+  public static final String SERIALIZED_NAME_SCHEDULE_MATCHING_PATTERN = "scheduleMatchingPattern";
+  @SerializedName(SERIALIZED_NAME_SCHEDULE_MATCHING_PATTERN)
+  private ScheduleMatchingPattern scheduleMatchingPattern;
 
   public static final String SERIALIZED_NAME_RUN_AS_USER_ID = "runAsUserId";
   @SerializedName(SERIALIZED_NAME_RUN_AS_USER_ID)
@@ -163,7 +168,7 @@ public class UpdateEventHandlerRequest {
    * Get eventMatchingPattern
    * @return eventMatchingPattern
   **/
-  @jakarta.annotation.Nonnull
+  @jakarta.annotation.Nullable
   public EventMatchingPattern getEventMatchingPattern() {
     return eventMatchingPattern;
   }
@@ -171,6 +176,27 @@ public class UpdateEventHandlerRequest {
 
   public void setEventMatchingPattern(EventMatchingPattern eventMatchingPattern) {
     this.eventMatchingPattern = eventMatchingPattern;
+  }
+
+
+  public UpdateEventHandlerRequest scheduleMatchingPattern(ScheduleMatchingPattern scheduleMatchingPattern) {
+    
+    this.scheduleMatchingPattern = scheduleMatchingPattern;
+    return this;
+  }
+
+   /**
+   * Get scheduleMatchingPattern
+   * @return scheduleMatchingPattern
+  **/
+  @jakarta.annotation.Nullable
+  public ScheduleMatchingPattern getScheduleMatchingPattern() {
+    return scheduleMatchingPattern;
+  }
+
+
+  public void setScheduleMatchingPattern(ScheduleMatchingPattern scheduleMatchingPattern) {
+    this.scheduleMatchingPattern = scheduleMatchingPattern;
   }
 
 
@@ -272,6 +298,7 @@ public class UpdateEventHandlerRequest {
         Objects.equals(this.description, updateEventHandlerRequest.description) &&
         Objects.equals(this.status, updateEventHandlerRequest.status) &&
         Objects.equals(this.eventMatchingPattern, updateEventHandlerRequest.eventMatchingPattern) &&
+        Objects.equals(this.scheduleMatchingPattern, updateEventHandlerRequest.scheduleMatchingPattern) &&
         Objects.equals(this.runAsUserId, updateEventHandlerRequest.runAsUserId) &&
         Objects.equals(this.taskDefinitionId, updateEventHandlerRequest.taskDefinitionId) &&
         Objects.equals(this.taskDefinitionAsAt, updateEventHandlerRequest.taskDefinitionAsAt) &&
@@ -284,7 +311,7 @@ public class UpdateEventHandlerRequest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(displayName, description, status, eventMatchingPattern, runAsUserId, taskDefinitionId, taskDefinitionAsAt, taskActivity);
+    return Objects.hash(displayName, description, status, eventMatchingPattern, scheduleMatchingPattern, runAsUserId, taskDefinitionId, taskDefinitionAsAt, taskActivity);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -302,6 +329,7 @@ public class UpdateEventHandlerRequest {
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    eventMatchingPattern: ").append(toIndentedString(eventMatchingPattern)).append("\n");
+    sb.append("    scheduleMatchingPattern: ").append(toIndentedString(scheduleMatchingPattern)).append("\n");
     sb.append("    runAsUserId: ").append(toIndentedString(runAsUserId)).append("\n");
     sb.append("    taskDefinitionId: ").append(toIndentedString(taskDefinitionId)).append("\n");
     sb.append("    taskDefinitionAsAt: ").append(toIndentedString(taskDefinitionAsAt)).append("\n");
@@ -332,6 +360,7 @@ public class UpdateEventHandlerRequest {
     openapiFields.add("description");
     openapiFields.add("status");
     openapiFields.add("eventMatchingPattern");
+    openapiFields.add("scheduleMatchingPattern");
     openapiFields.add("runAsUserId");
     openapiFields.add("taskDefinitionId");
     openapiFields.add("taskDefinitionAsAt");
@@ -341,7 +370,6 @@ public class UpdateEventHandlerRequest {
     openapiRequiredFields = new HashSet<String>();
     openapiRequiredFields.add("displayName");
     openapiRequiredFields.add("status");
-    openapiRequiredFields.add("eventMatchingPattern");
     openapiRequiredFields.add("runAsUserId");
     openapiRequiredFields.add("taskDefinitionId");
     openapiRequiredFields.add("taskActivity");
@@ -376,8 +404,14 @@ public class UpdateEventHandlerRequest {
       if (!jsonObj.get("status").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `status` to be a primitive type in the JSON string but got `%s`", jsonObj.get("status").toString()));
       }
-      // validate the required field `eventMatchingPattern`
-      EventMatchingPattern.validateJsonElement(jsonObj.get("eventMatchingPattern"));
+      // validate the optional field `eventMatchingPattern`
+      if (jsonObj.get("eventMatchingPattern") != null && !jsonObj.get("eventMatchingPattern").isJsonNull()) {
+        EventMatchingPattern.validateJsonElement(jsonObj.get("eventMatchingPattern"));
+      }
+      // validate the optional field `scheduleMatchingPattern`
+      if (jsonObj.get("scheduleMatchingPattern") != null && !jsonObj.get("scheduleMatchingPattern").isJsonNull()) {
+        ScheduleMatchingPattern.validateJsonElement(jsonObj.get("scheduleMatchingPattern"));
+      }
       // validate the required field `runAsUserId`
       EventHandlerMapping.validateJsonElement(jsonObj.get("runAsUserId"));
       // validate the required field `taskDefinitionId`

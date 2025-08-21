@@ -38,7 +38,7 @@ info:
     | <a name="939">939</a>|Blocked by a Network Zone| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1547
+  version: 0.1.1553
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -9280,6 +9280,33 @@ components:
         runAsUserId:
           setTo: setTo
           mapFrom: mapFrom
+        scheduleMatchingPattern:
+          recurrencePattern:
+            timeConstraints:
+              endDate: endDate
+              timesOfDay:
+              - type: type
+              - type: type
+              - type: type
+              - type: type
+              - type: type
+              startDate: startDate
+            dateRegularity:
+              type: type
+            businessDayAdjustment: businessDayAdjustment
+          context:
+            holidayCalendars:
+            - code: code
+              scope: scope
+            - code: code
+              scope: scope
+            - code: code
+              scope: scope
+            - code: code
+              scope: scope
+            - code: code
+              scope: scope
+            timeZone: timeZone
         taskDefinitionId:
           code: code
           scope: scope
@@ -9300,6 +9327,8 @@ components:
           type: string
         eventMatchingPattern:
           $ref: '#/components/schemas/EventMatchingPattern'
+        scheduleMatchingPattern:
+          $ref: '#/components/schemas/ScheduleMatchingPattern'
         runAsUserId:
           $ref: '#/components/schemas/EventHandlerMapping'
         taskDefinitionId:
@@ -9313,7 +9342,6 @@ components:
           $ref: '#/components/schemas/TaskActivity'
       required:
       - displayName
-      - eventMatchingPattern
       - runAsUserId
       - status
       - taskActivity
