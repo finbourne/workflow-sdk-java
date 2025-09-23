@@ -148,7 +148,7 @@ public class ActionLog {
   }
 
    /**
-   * The ID of the user that the Action was performed by.  If not specified, the actions were performed by the \&quot;current user\&quot;.
+   * The ID of the user that the Action was performed by. If not specified, the actions were performed by the \&quot;current user\&quot;.
    * @return runAsUserId
   **/
   @jakarta.annotation.Nullable

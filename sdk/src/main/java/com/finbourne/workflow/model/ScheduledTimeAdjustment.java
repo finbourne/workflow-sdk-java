@@ -47,7 +47,7 @@ import java.util.Set;
 import com.finbourne.workflow.JSON;
 
 /**
- * Represents an adjustment to the scheduled time of an EventHandler. Only relevant for EventHandlers with a  Finbourne.Workflow.WebApi.Common.Dto.Json.EventHandlers.ScheduleMatchingPattern
+ * Represents an adjustment to the scheduled time of an EventHandler. Only relevant for EventHandlers with a Finbourne.Workflow.WebApi.Common.Dto.Json.EventHandlers.ScheduleMatchingPattern
  */
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class ScheduledTimeAdjustment {

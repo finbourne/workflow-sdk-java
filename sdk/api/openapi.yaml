@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.0.4
 info:
   contact:
     email: info@finbourne.com
@@ -38,7 +38,7 @@ info:
     | <a name="939">939</a>|Blocked by a Network Zone| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1554
+  version: 0.1.1558
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -4976,8 +4976,9 @@ components:
           minLength: 1
           type: string
         runAsUserId:
-          description: "The ID of the user that the Action was performed by.\r\nIf\
-            \ not specified, the actions were performed by the \"current user\"."
+          description: |-
+            The ID of the user that the Action was performed by.
+            If not specified, the actions were performed by the "current user".
           maxLength: 1024
           nullable: true
           pattern: "^[a-zA-Z0-9\\-_]+$"
@@ -5031,9 +5032,9 @@ components:
           nullable: true
           type: string
         requestId:
-          description: "The request Id of the request that caused this Action to be\
-            \ triggered.\r\nThis could be the original request that caused a sequence\
-            \ of Actions that resulted in this Action"
+          description: |-
+            The request Id of the request that caused this Action to be triggered.
+            This could be the original request that caused a sequence of Actions that resulted in this Action
           minLength: 1
           type: string
       required:
@@ -5552,9 +5553,9 @@ components:
         scheduleDependentTaskFields:
           additionalProperties:
             $ref: '#/components/schemas/ScheduledTimeAdjustment'
-          description: "The Schedule dependent task field mappings. Only relevant\
-            \ if a Finbourne.Workflow.WebApi.Common.Dto.Json.EventHandlers.ScheduleMatchingPattern\
-            \ is\r\nspecified"
+          description: |-
+            The Schedule dependent task field mappings. Only relevant if a Finbourne.Workflow.WebApi.Common.Dto.Json.EventHandlers.ScheduleMatchingPattern is
+            specified
           nullable: true
           type: object
       required:
@@ -5590,9 +5591,9 @@ components:
         scheduleDependentTaskFields:
           additionalProperties:
             $ref: '#/components/schemas/ScheduledTimeAdjustment'
-          description: "The Schedule dependent task field mappings. Only relevant\
-            \ if a Finbourne.Workflow.WebApi.Common.Dto.Json.EventHandlers.ScheduleMatchingPattern\
-            \ is\r\nspecified"
+          description: |-
+            The Schedule dependent task field mappings. Only relevant if a Finbourne.Workflow.WebApi.Common.Dto.Json.EventHandlers.ScheduleMatchingPattern is
+            specified
           nullable: true
           type: object
       type: object
@@ -6144,16 +6145,17 @@ components:
         eventType: eventType
       properties:
         eventType:
-          description: "The type of event to subscribe to. The list of available event\
-            \ types can be discovered\r\nby calling the ‘List available EventTypes’\
-            \ API endpoint in the Notifications service"
+          description: |-
+            The type of event to subscribe to. The list of available event types can be discovered
+            by calling the ‘List available EventTypes’ API endpoint in the Notifications service
           maxLength: 512
           minLength: 0
           pattern: "^[a-zA-Z]*$"
           type: string
         filter:
-          description: "A filter on the event. See https://support.lusid.com/filtering-results-from-lusid\
-            \ for more information.\r\nIf not provided, all events will be matched."
+          description: |-
+            A filter on the event. See https://support.lusid.com/filtering-results-from-lusid for more information.
+            If not provided, all events will be matched.
           nullable: true
           type: string
       required:
@@ -8177,8 +8179,9 @@ components:
       type: object
     ScheduledTimeAdjustment:
       additionalProperties: false
-      description: "Represents an adjustment to the scheduled time of an EventHandler.\
-        \ Only relevant for EventHandlers with a\r\nFinbourne.Workflow.WebApi.Common.Dto.Json.EventHandlers.ScheduleMatchingPattern"
+      description: |-
+        Represents an adjustment to the scheduled time of an EventHandler. Only relevant for EventHandlers with a
+        Finbourne.Workflow.WebApi.Common.Dto.Json.EventHandlers.ScheduleMatchingPattern
       example:
         dateAdjustment:
           deltaDays: 2054
@@ -8635,9 +8638,9 @@ components:
         scheduleDependentTaskFields:
           additionalProperties:
             $ref: '#/components/schemas/ScheduledTimeAdjustment'
-          description: "The Schedule dependent task field mappings. Only relevant\
-            \ if a Finbourne.Workflow.WebApi.Common.Dto.Json.EventHandlers.ScheduleMatchingPattern\
-            \ is\r\nspecified"
+          description: |-
+            The Schedule dependent task field mappings. Only relevant if a Finbourne.Workflow.WebApi.Common.Dto.Json.EventHandlers.ScheduleMatchingPattern is
+            specified
           nullable: true
           type: object
       required:
@@ -8690,9 +8693,9 @@ components:
         scheduleDependentTaskFields:
           additionalProperties:
             $ref: '#/components/schemas/ScheduledTimeAdjustment'
-          description: "The Schedule dependent task field mappings. Only relevant\
-            \ if a Finbourne.Workflow.WebApi.Common.Dto.Json.EventHandlers.ScheduleMatchingPattern\
-            \ is\r\nspecified"
+          description: |-
+            The Schedule dependent task field mappings. Only relevant if a Finbourne.Workflow.WebApi.Common.Dto.Json.EventHandlers.ScheduleMatchingPattern is
+            specified
           nullable: true
           type: object
       type: object
@@ -9380,9 +9383,9 @@ components:
         scheduleDependentTaskFields:
           additionalProperties:
             $ref: '#/components/schemas/ScheduledTimeAdjustment'
-          description: "The Schedule dependent task field mappings. Only relevant\
-            \ if a Finbourne.Workflow.WebApi.Common.Dto.Json.EventHandlers.ScheduleMatchingPattern\
-            \ is\r\nspecified"
+          description: |-
+            The Schedule dependent task field mappings. Only relevant if a Finbourne.Workflow.WebApi.Common.Dto.Json.EventHandlers.ScheduleMatchingPattern is
+            specified
           nullable: true
           type: object
       required:
@@ -9422,9 +9425,9 @@ components:
         scheduleDependentTaskFields:
           additionalProperties:
             $ref: '#/components/schemas/ScheduledTimeAdjustment'
-          description: "The Schedule dependent task field mappings. Only relevant\
-            \ if a Finbourne.Workflow.WebApi.Common.Dto.Json.EventHandlers.ScheduleMatchingPattern\
-            \ is\r\nspecified"
+          description: |-
+            The Schedule dependent task field mappings. Only relevant if a Finbourne.Workflow.WebApi.Common.Dto.Json.EventHandlers.ScheduleMatchingPattern is
+            specified
           nullable: true
           type: object
       type: object
@@ -9606,8 +9609,9 @@ components:
       type: object
     UpdateTaskWithIdAndTriggerRequest:
       additionalProperties: false
-      description: "A request to update multiple Tasks\r\nIncludes a trigger which\
-        \ is supplied from route in single update request"
+      description: |-
+        A request to update multiple Tasks
+        Includes a trigger which is supplied from route in single update request
       example:
         triggerName: triggerName
         correlationIds:

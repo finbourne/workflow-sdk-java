@@ -265,7 +265,7 @@ public class UpdateMatchingTasksActivityResponse {
   }
 
    /**
-   * The Schedule dependent task field mappings. Only relevant if a Finbourne.Workflow.WebApi.Common.Dto.Json.EventHandlers.ScheduleMatchingPattern is  specified
+   * The Schedule dependent task field mappings. Only relevant if a Finbourne.Workflow.WebApi.Common.Dto.Json.EventHandlers.ScheduleMatchingPattern is specified
    * @return scheduleDependentTaskFields
   **/
   @jakarta.annotation.Nullable

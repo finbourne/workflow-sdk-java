@@ -90,7 +90,7 @@ public class ActionLogOrigin {
   }
 
    /**
-   * The request Id of the request that caused this Action to be triggered.  This could be the original request that caused a sequence of Actions that resulted in this Action
+   * The request Id of the request that caused this Action to be triggered. This could be the original request that caused a sequence of Actions that resulted in this Action
    * @return requestId
   **/
   @jakarta.annotation.Nonnull

@@ -11,7 +11,7 @@ An Action Log contains the processing history of an Action
 |**id** | **UUID** | Unique identifier of the Action |  |
 |**origin** | [**ActionLogOrigin**](ActionLogOrigin.md) |  |  |
 |**actionType** | **String** | The type of the Action |  |
-|**runAsUserId** | **String** | The ID of the user that the Action was performed by.  If not specified, the actions were performed by the \&quot;current user\&quot;. |  [optional] |
+|**runAsUserId** | **String** | The ID of the user that the Action was performed by. If not specified, the actions were performed by the \&quot;current user\&quot;. |  [optional] |
 |**loggedItems** | [**List&lt;ActionLogItem&gt;**](ActionLogItem.md) | The logged items for this Action |  |
 
 

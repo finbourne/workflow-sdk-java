@@ -49,7 +49,7 @@ import java.util.Set;
 import com.finbourne.workflow.JSON;
 
 /**
- * A request to update multiple Tasks  Includes a trigger which is supplied from route in single update request
+ * A request to update multiple Tasks Includes a trigger which is supplied from route in single update request
  */
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class UpdateTaskWithIdAndTriggerRequest {

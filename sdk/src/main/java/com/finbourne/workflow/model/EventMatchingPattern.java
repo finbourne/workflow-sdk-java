@@ -68,7 +68,7 @@ public class EventMatchingPattern {
   }
 
    /**
-   * The type of event to subscribe to. The list of available event types can be discovered  by calling the ‘List available EventTypes’ API endpoint in the Notifications service
+   * The type of event to subscribe to. The list of available event types can be discovered by calling the ‘List available EventTypes’ API endpoint in the Notifications service
    * @return eventType
   **/
   @jakarta.annotation.Nonnull
@@ -89,7 +89,7 @@ public class EventMatchingPattern {
   }
 
    /**
-   * A filter on the event. See https://support.lusid.com/filtering-results-from-lusid for more information.  If not provided, all events will be matched.
+   * A filter on the event. See https://support.lusid.com/filtering-results-from-lusid for more information. If not provided, all events will be matched.
    * @return filter
   **/
   @jakarta.annotation.Nullable
