@@ -38,7 +38,7 @@ info:
     | <a name="939">939</a>|Blocked by a Network Zone| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1560
+  version: 0.1.1576
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -321,8 +321,8 @@ paths:
                     code: YYY
                   taskDefinitionAsAt: 9999-12-31T23:59:59.9999999+00:00
                   taskActivity:
-                    initialTrigger: InitialTrigger
                     type: CreateNewTask
+                    initialTrigger: InitialTrigger
                     correlationIds: []
                     taskFields: {}
                 links: []
@@ -370,11 +370,11 @@ paths:
                 code: YYY
               taskDefinitionAsAt: 9999-12-31T23:59:59.9999999+00:00
               taskActivity:
-                initialTrigger: InitialTrigger
-                type: CreateNewTask
-                correlationIds: []
-                taskFields: {}
-                scheduleDependentTaskFields: null
+                Type: CreateNewTask
+                InitialTrigger: InitialTrigger
+                CorrelationIds: []
+                TaskFields: {}
+                ScheduleDependentTaskFields: null
             schema:
               $ref: '#/components/schemas/CreateEventHandlerRequest'
           application/json:
@@ -395,11 +395,11 @@ paths:
                 code: YYY
               taskDefinitionAsAt: 9999-12-31T23:59:59.9999999+00:00
               taskActivity:
-                initialTrigger: InitialTrigger
-                type: CreateNewTask
-                correlationIds: []
-                taskFields: {}
-                scheduleDependentTaskFields: null
+                Type: CreateNewTask
+                InitialTrigger: InitialTrigger
+                CorrelationIds: []
+                TaskFields: {}
+                ScheduleDependentTaskFields: null
             schema:
               $ref: '#/components/schemas/CreateEventHandlerRequest'
           text/json:
@@ -420,11 +420,11 @@ paths:
                 code: YYY
               taskDefinitionAsAt: 9999-12-31T23:59:59.9999999+00:00
               taskActivity:
-                initialTrigger: InitialTrigger
-                type: CreateNewTask
-                correlationIds: []
-                taskFields: {}
-                scheduleDependentTaskFields: null
+                Type: CreateNewTask
+                InitialTrigger: InitialTrigger
+                CorrelationIds: []
+                TaskFields: {}
+                ScheduleDependentTaskFields: null
             schema:
               $ref: '#/components/schemas/CreateEventHandlerRequest'
           application/*+json:
@@ -445,11 +445,11 @@ paths:
                 code: YYY
               taskDefinitionAsAt: 9999-12-31T23:59:59.9999999+00:00
               taskActivity:
-                initialTrigger: InitialTrigger
-                type: CreateNewTask
-                correlationIds: []
-                taskFields: {}
-                scheduleDependentTaskFields: null
+                Type: CreateNewTask
+                InitialTrigger: InitialTrigger
+                CorrelationIds: []
+                TaskFields: {}
+                ScheduleDependentTaskFields: null
             schema:
               $ref: '#/components/schemas/CreateEventHandlerRequest'
         description: The data to create an Event Handler
@@ -483,8 +483,8 @@ paths:
                   code: YYY
                 taskDefinitionAsAt: 9999-12-31T23:59:59.9999999+00:00
                 taskActivity:
-                  initialTrigger: InitialTrigger
                   type: CreateNewTask
+                  initialTrigger: InitialTrigger
                   correlationIds: []
                   taskFields: {}
               schema:
@@ -635,8 +635,8 @@ paths:
                   code: YYY
                 taskDefinitionAsAt: 9999-12-31T23:59:59.9999999+00:00
                 taskActivity:
-                  initialTrigger: InitialTrigger
                   type: CreateNewTask
+                  initialTrigger: InitialTrigger
                   correlationIds: []
                   taskFields: {}
               schema:
@@ -703,11 +703,11 @@ paths:
                 code: YYY
               taskDefinitionAsAt: 9999-12-31T23:59:59.9999999+00:00
               taskActivity:
-                initialTrigger: InitialTrigger
-                type: CreateNewTask
-                correlationIds: []
-                taskFields: {}
-                scheduleDependentTaskFields: null
+                Type: CreateNewTask
+                InitialTrigger: InitialTrigger
+                CorrelationIds: []
+                TaskFields: {}
+                ScheduleDependentTaskFields: null
             schema:
               $ref: '#/components/schemas/UpdateEventHandlerRequest'
           application/json:
@@ -725,11 +725,11 @@ paths:
                 code: YYY
               taskDefinitionAsAt: 9999-12-31T23:59:59.9999999+00:00
               taskActivity:
-                initialTrigger: InitialTrigger
-                type: CreateNewTask
-                correlationIds: []
-                taskFields: {}
-                scheduleDependentTaskFields: null
+                Type: CreateNewTask
+                InitialTrigger: InitialTrigger
+                CorrelationIds: []
+                TaskFields: {}
+                ScheduleDependentTaskFields: null
             schema:
               $ref: '#/components/schemas/UpdateEventHandlerRequest'
           text/json:
@@ -747,11 +747,11 @@ paths:
                 code: YYY
               taskDefinitionAsAt: 9999-12-31T23:59:59.9999999+00:00
               taskActivity:
-                initialTrigger: InitialTrigger
-                type: CreateNewTask
-                correlationIds: []
-                taskFields: {}
-                scheduleDependentTaskFields: null
+                Type: CreateNewTask
+                InitialTrigger: InitialTrigger
+                CorrelationIds: []
+                TaskFields: {}
+                ScheduleDependentTaskFields: null
             schema:
               $ref: '#/components/schemas/UpdateEventHandlerRequest'
           application/*+json:
@@ -769,11 +769,11 @@ paths:
                 code: YYY
               taskDefinitionAsAt: 9999-12-31T23:59:59.9999999+00:00
               taskActivity:
-                initialTrigger: InitialTrigger
-                type: CreateNewTask
-                correlationIds: []
-                taskFields: {}
-                scheduleDependentTaskFields: null
+                Type: CreateNewTask
+                InitialTrigger: InitialTrigger
+                CorrelationIds: []
+                TaskFields: {}
+                ScheduleDependentTaskFields: null
             schema:
               $ref: '#/components/schemas/UpdateEventHandlerRequest'
         description: The data to update an Event Handler
@@ -807,8 +807,8 @@ paths:
                   code: YYY
                 taskDefinitionAsAt: 9999-12-31T23:59:59.9999999+00:00
                 taskActivity:
-                  initialTrigger: InitialTrigger
                   type: CreateNewTask
+                  initialTrigger: InitialTrigger
                   correlationIds: []
                   taskFields: {}
               schema:
@@ -9144,7 +9144,7 @@ components:
           description: Times of the day to run the Recurrence Pattern
           items:
             $ref: '#/components/schemas/TimeOfDay'
-          maxItems: 5
+          maxItems: 100
           minItems: 1
           type: array
       required:
