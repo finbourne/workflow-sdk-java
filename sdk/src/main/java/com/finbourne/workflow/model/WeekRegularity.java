@@ -59,9 +59,54 @@ public class WeekRegularity {
   @SerializedName(SERIALIZED_NAME_DAYS_OF_WEEK)
   private List<String> daysOfWeek = new ArrayList<>();
 
+  /**
+   * The type of Date Regularity
+   */
+  @JsonAdapter(TypeEnum.Adapter.class)
+  public enum TypeEnum {
+    WEEK("Week");
+
+    private String value;
+
+    TypeEnum(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    public static TypeEnum fromValue(String value) {
+      for (TypeEnum b : TypeEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    }
+
+    public static class Adapter extends TypeAdapter<TypeEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final TypeEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public TypeEnum read(final JsonReader jsonReader) throws IOException {
+        String value =  jsonReader.nextString();
+        return TypeEnum.fromValue(value);
+      }
+    }
+  }
+
   public static final String SERIALIZED_NAME_TYPE = "type";
   @SerializedName(SERIALIZED_NAME_TYPE)
-  private String type;
+  private TypeEnum type;
 
   public WeekRegularity() {
   }
@@ -118,7 +163,7 @@ public class WeekRegularity {
   }
 
 
-  public WeekRegularity type(String type) {
+  public WeekRegularity type(TypeEnum type) {
     
     this.type = type;
     return this;
@@ -129,12 +174,12 @@ public class WeekRegularity {
    * @return type
   **/
   @jakarta.annotation.Nonnull
-  public String getType() {
+  public TypeEnum getType() {
     return type;
   }
 
 
-  public void setType(String type) {
+  public void setType(TypeEnum type) {
     this.type = type;
   }
 

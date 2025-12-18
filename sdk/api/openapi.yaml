@@ -38,7 +38,7 @@ info:
     | <a name="939">939</a>|Blocked by a Network Zone| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1576
+  version: 0.1.1586
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -5431,7 +5431,7 @@ components:
                 setTo:
                   hours: 3
                   minutes: 35
-                  type: type
+                  type: Specified
           correlationIds:
           - setTo: setTo
             mapFrom: mapFrom
@@ -5833,6 +5833,9 @@ components:
           type: string
         type:
           description: The type of Time of Day
+          enum:
+          - CutLabel
+          - Specified
           minLength: 1
           type: string
       required:
@@ -5913,6 +5916,12 @@ components:
           type: integer
         type:
           description: The type of Date Regularity
+          enum:
+          - Day
+          - RelativeMonth
+          - SpecificMonth
+          - Week
+          - Year
           minLength: 1
           type: string
       required:
@@ -6019,7 +6028,7 @@ components:
                 setTo:
                   hours: 3
                   minutes: 35
-                  type: type
+                  type: Specified
           correlationIds:
           - setTo: setTo
             mapFrom: mapFrom
@@ -6575,7 +6584,7 @@ components:
                   setTo:
                     hours: 3
                     minutes: 35
-                    type: type
+                    type: Specified
             correlationIds:
             - setTo: setTo
               mapFrom: mapFrom
@@ -6647,7 +6656,7 @@ components:
                   setTo:
                     hours: 3
                     minutes: 35
-                    type: type
+                    type: Specified
             correlationIds:
             - setTo: setTo
               mapFrom: mapFrom
@@ -7447,6 +7456,8 @@ components:
           type: string
         type:
           description: The type of Date Regularity
+          enum:
+          - RelativeMonth
           minLength: 1
           type: string
       required:
@@ -8190,7 +8201,7 @@ components:
           setTo:
             hours: 3
             minutes: 35
-            type: type
+            type: Specified
       properties:
         dateAdjustment:
           $ref: '#/components/schemas/DateAdjustment'
@@ -8349,6 +8360,8 @@ components:
           type: array
         type:
           description: The type of Date Regularity
+          enum:
+          - SpecificMonth
           minLength: 1
           type: string
       required:
@@ -8362,7 +8375,7 @@ components:
       example:
         hours: 3
         minutes: 35
-        type: type
+        type: Specified
       properties:
         hours:
           description: Hours
@@ -8378,6 +8391,8 @@ components:
           type: integer
         type:
           description: The type of Time of Day
+          enum:
+          - Specified
           minLength: 1
           type: string
       required:
@@ -8604,7 +8619,7 @@ components:
               setTo:
                 hours: 3
                 minutes: 35
-                type: type
+                type: Specified
         correlationIds:
         - setTo: setTo
           mapFrom: mapFrom
@@ -8659,7 +8674,7 @@ components:
               setTo:
                 hours: 3
                 minutes: 35
-                type: type
+                type: Specified
         correlationIds:
         - setTo: setTo
           mapFrom: mapFrom
@@ -9109,7 +9124,7 @@ components:
         setTo:
           hours: 3
           minutes: 35
-          type: type
+          type: Specified
       properties:
         setTo:
           $ref: '#/components/schemas/SpecifiedTime'
@@ -9264,7 +9279,7 @@ components:
                 setTo:
                   hours: 3
                   minutes: 35
-                  type: type
+                  type: Specified
           correlationIds:
           - setTo: setTo
             mapFrom: mapFrom
@@ -9777,6 +9792,8 @@ components:
           type: array
         type:
           description: The type of Date Regularity
+          enum:
+          - Week
           minLength: 1
           type: string
       required:
@@ -9940,6 +9957,8 @@ components:
           type: array
         type:
           description: The type of Date Regularity
+          enum:
+          - Year
           minLength: 1
           type: string
       required:
