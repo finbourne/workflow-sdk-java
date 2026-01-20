@@ -5,7 +5,7 @@ Day Regularity
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**frequency** | **Integer** | The frequency of the Day Regularity | [default to Integer]
+**frequency** | **Integer** | The frequency of the Day Regularity. For example, a value of 2 indicates every 2 days | [default to Integer]
 **type** | **String** | The type of Date Regularity | [default to String]
 
 ```java

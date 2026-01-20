@@ -38,7 +38,7 @@ info:
     | <a name="939">939</a>|Blocked by a Network Zone| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1586
+  version: 0.1.1611
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -5823,7 +5823,8 @@ components:
       type: object
     CutLabelReference:
       additionalProperties: false
-      description: A reference to a Cut Label in LUSID
+      description: A reference to a Cut Label in LUSID. The time zone of the Cut Label
+        will be used
       properties:
         code:
           description: Code of the Cut Label
@@ -5909,7 +5910,8 @@ components:
       description: Day Regularity
       properties:
         frequency:
-          description: The frequency of the Day Regularity
+          description: "The frequency of the Day Regularity. For example, a value\
+            \ of 2 indicates every 2 days"
           format: int32
           maximum: 1000
           minimum: 1
@@ -6181,6 +6183,7 @@ components:
           - GroupReconciliation
           - HealthCheck
           - LuminesceView
+          - LusidEntityDataQualityCheck
           - SchedulerJob
           - Sleep
           minLength: 1
@@ -6200,6 +6203,7 @@ components:
           - HealthCheck
           - Library
           - LuminesceView
+          - LusidEntityDataQualityCheck
           - SchedulerJob
           - Sleep
           nullable: true
@@ -6486,6 +6490,32 @@ components:
           type: string
         name:
           description: Name of the view in Luminesce
+          nullable: true
+          type: string
+      type: object
+    LusidEntityDataQualityCheck:
+      additionalProperties: false
+      description: Configuration for a Worker that calls runs a Lusid entity Data
+        quality check in LUSID
+      properties:
+        type:
+          description: The type of worker
+          enum:
+          - LusidEntityDataQualityCheck
+          minLength: 1
+          type: string
+      required:
+      - type
+      type: object
+    LusidEntityDataQualityCheckResponse:
+      additionalProperties: false
+      description: Readonly configuration for the Lusid Entity Data Quality Check
+        Worker
+      properties:
+        type:
+          description: The type of worker
+          enum:
+          - LusidEntityDataQualityCheck
           nullable: true
           type: string
       type: object
@@ -7425,7 +7455,9 @@ components:
         dateRegularity:
           $ref: '#/components/schemas/DateRegularity'
         businessDayAdjustment:
-          description: The Business Day Adjustment
+          description: |-
+            The Business Day Adjustment. One of None, Previous, Following, ModifiedPrevious, ModifiedFollowing,
+            HalfMonthModifiedFollowing, Nearest
           minLength: 1
           type: string
       required:
@@ -7438,20 +7470,24 @@ components:
       description: Relative Month Regularity
       properties:
         frequency:
-          description: The frequency of the Relative Month Regularity
+          description: "The frequency of the Relative Month Regularity. For example,\
+            \ a value of 2 indicates every 2 months"
           format: int32
           maximum: 100
           minimum: 1
           type: integer
         daysOfWeek:
-          description: Days of the week
+          description: "Days of the week. One or more of - Monday, Tuesday, Wednesday,\
+            \ Thursday, Friday, Saturday, Sunday"
           items:
             type: string
           maxItems: 7
           minItems: 1
           type: array
         index:
-          description: Relative index in the month
+          description: |-
+            Relative index in the month. One of - First, Second, Third, Fourth, Last. For example, to specify the second
+            Tuesday of every month, set DaysOfWeek to ["Tuesday"] and Index to "Second"
           minLength: 1
           type: string
         type:
@@ -8268,7 +8304,7 @@ components:
         timeZone: timeZone
       properties:
         timeZone:
-          description: The time zone to use
+          description: The time zone to use. A TZ Identifier e.g. "Europe/London"
           maxLength: 100
           minLength: 1
           type: string
@@ -8345,13 +8381,15 @@ components:
       description: Specific Month Regularity
       properties:
         frequency:
-          description: The frequency of the Specific Month Regularity
+          description: "The frequency of the Specific Month Regularity. For example,\
+            \ a value of 2 indicates every 2 months"
           format: int32
           maximum: 100
           minimum: 1
           type: integer
         daysOfMonth:
-          description: Days of the month
+          description: "Days of the month. For example, to specify the 1st and 15th\
+            \ of every month, set DaysOfMonth to [1, 15]"
           items:
             format: int32
             type: integer
@@ -9145,12 +9183,12 @@ components:
         startDate: startDate
       properties:
         startDate:
-          description: Start date of the Recurrence Pattern
+          description: Start date of the Recurrence Pattern e.g. 2025-12-25
           maxLength: 20
           minLength: 0
           type: string
         endDate:
-          description: Optional end date of the Recurrence Pattern
+          description: Optional end date of the Recurrence Pattern e.g. 2025-12-31
           maxLength: 20
           minLength: 0
           nullable: true
@@ -9778,13 +9816,15 @@ components:
       description: Week Regularity
       properties:
         frequency:
-          description: The frequency of the Week Regularity
+          description: "The frequency of the Week Regularity. For example, a value\
+            \ of 2 indicates every 2 weeks"
           format: int32
           maximum: 100
           minimum: 1
           type: integer
         daysOfWeek:
-          description: Days of the week
+          description: "Days of the week. One or more of - Monday, Tuesday, Wednesday,\
+            \ Thursday, Friday, Saturday, Sunday"
           items:
             type: string
           maxItems: 7
@@ -9897,6 +9937,7 @@ components:
       - $ref: '#/components/schemas/GroupReconciliation'
       - $ref: '#/components/schemas/HealthCheck'
       - $ref: '#/components/schemas/LuminesceView'
+      - $ref: '#/components/schemas/LusidEntityDataQualityCheck'
       - $ref: '#/components/schemas/SchedulerJob'
       - $ref: '#/components/schemas/Sleep'
       properties:
@@ -9916,6 +9957,7 @@ components:
       - $ref: '#/components/schemas/HealthCheckResponse'
       - $ref: '#/components/schemas/LibraryResponse'
       - $ref: '#/components/schemas/LuminesceViewResponse'
+      - $ref: '#/components/schemas/LusidEntityDataQualityCheckResponse'
       - $ref: '#/components/schemas/SchedulerJobResponse'
       - $ref: '#/components/schemas/SleepResponse'
       type: object

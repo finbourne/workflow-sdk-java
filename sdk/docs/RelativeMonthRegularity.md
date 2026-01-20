@@ -5,9 +5,9 @@ Relative Month Regularity
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**frequency** | **Integer** | The frequency of the Relative Month Regularity | [default to Integer]
-**daysOfWeek** | **List&lt;String&gt;** | Days of the week | [default to List<String>]
-**index** | **String** | Relative index in the month | [default to String]
+**frequency** | **Integer** | The frequency of the Relative Month Regularity. For example, a value of 2 indicates every 2 months | [default to Integer]
+**daysOfWeek** | **List&lt;String&gt;** | Days of the week. One or more of - Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday | [default to List<String>]
+**index** | **String** | Relative index in the month. One of - First, Second, Third, Fourth, Last. For example, to specify the second Tuesday of every month, set DaysOfWeek to [\&quot;Tuesday\&quot;] and Index to \&quot;Second\&quot; | [default to String]
 **type** | **String** | The type of Date Regularity | [default to String]
 
 ```java

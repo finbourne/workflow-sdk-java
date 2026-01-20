@@ -115,7 +115,7 @@ public class RecurrencePattern {
   }
 
    /**
-   * The Business Day Adjustment
+   * The Business Day Adjustment. One of None, Previous, Following, ModifiedPrevious, ModifiedFollowing, HalfMonthModifiedFollowing, Nearest
    * @return businessDayAdjustment
   **/
   @jakarta.annotation.Nonnull

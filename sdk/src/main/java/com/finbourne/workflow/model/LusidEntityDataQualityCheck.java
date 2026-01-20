@@ -17,9 +17,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -47,24 +45,16 @@ import java.util.Set;
 import com.finbourne.workflow.JSON;
 
 /**
- * Week Regularity
+ * Configuration for a Worker that calls runs a Lusid entity Data quality check in LUSID
  */
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class WeekRegularity {
-  public static final String SERIALIZED_NAME_FREQUENCY = "frequency";
-  @SerializedName(SERIALIZED_NAME_FREQUENCY)
-  private Integer frequency;
-
-  public static final String SERIALIZED_NAME_DAYS_OF_WEEK = "daysOfWeek";
-  @SerializedName(SERIALIZED_NAME_DAYS_OF_WEEK)
-  private List<String> daysOfWeek = new ArrayList<>();
-
+public class LusidEntityDataQualityCheck {
   /**
-   * The type of Date Regularity
+   * The type of worker
    */
   @JsonAdapter(TypeEnum.Adapter.class)
   public enum TypeEnum {
-    WEEK("Week");
+    LUSIDENTITYDATAQUALITYCHECK("LusidEntityDataQualityCheck");
 
     private String value;
 
@@ -108,69 +98,17 @@ public class WeekRegularity {
   @SerializedName(SERIALIZED_NAME_TYPE)
   private TypeEnum type;
 
-  public WeekRegularity() {
+  public LusidEntityDataQualityCheck() {
   }
 
-  public WeekRegularity frequency(Integer frequency) {
-    
-    this.frequency = frequency;
-    return this;
-  }
-
-   /**
-   * The frequency of the Week Regularity. For example, a value of 2 indicates every 2 weeks
-   * minimum: 1
-   * maximum: 100
-   * @return frequency
-  **/
-  @jakarta.annotation.Nonnull
-  public Integer getFrequency() {
-    return frequency;
-  }
-
-
-  public void setFrequency(Integer frequency) {
-    this.frequency = frequency;
-  }
-
-
-  public WeekRegularity daysOfWeek(List<String> daysOfWeek) {
-    
-    this.daysOfWeek = daysOfWeek;
-    return this;
-  }
-
-  public WeekRegularity addDaysOfWeekItem(String daysOfWeekItem) {
-    if (this.daysOfWeek == null) {
-      this.daysOfWeek = new ArrayList<>();
-    }
-    this.daysOfWeek.add(daysOfWeekItem);
-    return this;
-  }
-
-   /**
-   * Days of the week. One or more of - Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
-   * @return daysOfWeek
-  **/
-  @jakarta.annotation.Nonnull
-  public List<String> getDaysOfWeek() {
-    return daysOfWeek;
-  }
-
-
-  public void setDaysOfWeek(List<String> daysOfWeek) {
-    this.daysOfWeek = daysOfWeek;
-  }
-
-
-  public WeekRegularity type(TypeEnum type) {
+  public LusidEntityDataQualityCheck type(TypeEnum type) {
     
     this.type = type;
     return this;
   }
 
    /**
-   * The type of Date Regularity
+   * The type of worker
    * @return type
   **/
   @jakarta.annotation.Nonnull
@@ -193,23 +131,19 @@ public class WeekRegularity {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    WeekRegularity weekRegularity = (WeekRegularity) o;
-    return Objects.equals(this.frequency, weekRegularity.frequency) &&
-        Objects.equals(this.daysOfWeek, weekRegularity.daysOfWeek) &&
-        Objects.equals(this.type, weekRegularity.type);
+    LusidEntityDataQualityCheck lusidEntityDataQualityCheck = (LusidEntityDataQualityCheck) o;
+    return Objects.equals(this.type, lusidEntityDataQualityCheck.type);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(frequency, daysOfWeek, type);
+    return Objects.hash(type);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class WeekRegularity {\n");
-    sb.append("    frequency: ").append(toIndentedString(frequency)).append("\n");
-    sb.append("    daysOfWeek: ").append(toIndentedString(daysOfWeek)).append("\n");
+    sb.append("class LusidEntityDataQualityCheck {\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -233,14 +167,10 @@ public class WeekRegularity {
   static {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
-    openapiFields.add("frequency");
-    openapiFields.add("daysOfWeek");
     openapiFields.add("type");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
-    openapiRequiredFields.add("frequency");
-    openapiRequiredFields.add("daysOfWeek");
     openapiRequiredFields.add("type");
   }
 
@@ -248,28 +178,22 @@ public class WeekRegularity {
   * Validates the JSON Element and throws an exception if issues found
   *
   * @param jsonElement JSON Element
-  * @throws IOException if the JSON Element is invalid with respect to WeekRegularity
+  * @throws IOException if the JSON Element is invalid with respect to LusidEntityDataQualityCheck
   */
   public static void validateJsonElement(JsonElement jsonElement) throws IOException {
       if (jsonElement == null) {
-        if (!WeekRegularity.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
-          throw new IllegalArgumentException(String.format("The required field(s) %s in WeekRegularity is not found in the empty JSON string", WeekRegularity.openapiRequiredFields.toString()));
+        if (!LusidEntityDataQualityCheck.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in LusidEntityDataQualityCheck is not found in the empty JSON string", LusidEntityDataQualityCheck.openapiRequiredFields.toString()));
         }
       }
 
       // check to make sure all required properties/fields are present in the JSON string
-      for (String requiredField : WeekRegularity.openapiRequiredFields) {
+      for (String requiredField : LusidEntityDataQualityCheck.openapiRequiredFields) {
         if (jsonElement.getAsJsonObject().get(requiredField) == null) {
           throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonElement.toString()));
         }
       }
         JsonObject jsonObj = jsonElement.getAsJsonObject();
-      // ensure the required json array is present
-      if (jsonObj.get("daysOfWeek") == null) {
-        throw new IllegalArgumentException("Expected the field `linkedContent` to be an array in the JSON string but got `null`");
-      } else if (!jsonObj.get("daysOfWeek").isJsonArray()) {
-        throw new IllegalArgumentException(String.format("Expected the field `daysOfWeek` to be an array in the JSON string but got `%s`", jsonObj.get("daysOfWeek").toString()));
-      }
       if (!jsonObj.get("type").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `type` to be a primitive type in the JSON string but got `%s`", jsonObj.get("type").toString()));
       }
@@ -279,22 +203,22 @@ public class WeekRegularity {
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!WeekRegularity.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'WeekRegularity' and its subtypes
+       if (!LusidEntityDataQualityCheck.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'LusidEntityDataQualityCheck' and its subtypes
        }
        final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<WeekRegularity> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(WeekRegularity.class));
+       final TypeAdapter<LusidEntityDataQualityCheck> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(LusidEntityDataQualityCheck.class));
 
-       return (TypeAdapter<T>) new TypeAdapter<WeekRegularity>() {
+       return (TypeAdapter<T>) new TypeAdapter<LusidEntityDataQualityCheck>() {
            @Override
-           public void write(JsonWriter out, WeekRegularity value) throws IOException {
+           public void write(JsonWriter out, LusidEntityDataQualityCheck value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              elementAdapter.write(out, obj);
            }
 
            @Override
-           public WeekRegularity read(JsonReader in) throws IOException {
+           public LusidEntityDataQualityCheck read(JsonReader in) throws IOException {
              JsonElement jsonElement = elementAdapter.read(in);
              validateJsonElement(jsonElement);
              return thisAdapter.fromJsonTree(jsonElement);
@@ -305,18 +229,18 @@ public class WeekRegularity {
   }
 
  /**
-  * Create an instance of WeekRegularity given an JSON string
+  * Create an instance of LusidEntityDataQualityCheck given an JSON string
   *
   * @param jsonString JSON string
-  * @return An instance of WeekRegularity
-  * @throws IOException if the JSON string is invalid with respect to WeekRegularity
+  * @return An instance of LusidEntityDataQualityCheck
+  * @throws IOException if the JSON string is invalid with respect to LusidEntityDataQualityCheck
   */
-  public static WeekRegularity fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, WeekRegularity.class);
+  public static LusidEntityDataQualityCheck fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, LusidEntityDataQualityCheck.class);
   }
 
  /**
-  * Convert an instance of WeekRegularity to an JSON string
+  * Convert an instance of LusidEntityDataQualityCheck to an JSON string
   *
   * @return JSON string
   */

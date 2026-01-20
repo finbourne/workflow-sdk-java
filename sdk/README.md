@@ -87,6 +87,8 @@ Class | Method | HTTP request | Description
  - [Link](docs/Link.md)
  - [LuminesceView](docs/LuminesceView.md)
  - [LuminesceViewResponse](docs/LuminesceViewResponse.md)
+ - [LusidEntityDataQualityCheck](docs/LusidEntityDataQualityCheck.md)
+ - [LusidEntityDataQualityCheckResponse](docs/LusidEntityDataQualityCheckResponse.md)
  - [LusidProblemDetails](docs/LusidProblemDetails.md)
  - [LusidValidationProblemDetails](docs/LusidValidationProblemDetails.md)
  - [PagedResourceListOfEventHandler](docs/PagedResourceListOfEventHandler.md)

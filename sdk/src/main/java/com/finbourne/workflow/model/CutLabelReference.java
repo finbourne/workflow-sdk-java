@@ -45,7 +45,7 @@ import java.util.Set;
 import com.finbourne.workflow.JSON;
 
 /**
- * A reference to a Cut Label in LUSID
+ * A reference to a Cut Label in LUSID. The time zone of the Cut Label will be used
  */
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class CutLabelReference {

@@ -118,7 +118,7 @@ public class SpecificMonthRegularity {
   }
 
    /**
-   * The frequency of the Specific Month Regularity
+   * The frequency of the Specific Month Regularity. For example, a value of 2 indicates every 2 months
    * minimum: 1
    * maximum: 100
    * @return frequency
@@ -149,7 +149,7 @@ public class SpecificMonthRegularity {
   }
 
    /**
-   * Days of the month
+   * Days of the month. For example, to specify the 1st and 15th of every month, set DaysOfMonth to [1, 15]
    * @return daysOfMonth
   **/
   @jakarta.annotation.Nonnull

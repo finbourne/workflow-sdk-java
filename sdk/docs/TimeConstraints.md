@@ -5,8 +5,8 @@ Time constraints for a Recurrence Pattern
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**startDate** | **String** | Start date of the Recurrence Pattern | [default to String]
-**endDate** | **String** | Optional end date of the Recurrence Pattern | [optional] [default to String]
+**startDate** | **String** | Start date of the Recurrence Pattern e.g. 2025-12-25 | [default to String]
+**endDate** | **String** | Optional end date of the Recurrence Pattern e.g. 2025-12-31 | [optional] [default to String]
 **timesOfDay** | [**List&lt;TimeOfDay&gt;**](TimeOfDay.md) | Times of the day to run the Recurrence Pattern | [default to List<TimeOfDay>]
 
 ```java

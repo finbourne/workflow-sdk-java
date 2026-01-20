@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **timeConstraints** | [**TimeConstraints**](TimeConstraints.md) |  | [default to TimeConstraints]
 **dateRegularity** | [**DateRegularity**](DateRegularity.md) |  | [default to DateRegularity]
-**businessDayAdjustment** | **String** | The Business Day Adjustment | [default to String]
+**businessDayAdjustment** | **String** | The Business Day Adjustment. One of None, Previous, Following, ModifiedPrevious, ModifiedFollowing, HalfMonthModifiedFollowing, Nearest | [default to String]
 
 ```java
 import com.finbourne.workflow.model.RecurrencePattern;

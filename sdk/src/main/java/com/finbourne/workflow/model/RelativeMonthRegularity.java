@@ -122,7 +122,7 @@ public class RelativeMonthRegularity {
   }
 
    /**
-   * The frequency of the Relative Month Regularity
+   * The frequency of the Relative Month Regularity. For example, a value of 2 indicates every 2 months
    * minimum: 1
    * maximum: 100
    * @return frequency
@@ -153,7 +153,7 @@ public class RelativeMonthRegularity {
   }
 
    /**
-   * Days of the week
+   * Days of the week. One or more of - Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
    * @return daysOfWeek
   **/
   @jakarta.annotation.Nonnull
@@ -174,7 +174,7 @@ public class RelativeMonthRegularity {
   }
 
    /**
-   * Relative index in the month
+   * Relative index in the month. One of - First, Second, Third, Fourth, Last. For example, to specify the second Tuesday of every month, set DaysOfWeek to [\&quot;Tuesday\&quot;] and Index to \&quot;Second\&quot;
    * @return index
   **/
   @jakarta.annotation.Nonnull

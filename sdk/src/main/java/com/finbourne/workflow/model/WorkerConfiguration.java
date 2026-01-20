@@ -15,6 +15,7 @@ import com.finbourne.workflow.model.Fail;
 import com.finbourne.workflow.model.GroupReconciliation;
 import com.finbourne.workflow.model.HealthCheck;
 import com.finbourne.workflow.model.LuminesceView;
+import com.finbourne.workflow.model.LusidEntityDataQualityCheck;
 import com.finbourne.workflow.model.ResourceId;
 import com.finbourne.workflow.model.SchedulerJob;
 import com.finbourne.workflow.model.Sleep;
@@ -78,6 +79,7 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
             final TypeAdapter<GroupReconciliation> adapterGroupReconciliation = gson.getDelegateAdapter(this, TypeToken.get(GroupReconciliation.class));
             final TypeAdapter<HealthCheck> adapterHealthCheck = gson.getDelegateAdapter(this, TypeToken.get(HealthCheck.class));
             final TypeAdapter<LuminesceView> adapterLuminesceView = gson.getDelegateAdapter(this, TypeToken.get(LuminesceView.class));
+            final TypeAdapter<LusidEntityDataQualityCheck> adapterLusidEntityDataQualityCheck = gson.getDelegateAdapter(this, TypeToken.get(LusidEntityDataQualityCheck.class));
             final TypeAdapter<SchedulerJob> adapterSchedulerJob = gson.getDelegateAdapter(this, TypeToken.get(SchedulerJob.class));
             final TypeAdapter<Sleep> adapterSleep = gson.getDelegateAdapter(this, TypeToken.get(Sleep.class));
 
@@ -113,6 +115,12 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
                       elementAdapter.write(out, element);
                       return;
                     }
+                    // check if the actual instance is of the type `LusidEntityDataQualityCheck`
+                    if (value.getActualInstance() instanceof LusidEntityDataQualityCheck) {
+                      JsonElement element = adapterLusidEntityDataQualityCheck.toJsonTree((LusidEntityDataQualityCheck)value.getActualInstance());
+                      elementAdapter.write(out, element);
+                      return;
+                    }
                     // check if the actual instance is of the type `SchedulerJob`
                     if (value.getActualInstance() instanceof SchedulerJob) {
                       JsonElement element = adapterSchedulerJob.toJsonTree((SchedulerJob)value.getActualInstance());
@@ -125,7 +133,7 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
                       elementAdapter.write(out, element);
                       return;
                     }
-                    throw new IOException("Failed to serialize as the type doesn't match oneOf schemas: Fail, GroupReconciliation, HealthCheck, LuminesceView, SchedulerJob, Sleep");
+                    throw new IOException("Failed to serialize as the type doesn't match oneOf schemas: Fail, GroupReconciliation, HealthCheck, LuminesceView, LusidEntityDataQualityCheck, SchedulerJob, Sleep");
                 }
 
                 @Override
@@ -184,6 +192,18 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
                       // deserialization failed, continue
                       errorMessages.add(String.format("Deserialization for LuminesceView failed with `%s`.", e.getMessage()));
                       log.log(Level.FINER, "Input data does not match schema 'LuminesceView'", e);
+                    }
+                    // deserialize LusidEntityDataQualityCheck
+                    try {
+                      // validate the JSON object to see if any exception is thrown
+                      LusidEntityDataQualityCheck.validateJsonElement(jsonElement);
+                      actualAdapter = adapterLusidEntityDataQualityCheck;
+                      match++;
+                      log.log(Level.FINER, "Input data matches schema 'LusidEntityDataQualityCheck'");
+                    } catch (Exception e) {
+                      // deserialization failed, continue
+                      errorMessages.add(String.format("Deserialization for LusidEntityDataQualityCheck failed with `%s`.", e.getMessage()));
+                      log.log(Level.FINER, "Input data does not match schema 'LusidEntityDataQualityCheck'", e);
                     }
                     // deserialize SchedulerJob
                     try {
@@ -249,6 +269,11 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
         setActualInstance(o);
     }
 
+    public WorkerConfiguration(LusidEntityDataQualityCheck o) {
+        super("oneOf", Boolean.FALSE);
+        setActualInstance(o);
+    }
+
     public WorkerConfiguration(SchedulerJob o) {
         super("oneOf", Boolean.FALSE);
         setActualInstance(o);
@@ -264,6 +289,7 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
         schemas.put("GroupReconciliation", GroupReconciliation.class);
         schemas.put("HealthCheck", HealthCheck.class);
         schemas.put("LuminesceView", LuminesceView.class);
+        schemas.put("LusidEntityDataQualityCheck", LusidEntityDataQualityCheck.class);
         schemas.put("SchedulerJob", SchedulerJob.class);
         schemas.put("Sleep", Sleep.class);
     }
@@ -276,7 +302,7 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
     /**
      * Set the instance that matches the oneOf child schema, check
      * the instance parameter is valid against the oneOf child schemas:
-     * Fail, GroupReconciliation, HealthCheck, LuminesceView, SchedulerJob, Sleep
+     * Fail, GroupReconciliation, HealthCheck, LuminesceView, LusidEntityDataQualityCheck, SchedulerJob, Sleep
      *
      * It could be an instance of the 'oneOf' schemas.
      */
@@ -302,6 +328,11 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
             return;
         }
 
+        if (instance instanceof LusidEntityDataQualityCheck) {
+            super.setActualInstance(instance);
+            return;
+        }
+
         if (instance instanceof SchedulerJob) {
             super.setActualInstance(instance);
             return;
@@ -312,14 +343,14 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
             return;
         }
 
-        throw new RuntimeException("Invalid instance type. Must be Fail, GroupReconciliation, HealthCheck, LuminesceView, SchedulerJob, Sleep");
+        throw new RuntimeException("Invalid instance type. Must be Fail, GroupReconciliation, HealthCheck, LuminesceView, LusidEntityDataQualityCheck, SchedulerJob, Sleep");
     }
 
     /**
      * Get the actual instance, which can be the following:
-     * Fail, GroupReconciliation, HealthCheck, LuminesceView, SchedulerJob, Sleep
+     * Fail, GroupReconciliation, HealthCheck, LuminesceView, LusidEntityDataQualityCheck, SchedulerJob, Sleep
      *
-     * @return The actual instance (Fail, GroupReconciliation, HealthCheck, LuminesceView, SchedulerJob, Sleep)
+     * @return The actual instance (Fail, GroupReconciliation, HealthCheck, LuminesceView, LusidEntityDataQualityCheck, SchedulerJob, Sleep)
      */
     @Override
     public Object getActualInstance() {
@@ -365,6 +396,16 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
      */
     public LuminesceView getLuminesceView() throws ClassCastException {
         return (LuminesceView)super.getActualInstance();
+    }
+    /**
+     * Get the actual instance of `LusidEntityDataQualityCheck`. If the actual instance is not `LusidEntityDataQualityCheck`,
+     * the ClassCastException will be thrown.
+     *
+     * @return The actual instance of `LusidEntityDataQualityCheck`
+     * @throws ClassCastException if the instance is not `LusidEntityDataQualityCheck`
+     */
+    public LusidEntityDataQualityCheck getLusidEntityDataQualityCheck() throws ClassCastException {
+        return (LusidEntityDataQualityCheck)super.getActualInstance();
     }
     /**
      * Get the actual instance of `SchedulerJob`. If the actual instance is not `SchedulerJob`,
@@ -429,6 +470,14 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
       errorMessages.add(String.format("Deserialization for LuminesceView failed with `%s`.", e.getMessage()));
       // continue to the next one
     }
+    // validate the json string with LusidEntityDataQualityCheck
+    try {
+      LusidEntityDataQualityCheck.validateJsonElement(jsonElement);
+      validCount++;
+    } catch (Exception e) {
+      errorMessages.add(String.format("Deserialization for LusidEntityDataQualityCheck failed with `%s`.", e.getMessage()));
+      // continue to the next one
+    }
     // validate the json string with SchedulerJob
     try {
       SchedulerJob.validateJsonElement(jsonElement);
@@ -446,7 +495,7 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
       // continue to the next one
     }
     if (validCount != 1) {
-      throw new IOException(String.format("The JSON string is invalid for WorkerConfiguration with oneOf schemas: Fail, GroupReconciliation, HealthCheck, LuminesceView, SchedulerJob, Sleep. %d class(es) match the result, expected 1. Detailed failure message for oneOf schemas: %s. JSON: %s", validCount, errorMessages, jsonElement.toString()));
+      throw new IOException(String.format("The JSON string is invalid for WorkerConfiguration with oneOf schemas: Fail, GroupReconciliation, HealthCheck, LuminesceView, LusidEntityDataQualityCheck, SchedulerJob, Sleep. %d class(es) match the result, expected 1. Detailed failure message for oneOf schemas: %s. JSON: %s", validCount, errorMessages, jsonElement.toString()));
     }
   }
 

@@ -120,7 +120,7 @@ public class DayRegularity {
   }
 
    /**
-   * The frequency of the Day Regularity
+   * The frequency of the Day Regularity. For example, a value of 2 indicates every 2 days
    * minimum: 1
    * maximum: 1000
    * @return frequency

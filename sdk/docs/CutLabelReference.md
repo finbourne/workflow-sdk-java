@@ -1,5 +1,5 @@
 # com.finbourne.workflow.model.CutLabelReference
-A reference to a Cut Label in LUSID
+A reference to a Cut Label in LUSID. The time zone of the Cut Label will be used
 
 ## Properties
 

@@ -71,7 +71,7 @@ public class ScheduleMatchingPatternContext {
   }
 
    /**
-   * The time zone to use
+   * The time zone to use. A TZ Identifier e.g. \&quot;Europe/London\&quot;
    * @return timeZone
   **/
   @jakarta.annotation.Nonnull

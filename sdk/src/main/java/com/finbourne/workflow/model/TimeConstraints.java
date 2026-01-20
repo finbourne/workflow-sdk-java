@@ -75,7 +75,7 @@ public class TimeConstraints {
   }
 
    /**
-   * Start date of the Recurrence Pattern
+   * Start date of the Recurrence Pattern e.g. 2025-12-25
    * @return startDate
   **/
   @jakarta.annotation.Nonnull
@@ -96,7 +96,7 @@ public class TimeConstraints {
   }
 
    /**
-   * Optional end date of the Recurrence Pattern
+   * Optional end date of the Recurrence Pattern e.g. 2025-12-31
    * @return endDate
   **/
   @jakarta.annotation.Nullable

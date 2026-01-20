@@ -5,8 +5,8 @@ Week Regularity
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**frequency** | **Integer** | The frequency of the Week Regularity | [default to Integer]
-**daysOfWeek** | **List&lt;String&gt;** | Days of the week | [default to List<String>]
+**frequency** | **Integer** | The frequency of the Week Regularity. For example, a value of 2 indicates every 2 weeks | [default to Integer]
+**daysOfWeek** | **List&lt;String&gt;** | Days of the week. One or more of - Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday | [default to List<String>]
 **type** | **String** | The type of Date Regularity | [default to String]
 
 ```java

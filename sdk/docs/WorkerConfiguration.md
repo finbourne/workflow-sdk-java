@@ -31,6 +31,8 @@ WorkerConfiguration config = new WorkerConfiguration(workerConfiguration);
 
 * [LuminesceView](./LuminesceView.md)
 
+* [LusidEntityDataQualityCheck](./LusidEntityDataQualityCheck.md)
+
 * [SchedulerJob](./SchedulerJob.md)
 
 * [Sleep](./Sleep.md)

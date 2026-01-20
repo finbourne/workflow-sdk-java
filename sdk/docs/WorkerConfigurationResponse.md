@@ -33,6 +33,8 @@ WorkerConfigurationResponse config = new WorkerConfigurationResponse(workerConfi
 
 * [LuminesceViewResponse](./LuminesceViewResponse.md)
 
+* [LusidEntityDataQualityCheckResponse](./LusidEntityDataQualityCheckResponse.md)
+
 * [SchedulerJobResponse](./SchedulerJobResponse.md)
 
 * [SleepResponse](./SleepResponse.md)

@@ -6,10 +6,10 @@ A Date Regularity
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **String** | The type of Date Regularity | [default to String]
-**frequency** | **Integer** | The frequency of the Week Regularity | [default to Integer]
-**daysOfWeek** | **List&lt;String&gt;** | Days of the week | [default to List<String>]
-**index** | **String** | Relative index in the month | [default to String]
-**daysOfMonth** | **List&lt;Integer&gt;** | Days of the month | [default to List<Integer>]
+**frequency** | **Integer** | The frequency of the Week Regularity. For example, a value of 2 indicates every 2 weeks | [default to Integer]
+**daysOfWeek** | **List&lt;String&gt;** | Days of the week. One or more of - Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday | [default to List<String>]
+**index** | **String** | Relative index in the month. One of - First, Second, Third, Fourth, Last. For example, to specify the second Tuesday of every month, set DaysOfWeek to [\&quot;Tuesday\&quot;] and Index to \&quot;Second\&quot; | [default to String]
+**daysOfMonth** | **List&lt;Integer&gt;** | Days of the month. For example, to specify the 1st and 15th of every month, set DaysOfMonth to [1, 15] | [default to List<Integer>]
 **dates** | [**List&lt;DayOfYear&gt;**](DayOfYear.md) | The dates in the year | [default to List<DayOfYear>]
 
 ```java
