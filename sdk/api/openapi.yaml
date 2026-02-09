@@ -38,7 +38,7 @@ info:
     | <a name="939">939</a>|Blocked by a Network Zone| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1620
+  version: 0.1.1632
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -343,10 +343,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: "[EXPERIMENTAL] ListEventHandlers: List Event Handlers"
+      summary: "ListEventHandlers: List Event Handlers"
       tags:
       - Event Handlers
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: Stable
       x-accepts: application/json
     post:
       operationId: CreateEventHandler
@@ -504,10 +504,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: "[EXPERIMENTAL] CreateEventHandler: Create a new Event Handler"
+      summary: "CreateEventHandler: Create a new Event Handler"
       tags:
       - Event Handlers
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: Stable
       x-content-type: application/json-patch+json
       x-accepts: application/json
   /api/eventhandlers/{scope}/{code}:
@@ -564,10 +564,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: "[EXPERIMENTAL] DeleteEventHandler: Delete an Event Handler"
+      summary: "DeleteEventHandler: Delete an Event Handler"
       tags:
       - Event Handlers
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: Stable
       x-accepts: application/json
     get:
       description: Will return a NotFound failure if the event handler does not exist
@@ -656,10 +656,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: "[EXPERIMENTAL] GetEventHandler: Get an Event Handler"
+      summary: "GetEventHandler: Get an Event Handler"
       tags:
       - Event Handlers
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: Stable
       x-accepts: application/json
     put:
       operationId: UpdateEventHandler
@@ -834,10 +834,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: "[EXPERIMENTAL] UpdateEventHandler: Update an existing Event handler"
+      summary: "UpdateEventHandler: Update an existing Event handler"
       tags:
       - Event Handlers
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: Stable
       x-content-type: application/json-patch+json
       x-accepts: application/json
   /api/metadata/access/resources:

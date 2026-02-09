@@ -295,7 +295,7 @@ public class EventHandlersApi {
     }
 
     /**
-     * [EXPERIMENTAL] CreateEventHandler: Create a new Event Handler
+     * CreateEventHandler: Create a new Event Handler
      * 
      * @param createEventHandlerRequest The data to create an Event Handler (required)
      * @return APIcreateEventHandlerRequest
@@ -540,7 +540,7 @@ public class EventHandlersApi {
     }
 
     /**
-     * [EXPERIMENTAL] DeleteEventHandler: Delete an Event Handler
+     * DeleteEventHandler: Delete an Event Handler
      * If the Event Handler does not exist a failure will be returned
      * @param scope Scope of the event handler to be deleted (required)
      * @param code Code of the event handler to be deleted (required)
@@ -795,7 +795,7 @@ public class EventHandlersApi {
     }
 
     /**
-     * [EXPERIMENTAL] GetEventHandler: Get an Event Handler
+     * GetEventHandler: Get an Event Handler
      * Will return a NotFound failure if the event handler does not exist
      * @param scope Scope of the event handler (required)
      * @param code Code of the event handler (required)
@@ -1078,7 +1078,7 @@ public class EventHandlersApi {
     }
 
     /**
-     * [EXPERIMENTAL] ListEventHandlers: List Event Handlers
+     * ListEventHandlers: List Event Handlers
      * 
      * @return APIlistEventHandlersRequest
      * @http.response.details
@@ -1333,7 +1333,7 @@ public class EventHandlersApi {
     }
 
     /**
-     * [EXPERIMENTAL] UpdateEventHandler: Update an existing Event handler
+     * UpdateEventHandler: Update an existing Event handler
      * 
      * @param scope The scope that identifies an Event Handler (required)
      * @param code The code that identifies an Event Handler (required)

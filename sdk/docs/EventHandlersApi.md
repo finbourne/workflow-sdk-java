@@ -4,11 +4,11 @@ All URIs are relative to *https://fbn-prd.lusid.com/workflow*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**createEventHandler**](EventHandlersApi.md#createEventHandler) | **POST** /api/eventhandlers | [EXPERIMENTAL] CreateEventHandler: Create a new Event Handler |
-| [**deleteEventHandler**](EventHandlersApi.md#deleteEventHandler) | **DELETE** /api/eventhandlers/{scope}/{code} | [EXPERIMENTAL] DeleteEventHandler: Delete an Event Handler |
-| [**getEventHandler**](EventHandlersApi.md#getEventHandler) | **GET** /api/eventhandlers/{scope}/{code} | [EXPERIMENTAL] GetEventHandler: Get an Event Handler |
-| [**listEventHandlers**](EventHandlersApi.md#listEventHandlers) | **GET** /api/eventhandlers | [EXPERIMENTAL] ListEventHandlers: List Event Handlers |
-| [**updateEventHandler**](EventHandlersApi.md#updateEventHandler) | **PUT** /api/eventhandlers/{scope}/{code} | [EXPERIMENTAL] UpdateEventHandler: Update an existing Event handler |
+| [**createEventHandler**](EventHandlersApi.md#createEventHandler) | **POST** /api/eventhandlers | CreateEventHandler: Create a new Event Handler |
+| [**deleteEventHandler**](EventHandlersApi.md#deleteEventHandler) | **DELETE** /api/eventhandlers/{scope}/{code} | DeleteEventHandler: Delete an Event Handler |
+| [**getEventHandler**](EventHandlersApi.md#getEventHandler) | **GET** /api/eventhandlers/{scope}/{code} | GetEventHandler: Get an Event Handler |
+| [**listEventHandlers**](EventHandlersApi.md#listEventHandlers) | **GET** /api/eventhandlers | ListEventHandlers: List Event Handlers |
+| [**updateEventHandler**](EventHandlersApi.md#updateEventHandler) | **PUT** /api/eventhandlers/{scope}/{code} | UpdateEventHandler: Update an existing Event handler |
 
 
 
@@ -16,7 +16,7 @@ All URIs are relative to *https://fbn-prd.lusid.com/workflow*
 
 > EventHandler createEventHandler(createEventHandlerRequest)
 
-[EXPERIMENTAL] CreateEventHandler: Create a new Event Handler
+CreateEventHandler: Create a new Event Handler
 
 ### Example
 
@@ -105,7 +105,7 @@ public class EventHandlersApiExample {
 
 > DeletedEntityResponse deleteEventHandler(scope, code)
 
-[EXPERIMENTAL] DeleteEventHandler: Delete an Event Handler
+DeleteEventHandler: Delete an Event Handler
 
 If the Event Handler does not exist a failure will be returned
 
@@ -199,7 +199,7 @@ public class EventHandlersApiExample {
 
 > EventHandler getEventHandler(scope, code, asAt)
 
-[EXPERIMENTAL] GetEventHandler: Get an Event Handler
+GetEventHandler: Get an Event Handler
 
 Will return a NotFound failure if the event handler does not exist
 
@@ -294,7 +294,7 @@ public class EventHandlersApiExample {
 
 > PagedResourceListOfEventHandler listEventHandlers(asAt, filter, limit, page)
 
-[EXPERIMENTAL] ListEventHandlers: List Event Handlers
+ListEventHandlers: List Event Handlers
 
 ### Example
 
@@ -389,7 +389,7 @@ public class EventHandlersApiExample {
 
 > EventHandler updateEventHandler(scope, code, updateEventHandlerRequest)
 
-[EXPERIMENTAL] UpdateEventHandler: Update an existing Event handler
+UpdateEventHandler: Update an existing Event handler
 
 ### Example
 
