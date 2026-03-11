@@ -33,6 +33,8 @@ Class | Method | HTTP request | Description
 *WorkersApi* | [**listWorkers**](docs/WorkersApi.md#listworkers) | **GET** /api/workers | ListWorkers: List Workers
 *WorkersApi* | [**runWorker**](docs/WorkersApi.md#runworker) | **POST** /api/workers/{scope}/{code}/$run | RunWorker: Run a Worker
 *WorkersApi* | [**updateWorker**](docs/WorkersApi.md#updateworker) | **PUT** /api/workers/{scope}/{code} | UpdateWorker: Update a Worker
+*WorkflowsApi* | [**createWorkflow**](docs/WorkflowsApi.md#createworkflow) | **POST** /api/workflows | [EXPERIMENTAL] CreateWorkflow: Create a new Workflow
+*WorkflowsApi* | [**getWorkflow**](docs/WorkflowsApi.md#getworkflow) | **GET** /api/workflows/{scope}/{code} | [EXPERIMENTAL] GetWorkflow: Get a Workflow
 
 
 <a id="documentation-for-models"></a>
@@ -52,6 +54,7 @@ Class | Method | HTTP request | Description
  - [BatchUpdateTasksResponse](docs/BatchUpdateTasksResponse.md)
  - [CalendarReference](docs/CalendarReference.md)
  - [ChangeItem](docs/ChangeItem.md)
+ - [ChildTaskDefinitionEdge](docs/ChildTaskDefinitionEdge.md)
  - [CreateChildTaskConfiguration](docs/CreateChildTaskConfiguration.md)
  - [CreateChildTasksAction](docs/CreateChildTasksAction.md)
  - [CreateChildTasksActionResponse](docs/CreateChildTasksActionResponse.md)
@@ -61,6 +64,7 @@ Class | Method | HTTP request | Description
  - [CreateTaskDefinitionRequest](docs/CreateTaskDefinitionRequest.md)
  - [CreateTaskRequest](docs/CreateTaskRequest.md)
  - [CreateWorkerRequest](docs/CreateWorkerRequest.md)
+ - [CreateWorkflowRequest](docs/CreateWorkflowRequest.md)
  - [CutLabelReference](docs/CutLabelReference.md)
  - [DateAdjustment](docs/DateAdjustment.md)
  - [DateRegularity](docs/DateRegularity.md)
@@ -147,10 +151,15 @@ Class | Method | HTTP request | Description
  - [UpdateWorkerRequest](docs/UpdateWorkerRequest.md)
  - [ValueConstraints](docs/ValueConstraints.md)
  - [VersionInfo](docs/VersionInfo.md)
+ - [VersionedTaskDefinitionId](docs/VersionedTaskDefinitionId.md)
  - [WeekRegularity](docs/WeekRegularity.md)
  - [Worker](docs/Worker.md)
  - [WorkerConfiguration](docs/WorkerConfiguration.md)
  - [WorkerConfigurationResponse](docs/WorkerConfigurationResponse.md)
  - [WorkerStatusTriggers](docs/WorkerStatusTriggers.md)
+ - [WorkflowResponse](docs/WorkflowResponse.md)
+ - [WorkflowStructure](docs/WorkflowStructure.md)
+ - [WorkflowStructureEdges](docs/WorkflowStructureEdges.md)
+ - [WorkflowStructureNodes](docs/WorkflowStructureNodes.md)
  - [YearRegularity](docs/YearRegularity.md)
 

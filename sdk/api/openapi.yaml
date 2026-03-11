@@ -36,9 +36,11 @@ info:
     | <a name="893">893</a>|Event Handler not found.| |
     | <a name="894">894</a>|Invalid Event Handler.| |
     | <a name="939">939</a>|Blocked by a Network Zone| |
+    | <a name="972">972</a>|Workflow does not exist.| |
+    | <a name="973">973</a>|Workflow already exists.| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1632
+  version: 0.1.1644
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -94,6 +96,10 @@ info:
       title: Invalid Event Handler.
     "939":
       title: Blocked by a Network Zone
+    "972":
+      title: Workflow does not exist.
+    "973":
+      title: Workflow already exists.
   x-fbn-description: "The Workflow Service enables you to create data and business\
     \ operational controls for LUSID by modelling workflows, defining tasks, and setting\
     \ state transitions with triggers and actions."
@@ -114,6 +120,8 @@ tags:
   name: Tasks
 - description: Workflow endpoint for managing and running Workers
   name: Workers
+- description: Workflow endpoint for managing Workflows
+  name: Workflows
 paths:
   /api/actionlogs/{id}:
     get:
@@ -4595,6 +4603,163 @@ paths:
       x-fbn-apistatus: Stable
       x-content-type: application/json-patch+json
       x-accepts: application/json
+  /api/workflows:
+    post:
+      operationId: CreateWorkflow
+      requestBody:
+        content:
+          application/json-patch+json:
+            example:
+              id:
+                scope: default
+                code: ExampleWorkflow
+              displayName: Example Workflow
+              description: An example workflow that references a root task definition
+              rootTaskDefinitionId:
+                scope: default
+                code: ExampleTaskDefinition
+            schema:
+              $ref: '#/components/schemas/CreateWorkflowRequest'
+          application/json:
+            example:
+              id:
+                scope: default
+                code: ExampleWorkflow
+              displayName: Example Workflow
+              description: An example workflow that references a root task definition
+              rootTaskDefinitionId:
+                scope: default
+                code: ExampleTaskDefinition
+            schema:
+              $ref: '#/components/schemas/CreateWorkflowRequest'
+          text/json:
+            example:
+              id:
+                scope: default
+                code: ExampleWorkflow
+              displayName: Example Workflow
+              description: An example workflow that references a root task definition
+              rootTaskDefinitionId:
+                scope: default
+                code: ExampleTaskDefinition
+            schema:
+              $ref: '#/components/schemas/CreateWorkflowRequest'
+          application/*+json:
+            example:
+              id:
+                scope: default
+                code: ExampleWorkflow
+              displayName: Example Workflow
+              description: An example workflow that references a root task definition
+              rootTaskDefinitionId:
+                scope: default
+                code: ExampleTaskDefinition
+            schema:
+              $ref: '#/components/schemas/CreateWorkflowRequest'
+        description: The data to create a Workflow
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowResponse'
+          description: Created
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        "409":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Workflow already exists.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] CreateWorkflow: Create a new Workflow"
+      tags:
+      - Workflows
+      x-fbn-apistatus: Experimental
+      x-content-type: application/json-patch+json
+      x-accepts: application/json
+  /api/workflows/{scope}/{code}:
+    get:
+      operationId: GetWorkflow
+      parameters:
+      - description: The scope that identifies a Workflow
+        explode: false
+        in: path
+        name: scope
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      - description: The code that identifies a Workflow
+        explode: false
+        in: path
+        name: code
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      - description: The asAt datetime at which to retrieve the Workflow. Defaults
+          to returning the latest version if not specified.
+        explode: true
+        in: query
+        name: asAt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+        x-nullable: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        "404":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Workflow not found.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] GetWorkflow: Get a Workflow"
+      tags:
+      - Workflows
+      x-fbn-apistatus: Experimental
+      x-accepts: application/json
 components:
   schemas:
     AccessControlledAction:
@@ -5346,6 +5511,27 @@ components:
       - requestIdModified
       - userIdModified
       type: object
+    ChildTaskDefinitionEdge:
+      additionalProperties: false
+      description: Represents a parent-child relationship between two Task Definitions
+        in a Workflow
+      example:
+        parent:
+          taskDefinitionId:
+            code: code
+            scope: scope
+          taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
+        child:
+          taskDefinitionId:
+            code: code
+            scope: scope
+          taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        parent:
+          $ref: '#/components/schemas/VersionedTaskDefinitionId'
+        child:
+          $ref: '#/components/schemas/VersionedTaskDefinitionId'
+      type: object
     CreateChildTaskConfiguration:
       additionalProperties: false
       description: Create Child Task Configuration
@@ -5820,6 +6006,41 @@ components:
       - displayName
       - id
       - workerConfiguration
+      type: object
+    CreateWorkflowRequest:
+      additionalProperties: false
+      description: Contains required info to create a new Workflow
+      example:
+        displayName: displayName
+        rootTaskDefinitionId:
+          code: code
+          scope: scope
+        description: description
+        id:
+          code: code
+          scope: scope
+      properties:
+        id:
+          $ref: '#/components/schemas/ResourceId'
+        displayName:
+          description: Human readable name
+          maxLength: 512
+          minLength: 1
+          pattern: "^[\\s\\S]*$"
+          type: string
+        description:
+          description: Human readable description
+          maxLength: 1024
+          minLength: 0
+          nullable: true
+          pattern: "^[\\s\\S]*$"
+          type: string
+        rootTaskDefinitionId:
+          $ref: '#/components/schemas/ResourceId'
+      required:
+      - displayName
+      - id
+      - rootTaskDefinitionId
       type: object
     CutLabelReference:
       additionalProperties: false
@@ -9766,6 +9987,25 @@ components:
       - constraintType
       - valueSourceType
       type: object
+    VersionedTaskDefinitionId:
+      additionalProperties: false
+      description: A Task Definition Id with an optional asAt timestamp identifying
+        a specific version
+      example:
+        taskDefinitionId:
+          code: code
+          scope: scope
+        taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        taskDefinitionId:
+          $ref: '#/components/schemas/ResourceId'
+        taskDefinitionAsAt:
+          description: The asAt time of this version of the Task Definition. Null
+            means the latest version.
+          format: date-time
+          nullable: true
+          type: string
+      type: object
     VersionInfo:
       additionalProperties: false
       description: The version metadata.
@@ -9986,6 +10226,797 @@ components:
           nullable: true
           type: string
       type: object
+    WorkflowResponse:
+      additionalProperties: false
+      description: A Workflow
+      example:
+        workflowStructure:
+          nodes:
+            taskDefinitions:
+            - initialState:
+                requiredFields:
+                - requiredFields
+                - requiredFields
+                name: name
+              displayName: displayName
+              description: description
+              fieldSchema:
+              - readOnlyStates:
+                  stateType: stateType
+                  selectedStates:
+                  - selectedStates
+                  - selectedStates
+                displayName: displayName
+                containsUrl: true
+                name: name
+                description: description
+                valueConstraints:
+                  acceptableValues:
+                  - ""
+                  - ""
+                  constraintType: constraintType
+                  valueSourceType: valueSourceType
+                type: type
+                category: category
+              - readOnlyStates:
+                  stateType: stateType
+                  selectedStates:
+                  - selectedStates
+                  - selectedStates
+                displayName: displayName
+                containsUrl: true
+                name: name
+                description: description
+                valueConstraints:
+                  acceptableValues:
+                  - ""
+                  - ""
+                  constraintType: constraintType
+                  valueSourceType: valueSourceType
+                type: type
+                category: category
+              id:
+                code: code
+                scope: scope
+              triggers:
+              - displayName: displayName
+                name: name
+                description: description
+                trigger:
+                  type: type
+              - displayName: displayName
+                name: name
+                description: description
+                trigger:
+                  type: type
+              transitions:
+              - fromState: fromState
+                toState: toState
+                displayName: displayName
+                guard: guard
+                action: action
+                description: description
+                guardDescription: guardDescription
+                guardConditionNotMetMessage: guardConditionNotMetMessage
+                trigger: trigger
+              - fromState: fromState
+                toState: toState
+                displayName: displayName
+                guard: guard
+                action: action
+                description: description
+                guardDescription: guardDescription
+                guardConditionNotMetMessage: guardConditionNotMetMessage
+                trigger: trigger
+              version:
+                asAtModified: 2000-01-23T04:56:07.000+00:00
+                userIdModified: userIdModified
+                asAtVersionNumber: 0
+                asAtCreated: 2000-01-23T04:56:07.000+00:00
+                requestIdCreated: requestIdCreated
+                userIdCreated: userIdCreated
+                requestIdModified: requestIdModified
+              actions:
+              - displayName: displayName
+                name: name
+                description: description
+                runAsUserId: runAsUserId
+                actionDetails:
+                  type: type
+                category: category
+              - displayName: displayName
+                name: name
+                description: description
+                runAsUserId: runAsUserId
+                actionDetails:
+                  type: type
+                category: category
+              states:
+              - displayName: displayName
+                name: name
+                description: description
+                category: category
+              - displayName: displayName
+                name: name
+                description: description
+                category: category
+            - initialState:
+                requiredFields:
+                - requiredFields
+                - requiredFields
+                name: name
+              displayName: displayName
+              description: description
+              fieldSchema:
+              - readOnlyStates:
+                  stateType: stateType
+                  selectedStates:
+                  - selectedStates
+                  - selectedStates
+                displayName: displayName
+                containsUrl: true
+                name: name
+                description: description
+                valueConstraints:
+                  acceptableValues:
+                  - ""
+                  - ""
+                  constraintType: constraintType
+                  valueSourceType: valueSourceType
+                type: type
+                category: category
+              - readOnlyStates:
+                  stateType: stateType
+                  selectedStates:
+                  - selectedStates
+                  - selectedStates
+                displayName: displayName
+                containsUrl: true
+                name: name
+                description: description
+                valueConstraints:
+                  acceptableValues:
+                  - ""
+                  - ""
+                  constraintType: constraintType
+                  valueSourceType: valueSourceType
+                type: type
+                category: category
+              id:
+                code: code
+                scope: scope
+              triggers:
+              - displayName: displayName
+                name: name
+                description: description
+                trigger:
+                  type: type
+              - displayName: displayName
+                name: name
+                description: description
+                trigger:
+                  type: type
+              transitions:
+              - fromState: fromState
+                toState: toState
+                displayName: displayName
+                guard: guard
+                action: action
+                description: description
+                guardDescription: guardDescription
+                guardConditionNotMetMessage: guardConditionNotMetMessage
+                trigger: trigger
+              - fromState: fromState
+                toState: toState
+                displayName: displayName
+                guard: guard
+                action: action
+                description: description
+                guardDescription: guardDescription
+                guardConditionNotMetMessage: guardConditionNotMetMessage
+                trigger: trigger
+              version:
+                asAtModified: 2000-01-23T04:56:07.000+00:00
+                userIdModified: userIdModified
+                asAtVersionNumber: 0
+                asAtCreated: 2000-01-23T04:56:07.000+00:00
+                requestIdCreated: requestIdCreated
+                userIdCreated: userIdCreated
+                requestIdModified: requestIdModified
+              actions:
+              - displayName: displayName
+                name: name
+                description: description
+                runAsUserId: runAsUserId
+                actionDetails:
+                  type: type
+                category: category
+              - displayName: displayName
+                name: name
+                description: description
+                runAsUserId: runAsUserId
+                actionDetails:
+                  type: type
+                category: category
+              states:
+              - displayName: displayName
+                name: name
+                description: description
+                category: category
+              - displayName: displayName
+                name: name
+                description: description
+                category: category
+          edges:
+            childTaskDefinitions:
+            - parent:
+                taskDefinitionId:
+                  code: code
+                  scope: scope
+                taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
+              child:
+                taskDefinitionId:
+                  code: code
+                  scope: scope
+                taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
+            - parent:
+                taskDefinitionId:
+                  code: code
+                  scope: scope
+                taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
+              child:
+                taskDefinitionId:
+                  code: code
+                  scope: scope
+                taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
+        displayName: displayName
+        rootTaskDefinitionId:
+          code: code
+          scope: scope
+        description: description
+        id:
+          code: code
+          scope: scope
+        version:
+          asAtModified: 2000-01-23T04:56:07.000+00:00
+          userIdModified: userIdModified
+          asAtVersionNumber: 0
+          asAtCreated: 2000-01-23T04:56:07.000+00:00
+          requestIdCreated: requestIdCreated
+          userIdCreated: userIdCreated
+          requestIdModified: requestIdModified
+      properties:
+        id:
+          $ref: '#/components/schemas/ResourceId'
+        version:
+          $ref: '#/components/schemas/VersionInfo'
+        displayName:
+          description: Human readable name
+          minLength: 1
+          type: string
+        description:
+          description: Human readable description
+          nullable: true
+          type: string
+        rootTaskDefinitionId:
+          $ref: '#/components/schemas/ResourceId'
+        workflowStructure:
+          $ref: '#/components/schemas/WorkflowStructure'
+      required:
+      - displayName
+      - id
+      - rootTaskDefinitionId
+      type: object
+    WorkflowStructure:
+      additionalProperties: false
+      description: Describes the structure of a Workflow as a graph of Task Definitions
+      example:
+        nodes:
+          taskDefinitions:
+          - initialState:
+              requiredFields:
+              - requiredFields
+              - requiredFields
+              name: name
+            displayName: displayName
+            description: description
+            fieldSchema:
+            - readOnlyStates:
+                stateType: stateType
+                selectedStates:
+                - selectedStates
+                - selectedStates
+              displayName: displayName
+              containsUrl: true
+              name: name
+              description: description
+              valueConstraints:
+                acceptableValues:
+                - ""
+                - ""
+                constraintType: constraintType
+                valueSourceType: valueSourceType
+              type: type
+              category: category
+            - readOnlyStates:
+                stateType: stateType
+                selectedStates:
+                - selectedStates
+                - selectedStates
+              displayName: displayName
+              containsUrl: true
+              name: name
+              description: description
+              valueConstraints:
+                acceptableValues:
+                - ""
+                - ""
+                constraintType: constraintType
+                valueSourceType: valueSourceType
+              type: type
+              category: category
+            id:
+              code: code
+              scope: scope
+            triggers:
+            - displayName: displayName
+              name: name
+              description: description
+              trigger:
+                type: type
+            - displayName: displayName
+              name: name
+              description: description
+              trigger:
+                type: type
+            transitions:
+            - fromState: fromState
+              toState: toState
+              displayName: displayName
+              guard: guard
+              action: action
+              description: description
+              guardDescription: guardDescription
+              guardConditionNotMetMessage: guardConditionNotMetMessage
+              trigger: trigger
+            - fromState: fromState
+              toState: toState
+              displayName: displayName
+              guard: guard
+              action: action
+              description: description
+              guardDescription: guardDescription
+              guardConditionNotMetMessage: guardConditionNotMetMessage
+              trigger: trigger
+            version:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+              userIdModified: userIdModified
+              asAtVersionNumber: 0
+              asAtCreated: 2000-01-23T04:56:07.000+00:00
+              requestIdCreated: requestIdCreated
+              userIdCreated: userIdCreated
+              requestIdModified: requestIdModified
+            actions:
+            - displayName: displayName
+              name: name
+              description: description
+              runAsUserId: runAsUserId
+              actionDetails:
+                type: type
+              category: category
+            - displayName: displayName
+              name: name
+              description: description
+              runAsUserId: runAsUserId
+              actionDetails:
+                type: type
+              category: category
+            states:
+            - displayName: displayName
+              name: name
+              description: description
+              category: category
+            - displayName: displayName
+              name: name
+              description: description
+              category: category
+          - initialState:
+              requiredFields:
+              - requiredFields
+              - requiredFields
+              name: name
+            displayName: displayName
+            description: description
+            fieldSchema:
+            - readOnlyStates:
+                stateType: stateType
+                selectedStates:
+                - selectedStates
+                - selectedStates
+              displayName: displayName
+              containsUrl: true
+              name: name
+              description: description
+              valueConstraints:
+                acceptableValues:
+                - ""
+                - ""
+                constraintType: constraintType
+                valueSourceType: valueSourceType
+              type: type
+              category: category
+            - readOnlyStates:
+                stateType: stateType
+                selectedStates:
+                - selectedStates
+                - selectedStates
+              displayName: displayName
+              containsUrl: true
+              name: name
+              description: description
+              valueConstraints:
+                acceptableValues:
+                - ""
+                - ""
+                constraintType: constraintType
+                valueSourceType: valueSourceType
+              type: type
+              category: category
+            id:
+              code: code
+              scope: scope
+            triggers:
+            - displayName: displayName
+              name: name
+              description: description
+              trigger:
+                type: type
+            - displayName: displayName
+              name: name
+              description: description
+              trigger:
+                type: type
+            transitions:
+            - fromState: fromState
+              toState: toState
+              displayName: displayName
+              guard: guard
+              action: action
+              description: description
+              guardDescription: guardDescription
+              guardConditionNotMetMessage: guardConditionNotMetMessage
+              trigger: trigger
+            - fromState: fromState
+              toState: toState
+              displayName: displayName
+              guard: guard
+              action: action
+              description: description
+              guardDescription: guardDescription
+              guardConditionNotMetMessage: guardConditionNotMetMessage
+              trigger: trigger
+            version:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+              userIdModified: userIdModified
+              asAtVersionNumber: 0
+              asAtCreated: 2000-01-23T04:56:07.000+00:00
+              requestIdCreated: requestIdCreated
+              userIdCreated: userIdCreated
+              requestIdModified: requestIdModified
+            actions:
+            - displayName: displayName
+              name: name
+              description: description
+              runAsUserId: runAsUserId
+              actionDetails:
+                type: type
+              category: category
+            - displayName: displayName
+              name: name
+              description: description
+              runAsUserId: runAsUserId
+              actionDetails:
+                type: type
+              category: category
+            states:
+            - displayName: displayName
+              name: name
+              description: description
+              category: category
+            - displayName: displayName
+              name: name
+              description: description
+              category: category
+        edges:
+          childTaskDefinitions:
+          - parent:
+              taskDefinitionId:
+                code: code
+                scope: scope
+              taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
+            child:
+              taskDefinitionId:
+                code: code
+                scope: scope
+              taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
+          - parent:
+              taskDefinitionId:
+                code: code
+                scope: scope
+              taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
+            child:
+              taskDefinitionId:
+                code: code
+                scope: scope
+              taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        nodes:
+          $ref: '#/components/schemas/WorkflowStructureNodes'
+        edges:
+          $ref: '#/components/schemas/WorkflowStructureEdges'
+      type: object
+    WorkflowStructureEdges:
+      additionalProperties: false
+      description: The edges of a Workflow structure graph — the parent-child relationships
+        between Task Definitions
+      example:
+        childTaskDefinitions:
+        - parent:
+            taskDefinitionId:
+              code: code
+              scope: scope
+            taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
+          child:
+            taskDefinitionId:
+              code: code
+              scope: scope
+            taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
+        - parent:
+            taskDefinitionId:
+              code: code
+              scope: scope
+            taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
+          child:
+            taskDefinitionId:
+              code: code
+              scope: scope
+            taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        childTaskDefinitions:
+          description: The child Task Definition relationships
+          items:
+            $ref: '#/components/schemas/ChildTaskDefinitionEdge'
+          nullable: true
+          type: array
+      type: object
+    WorkflowStructureNodes:
+      additionalProperties: false
+      description: The nodes of a Workflow structure graph — the Task Definitions
+        involved
+      example:
+        taskDefinitions:
+        - initialState:
+            requiredFields:
+            - requiredFields
+            - requiredFields
+            name: name
+          displayName: displayName
+          description: description
+          fieldSchema:
+          - readOnlyStates:
+              stateType: stateType
+              selectedStates:
+              - selectedStates
+              - selectedStates
+            displayName: displayName
+            containsUrl: true
+            name: name
+            description: description
+            valueConstraints:
+              acceptableValues:
+              - ""
+              - ""
+              constraintType: constraintType
+              valueSourceType: valueSourceType
+            type: type
+            category: category
+          - readOnlyStates:
+              stateType: stateType
+              selectedStates:
+              - selectedStates
+              - selectedStates
+            displayName: displayName
+            containsUrl: true
+            name: name
+            description: description
+            valueConstraints:
+              acceptableValues:
+              - ""
+              - ""
+              constraintType: constraintType
+              valueSourceType: valueSourceType
+            type: type
+            category: category
+          id:
+            code: code
+            scope: scope
+          triggers:
+          - displayName: displayName
+            name: name
+            description: description
+            trigger:
+              type: type
+          - displayName: displayName
+            name: name
+            description: description
+            trigger:
+              type: type
+          transitions:
+          - fromState: fromState
+            toState: toState
+            displayName: displayName
+            guard: guard
+            action: action
+            description: description
+            guardDescription: guardDescription
+            guardConditionNotMetMessage: guardConditionNotMetMessage
+            trigger: trigger
+          - fromState: fromState
+            toState: toState
+            displayName: displayName
+            guard: guard
+            action: action
+            description: description
+            guardDescription: guardDescription
+            guardConditionNotMetMessage: guardConditionNotMetMessage
+            trigger: trigger
+          version:
+            asAtModified: 2000-01-23T04:56:07.000+00:00
+            userIdModified: userIdModified
+            asAtVersionNumber: 0
+            asAtCreated: 2000-01-23T04:56:07.000+00:00
+            requestIdCreated: requestIdCreated
+            userIdCreated: userIdCreated
+            requestIdModified: requestIdModified
+          actions:
+          - displayName: displayName
+            name: name
+            description: description
+            runAsUserId: runAsUserId
+            actionDetails:
+              type: type
+            category: category
+          - displayName: displayName
+            name: name
+            description: description
+            runAsUserId: runAsUserId
+            actionDetails:
+              type: type
+            category: category
+          states:
+          - displayName: displayName
+            name: name
+            description: description
+            category: category
+          - displayName: displayName
+            name: name
+            description: description
+            category: category
+        - initialState:
+            requiredFields:
+            - requiredFields
+            - requiredFields
+            name: name
+          displayName: displayName
+          description: description
+          fieldSchema:
+          - readOnlyStates:
+              stateType: stateType
+              selectedStates:
+              - selectedStates
+              - selectedStates
+            displayName: displayName
+            containsUrl: true
+            name: name
+            description: description
+            valueConstraints:
+              acceptableValues:
+              - ""
+              - ""
+              constraintType: constraintType
+              valueSourceType: valueSourceType
+            type: type
+            category: category
+          - readOnlyStates:
+              stateType: stateType
+              selectedStates:
+              - selectedStates
+              - selectedStates
+            displayName: displayName
+            containsUrl: true
+            name: name
+            description: description
+            valueConstraints:
+              acceptableValues:
+              - ""
+              - ""
+              constraintType: constraintType
+              valueSourceType: valueSourceType
+            type: type
+            category: category
+          id:
+            code: code
+            scope: scope
+          triggers:
+          - displayName: displayName
+            name: name
+            description: description
+            trigger:
+              type: type
+          - displayName: displayName
+            name: name
+            description: description
+            trigger:
+              type: type
+          transitions:
+          - fromState: fromState
+            toState: toState
+            displayName: displayName
+            guard: guard
+            action: action
+            description: description
+            guardDescription: guardDescription
+            guardConditionNotMetMessage: guardConditionNotMetMessage
+            trigger: trigger
+          - fromState: fromState
+            toState: toState
+            displayName: displayName
+            guard: guard
+            action: action
+            description: description
+            guardDescription: guardDescription
+            guardConditionNotMetMessage: guardConditionNotMetMessage
+            trigger: trigger
+          version:
+            asAtModified: 2000-01-23T04:56:07.000+00:00
+            userIdModified: userIdModified
+            asAtVersionNumber: 0
+            asAtCreated: 2000-01-23T04:56:07.000+00:00
+            requestIdCreated: requestIdCreated
+            userIdCreated: userIdCreated
+            requestIdModified: requestIdModified
+          actions:
+          - displayName: displayName
+            name: name
+            description: description
+            runAsUserId: runAsUserId
+            actionDetails:
+              type: type
+            category: category
+          - displayName: displayName
+            name: name
+            description: description
+            runAsUserId: runAsUserId
+            actionDetails:
+              type: type
+            category: category
+          states:
+          - displayName: displayName
+            name: name
+            description: description
+            category: category
+          - displayName: displayName
+            name: name
+            description: description
+            category: category
+      properties:
+        taskDefinitions:
+          description: The Task Definitions that make up the nodes of this Workflow
+          items:
+            $ref: '#/components/schemas/TaskDefinition'
+          nullable: true
+          type: array
+      type: object
     YearRegularity:
       additionalProperties: false
       description: Year Regularity
@@ -10024,5 +11055,6 @@ x-tagGroups:
   - Task Definitions
   - Tasks
   - Workers
+  - Workflows
 x-group-parameters: true
 
