@@ -299,7 +299,7 @@ public class WorkflowsApi {
     }
 
     /**
-     * [EXPERIMENTAL] CreateWorkflow: Create a new Workflow
+     * CreateWorkflow: Create a new Workflow
      * 
      * @param createWorkflowRequest The data to create a Workflow (required)
      * @return APIcreateWorkflowRequest
@@ -560,7 +560,7 @@ public class WorkflowsApi {
     }
 
     /**
-     * [EXPERIMENTAL] GetWorkflow: Get a Workflow
+     * GetWorkflow: Get a Workflow
      * 
      * @param scope The scope that identifies a Workflow (required)
      * @param code The code that identifies a Workflow (required)

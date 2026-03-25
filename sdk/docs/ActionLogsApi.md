@@ -4,7 +4,7 @@ All URIs are relative to *https://fbn-prd.lusid.com/workflow*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**getActionLogs**](ActionLogsApi.md#getActionLogs) | **GET** /api/actionlogs/{id} | [EXPERIMENTAL] GetActionLogs: Get the Action Logs for an Action Id |
+| [**getActionLogs**](ActionLogsApi.md#getActionLogs) | **GET** /api/actionlogs/{id} | GetActionLogs: Get the Action Logs for an Action Id |
 
 
 
@@ -12,7 +12,7 @@ All URIs are relative to *https://fbn-prd.lusid.com/workflow*
 
 > ActionLog getActionLogs(id)
 
-[EXPERIMENTAL] GetActionLogs: Get the Action Logs for an Action Id
+GetActionLogs: Get the Action Logs for an Action Id
 
 ### Example
 

@@ -40,7 +40,7 @@ info:
     | <a name="973">973</a>|Workflow already exists.| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1644
+  version: 0.1.1663
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -240,10 +240,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: "[EXPERIMENTAL] GetActionLogs: Get the Action Logs for an Action Id"
+      summary: "GetActionLogs: Get the Action Logs for an Action Id"
       tags:
       - Action Logs
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: Stable
       x-accepts: application/json
   /api/eventhandlers:
     get:
@@ -3378,10 +3378,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: "[EXPERIMENTAL] BatchUpdateTasks: Batch update tasks"
+      summary: "BatchUpdateTasks: Batch update tasks"
       tags:
       - Tasks
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: Stable
       x-content-type: application/json-patch+json
       x-accepts: application/json
   /api/tasks/{id}:
@@ -4685,10 +4685,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: "[EXPERIMENTAL] CreateWorkflow: Create a new Workflow"
+      summary: "CreateWorkflow: Create a new Workflow"
       tags:
       - Workflows
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: Stable
       x-content-type: application/json-patch+json
       x-accepts: application/json
   /api/workflows/{scope}/{code}:
@@ -4755,10 +4755,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: "[EXPERIMENTAL] GetWorkflow: Get a Workflow"
+      summary: "GetWorkflow: Get a Workflow"
       tags:
       - Workflows
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: Stable
       x-accepts: application/json
 components:
   schemas:
@@ -5265,6 +5265,9 @@ components:
               code: code
               scope: scope
           actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          openDurationSinceLastUpdate: 1
+          hierarchicalPosition: hierarchicalPosition
+          openDuration: 6
           version:
             asAtModified: 2000-01-23T04:56:07.000+00:00
             userIdModified: userIdModified
@@ -5313,12 +5316,14 @@ components:
             asAtModified: 2000-01-23T04:56:07.000+00:00
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           state: state
+          completionStatus: completionStatus
           taskDefinitionDisplayName: taskDefinitionDisplayName
           fields:
           - name: name
             value: ""
           - name: name
             value: ""
+          openDurationSinceLastTransition: 5
         - terminalState: true
           stack:
             stackMembershipType: stackMembershipType
@@ -5339,6 +5344,9 @@ components:
               code: code
               scope: scope
           actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          openDurationSinceLastUpdate: 1
+          hierarchicalPosition: hierarchicalPosition
+          openDuration: 6
           version:
             asAtModified: 2000-01-23T04:56:07.000+00:00
             userIdModified: userIdModified
@@ -5387,12 +5395,14 @@ components:
             asAtModified: 2000-01-23T04:56:07.000+00:00
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           state: state
+          completionStatus: completionStatus
           taskDefinitionDisplayName: taskDefinitionDisplayName
           fields:
           - name: name
             value: ""
           - name: name
             value: ""
+          openDurationSinceLastTransition: 5
         links:
         - method: method
           description: description
@@ -7028,6 +7038,9 @@ components:
               code: code
               scope: scope
           actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          openDurationSinceLastUpdate: 1
+          hierarchicalPosition: hierarchicalPosition
+          openDuration: 6
           version:
             asAtModified: 2000-01-23T04:56:07.000+00:00
             userIdModified: userIdModified
@@ -7076,12 +7089,14 @@ components:
             asAtModified: 2000-01-23T04:56:07.000+00:00
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           state: state
+          completionStatus: completionStatus
           taskDefinitionDisplayName: taskDefinitionDisplayName
           fields:
           - name: name
             value: ""
           - name: name
             value: ""
+          openDurationSinceLastTransition: 5
         - terminalState: true
           stack:
             stackMembershipType: stackMembershipType
@@ -7102,6 +7117,9 @@ components:
               code: code
               scope: scope
           actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          openDurationSinceLastUpdate: 1
+          hierarchicalPosition: hierarchicalPosition
+          openDuration: 6
           version:
             asAtModified: 2000-01-23T04:56:07.000+00:00
             userIdModified: userIdModified
@@ -7150,12 +7168,14 @@ components:
             asAtModified: 2000-01-23T04:56:07.000+00:00
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           state: state
+          completionStatus: completionStatus
           taskDefinitionDisplayName: taskDefinitionDisplayName
           fields:
           - name: name
             value: ""
           - name: name
             value: ""
+          openDurationSinceLastTransition: 5
         links:
         - method: method
           description: description
@@ -8089,6 +8109,9 @@ components:
               code: code
               scope: scope
           actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          openDurationSinceLastUpdate: 1
+          hierarchicalPosition: hierarchicalPosition
+          openDuration: 6
           version:
             asAtModified: 2000-01-23T04:56:07.000+00:00
             userIdModified: userIdModified
@@ -8137,12 +8160,14 @@ components:
             asAtModified: 2000-01-23T04:56:07.000+00:00
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           state: state
+          completionStatus: completionStatus
           taskDefinitionDisplayName: taskDefinitionDisplayName
           fields:
           - name: name
             value: ""
           - name: name
             value: ""
+          openDurationSinceLastTransition: 5
         - terminalState: true
           stack:
             stackMembershipType: stackMembershipType
@@ -8163,6 +8188,9 @@ components:
               code: code
               scope: scope
           actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          openDurationSinceLastUpdate: 1
+          hierarchicalPosition: hierarchicalPosition
+          openDuration: 6
           version:
             asAtModified: 2000-01-23T04:56:07.000+00:00
             userIdModified: userIdModified
@@ -8211,12 +8239,14 @@ components:
             asAtModified: 2000-01-23T04:56:07.000+00:00
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           state: state
+          completionStatus: completionStatus
           taskDefinitionDisplayName: taskDefinitionDisplayName
           fields:
           - name: name
             value: ""
           - name: name
             value: ""
+          openDurationSinceLastTransition: 5
         links:
         - method: method
           description: description
@@ -8731,6 +8761,9 @@ components:
             code: code
             scope: scope
         actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        openDurationSinceLastUpdate: 1
+        hierarchicalPosition: hierarchicalPosition
+        openDuration: 6
         version:
           asAtModified: 2000-01-23T04:56:07.000+00:00
           userIdModified: userIdModified
@@ -8779,12 +8812,14 @@ components:
           asAtModified: 2000-01-23T04:56:07.000+00:00
         id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         state: state
+        completionStatus: completionStatus
         taskDefinitionDisplayName: taskDefinitionDisplayName
         fields:
         - name: name
           value: ""
         - name: name
           value: ""
+        openDurationSinceLastTransition: 5
       properties:
         id:
           description: The unique id for this Task
@@ -8856,6 +8891,35 @@ components:
           format: uuid
           nullable: true
           type: string
+        hierarchicalPosition:
+          description: "The hierarchical position of this Task: UltimateParent, IntermediateParent,\
+            \ Child, or Standalone"
+          nullable: true
+          type: string
+        completionStatus:
+          description: "The completion status of this Task: NotStarted, InProgress,\
+            \ or Completed"
+          nullable: true
+          type: string
+        openDuration:
+          description: |-
+            Duration in seconds since the Task was created.
+            If the Task is Completed, this is the duration from creation to the last transition.
+          format: int64
+          nullable: true
+          type: integer
+        openDurationSinceLastUpdate:
+          description: Duration in seconds since the Task was last updated. 0 if the
+            Task is Completed.
+          format: int64
+          nullable: true
+          type: integer
+        openDurationSinceLastTransition:
+          description: Duration in seconds since the Task last transitioned. 0 if
+            the Task is Completed.
+          format: int64
+          nullable: true
+          type: integer
       required:
       - id
       - state

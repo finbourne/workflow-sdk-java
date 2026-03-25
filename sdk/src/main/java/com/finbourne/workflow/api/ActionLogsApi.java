@@ -296,7 +296,7 @@ public class ActionLogsApi {
     }
 
     /**
-     * [EXPERIMENTAL] GetActionLogs: Get the Action Logs for an Action Id
+     * GetActionLogs: Get the Action Logs for an Action Id
      * 
      * @param id The Action Id (required)
      * @return APIgetActionLogsRequest

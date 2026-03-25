@@ -4,7 +4,7 @@ All URIs are relative to *https://fbn-prd.lusid.com/workflow*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**batchUpdateTasks**](TasksApi.md#batchUpdateTasks) | **PATCH** /api/tasks/$update | [EXPERIMENTAL] BatchUpdateTasks: Batch update tasks |
+| [**batchUpdateTasks**](TasksApi.md#batchUpdateTasks) | **PATCH** /api/tasks/$update | BatchUpdateTasks: Batch update tasks |
 | [**createTask**](TasksApi.md#createTask) | **POST** /api/tasks | CreateTask: Create a new Task |
 | [**deleteTask**](TasksApi.md#deleteTask) | **DELETE** /api/tasks/{id} | DeleteTask: Delete a Task |
 | [**deleteTasks**](TasksApi.md#deleteTasks) | **POST** /api/tasks/$delete | DeleteTasks: Batch Delete Tasks |
@@ -19,7 +19,7 @@ All URIs are relative to *https://fbn-prd.lusid.com/workflow*
 
 > BatchUpdateTasksResponse batchUpdateTasks(batchUpdateTasksRequest)
 
-[EXPERIMENTAL] BatchUpdateTasks: Batch update tasks
+BatchUpdateTasks: Batch update tasks
 
 ### Example
 

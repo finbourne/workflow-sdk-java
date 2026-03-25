@@ -132,6 +132,26 @@ public class Task {
   @SerializedName(SERIALIZED_NAME_ACTION_LOG_ID_SUBMITTED)
   private UUID actionLogIdSubmitted;
 
+  public static final String SERIALIZED_NAME_HIERARCHICAL_POSITION = "hierarchicalPosition";
+  @SerializedName(SERIALIZED_NAME_HIERARCHICAL_POSITION)
+  private String hierarchicalPosition;
+
+  public static final String SERIALIZED_NAME_COMPLETION_STATUS = "completionStatus";
+  @SerializedName(SERIALIZED_NAME_COMPLETION_STATUS)
+  private String completionStatus;
+
+  public static final String SERIALIZED_NAME_OPEN_DURATION = "openDuration";
+  @SerializedName(SERIALIZED_NAME_OPEN_DURATION)
+  private Long openDuration;
+
+  public static final String SERIALIZED_NAME_OPEN_DURATION_SINCE_LAST_UPDATE = "openDurationSinceLastUpdate";
+  @SerializedName(SERIALIZED_NAME_OPEN_DURATION_SINCE_LAST_UPDATE)
+  private Long openDurationSinceLastUpdate;
+
+  public static final String SERIALIZED_NAME_OPEN_DURATION_SINCE_LAST_TRANSITION = "openDurationSinceLastTransition";
+  @SerializedName(SERIALIZED_NAME_OPEN_DURATION_SINCE_LAST_TRANSITION)
+  private Long openDurationSinceLastTransition;
+
   public Task() {
   }
 
@@ -537,6 +557,111 @@ public class Task {
   }
 
 
+  public Task hierarchicalPosition(String hierarchicalPosition) {
+    
+    this.hierarchicalPosition = hierarchicalPosition;
+    return this;
+  }
+
+   /**
+   * The hierarchical position of this Task: UltimateParent, IntermediateParent, Child, or Standalone
+   * @return hierarchicalPosition
+  **/
+  @jakarta.annotation.Nullable
+  public String getHierarchicalPosition() {
+    return hierarchicalPosition;
+  }
+
+
+  public void setHierarchicalPosition(String hierarchicalPosition) {
+    this.hierarchicalPosition = hierarchicalPosition;
+  }
+
+
+  public Task completionStatus(String completionStatus) {
+    
+    this.completionStatus = completionStatus;
+    return this;
+  }
+
+   /**
+   * The completion status of this Task: NotStarted, InProgress, or Completed
+   * @return completionStatus
+  **/
+  @jakarta.annotation.Nullable
+  public String getCompletionStatus() {
+    return completionStatus;
+  }
+
+
+  public void setCompletionStatus(String completionStatus) {
+    this.completionStatus = completionStatus;
+  }
+
+
+  public Task openDuration(Long openDuration) {
+    
+    this.openDuration = openDuration;
+    return this;
+  }
+
+   /**
+   * Duration in seconds since the Task was created. If the Task is Completed, this is the duration from creation to the last transition.
+   * @return openDuration
+  **/
+  @jakarta.annotation.Nullable
+  public Long getOpenDuration() {
+    return openDuration;
+  }
+
+
+  public void setOpenDuration(Long openDuration) {
+    this.openDuration = openDuration;
+  }
+
+
+  public Task openDurationSinceLastUpdate(Long openDurationSinceLastUpdate) {
+    
+    this.openDurationSinceLastUpdate = openDurationSinceLastUpdate;
+    return this;
+  }
+
+   /**
+   * Duration in seconds since the Task was last updated. 0 if the Task is Completed.
+   * @return openDurationSinceLastUpdate
+  **/
+  @jakarta.annotation.Nullable
+  public Long getOpenDurationSinceLastUpdate() {
+    return openDurationSinceLastUpdate;
+  }
+
+
+  public void setOpenDurationSinceLastUpdate(Long openDurationSinceLastUpdate) {
+    this.openDurationSinceLastUpdate = openDurationSinceLastUpdate;
+  }
+
+
+  public Task openDurationSinceLastTransition(Long openDurationSinceLastTransition) {
+    
+    this.openDurationSinceLastTransition = openDurationSinceLastTransition;
+    return this;
+  }
+
+   /**
+   * Duration in seconds since the Task last transitioned. 0 if the Task is Completed.
+   * @return openDurationSinceLastTransition
+  **/
+  @jakarta.annotation.Nullable
+  public Long getOpenDurationSinceLastTransition() {
+    return openDurationSinceLastTransition;
+  }
+
+
+  public void setOpenDurationSinceLastTransition(Long openDurationSinceLastTransition) {
+    this.openDurationSinceLastTransition = openDurationSinceLastTransition;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -564,7 +689,12 @@ public class Task {
         Objects.equals(this.stack, task.stack) &&
         Objects.equals(this.actionLogIdCreated, task.actionLogIdCreated) &&
         Objects.equals(this.actionLogIdModified, task.actionLogIdModified) &&
-        Objects.equals(this.actionLogIdSubmitted, task.actionLogIdSubmitted);
+        Objects.equals(this.actionLogIdSubmitted, task.actionLogIdSubmitted) &&
+        Objects.equals(this.hierarchicalPosition, task.hierarchicalPosition) &&
+        Objects.equals(this.completionStatus, task.completionStatus) &&
+        Objects.equals(this.openDuration, task.openDuration) &&
+        Objects.equals(this.openDurationSinceLastUpdate, task.openDurationSinceLastUpdate) &&
+        Objects.equals(this.openDurationSinceLastTransition, task.openDurationSinceLastTransition);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -573,7 +703,7 @@ public class Task {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, taskDefinitionId, taskDefinitionVersion, taskDefinitionDisplayName, state, ultimateParentTask, parentTask, childTasks, correlationIds, version, terminalState, asAtLastTransition, fields, stackingKey, stack, actionLogIdCreated, actionLogIdModified, actionLogIdSubmitted);
+    return Objects.hash(id, taskDefinitionId, taskDefinitionVersion, taskDefinitionDisplayName, state, ultimateParentTask, parentTask, childTasks, correlationIds, version, terminalState, asAtLastTransition, fields, stackingKey, stack, actionLogIdCreated, actionLogIdModified, actionLogIdSubmitted, hierarchicalPosition, completionStatus, openDuration, openDurationSinceLastUpdate, openDurationSinceLastTransition);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -605,6 +735,11 @@ public class Task {
     sb.append("    actionLogIdCreated: ").append(toIndentedString(actionLogIdCreated)).append("\n");
     sb.append("    actionLogIdModified: ").append(toIndentedString(actionLogIdModified)).append("\n");
     sb.append("    actionLogIdSubmitted: ").append(toIndentedString(actionLogIdSubmitted)).append("\n");
+    sb.append("    hierarchicalPosition: ").append(toIndentedString(hierarchicalPosition)).append("\n");
+    sb.append("    completionStatus: ").append(toIndentedString(completionStatus)).append("\n");
+    sb.append("    openDuration: ").append(toIndentedString(openDuration)).append("\n");
+    sb.append("    openDurationSinceLastUpdate: ").append(toIndentedString(openDurationSinceLastUpdate)).append("\n");
+    sb.append("    openDurationSinceLastTransition: ").append(toIndentedString(openDurationSinceLastTransition)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -645,6 +780,11 @@ public class Task {
     openapiFields.add("actionLogIdCreated");
     openapiFields.add("actionLogIdModified");
     openapiFields.add("actionLogIdSubmitted");
+    openapiFields.add("hierarchicalPosition");
+    openapiFields.add("completionStatus");
+    openapiFields.add("openDuration");
+    openapiFields.add("openDurationSinceLastUpdate");
+    openapiFields.add("openDurationSinceLastTransition");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -747,6 +887,12 @@ public class Task {
       }
       if ((jsonObj.get("actionLogIdSubmitted") != null && !jsonObj.get("actionLogIdSubmitted").isJsonNull()) && !jsonObj.get("actionLogIdSubmitted").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `actionLogIdSubmitted` to be a primitive type in the JSON string but got `%s`", jsonObj.get("actionLogIdSubmitted").toString()));
+      }
+      if ((jsonObj.get("hierarchicalPosition") != null && !jsonObj.get("hierarchicalPosition").isJsonNull()) && !jsonObj.get("hierarchicalPosition").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `hierarchicalPosition` to be a primitive type in the JSON string but got `%s`", jsonObj.get("hierarchicalPosition").toString()));
+      }
+      if ((jsonObj.get("completionStatus") != null && !jsonObj.get("completionStatus").isJsonNull()) && !jsonObj.get("completionStatus").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `completionStatus` to be a primitive type in the JSON string but got `%s`", jsonObj.get("completionStatus").toString()));
       }
   }
 

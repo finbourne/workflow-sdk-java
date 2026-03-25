@@ -303,7 +303,7 @@ public class TasksApi {
     }
 
     /**
-     * [EXPERIMENTAL] BatchUpdateTasks: Batch update tasks
+     * BatchUpdateTasks: Batch update tasks
      * 
      * @return APIbatchUpdateTasksRequest
      * @http.response.details

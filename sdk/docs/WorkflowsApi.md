@@ -4,8 +4,8 @@ All URIs are relative to *https://fbn-prd.lusid.com/workflow*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**createWorkflow**](WorkflowsApi.md#createWorkflow) | **POST** /api/workflows | [EXPERIMENTAL] CreateWorkflow: Create a new Workflow |
-| [**getWorkflow**](WorkflowsApi.md#getWorkflow) | **GET** /api/workflows/{scope}/{code} | [EXPERIMENTAL] GetWorkflow: Get a Workflow |
+| [**createWorkflow**](WorkflowsApi.md#createWorkflow) | **POST** /api/workflows | CreateWorkflow: Create a new Workflow |
+| [**getWorkflow**](WorkflowsApi.md#getWorkflow) | **GET** /api/workflows/{scope}/{code} | GetWorkflow: Get a Workflow |
 
 
 
@@ -13,7 +13,7 @@ All URIs are relative to *https://fbn-prd.lusid.com/workflow*
 
 > WorkflowResponse createWorkflow(createWorkflowRequest)
 
-[EXPERIMENTAL] CreateWorkflow: Create a new Workflow
+CreateWorkflow: Create a new Workflow
 
 ### Example
 
@@ -103,7 +103,7 @@ public class WorkflowsApiExample {
 
 > WorkflowResponse getWorkflow(scope, code, asAt)
 
-[EXPERIMENTAL] GetWorkflow: Get a Workflow
+GetWorkflow: Get a Workflow
 
 ### Example
 

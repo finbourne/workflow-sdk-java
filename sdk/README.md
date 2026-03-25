@@ -5,7 +5,7 @@ All URIs are relative to *https://fbn-prd.lusid.com/workflow*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*ActionLogsApi* | [**getActionLogs**](docs/ActionLogsApi.md#getactionlogs) | **GET** /api/actionlogs/{id} | [EXPERIMENTAL] GetActionLogs: Get the Action Logs for an Action Id
+*ActionLogsApi* | [**getActionLogs**](docs/ActionLogsApi.md#getactionlogs) | **GET** /api/actionlogs/{id} | GetActionLogs: Get the Action Logs for an Action Id
 *ApplicationMetadataApi* | [**listAccessControlledResources**](docs/ApplicationMetadataApi.md#listaccesscontrolledresources) | **GET** /api/metadata/access/resources | ListAccessControlledResources: Get resources available for access control
 *EventHandlersApi* | [**createEventHandler**](docs/EventHandlersApi.md#createeventhandler) | **POST** /api/eventhandlers | CreateEventHandler: Create a new Event Handler
 *EventHandlersApi* | [**deleteEventHandler**](docs/EventHandlersApi.md#deleteeventhandler) | **DELETE** /api/eventhandlers/{scope}/{code} | DeleteEventHandler: Delete an Event Handler
@@ -18,7 +18,7 @@ Class | Method | HTTP request | Description
 *TaskDefinitionsApi* | [**listTaskDefinitions**](docs/TaskDefinitionsApi.md#listtaskdefinitions) | **GET** /api/taskdefinitions | ListTaskDefinitions: List Task Definitions
 *TaskDefinitionsApi* | [**listTasksForTaskDefinition**](docs/TaskDefinitionsApi.md#listtasksfortaskdefinition) | **GET** /api/taskdefinitions/{scope}/{code}/tasks | ListTasksForTaskDefinition: List Tasks for a Task Definition
 *TaskDefinitionsApi* | [**updateTaskDefinition**](docs/TaskDefinitionsApi.md#updatetaskdefinition) | **PUT** /api/taskdefinitions/{scope}/{code} | UpdateTaskDefinition: Update an existing Task Definition
-*TasksApi* | [**batchUpdateTasks**](docs/TasksApi.md#batchupdatetasks) | **PATCH** /api/tasks/$update | [EXPERIMENTAL] BatchUpdateTasks: Batch update tasks
+*TasksApi* | [**batchUpdateTasks**](docs/TasksApi.md#batchupdatetasks) | **PATCH** /api/tasks/$update | BatchUpdateTasks: Batch update tasks
 *TasksApi* | [**createTask**](docs/TasksApi.md#createtask) | **POST** /api/tasks | CreateTask: Create a new Task
 *TasksApi* | [**deleteTask**](docs/TasksApi.md#deletetask) | **DELETE** /api/tasks/{id} | DeleteTask: Delete a Task
 *TasksApi* | [**deleteTasks**](docs/TasksApi.md#deletetasks) | **POST** /api/tasks/$delete | DeleteTasks: Batch Delete Tasks
@@ -33,8 +33,8 @@ Class | Method | HTTP request | Description
 *WorkersApi* | [**listWorkers**](docs/WorkersApi.md#listworkers) | **GET** /api/workers | ListWorkers: List Workers
 *WorkersApi* | [**runWorker**](docs/WorkersApi.md#runworker) | **POST** /api/workers/{scope}/{code}/$run | RunWorker: Run a Worker
 *WorkersApi* | [**updateWorker**](docs/WorkersApi.md#updateworker) | **PUT** /api/workers/{scope}/{code} | UpdateWorker: Update a Worker
-*WorkflowsApi* | [**createWorkflow**](docs/WorkflowsApi.md#createworkflow) | **POST** /api/workflows | [EXPERIMENTAL] CreateWorkflow: Create a new Workflow
-*WorkflowsApi* | [**getWorkflow**](docs/WorkflowsApi.md#getworkflow) | **GET** /api/workflows/{scope}/{code} | [EXPERIMENTAL] GetWorkflow: Get a Workflow
+*WorkflowsApi* | [**createWorkflow**](docs/WorkflowsApi.md#createworkflow) | **POST** /api/workflows | CreateWorkflow: Create a new Workflow
+*WorkflowsApi* | [**getWorkflow**](docs/WorkflowsApi.md#getworkflow) | **GET** /api/workflows/{scope}/{code} | GetWorkflow: Get a Workflow
 
 
 <a id="documentation-for-models"></a>
