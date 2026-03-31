@@ -40,7 +40,7 @@ info:
     | <a name="973">973</a>|Workflow already exists.| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1663
+  version: 0.1.1672
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -378,11 +378,11 @@ paths:
                 code: YYY
               taskDefinitionAsAt: 9999-12-31T23:59:59.9999999+00:00
               taskActivity:
-                Type: CreateNewTask
-                InitialTrigger: InitialTrigger
-                CorrelationIds: []
-                TaskFields: {}
-                ScheduleDependentTaskFields: null
+                type: CreateNewTask
+                initialTrigger: InitialTrigger
+                correlationIds: []
+                taskFields: {}
+                scheduleDependentTaskFields: null
             schema:
               $ref: '#/components/schemas/CreateEventHandlerRequest'
           application/json:
@@ -403,11 +403,11 @@ paths:
                 code: YYY
               taskDefinitionAsAt: 9999-12-31T23:59:59.9999999+00:00
               taskActivity:
-                Type: CreateNewTask
-                InitialTrigger: InitialTrigger
-                CorrelationIds: []
-                TaskFields: {}
-                ScheduleDependentTaskFields: null
+                type: CreateNewTask
+                initialTrigger: InitialTrigger
+                correlationIds: []
+                taskFields: {}
+                scheduleDependentTaskFields: null
             schema:
               $ref: '#/components/schemas/CreateEventHandlerRequest'
           text/json:
@@ -428,11 +428,11 @@ paths:
                 code: YYY
               taskDefinitionAsAt: 9999-12-31T23:59:59.9999999+00:00
               taskActivity:
-                Type: CreateNewTask
-                InitialTrigger: InitialTrigger
-                CorrelationIds: []
-                TaskFields: {}
-                ScheduleDependentTaskFields: null
+                type: CreateNewTask
+                initialTrigger: InitialTrigger
+                correlationIds: []
+                taskFields: {}
+                scheduleDependentTaskFields: null
             schema:
               $ref: '#/components/schemas/CreateEventHandlerRequest'
           application/*+json:
@@ -453,11 +453,11 @@ paths:
                 code: YYY
               taskDefinitionAsAt: 9999-12-31T23:59:59.9999999+00:00
               taskActivity:
-                Type: CreateNewTask
-                InitialTrigger: InitialTrigger
-                CorrelationIds: []
-                TaskFields: {}
-                ScheduleDependentTaskFields: null
+                type: CreateNewTask
+                initialTrigger: InitialTrigger
+                correlationIds: []
+                taskFields: {}
+                scheduleDependentTaskFields: null
             schema:
               $ref: '#/components/schemas/CreateEventHandlerRequest'
         description: The data to create an Event Handler
@@ -711,11 +711,11 @@ paths:
                 code: YYY
               taskDefinitionAsAt: 9999-12-31T23:59:59.9999999+00:00
               taskActivity:
-                Type: CreateNewTask
-                InitialTrigger: InitialTrigger
-                CorrelationIds: []
-                TaskFields: {}
-                ScheduleDependentTaskFields: null
+                type: CreateNewTask
+                initialTrigger: InitialTrigger
+                correlationIds: []
+                taskFields: {}
+                scheduleDependentTaskFields: null
             schema:
               $ref: '#/components/schemas/UpdateEventHandlerRequest'
           application/json:
@@ -733,11 +733,11 @@ paths:
                 code: YYY
               taskDefinitionAsAt: 9999-12-31T23:59:59.9999999+00:00
               taskActivity:
-                Type: CreateNewTask
-                InitialTrigger: InitialTrigger
-                CorrelationIds: []
-                TaskFields: {}
-                ScheduleDependentTaskFields: null
+                type: CreateNewTask
+                initialTrigger: InitialTrigger
+                correlationIds: []
+                taskFields: {}
+                scheduleDependentTaskFields: null
             schema:
               $ref: '#/components/schemas/UpdateEventHandlerRequest'
           text/json:
@@ -755,11 +755,11 @@ paths:
                 code: YYY
               taskDefinitionAsAt: 9999-12-31T23:59:59.9999999+00:00
               taskActivity:
-                Type: CreateNewTask
-                InitialTrigger: InitialTrigger
-                CorrelationIds: []
-                TaskFields: {}
-                ScheduleDependentTaskFields: null
+                type: CreateNewTask
+                initialTrigger: InitialTrigger
+                correlationIds: []
+                taskFields: {}
+                scheduleDependentTaskFields: null
             schema:
               $ref: '#/components/schemas/UpdateEventHandlerRequest'
           application/*+json:
@@ -777,11 +777,11 @@ paths:
                 code: YYY
               taskDefinitionAsAt: 9999-12-31T23:59:59.9999999+00:00
               taskActivity:
-                Type: CreateNewTask
-                InitialTrigger: InitialTrigger
-                CorrelationIds: []
-                TaskFields: {}
-                ScheduleDependentTaskFields: null
+                type: CreateNewTask
+                initialTrigger: InitialTrigger
+                correlationIds: []
+                taskFields: {}
+                scheduleDependentTaskFields: null
             schema:
               $ref: '#/components/schemas/UpdateEventHandlerRequest'
         description: The data to update an Event Handler
@@ -4604,6 +4604,102 @@ paths:
       x-content-type: application/json-patch+json
       x-accepts: application/json
   /api/workflows:
+    get:
+      operationId: ListWorkflows
+      parameters:
+      - description: The asAt datetime at which to list the Workflows. Defaults to
+          return the latest version of each Workflow if not specified.
+        explode: true
+        in: query
+        name: asAt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+        x-nullable: true
+      - description: "Expression to filter the result set. Read more about filtering\
+          \ results from LUSID here: https://support.lusid.com/filtering-results-from-lusid."
+        explode: true
+        in: query
+        name: filter
+        required: false
+        schema:
+          maxLength: 16384
+          minLength: 0
+          pattern: "^[\\s\\S]*$"
+          type: string
+        style: form
+      - description: "A list of field names or properties to sort by, each suffixed\
+          \ by \" ASC\" or \" DESC\""
+        explode: true
+        in: query
+        name: sortBy
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+        x-nullable: true
+      - description: "When paginating, limit the number of returned results to this\
+          \ many."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+        x-nullable: true
+      - description: "The pagination token to use to continue listing workflows from\
+          \ a previous call to list workflows. This value is returned from the previous\
+          \ call. If a pagination token is provided the sortBy, filter, effectiveAt,\
+          \ and asAt fields must not have changed since the original request."
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          maxLength: 500
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\+/]*={0,3}$"
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResourceListOfWorkflowResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        "404":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: No Workflows found.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "ListWorkflows: List Workflows"
+      tags:
+      - Workflows
+      x-fbn-apistatus: Stable
+      x-accepts: application/json
     post:
       operationId: CreateWorkflow
       requestBody:
@@ -4662,6 +4758,172 @@ paths:
         "201":
           content:
             application/json:
+              example:
+                id:
+                  scope: default
+                  code: ExampleWorkflow
+                version:
+                  asAtCreated: 2022-01-01T01:02:03.0000000+00:00
+                  userIdCreated: User-1
+                  requestIdCreated: RequestId-1
+                  asAtModified: 2022-01-01T01:02:03.0000000+00:00
+                  userIdModified: User-1
+                  requestIdModified: RequestId-1
+                  asAtVersionNumber: 1
+                displayName: Example Workflow
+                description: An example workflow that references a root task definition
+                rootTaskDefinitionId:
+                  scope: default
+                  code: ExampleTaskDefinition
+                workflowStructure:
+                  nodes:
+                    taskDefinitions:
+                    - id:
+                        scope: A1
+                        code: ZZZ
+                      version:
+                        asAtCreated: 2022-01-01T01:02:03.0000000+00:00
+                        userIdCreated: User-1
+                        requestIdCreated: RequestId-1
+                        asAtModified: 2022-01-01T01:02:03.0000000+00:00
+                        userIdModified: User-1
+                        requestIdModified: RequestId-1
+                        asAtVersionNumber: 1
+                      displayName: An example TaskDefinition
+                      description: Test
+                      states:
+                      - name: Submitted
+                        displayName: Submitted
+                        description: Submitted ready to start
+                        category: NotStarted
+                      - name: InProgress
+                        displayName: In progress
+                        description: In progress
+                        category: InProgress
+                      - name: SendingSurvey
+                        displayName: In Progress sending survey
+                        description: Sending survey
+                        category: InProgress
+                      - name: Done
+                        displayName: Done
+                        description: Task has finished successfully
+                        category: CompletedSuccess
+                      - name: SurveyNotSent
+                        displayName: Survey Not Sent
+                        description: Survey has not been sent
+                        category: InProgress
+                      - name: NotDone
+                        displayName: Not Done
+                        description: Task is not done
+                        category: Other
+                      fieldSchema:
+                      - name: clientId
+                        type: String
+                        displayName: Client Id
+                        description: Id for the client
+                        containsUrl: false
+                      - name: assignee
+                        type: String
+                        readOnlyStates:
+                          stateType: SelectedStates
+                          selectedStates:
+                          - Submitted
+                          - Done
+                          - SurveyNotSent
+                          - NotDone
+                      - name: resolutionDetail
+                        type: String
+                        readOnlyStates:
+                          stateType: TerminalState
+                        category: LargetextArea
+                      initialState:
+                        name: Submitted
+                        requiredFields:
+                        - clientId
+                      triggers:
+                      - name: start
+                        trigger:
+                          type: External
+                        displayName: Start
+                        description: Start the task
+                      - name: cancel
+                        trigger:
+                          type: External
+                      - name: resolve
+                        trigger:
+                          type: External
+                      - name: timeout
+                        trigger:
+                          type: External
+                      - name: success
+                        trigger:
+                          type: External
+                      - name: failure
+                        trigger:
+                          type: External
+                      actions:
+                      - name: health-check
+                        runAsUserId: user-id
+                        actionDetails:
+                          type: RunWorker
+                          workerId:
+                            scope: Health
+                            code: HealthCheckWorker
+                          workerAsAt: 2022-01-01T01:02:03.0000000+00:00
+                          workerParameters: {}
+                          workerStatusTriggers:
+                            started: null
+                            completedWithResults: null
+                            completedNoResults: null
+                            failedToStart: null
+                            failedToComplete: null
+                          childTaskConfigurations:
+                          - taskDefinitionId:
+                              scope: AAA
+                              code: BBB
+                            mapStackingKeyFrom: null
+                            childTaskFields:
+                              assignee:
+                                mapFrom: foo
+                                setTo: bar
+                            resultMatchingPattern: null
+                            taskDefinitionAsAt: null
+                            initialTrigger: test-trigger
+                          workerTimeout: 120
+                        displayName: Health Check
+                        description: Health check
+                      transitions:
+                      - fromState: Submitted
+                        toState: InProgress
+                        trigger: start
+                        guard: "fields['assignee'] exists AND fields['assignee'] NOT\
+                          \ eq ''"
+                        displayName: Start
+                        description: Start the worker
+                        guardDescription: Field assignee exists
+                        guardConditionNotMetMessage: Assignee does not exist
+                      - fromState: InProgress
+                        toState: SendingSurvey
+                        trigger: resolve
+                        guard: "fields['resolutionDetail'] exists AND fields['resolutionDetail']\
+                          \ NOT eq ''"
+                        action: health-check
+                      - fromState: SendingSurvey
+                        toState: Done
+                        trigger: success
+                      - fromState: SendingSurvey
+                        toState: SurveyNotSent
+                        trigger: failure
+                      - fromState: SendingSurvey
+                        toState: NotDone
+                        trigger: timeout
+                      - fromState: InProgress
+                        toState: NotDone
+                        trigger: cancel
+                        guard: "fields['cancellationDetail'] exists AND fields['cancellationDetail']\
+                          \ NOT eq ''"
+                  edges:
+                    childTaskDefinitions: []
               schema:
                 $ref: '#/components/schemas/WorkflowResponse'
           description: Created
@@ -4732,6 +4994,172 @@ paths:
         "200":
           content:
             application/json:
+              example:
+                id:
+                  scope: default
+                  code: ExampleWorkflow
+                version:
+                  asAtCreated: 2022-01-01T01:02:03.0000000+00:00
+                  userIdCreated: User-1
+                  requestIdCreated: RequestId-1
+                  asAtModified: 2022-01-01T01:02:03.0000000+00:00
+                  userIdModified: User-1
+                  requestIdModified: RequestId-1
+                  asAtVersionNumber: 1
+                displayName: Example Workflow
+                description: An example workflow that references a root task definition
+                rootTaskDefinitionId:
+                  scope: default
+                  code: ExampleTaskDefinition
+                workflowStructure:
+                  nodes:
+                    taskDefinitions:
+                    - id:
+                        scope: A1
+                        code: ZZZ
+                      version:
+                        asAtCreated: 2022-01-01T01:02:03.0000000+00:00
+                        userIdCreated: User-1
+                        requestIdCreated: RequestId-1
+                        asAtModified: 2022-01-01T01:02:03.0000000+00:00
+                        userIdModified: User-1
+                        requestIdModified: RequestId-1
+                        asAtVersionNumber: 1
+                      displayName: An example TaskDefinition
+                      description: Test
+                      states:
+                      - name: Submitted
+                        displayName: Submitted
+                        description: Submitted ready to start
+                        category: NotStarted
+                      - name: InProgress
+                        displayName: In progress
+                        description: In progress
+                        category: InProgress
+                      - name: SendingSurvey
+                        displayName: In Progress sending survey
+                        description: Sending survey
+                        category: InProgress
+                      - name: Done
+                        displayName: Done
+                        description: Task has finished successfully
+                        category: CompletedSuccess
+                      - name: SurveyNotSent
+                        displayName: Survey Not Sent
+                        description: Survey has not been sent
+                        category: InProgress
+                      - name: NotDone
+                        displayName: Not Done
+                        description: Task is not done
+                        category: Other
+                      fieldSchema:
+                      - name: clientId
+                        type: String
+                        displayName: Client Id
+                        description: Id for the client
+                        containsUrl: false
+                      - name: assignee
+                        type: String
+                        readOnlyStates:
+                          stateType: SelectedStates
+                          selectedStates:
+                          - Submitted
+                          - Done
+                          - SurveyNotSent
+                          - NotDone
+                      - name: resolutionDetail
+                        type: String
+                        readOnlyStates:
+                          stateType: TerminalState
+                        category: LargetextArea
+                      initialState:
+                        name: Submitted
+                        requiredFields:
+                        - clientId
+                      triggers:
+                      - name: start
+                        trigger:
+                          type: External
+                        displayName: Start
+                        description: Start the task
+                      - name: cancel
+                        trigger:
+                          type: External
+                      - name: resolve
+                        trigger:
+                          type: External
+                      - name: timeout
+                        trigger:
+                          type: External
+                      - name: success
+                        trigger:
+                          type: External
+                      - name: failure
+                        trigger:
+                          type: External
+                      actions:
+                      - name: health-check
+                        runAsUserId: user-id
+                        actionDetails:
+                          type: RunWorker
+                          workerId:
+                            scope: Health
+                            code: HealthCheckWorker
+                          workerAsAt: 2022-01-01T01:02:03.0000000+00:00
+                          workerParameters: {}
+                          workerStatusTriggers:
+                            started: null
+                            completedWithResults: null
+                            completedNoResults: null
+                            failedToStart: null
+                            failedToComplete: null
+                          childTaskConfigurations:
+                          - taskDefinitionId:
+                              scope: AAA
+                              code: BBB
+                            mapStackingKeyFrom: null
+                            childTaskFields:
+                              assignee:
+                                mapFrom: foo
+                                setTo: bar
+                            resultMatchingPattern: null
+                            taskDefinitionAsAt: null
+                            initialTrigger: test-trigger
+                          workerTimeout: 120
+                        displayName: Health Check
+                        description: Health check
+                      transitions:
+                      - fromState: Submitted
+                        toState: InProgress
+                        trigger: start
+                        guard: "fields['assignee'] exists AND fields['assignee'] NOT\
+                          \ eq ''"
+                        displayName: Start
+                        description: Start the worker
+                        guardDescription: Field assignee exists
+                        guardConditionNotMetMessage: Assignee does not exist
+                      - fromState: InProgress
+                        toState: SendingSurvey
+                        trigger: resolve
+                        guard: "fields['resolutionDetail'] exists AND fields['resolutionDetail']\
+                          \ NOT eq ''"
+                        action: health-check
+                      - fromState: SendingSurvey
+                        toState: Done
+                        trigger: success
+                      - fromState: SendingSurvey
+                        toState: SurveyNotSent
+                        trigger: failure
+                      - fromState: SendingSurvey
+                        toState: NotDone
+                        trigger: timeout
+                      - fromState: InProgress
+                        toState: NotDone
+                        trigger: cancel
+                        guard: "fields['cancellationDetail'] exists AND fields['cancellationDetail']\
+                          \ NOT eq ''"
+                  edges:
+                    childTaskDefinitions: []
               schema:
                 $ref: '#/components/schemas/WorkflowResponse'
           description: OK
@@ -5255,6 +5683,19 @@ components:
             leadTaskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             tasksInStack: 0
             memberAddedAsAt: 2000-01-23T04:56:07.000+00:00
+          actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          openDurationSinceLastUpdate: 1
+          taskDefinitionId:
+            code: code
+            scope: scope
+          stackingKey: stackingKey
+          actionLogIdSubmitted: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          correlationIds:
+          - correlationIds
+          - correlationIds
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: state
+          taskDefinitionDisplayName: taskDefinitionDisplayName
           parentTask:
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -5264,8 +5705,7 @@ components:
             taskDefinitionId:
               code: code
               scope: scope
-          actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          openDurationSinceLastUpdate: 1
+          workflowDisplayName: workflowDisplayName
           hierarchicalPosition: hierarchicalPosition
           openDuration: 6
           version:
@@ -5276,10 +5716,6 @@ components:
             requestIdCreated: requestIdCreated
             userIdCreated: userIdCreated
             requestIdModified: requestIdModified
-          taskDefinitionId:
-            code: code
-            scope: scope
-          stackingKey: stackingKey
           actionLogIdModified: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           childTasks:
           - taskDefinitionVersion:
@@ -5299,7 +5735,6 @@ components:
               code: code
               scope: scope
           asAtLastTransition: 2000-01-23T04:56:07.000+00:00
-          actionLogIdSubmitted: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           ultimateParentTask:
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -5309,20 +5744,17 @@ components:
             taskDefinitionId:
               code: code
               scope: scope
-          correlationIds:
-          - correlationIds
-          - correlationIds
           taskDefinitionVersion:
             asAtModified: 2000-01-23T04:56:07.000+00:00
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          state: state
           completionStatus: completionStatus
-          taskDefinitionDisplayName: taskDefinitionDisplayName
           fields:
           - name: name
             value: ""
           - name: name
             value: ""
+          workflowId:
+            code: code
+            scope: scope
           openDurationSinceLastTransition: 5
         - terminalState: true
           stack:
@@ -5334,6 +5766,19 @@ components:
             leadTaskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             tasksInStack: 0
             memberAddedAsAt: 2000-01-23T04:56:07.000+00:00
+          actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          openDurationSinceLastUpdate: 1
+          taskDefinitionId:
+            code: code
+            scope: scope
+          stackingKey: stackingKey
+          actionLogIdSubmitted: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          correlationIds:
+          - correlationIds
+          - correlationIds
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: state
+          taskDefinitionDisplayName: taskDefinitionDisplayName
           parentTask:
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -5343,8 +5788,7 @@ components:
             taskDefinitionId:
               code: code
               scope: scope
-          actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          openDurationSinceLastUpdate: 1
+          workflowDisplayName: workflowDisplayName
           hierarchicalPosition: hierarchicalPosition
           openDuration: 6
           version:
@@ -5355,10 +5799,6 @@ components:
             requestIdCreated: requestIdCreated
             userIdCreated: userIdCreated
             requestIdModified: requestIdModified
-          taskDefinitionId:
-            code: code
-            scope: scope
-          stackingKey: stackingKey
           actionLogIdModified: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           childTasks:
           - taskDefinitionVersion:
@@ -5378,7 +5818,6 @@ components:
               code: code
               scope: scope
           asAtLastTransition: 2000-01-23T04:56:07.000+00:00
-          actionLogIdSubmitted: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           ultimateParentTask:
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -5388,20 +5827,17 @@ components:
             taskDefinitionId:
               code: code
               scope: scope
-          correlationIds:
-          - correlationIds
-          - correlationIds
           taskDefinitionVersion:
             asAtModified: 2000-01-23T04:56:07.000+00:00
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          state: state
           completionStatus: completionStatus
-          taskDefinitionDisplayName: taskDefinitionDisplayName
           fields:
           - name: name
             value: ""
           - name: name
             value: ""
+          workflowId:
+            code: code
+            scope: scope
           openDurationSinceLastTransition: 5
         links:
         - method: method
@@ -5958,9 +6394,14 @@ components:
         taskDefinitionId:
           code: code
           scope: scope
+        workflowId:
+          code: code
+          scope: scope
         stackingKey: stackingKey
       properties:
         taskDefinitionId:
+          $ref: '#/components/schemas/ResourceId'
+        workflowId:
           $ref: '#/components/schemas/ResourceId'
         correlationIds:
           description: A set of guid identifiers that allow correlation across the
@@ -5980,8 +6421,6 @@ components:
           description: The key for the Stack that this Task should be added to
           nullable: true
           type: string
-      required:
-      - taskDefinitionId
       type: object
     CreateWorkerRequest:
       additionalProperties: false
@@ -7028,6 +7467,19 @@ components:
             leadTaskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             tasksInStack: 0
             memberAddedAsAt: 2000-01-23T04:56:07.000+00:00
+          actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          openDurationSinceLastUpdate: 1
+          taskDefinitionId:
+            code: code
+            scope: scope
+          stackingKey: stackingKey
+          actionLogIdSubmitted: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          correlationIds:
+          - correlationIds
+          - correlationIds
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: state
+          taskDefinitionDisplayName: taskDefinitionDisplayName
           parentTask:
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -7037,8 +7489,7 @@ components:
             taskDefinitionId:
               code: code
               scope: scope
-          actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          openDurationSinceLastUpdate: 1
+          workflowDisplayName: workflowDisplayName
           hierarchicalPosition: hierarchicalPosition
           openDuration: 6
           version:
@@ -7049,10 +7500,6 @@ components:
             requestIdCreated: requestIdCreated
             userIdCreated: userIdCreated
             requestIdModified: requestIdModified
-          taskDefinitionId:
-            code: code
-            scope: scope
-          stackingKey: stackingKey
           actionLogIdModified: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           childTasks:
           - taskDefinitionVersion:
@@ -7072,7 +7519,6 @@ components:
               code: code
               scope: scope
           asAtLastTransition: 2000-01-23T04:56:07.000+00:00
-          actionLogIdSubmitted: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           ultimateParentTask:
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -7082,20 +7528,17 @@ components:
             taskDefinitionId:
               code: code
               scope: scope
-          correlationIds:
-          - correlationIds
-          - correlationIds
           taskDefinitionVersion:
             asAtModified: 2000-01-23T04:56:07.000+00:00
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          state: state
           completionStatus: completionStatus
-          taskDefinitionDisplayName: taskDefinitionDisplayName
           fields:
           - name: name
             value: ""
           - name: name
             value: ""
+          workflowId:
+            code: code
+            scope: scope
           openDurationSinceLastTransition: 5
         - terminalState: true
           stack:
@@ -7107,6 +7550,19 @@ components:
             leadTaskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             tasksInStack: 0
             memberAddedAsAt: 2000-01-23T04:56:07.000+00:00
+          actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          openDurationSinceLastUpdate: 1
+          taskDefinitionId:
+            code: code
+            scope: scope
+          stackingKey: stackingKey
+          actionLogIdSubmitted: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          correlationIds:
+          - correlationIds
+          - correlationIds
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: state
+          taskDefinitionDisplayName: taskDefinitionDisplayName
           parentTask:
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -7116,8 +7572,7 @@ components:
             taskDefinitionId:
               code: code
               scope: scope
-          actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          openDurationSinceLastUpdate: 1
+          workflowDisplayName: workflowDisplayName
           hierarchicalPosition: hierarchicalPosition
           openDuration: 6
           version:
@@ -7128,10 +7583,6 @@ components:
             requestIdCreated: requestIdCreated
             userIdCreated: userIdCreated
             requestIdModified: requestIdModified
-          taskDefinitionId:
-            code: code
-            scope: scope
-          stackingKey: stackingKey
           actionLogIdModified: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           childTasks:
           - taskDefinitionVersion:
@@ -7151,7 +7602,6 @@ components:
               code: code
               scope: scope
           asAtLastTransition: 2000-01-23T04:56:07.000+00:00
-          actionLogIdSubmitted: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           ultimateParentTask:
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -7161,20 +7611,17 @@ components:
             taskDefinitionId:
               code: code
               scope: scope
-          correlationIds:
-          - correlationIds
-          - correlationIds
           taskDefinitionVersion:
             asAtModified: 2000-01-23T04:56:07.000+00:00
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          state: state
           completionStatus: completionStatus
-          taskDefinitionDisplayName: taskDefinitionDisplayName
           fields:
           - name: name
             value: ""
           - name: name
             value: ""
+          workflowId:
+            code: code
+            scope: scope
           openDurationSinceLastTransition: 5
         links:
         - method: method
@@ -7578,6 +8025,555 @@ components:
         values:
           items:
             $ref: '#/components/schemas/Worker'
+          type: array
+        href:
+          format: uri
+          nullable: true
+          type: string
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          nullable: true
+          type: array
+      required:
+      - values
+      type: object
+    PagedResourceListOfWorkflowResponse:
+      additionalProperties: false
+      example:
+        previousPage: previousPage
+        nextPage: nextPage
+        values:
+        - workflowStructure:
+            nodes:
+              taskDefinitions:
+              - initialState:
+                  requiredFields:
+                  - requiredFields
+                  - requiredFields
+                  name: name
+                displayName: displayName
+                description: description
+                fieldSchema:
+                - readOnlyStates:
+                    stateType: stateType
+                    selectedStates:
+                    - selectedStates
+                    - selectedStates
+                  displayName: displayName
+                  containsUrl: true
+                  name: name
+                  description: description
+                  valueConstraints:
+                    acceptableValues:
+                    - ""
+                    - ""
+                    constraintType: constraintType
+                    valueSourceType: valueSourceType
+                  type: type
+                  category: category
+                - readOnlyStates:
+                    stateType: stateType
+                    selectedStates:
+                    - selectedStates
+                    - selectedStates
+                  displayName: displayName
+                  containsUrl: true
+                  name: name
+                  description: description
+                  valueConstraints:
+                    acceptableValues:
+                    - ""
+                    - ""
+                    constraintType: constraintType
+                    valueSourceType: valueSourceType
+                  type: type
+                  category: category
+                id:
+                  code: code
+                  scope: scope
+                triggers:
+                - displayName: displayName
+                  name: name
+                  description: description
+                  trigger:
+                    type: type
+                - displayName: displayName
+                  name: name
+                  description: description
+                  trigger:
+                    type: type
+                transitions:
+                - fromState: fromState
+                  toState: toState
+                  displayName: displayName
+                  guard: guard
+                  action: action
+                  description: description
+                  guardDescription: guardDescription
+                  guardConditionNotMetMessage: guardConditionNotMetMessage
+                  trigger: trigger
+                - fromState: fromState
+                  toState: toState
+                  displayName: displayName
+                  guard: guard
+                  action: action
+                  description: description
+                  guardDescription: guardDescription
+                  guardConditionNotMetMessage: guardConditionNotMetMessage
+                  trigger: trigger
+                version:
+                  asAtModified: 2000-01-23T04:56:07.000+00:00
+                  userIdModified: userIdModified
+                  asAtVersionNumber: 0
+                  asAtCreated: 2000-01-23T04:56:07.000+00:00
+                  requestIdCreated: requestIdCreated
+                  userIdCreated: userIdCreated
+                  requestIdModified: requestIdModified
+                actions:
+                - displayName: displayName
+                  name: name
+                  description: description
+                  runAsUserId: runAsUserId
+                  actionDetails:
+                    type: type
+                  category: category
+                - displayName: displayName
+                  name: name
+                  description: description
+                  runAsUserId: runAsUserId
+                  actionDetails:
+                    type: type
+                  category: category
+                states:
+                - displayName: displayName
+                  name: name
+                  description: description
+                  category: category
+                - displayName: displayName
+                  name: name
+                  description: description
+                  category: category
+              - initialState:
+                  requiredFields:
+                  - requiredFields
+                  - requiredFields
+                  name: name
+                displayName: displayName
+                description: description
+                fieldSchema:
+                - readOnlyStates:
+                    stateType: stateType
+                    selectedStates:
+                    - selectedStates
+                    - selectedStates
+                  displayName: displayName
+                  containsUrl: true
+                  name: name
+                  description: description
+                  valueConstraints:
+                    acceptableValues:
+                    - ""
+                    - ""
+                    constraintType: constraintType
+                    valueSourceType: valueSourceType
+                  type: type
+                  category: category
+                - readOnlyStates:
+                    stateType: stateType
+                    selectedStates:
+                    - selectedStates
+                    - selectedStates
+                  displayName: displayName
+                  containsUrl: true
+                  name: name
+                  description: description
+                  valueConstraints:
+                    acceptableValues:
+                    - ""
+                    - ""
+                    constraintType: constraintType
+                    valueSourceType: valueSourceType
+                  type: type
+                  category: category
+                id:
+                  code: code
+                  scope: scope
+                triggers:
+                - displayName: displayName
+                  name: name
+                  description: description
+                  trigger:
+                    type: type
+                - displayName: displayName
+                  name: name
+                  description: description
+                  trigger:
+                    type: type
+                transitions:
+                - fromState: fromState
+                  toState: toState
+                  displayName: displayName
+                  guard: guard
+                  action: action
+                  description: description
+                  guardDescription: guardDescription
+                  guardConditionNotMetMessage: guardConditionNotMetMessage
+                  trigger: trigger
+                - fromState: fromState
+                  toState: toState
+                  displayName: displayName
+                  guard: guard
+                  action: action
+                  description: description
+                  guardDescription: guardDescription
+                  guardConditionNotMetMessage: guardConditionNotMetMessage
+                  trigger: trigger
+                version:
+                  asAtModified: 2000-01-23T04:56:07.000+00:00
+                  userIdModified: userIdModified
+                  asAtVersionNumber: 0
+                  asAtCreated: 2000-01-23T04:56:07.000+00:00
+                  requestIdCreated: requestIdCreated
+                  userIdCreated: userIdCreated
+                  requestIdModified: requestIdModified
+                actions:
+                - displayName: displayName
+                  name: name
+                  description: description
+                  runAsUserId: runAsUserId
+                  actionDetails:
+                    type: type
+                  category: category
+                - displayName: displayName
+                  name: name
+                  description: description
+                  runAsUserId: runAsUserId
+                  actionDetails:
+                    type: type
+                  category: category
+                states:
+                - displayName: displayName
+                  name: name
+                  description: description
+                  category: category
+                - displayName: displayName
+                  name: name
+                  description: description
+                  category: category
+            edges:
+              childTaskDefinitions:
+              - parent:
+                  taskDefinitionId:
+                    code: code
+                    scope: scope
+                  taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
+                child:
+                  taskDefinitionId:
+                    code: code
+                    scope: scope
+                  taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
+              - parent:
+                  taskDefinitionId:
+                    code: code
+                    scope: scope
+                  taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
+                child:
+                  taskDefinitionId:
+                    code: code
+                    scope: scope
+                  taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
+          displayName: displayName
+          rootTaskDefinitionId:
+            code: code
+            scope: scope
+          description: description
+          id:
+            code: code
+            scope: scope
+          version:
+            asAtModified: 2000-01-23T04:56:07.000+00:00
+            userIdModified: userIdModified
+            asAtVersionNumber: 0
+            asAtCreated: 2000-01-23T04:56:07.000+00:00
+            requestIdCreated: requestIdCreated
+            userIdCreated: userIdCreated
+            requestIdModified: requestIdModified
+        - workflowStructure:
+            nodes:
+              taskDefinitions:
+              - initialState:
+                  requiredFields:
+                  - requiredFields
+                  - requiredFields
+                  name: name
+                displayName: displayName
+                description: description
+                fieldSchema:
+                - readOnlyStates:
+                    stateType: stateType
+                    selectedStates:
+                    - selectedStates
+                    - selectedStates
+                  displayName: displayName
+                  containsUrl: true
+                  name: name
+                  description: description
+                  valueConstraints:
+                    acceptableValues:
+                    - ""
+                    - ""
+                    constraintType: constraintType
+                    valueSourceType: valueSourceType
+                  type: type
+                  category: category
+                - readOnlyStates:
+                    stateType: stateType
+                    selectedStates:
+                    - selectedStates
+                    - selectedStates
+                  displayName: displayName
+                  containsUrl: true
+                  name: name
+                  description: description
+                  valueConstraints:
+                    acceptableValues:
+                    - ""
+                    - ""
+                    constraintType: constraintType
+                    valueSourceType: valueSourceType
+                  type: type
+                  category: category
+                id:
+                  code: code
+                  scope: scope
+                triggers:
+                - displayName: displayName
+                  name: name
+                  description: description
+                  trigger:
+                    type: type
+                - displayName: displayName
+                  name: name
+                  description: description
+                  trigger:
+                    type: type
+                transitions:
+                - fromState: fromState
+                  toState: toState
+                  displayName: displayName
+                  guard: guard
+                  action: action
+                  description: description
+                  guardDescription: guardDescription
+                  guardConditionNotMetMessage: guardConditionNotMetMessage
+                  trigger: trigger
+                - fromState: fromState
+                  toState: toState
+                  displayName: displayName
+                  guard: guard
+                  action: action
+                  description: description
+                  guardDescription: guardDescription
+                  guardConditionNotMetMessage: guardConditionNotMetMessage
+                  trigger: trigger
+                version:
+                  asAtModified: 2000-01-23T04:56:07.000+00:00
+                  userIdModified: userIdModified
+                  asAtVersionNumber: 0
+                  asAtCreated: 2000-01-23T04:56:07.000+00:00
+                  requestIdCreated: requestIdCreated
+                  userIdCreated: userIdCreated
+                  requestIdModified: requestIdModified
+                actions:
+                - displayName: displayName
+                  name: name
+                  description: description
+                  runAsUserId: runAsUserId
+                  actionDetails:
+                    type: type
+                  category: category
+                - displayName: displayName
+                  name: name
+                  description: description
+                  runAsUserId: runAsUserId
+                  actionDetails:
+                    type: type
+                  category: category
+                states:
+                - displayName: displayName
+                  name: name
+                  description: description
+                  category: category
+                - displayName: displayName
+                  name: name
+                  description: description
+                  category: category
+              - initialState:
+                  requiredFields:
+                  - requiredFields
+                  - requiredFields
+                  name: name
+                displayName: displayName
+                description: description
+                fieldSchema:
+                - readOnlyStates:
+                    stateType: stateType
+                    selectedStates:
+                    - selectedStates
+                    - selectedStates
+                  displayName: displayName
+                  containsUrl: true
+                  name: name
+                  description: description
+                  valueConstraints:
+                    acceptableValues:
+                    - ""
+                    - ""
+                    constraintType: constraintType
+                    valueSourceType: valueSourceType
+                  type: type
+                  category: category
+                - readOnlyStates:
+                    stateType: stateType
+                    selectedStates:
+                    - selectedStates
+                    - selectedStates
+                  displayName: displayName
+                  containsUrl: true
+                  name: name
+                  description: description
+                  valueConstraints:
+                    acceptableValues:
+                    - ""
+                    - ""
+                    constraintType: constraintType
+                    valueSourceType: valueSourceType
+                  type: type
+                  category: category
+                id:
+                  code: code
+                  scope: scope
+                triggers:
+                - displayName: displayName
+                  name: name
+                  description: description
+                  trigger:
+                    type: type
+                - displayName: displayName
+                  name: name
+                  description: description
+                  trigger:
+                    type: type
+                transitions:
+                - fromState: fromState
+                  toState: toState
+                  displayName: displayName
+                  guard: guard
+                  action: action
+                  description: description
+                  guardDescription: guardDescription
+                  guardConditionNotMetMessage: guardConditionNotMetMessage
+                  trigger: trigger
+                - fromState: fromState
+                  toState: toState
+                  displayName: displayName
+                  guard: guard
+                  action: action
+                  description: description
+                  guardDescription: guardDescription
+                  guardConditionNotMetMessage: guardConditionNotMetMessage
+                  trigger: trigger
+                version:
+                  asAtModified: 2000-01-23T04:56:07.000+00:00
+                  userIdModified: userIdModified
+                  asAtVersionNumber: 0
+                  asAtCreated: 2000-01-23T04:56:07.000+00:00
+                  requestIdCreated: requestIdCreated
+                  userIdCreated: userIdCreated
+                  requestIdModified: requestIdModified
+                actions:
+                - displayName: displayName
+                  name: name
+                  description: description
+                  runAsUserId: runAsUserId
+                  actionDetails:
+                    type: type
+                  category: category
+                - displayName: displayName
+                  name: name
+                  description: description
+                  runAsUserId: runAsUserId
+                  actionDetails:
+                    type: type
+                  category: category
+                states:
+                - displayName: displayName
+                  name: name
+                  description: description
+                  category: category
+                - displayName: displayName
+                  name: name
+                  description: description
+                  category: category
+            edges:
+              childTaskDefinitions:
+              - parent:
+                  taskDefinitionId:
+                    code: code
+                    scope: scope
+                  taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
+                child:
+                  taskDefinitionId:
+                    code: code
+                    scope: scope
+                  taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
+              - parent:
+                  taskDefinitionId:
+                    code: code
+                    scope: scope
+                  taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
+                child:
+                  taskDefinitionId:
+                    code: code
+                    scope: scope
+                  taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
+          displayName: displayName
+          rootTaskDefinitionId:
+            code: code
+            scope: scope
+          description: description
+          id:
+            code: code
+            scope: scope
+          version:
+            asAtModified: 2000-01-23T04:56:07.000+00:00
+            userIdModified: userIdModified
+            asAtVersionNumber: 0
+            asAtCreated: 2000-01-23T04:56:07.000+00:00
+            requestIdCreated: requestIdCreated
+            userIdCreated: userIdCreated
+            requestIdModified: requestIdModified
+        links:
+        - method: method
+          description: description
+          href: https://openapi-generator.tech
+          relation: relation
+        - method: method
+          description: description
+          href: https://openapi-generator.tech
+          relation: relation
+        href: https://openapi-generator.tech
+      properties:
+        nextPage:
+          nullable: true
+          type: string
+        previousPage:
+          nullable: true
+          type: string
+        values:
+          items:
+            $ref: '#/components/schemas/WorkflowResponse'
           type: array
         href:
           format: uri
@@ -8099,6 +9095,19 @@ components:
             leadTaskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             tasksInStack: 0
             memberAddedAsAt: 2000-01-23T04:56:07.000+00:00
+          actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          openDurationSinceLastUpdate: 1
+          taskDefinitionId:
+            code: code
+            scope: scope
+          stackingKey: stackingKey
+          actionLogIdSubmitted: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          correlationIds:
+          - correlationIds
+          - correlationIds
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: state
+          taskDefinitionDisplayName: taskDefinitionDisplayName
           parentTask:
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -8108,8 +9117,7 @@ components:
             taskDefinitionId:
               code: code
               scope: scope
-          actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          openDurationSinceLastUpdate: 1
+          workflowDisplayName: workflowDisplayName
           hierarchicalPosition: hierarchicalPosition
           openDuration: 6
           version:
@@ -8120,10 +9128,6 @@ components:
             requestIdCreated: requestIdCreated
             userIdCreated: userIdCreated
             requestIdModified: requestIdModified
-          taskDefinitionId:
-            code: code
-            scope: scope
-          stackingKey: stackingKey
           actionLogIdModified: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           childTasks:
           - taskDefinitionVersion:
@@ -8143,7 +9147,6 @@ components:
               code: code
               scope: scope
           asAtLastTransition: 2000-01-23T04:56:07.000+00:00
-          actionLogIdSubmitted: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           ultimateParentTask:
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -8153,20 +9156,17 @@ components:
             taskDefinitionId:
               code: code
               scope: scope
-          correlationIds:
-          - correlationIds
-          - correlationIds
           taskDefinitionVersion:
             asAtModified: 2000-01-23T04:56:07.000+00:00
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          state: state
           completionStatus: completionStatus
-          taskDefinitionDisplayName: taskDefinitionDisplayName
           fields:
           - name: name
             value: ""
           - name: name
             value: ""
+          workflowId:
+            code: code
+            scope: scope
           openDurationSinceLastTransition: 5
         - terminalState: true
           stack:
@@ -8178,6 +9178,19 @@ components:
             leadTaskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             tasksInStack: 0
             memberAddedAsAt: 2000-01-23T04:56:07.000+00:00
+          actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          openDurationSinceLastUpdate: 1
+          taskDefinitionId:
+            code: code
+            scope: scope
+          stackingKey: stackingKey
+          actionLogIdSubmitted: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          correlationIds:
+          - correlationIds
+          - correlationIds
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: state
+          taskDefinitionDisplayName: taskDefinitionDisplayName
           parentTask:
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -8187,8 +9200,7 @@ components:
             taskDefinitionId:
               code: code
               scope: scope
-          actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          openDurationSinceLastUpdate: 1
+          workflowDisplayName: workflowDisplayName
           hierarchicalPosition: hierarchicalPosition
           openDuration: 6
           version:
@@ -8199,10 +9211,6 @@ components:
             requestIdCreated: requestIdCreated
             userIdCreated: userIdCreated
             requestIdModified: requestIdModified
-          taskDefinitionId:
-            code: code
-            scope: scope
-          stackingKey: stackingKey
           actionLogIdModified: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           childTasks:
           - taskDefinitionVersion:
@@ -8222,7 +9230,6 @@ components:
               code: code
               scope: scope
           asAtLastTransition: 2000-01-23T04:56:07.000+00:00
-          actionLogIdSubmitted: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           ultimateParentTask:
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -8232,20 +9239,17 @@ components:
             taskDefinitionId:
               code: code
               scope: scope
-          correlationIds:
-          - correlationIds
-          - correlationIds
           taskDefinitionVersion:
             asAtModified: 2000-01-23T04:56:07.000+00:00
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          state: state
           completionStatus: completionStatus
-          taskDefinitionDisplayName: taskDefinitionDisplayName
           fields:
           - name: name
             value: ""
           - name: name
             value: ""
+          workflowId:
+            code: code
+            scope: scope
           openDurationSinceLastTransition: 5
         links:
         - method: method
@@ -8751,6 +9755,19 @@ components:
           leadTaskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           tasksInStack: 0
           memberAddedAsAt: 2000-01-23T04:56:07.000+00:00
+        actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        openDurationSinceLastUpdate: 1
+        taskDefinitionId:
+          code: code
+          scope: scope
+        stackingKey: stackingKey
+        actionLogIdSubmitted: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        correlationIds:
+        - correlationIds
+        - correlationIds
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        state: state
+        taskDefinitionDisplayName: taskDefinitionDisplayName
         parentTask:
           taskDefinitionVersion:
             asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -8760,8 +9777,7 @@ components:
           taskDefinitionId:
             code: code
             scope: scope
-        actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        openDurationSinceLastUpdate: 1
+        workflowDisplayName: workflowDisplayName
         hierarchicalPosition: hierarchicalPosition
         openDuration: 6
         version:
@@ -8772,10 +9788,6 @@ components:
           requestIdCreated: requestIdCreated
           userIdCreated: userIdCreated
           requestIdModified: requestIdModified
-        taskDefinitionId:
-          code: code
-          scope: scope
-        stackingKey: stackingKey
         actionLogIdModified: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         childTasks:
         - taskDefinitionVersion:
@@ -8795,7 +9807,6 @@ components:
             code: code
             scope: scope
         asAtLastTransition: 2000-01-23T04:56:07.000+00:00
-        actionLogIdSubmitted: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         ultimateParentTask:
           taskDefinitionVersion:
             asAtModified: 2000-01-23T04:56:07.000+00:00
@@ -8805,20 +9816,17 @@ components:
           taskDefinitionId:
             code: code
             scope: scope
-        correlationIds:
-        - correlationIds
-        - correlationIds
         taskDefinitionVersion:
           asAtModified: 2000-01-23T04:56:07.000+00:00
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        state: state
         completionStatus: completionStatus
-        taskDefinitionDisplayName: taskDefinitionDisplayName
         fields:
         - name: name
           value: ""
         - name: name
           value: ""
+        workflowId:
+          code: code
+          scope: scope
         openDurationSinceLastTransition: 5
       properties:
         id:
@@ -8832,6 +9840,13 @@ components:
         taskDefinitionDisplayName:
           description: The display name of the Task Definition used by this Task
           minLength: 1
+          type: string
+        workflowId:
+          $ref: '#/components/schemas/ResourceId'
+        workflowDisplayName:
+          description: "The display name of the Workflow that this Task is a member\
+            \ of, if any"
+          nullable: true
           type: string
         state:
           description: Current State

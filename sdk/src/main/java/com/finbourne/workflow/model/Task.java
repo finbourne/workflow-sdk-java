@@ -76,6 +76,14 @@ public class Task {
   @SerializedName(SERIALIZED_NAME_TASK_DEFINITION_DISPLAY_NAME)
   private String taskDefinitionDisplayName;
 
+  public static final String SERIALIZED_NAME_WORKFLOW_ID = "workflowId";
+  @SerializedName(SERIALIZED_NAME_WORKFLOW_ID)
+  private ResourceId workflowId;
+
+  public static final String SERIALIZED_NAME_WORKFLOW_DISPLAY_NAME = "workflowDisplayName";
+  @SerializedName(SERIALIZED_NAME_WORKFLOW_DISPLAY_NAME)
+  private String workflowDisplayName;
+
   public static final String SERIALIZED_NAME_STATE = "state";
   @SerializedName(SERIALIZED_NAME_STATE)
   private String state;
@@ -236,6 +244,48 @@ public class Task {
 
   public void setTaskDefinitionDisplayName(String taskDefinitionDisplayName) {
     this.taskDefinitionDisplayName = taskDefinitionDisplayName;
+  }
+
+
+  public Task workflowId(ResourceId workflowId) {
+    
+    this.workflowId = workflowId;
+    return this;
+  }
+
+   /**
+   * Get workflowId
+   * @return workflowId
+  **/
+  @jakarta.annotation.Nullable
+  public ResourceId getWorkflowId() {
+    return workflowId;
+  }
+
+
+  public void setWorkflowId(ResourceId workflowId) {
+    this.workflowId = workflowId;
+  }
+
+
+  public Task workflowDisplayName(String workflowDisplayName) {
+    
+    this.workflowDisplayName = workflowDisplayName;
+    return this;
+  }
+
+   /**
+   * The display name of the Workflow that this Task is a member of, if any
+   * @return workflowDisplayName
+  **/
+  @jakarta.annotation.Nullable
+  public String getWorkflowDisplayName() {
+    return workflowDisplayName;
+  }
+
+
+  public void setWorkflowDisplayName(String workflowDisplayName) {
+    this.workflowDisplayName = workflowDisplayName;
   }
 
 
@@ -676,6 +726,8 @@ public class Task {
         Objects.equals(this.taskDefinitionId, task.taskDefinitionId) &&
         Objects.equals(this.taskDefinitionVersion, task.taskDefinitionVersion) &&
         Objects.equals(this.taskDefinitionDisplayName, task.taskDefinitionDisplayName) &&
+        Objects.equals(this.workflowId, task.workflowId) &&
+        Objects.equals(this.workflowDisplayName, task.workflowDisplayName) &&
         Objects.equals(this.state, task.state) &&
         Objects.equals(this.ultimateParentTask, task.ultimateParentTask) &&
         Objects.equals(this.parentTask, task.parentTask) &&
@@ -703,7 +755,7 @@ public class Task {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, taskDefinitionId, taskDefinitionVersion, taskDefinitionDisplayName, state, ultimateParentTask, parentTask, childTasks, correlationIds, version, terminalState, asAtLastTransition, fields, stackingKey, stack, actionLogIdCreated, actionLogIdModified, actionLogIdSubmitted, hierarchicalPosition, completionStatus, openDuration, openDurationSinceLastUpdate, openDurationSinceLastTransition);
+    return Objects.hash(id, taskDefinitionId, taskDefinitionVersion, taskDefinitionDisplayName, workflowId, workflowDisplayName, state, ultimateParentTask, parentTask, childTasks, correlationIds, version, terminalState, asAtLastTransition, fields, stackingKey, stack, actionLogIdCreated, actionLogIdModified, actionLogIdSubmitted, hierarchicalPosition, completionStatus, openDuration, openDurationSinceLastUpdate, openDurationSinceLastTransition);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -721,6 +773,8 @@ public class Task {
     sb.append("    taskDefinitionId: ").append(toIndentedString(taskDefinitionId)).append("\n");
     sb.append("    taskDefinitionVersion: ").append(toIndentedString(taskDefinitionVersion)).append("\n");
     sb.append("    taskDefinitionDisplayName: ").append(toIndentedString(taskDefinitionDisplayName)).append("\n");
+    sb.append("    workflowId: ").append(toIndentedString(workflowId)).append("\n");
+    sb.append("    workflowDisplayName: ").append(toIndentedString(workflowDisplayName)).append("\n");
     sb.append("    state: ").append(toIndentedString(state)).append("\n");
     sb.append("    ultimateParentTask: ").append(toIndentedString(ultimateParentTask)).append("\n");
     sb.append("    parentTask: ").append(toIndentedString(parentTask)).append("\n");
@@ -766,6 +820,8 @@ public class Task {
     openapiFields.add("taskDefinitionId");
     openapiFields.add("taskDefinitionVersion");
     openapiFields.add("taskDefinitionDisplayName");
+    openapiFields.add("workflowId");
+    openapiFields.add("workflowDisplayName");
     openapiFields.add("state");
     openapiFields.add("ultimateParentTask");
     openapiFields.add("parentTask");
@@ -826,6 +882,13 @@ public class Task {
       TaskDefinitionVersion.validateJsonElement(jsonObj.get("taskDefinitionVersion"));
       if (!jsonObj.get("taskDefinitionDisplayName").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `taskDefinitionDisplayName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("taskDefinitionDisplayName").toString()));
+      }
+      // validate the optional field `workflowId`
+      if (jsonObj.get("workflowId") != null && !jsonObj.get("workflowId").isJsonNull()) {
+        ResourceId.validateJsonElement(jsonObj.get("workflowId"));
+      }
+      if ((jsonObj.get("workflowDisplayName") != null && !jsonObj.get("workflowDisplayName").isJsonNull()) && !jsonObj.get("workflowDisplayName").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `workflowDisplayName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("workflowDisplayName").toString()));
       }
       if (!jsonObj.get("state").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `state` to be a primitive type in the JSON string but got `%s`", jsonObj.get("state").toString()));

@@ -9,6 +9,8 @@ Name | Type | Description | Notes
 **taskDefinitionId** | [**ResourceId**](ResourceId.md) |  | [default to ResourceId]
 **taskDefinitionVersion** | [**TaskDefinitionVersion**](TaskDefinitionVersion.md) |  | [default to TaskDefinitionVersion]
 **taskDefinitionDisplayName** | **String** | The display name of the Task Definition used by this Task | [default to String]
+**workflowId** | [**ResourceId**](ResourceId.md) |  | [optional] [default to ResourceId]
+**workflowDisplayName** | **String** | The display name of the Workflow that this Task is a member of, if any | [optional] [default to String]
 **state** | **String** | Current State | [default to String]
 **ultimateParentTask** | [**TaskSummary**](TaskSummary.md) |  | [default to TaskSummary]
 **parentTask** | [**TaskSummary**](TaskSummary.md) |  | [optional] [default to TaskSummary]
@@ -39,6 +41,8 @@ UUID Id = "example Id";
 ResourceId TaskDefinitionId = new ResourceId();
 TaskDefinitionVersion TaskDefinitionVersion = new TaskDefinitionVersion();
 String TaskDefinitionDisplayName = "example TaskDefinitionDisplayName";
+ResourceId WorkflowId = new ResourceId();
+@jakarta.annotation.Nullable String WorkflowDisplayName = "example WorkflowDisplayName";
 String State = "example State";
 TaskSummary UltimateParentTask = new TaskSummary();
 TaskSummary ParentTask = new TaskSummary();
@@ -65,6 +69,8 @@ Task taskInstance = new Task()
     .TaskDefinitionId(TaskDefinitionId)
     .TaskDefinitionVersion(TaskDefinitionVersion)
     .TaskDefinitionDisplayName(TaskDefinitionDisplayName)
+    .WorkflowId(WorkflowId)
+    .WorkflowDisplayName(WorkflowDisplayName)
     .State(State)
     .UltimateParentTask(UltimateParentTask)
     .ParentTask(ParentTask)

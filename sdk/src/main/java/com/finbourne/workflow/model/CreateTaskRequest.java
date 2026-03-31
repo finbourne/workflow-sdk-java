@@ -58,6 +58,10 @@ public class CreateTaskRequest {
   @SerializedName(SERIALIZED_NAME_TASK_DEFINITION_ID)
   private ResourceId taskDefinitionId;
 
+  public static final String SERIALIZED_NAME_WORKFLOW_ID = "workflowId";
+  @SerializedName(SERIALIZED_NAME_WORKFLOW_ID)
+  private ResourceId workflowId;
+
   public static final String SERIALIZED_NAME_CORRELATION_IDS = "correlationIds";
   @SerializedName(SERIALIZED_NAME_CORRELATION_IDS)
   private List<String> correlationIds;
@@ -83,7 +87,7 @@ public class CreateTaskRequest {
    * Get taskDefinitionId
    * @return taskDefinitionId
   **/
-  @jakarta.annotation.Nonnull
+  @jakarta.annotation.Nullable
   public ResourceId getTaskDefinitionId() {
     return taskDefinitionId;
   }
@@ -91,6 +95,27 @@ public class CreateTaskRequest {
 
   public void setTaskDefinitionId(ResourceId taskDefinitionId) {
     this.taskDefinitionId = taskDefinitionId;
+  }
+
+
+  public CreateTaskRequest workflowId(ResourceId workflowId) {
+    
+    this.workflowId = workflowId;
+    return this;
+  }
+
+   /**
+   * Get workflowId
+   * @return workflowId
+  **/
+  @jakarta.annotation.Nullable
+  public ResourceId getWorkflowId() {
+    return workflowId;
+  }
+
+
+  public void setWorkflowId(ResourceId workflowId) {
+    this.workflowId = workflowId;
   }
 
 
@@ -184,6 +209,7 @@ public class CreateTaskRequest {
     }
     CreateTaskRequest createTaskRequest = (CreateTaskRequest) o;
     return Objects.equals(this.taskDefinitionId, createTaskRequest.taskDefinitionId) &&
+        Objects.equals(this.workflowId, createTaskRequest.workflowId) &&
         Objects.equals(this.correlationIds, createTaskRequest.correlationIds) &&
         Objects.equals(this.fields, createTaskRequest.fields) &&
         Objects.equals(this.stackingKey, createTaskRequest.stackingKey);
@@ -195,7 +221,7 @@ public class CreateTaskRequest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(taskDefinitionId, correlationIds, fields, stackingKey);
+    return Objects.hash(taskDefinitionId, workflowId, correlationIds, fields, stackingKey);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -210,6 +236,7 @@ public class CreateTaskRequest {
     StringBuilder sb = new StringBuilder();
     sb.append("class CreateTaskRequest {\n");
     sb.append("    taskDefinitionId: ").append(toIndentedString(taskDefinitionId)).append("\n");
+    sb.append("    workflowId: ").append(toIndentedString(workflowId)).append("\n");
     sb.append("    correlationIds: ").append(toIndentedString(correlationIds)).append("\n");
     sb.append("    fields: ").append(toIndentedString(fields)).append("\n");
     sb.append("    stackingKey: ").append(toIndentedString(stackingKey)).append("\n");
@@ -236,13 +263,13 @@ public class CreateTaskRequest {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
     openapiFields.add("taskDefinitionId");
+    openapiFields.add("workflowId");
     openapiFields.add("correlationIds");
     openapiFields.add("fields");
     openapiFields.add("stackingKey");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
-    openapiRequiredFields.add("taskDefinitionId");
   }
 
  /**
@@ -257,16 +284,15 @@ public class CreateTaskRequest {
           throw new IllegalArgumentException(String.format("The required field(s) %s in CreateTaskRequest is not found in the empty JSON string", CreateTaskRequest.openapiRequiredFields.toString()));
         }
       }
-
-      // check to make sure all required properties/fields are present in the JSON string
-      for (String requiredField : CreateTaskRequest.openapiRequiredFields) {
-        if (jsonElement.getAsJsonObject().get(requiredField) == null) {
-          throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonElement.toString()));
-        }
-      }
         JsonObject jsonObj = jsonElement.getAsJsonObject();
-      // validate the required field `taskDefinitionId`
-      ResourceId.validateJsonElement(jsonObj.get("taskDefinitionId"));
+      // validate the optional field `taskDefinitionId`
+      if (jsonObj.get("taskDefinitionId") != null && !jsonObj.get("taskDefinitionId").isJsonNull()) {
+        ResourceId.validateJsonElement(jsonObj.get("taskDefinitionId"));
+      }
+      // validate the optional field `workflowId`
+      if (jsonObj.get("workflowId") != null && !jsonObj.get("workflowId").isJsonNull()) {
+        ResourceId.validateJsonElement(jsonObj.get("workflowId"));
+      }
       // ensure the optional json data is an array if present
       if (jsonObj.get("correlationIds") != null && !jsonObj.get("correlationIds").isJsonNull() && !jsonObj.get("correlationIds").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `correlationIds` to be an array in the JSON string but got `%s`", jsonObj.get("correlationIds").toString()));

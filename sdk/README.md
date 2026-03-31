@@ -35,6 +35,7 @@ Class | Method | HTTP request | Description
 *WorkersApi* | [**updateWorker**](docs/WorkersApi.md#updateworker) | **PUT** /api/workers/{scope}/{code} | UpdateWorker: Update a Worker
 *WorkflowsApi* | [**createWorkflow**](docs/WorkflowsApi.md#createworkflow) | **POST** /api/workflows | CreateWorkflow: Create a new Workflow
 *WorkflowsApi* | [**getWorkflow**](docs/WorkflowsApi.md#getworkflow) | **GET** /api/workflows/{scope}/{code} | GetWorkflow: Get a Workflow
+*WorkflowsApi* | [**listWorkflows**](docs/WorkflowsApi.md#listworkflows) | **GET** /api/workflows | ListWorkflows: List Workflows
 
 
 <a id="documentation-for-models"></a>
@@ -99,6 +100,7 @@ Class | Method | HTTP request | Description
  - [PagedResourceListOfTask](docs/PagedResourceListOfTask.md)
  - [PagedResourceListOfTaskDefinition](docs/PagedResourceListOfTaskDefinition.md)
  - [PagedResourceListOfWorker](docs/PagedResourceListOfWorker.md)
+ - [PagedResourceListOfWorkflowResponse](docs/PagedResourceListOfWorkflowResponse.md)
  - [Parameter](docs/Parameter.md)
  - [ParameterValue](docs/ParameterValue.md)
  - [ReadOnlyStates](docs/ReadOnlyStates.md)
