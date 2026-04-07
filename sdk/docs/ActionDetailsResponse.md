@@ -31,6 +31,8 @@ ActionDetailsResponse config = new ActionDetailsResponse(actionDetailsResponse);
 
 * [RunWorkerActionResponse](./RunWorkerActionResponse.md)
 
+* [TriggerChildTasksActionResponse](./TriggerChildTasksActionResponse.md)
+
 * [TriggerParentTaskActionResponse](./TriggerParentTaskActionResponse.md)
 
 

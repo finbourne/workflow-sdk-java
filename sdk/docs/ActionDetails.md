@@ -31,6 +31,8 @@ ActionDetails config = new ActionDetails(actionDetails);
 
 * [RunWorkerAction](./RunWorkerAction.md)
 
+* [TriggerChildTasksAction](./TriggerChildTasksAction.md)
+
 * [TriggerParentTaskAction](./TriggerParentTaskAction.md)
 
 

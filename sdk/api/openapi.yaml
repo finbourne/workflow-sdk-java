@@ -40,7 +40,7 @@ info:
     | <a name="973">973</a>|Workflow already exists.| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1673
+  version: 0.1.1675
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -5659,6 +5659,7 @@ components:
       oneOf:
       - $ref: '#/components/schemas/CreateChildTasksAction'
       - $ref: '#/components/schemas/RunWorkerAction'
+      - $ref: '#/components/schemas/TriggerChildTasksAction'
       - $ref: '#/components/schemas/TriggerParentTaskAction'
       properties:
         type:
@@ -5676,6 +5677,7 @@ components:
       oneOf:
       - $ref: '#/components/schemas/CreateChildTasksActionResponse'
       - $ref: '#/components/schemas/RunWorkerActionResponse'
+      - $ref: '#/components/schemas/TriggerChildTasksActionResponse'
       - $ref: '#/components/schemas/TriggerParentTaskActionResponse'
       properties:
         type:
@@ -6186,6 +6188,7 @@ components:
           enum:
           - CreateChildTasks
           - RunWorker
+          - TriggerChildTasks
           - TriggerParentTask
           minLength: 1
           type: string
@@ -6207,6 +6210,7 @@ components:
           enum:
           - CreateChildTasks
           - RunWorker
+          - TriggerChildTasks
           - TriggerParentTask
           nullable: true
           type: string
@@ -10722,6 +10726,41 @@ components:
       required:
       - name
       - trigger
+      type: object
+    TriggerChildTasksAction:
+      additionalProperties: false
+      description: Defines a Trigger Child Tasks Action
+      properties:
+        type:
+          description: Type name for this Action
+          enum:
+          - TriggerChildTasks
+          minLength: 1
+          type: string
+        trigger:
+          description: Trigger on child tasks to be invoked
+          maxLength: 1024
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+      required:
+      - trigger
+      - type
+      type: object
+    TriggerChildTasksActionResponse:
+      additionalProperties: false
+      description: Defines a read-only Trigger Child Tasks Action
+      properties:
+        type:
+          description: Type name for this Action
+          enum:
+          - TriggerChildTasks
+          nullable: true
+          type: string
+        trigger:
+          description: Trigger on child tasks to be invoked
+          nullable: true
+          type: string
       type: object
     TriggerParentTaskAction:
       additionalProperties: false

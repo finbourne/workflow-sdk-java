@@ -141,6 +141,8 @@ Class | Method | HTTP request | Description
  - [TimeConstraints](docs/TimeConstraints.md)
  - [TimeOfDay](docs/TimeOfDay.md)
  - [TransitionTriggerDefinition](docs/TransitionTriggerDefinition.md)
+ - [TriggerChildTasksAction](docs/TriggerChildTasksAction.md)
+ - [TriggerChildTasksActionResponse](docs/TriggerChildTasksActionResponse.md)
  - [TriggerParentTaskAction](docs/TriggerParentTaskAction.md)
  - [TriggerParentTaskActionResponse](docs/TriggerParentTaskActionResponse.md)
  - [TriggerSchema](docs/TriggerSchema.md)

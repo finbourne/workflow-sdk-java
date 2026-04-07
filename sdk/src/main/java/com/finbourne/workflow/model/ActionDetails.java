@@ -16,6 +16,7 @@ import com.finbourne.workflow.model.FieldMapping;
 import com.finbourne.workflow.model.ResourceId;
 import com.finbourne.workflow.model.ResultantChildTaskConfiguration;
 import com.finbourne.workflow.model.RunWorkerAction;
+import com.finbourne.workflow.model.TriggerChildTasksAction;
 import com.finbourne.workflow.model.TriggerParentTaskAction;
 import com.finbourne.workflow.model.WorkerStatusTriggers;
 import com.google.gson.TypeAdapter;
@@ -81,6 +82,7 @@ public class ActionDetails extends AbstractOpenApiSchema {
             final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
             final TypeAdapter<CreateChildTasksAction> adapterCreateChildTasksAction = gson.getDelegateAdapter(this, TypeToken.get(CreateChildTasksAction.class));
             final TypeAdapter<RunWorkerAction> adapterRunWorkerAction = gson.getDelegateAdapter(this, TypeToken.get(RunWorkerAction.class));
+            final TypeAdapter<TriggerChildTasksAction> adapterTriggerChildTasksAction = gson.getDelegateAdapter(this, TypeToken.get(TriggerChildTasksAction.class));
             final TypeAdapter<TriggerParentTaskAction> adapterTriggerParentTaskAction = gson.getDelegateAdapter(this, TypeToken.get(TriggerParentTaskAction.class));
 
             return (TypeAdapter<T>) new TypeAdapter<ActionDetails>() {
@@ -103,13 +105,19 @@ public class ActionDetails extends AbstractOpenApiSchema {
                       elementAdapter.write(out, element);
                       return;
                     }
+                    // check if the actual instance is of the type `TriggerChildTasksAction`
+                    if (value.getActualInstance() instanceof TriggerChildTasksAction) {
+                      JsonElement element = adapterTriggerChildTasksAction.toJsonTree((TriggerChildTasksAction)value.getActualInstance());
+                      elementAdapter.write(out, element);
+                      return;
+                    }
                     // check if the actual instance is of the type `TriggerParentTaskAction`
                     if (value.getActualInstance() instanceof TriggerParentTaskAction) {
                       JsonElement element = adapterTriggerParentTaskAction.toJsonTree((TriggerParentTaskAction)value.getActualInstance());
                       elementAdapter.write(out, element);
                       return;
                     }
-                    throw new IOException("Failed to serialize as the type doesn't match oneOf schemas: CreateChildTasksAction, RunWorkerAction, TriggerParentTaskAction");
+                    throw new IOException("Failed to serialize as the type doesn't match oneOf schemas: CreateChildTasksAction, RunWorkerAction, TriggerChildTasksAction, TriggerParentTaskAction");
                 }
 
                 @Override
@@ -144,6 +152,18 @@ public class ActionDetails extends AbstractOpenApiSchema {
                       // deserialization failed, continue
                       errorMessages.add(String.format("Deserialization for RunWorkerAction failed with `%s`.", e.getMessage()));
                       log.log(Level.FINER, "Input data does not match schema 'RunWorkerAction'", e);
+                    }
+                    // deserialize TriggerChildTasksAction
+                    try {
+                      // validate the JSON object to see if any exception is thrown
+                      TriggerChildTasksAction.validateJsonElement(jsonElement);
+                      actualAdapter = adapterTriggerChildTasksAction;
+                      match++;
+                      log.log(Level.FINER, "Input data matches schema 'TriggerChildTasksAction'");
+                    } catch (Exception e) {
+                      // deserialization failed, continue
+                      errorMessages.add(String.format("Deserialization for TriggerChildTasksAction failed with `%s`.", e.getMessage()));
+                      log.log(Level.FINER, "Input data does not match schema 'TriggerChildTasksAction'", e);
                     }
                     // deserialize TriggerParentTaskAction
                     try {
@@ -187,6 +207,11 @@ public class ActionDetails extends AbstractOpenApiSchema {
         setActualInstance(o);
     }
 
+    public ActionDetails(TriggerChildTasksAction o) {
+        super("oneOf", Boolean.FALSE);
+        setActualInstance(o);
+    }
+
     public ActionDetails(TriggerParentTaskAction o) {
         super("oneOf", Boolean.FALSE);
         setActualInstance(o);
@@ -195,6 +220,7 @@ public class ActionDetails extends AbstractOpenApiSchema {
     static {
         schemas.put("CreateChildTasksAction", CreateChildTasksAction.class);
         schemas.put("RunWorkerAction", RunWorkerAction.class);
+        schemas.put("TriggerChildTasksAction", TriggerChildTasksAction.class);
         schemas.put("TriggerParentTaskAction", TriggerParentTaskAction.class);
     }
 
@@ -206,7 +232,7 @@ public class ActionDetails extends AbstractOpenApiSchema {
     /**
      * Set the instance that matches the oneOf child schema, check
      * the instance parameter is valid against the oneOf child schemas:
-     * CreateChildTasksAction, RunWorkerAction, TriggerParentTaskAction
+     * CreateChildTasksAction, RunWorkerAction, TriggerChildTasksAction, TriggerParentTaskAction
      *
      * It could be an instance of the 'oneOf' schemas.
      */
@@ -222,19 +248,24 @@ public class ActionDetails extends AbstractOpenApiSchema {
             return;
         }
 
+        if (instance instanceof TriggerChildTasksAction) {
+            super.setActualInstance(instance);
+            return;
+        }
+
         if (instance instanceof TriggerParentTaskAction) {
             super.setActualInstance(instance);
             return;
         }
 
-        throw new RuntimeException("Invalid instance type. Must be CreateChildTasksAction, RunWorkerAction, TriggerParentTaskAction");
+        throw new RuntimeException("Invalid instance type. Must be CreateChildTasksAction, RunWorkerAction, TriggerChildTasksAction, TriggerParentTaskAction");
     }
 
     /**
      * Get the actual instance, which can be the following:
-     * CreateChildTasksAction, RunWorkerAction, TriggerParentTaskAction
+     * CreateChildTasksAction, RunWorkerAction, TriggerChildTasksAction, TriggerParentTaskAction
      *
-     * @return The actual instance (CreateChildTasksAction, RunWorkerAction, TriggerParentTaskAction)
+     * @return The actual instance (CreateChildTasksAction, RunWorkerAction, TriggerChildTasksAction, TriggerParentTaskAction)
      */
     @Override
     public Object getActualInstance() {
@@ -260,6 +291,16 @@ public class ActionDetails extends AbstractOpenApiSchema {
      */
     public RunWorkerAction getRunWorkerAction() throws ClassCastException {
         return (RunWorkerAction)super.getActualInstance();
+    }
+    /**
+     * Get the actual instance of `TriggerChildTasksAction`. If the actual instance is not `TriggerChildTasksAction`,
+     * the ClassCastException will be thrown.
+     *
+     * @return The actual instance of `TriggerChildTasksAction`
+     * @throws ClassCastException if the instance is not `TriggerChildTasksAction`
+     */
+    public TriggerChildTasksAction getTriggerChildTasksAction() throws ClassCastException {
+        return (TriggerChildTasksAction)super.getActualInstance();
     }
     /**
      * Get the actual instance of `TriggerParentTaskAction`. If the actual instance is not `TriggerParentTaskAction`,
@@ -298,6 +339,14 @@ public class ActionDetails extends AbstractOpenApiSchema {
       errorMessages.add(String.format("Deserialization for RunWorkerAction failed with `%s`.", e.getMessage()));
       // continue to the next one
     }
+    // validate the json string with TriggerChildTasksAction
+    try {
+      TriggerChildTasksAction.validateJsonElement(jsonElement);
+      validCount++;
+    } catch (Exception e) {
+      errorMessages.add(String.format("Deserialization for TriggerChildTasksAction failed with `%s`.", e.getMessage()));
+      // continue to the next one
+    }
     // validate the json string with TriggerParentTaskAction
     try {
       TriggerParentTaskAction.validateJsonElement(jsonElement);
@@ -307,7 +356,7 @@ public class ActionDetails extends AbstractOpenApiSchema {
       // continue to the next one
     }
     if (validCount != 1) {
-      throw new IOException(String.format("The JSON string is invalid for ActionDetails with oneOf schemas: CreateChildTasksAction, RunWorkerAction, TriggerParentTaskAction. %d class(es) match the result, expected 1. Detailed failure message for oneOf schemas: %s. JSON: %s", validCount, errorMessages, jsonElement.toString()));
+      throw new IOException(String.format("The JSON string is invalid for ActionDetails with oneOf schemas: CreateChildTasksAction, RunWorkerAction, TriggerChildTasksAction, TriggerParentTaskAction. %d class(es) match the result, expected 1. Detailed failure message for oneOf schemas: %s. JSON: %s", validCount, errorMessages, jsonElement.toString()));
     }
   }
 

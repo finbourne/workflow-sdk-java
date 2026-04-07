@@ -11,16 +11,13 @@
 package com.finbourne.workflow.model;
 
 import java.util.Objects;
-import com.finbourne.workflow.model.CreateChildTaskConfiguration;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -48,22 +45,16 @@ import java.util.Set;
 import com.finbourne.workflow.JSON;
 
 /**
- * Defines a Create Child Tasks Action
+ * Defines a Trigger Child Tasks Action
  */
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class CreateChildTasksAction {
+public class TriggerChildTasksAction {
   /**
    * Type name for this Action
    */
   @JsonAdapter(TypeEnum.Adapter.class)
   public enum TypeEnum {
-    CREATECHILDTASKS("CreateChildTasks"),
-    
-    RUNWORKER("RunWorker"),
-    
-    TRIGGERCHILDTASKS("TriggerChildTasks"),
-    
-    TRIGGERPARENTTASK("TriggerParentTask");
+    TRIGGERCHILDTASKS("TriggerChildTasks");
 
     private String value;
 
@@ -107,14 +98,14 @@ public class CreateChildTasksAction {
   @SerializedName(SERIALIZED_NAME_TYPE)
   private TypeEnum type;
 
-  public static final String SERIALIZED_NAME_CHILD_TASK_CONFIGURATIONS = "childTaskConfigurations";
-  @SerializedName(SERIALIZED_NAME_CHILD_TASK_CONFIGURATIONS)
-  private List<CreateChildTaskConfiguration> childTaskConfigurations = new ArrayList<>();
+  public static final String SERIALIZED_NAME_TRIGGER = "trigger";
+  @SerializedName(SERIALIZED_NAME_TRIGGER)
+  private String trigger;
 
-  public CreateChildTasksAction() {
+  public TriggerChildTasksAction() {
   }
 
-  public CreateChildTasksAction type(TypeEnum type) {
+  public TriggerChildTasksAction type(TypeEnum type) {
     
     this.type = type;
     return this;
@@ -135,32 +126,24 @@ public class CreateChildTasksAction {
   }
 
 
-  public CreateChildTasksAction childTaskConfigurations(List<CreateChildTaskConfiguration> childTaskConfigurations) {
+  public TriggerChildTasksAction trigger(String trigger) {
     
-    this.childTaskConfigurations = childTaskConfigurations;
-    return this;
-  }
-
-  public CreateChildTasksAction addChildTaskConfigurationsItem(CreateChildTaskConfiguration childTaskConfigurationsItem) {
-    if (this.childTaskConfigurations == null) {
-      this.childTaskConfigurations = new ArrayList<>();
-    }
-    this.childTaskConfigurations.add(childTaskConfigurationsItem);
+    this.trigger = trigger;
     return this;
   }
 
    /**
-   * The Child Task Configurations
-   * @return childTaskConfigurations
+   * Trigger on child tasks to be invoked
+   * @return trigger
   **/
   @jakarta.annotation.Nonnull
-  public List<CreateChildTaskConfiguration> getChildTaskConfigurations() {
-    return childTaskConfigurations;
+  public String getTrigger() {
+    return trigger;
   }
 
 
-  public void setChildTaskConfigurations(List<CreateChildTaskConfiguration> childTaskConfigurations) {
-    this.childTaskConfigurations = childTaskConfigurations;
+  public void setTrigger(String trigger) {
+    this.trigger = trigger;
   }
 
 
@@ -173,22 +156,22 @@ public class CreateChildTasksAction {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CreateChildTasksAction createChildTasksAction = (CreateChildTasksAction) o;
-    return Objects.equals(this.type, createChildTasksAction.type) &&
-        Objects.equals(this.childTaskConfigurations, createChildTasksAction.childTaskConfigurations);
+    TriggerChildTasksAction triggerChildTasksAction = (TriggerChildTasksAction) o;
+    return Objects.equals(this.type, triggerChildTasksAction.type) &&
+        Objects.equals(this.trigger, triggerChildTasksAction.trigger);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(type, childTaskConfigurations);
+    return Objects.hash(type, trigger);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CreateChildTasksAction {\n");
+    sb.append("class TriggerChildTasksAction {\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
-    sb.append("    childTaskConfigurations: ").append(toIndentedString(childTaskConfigurations)).append("\n");
+    sb.append("    trigger: ").append(toIndentedString(trigger)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -212,29 +195,29 @@ public class CreateChildTasksAction {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
     openapiFields.add("type");
-    openapiFields.add("childTaskConfigurations");
+    openapiFields.add("trigger");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
     openapiRequiredFields.add("type");
-    openapiRequiredFields.add("childTaskConfigurations");
+    openapiRequiredFields.add("trigger");
   }
 
  /**
   * Validates the JSON Element and throws an exception if issues found
   *
   * @param jsonElement JSON Element
-  * @throws IOException if the JSON Element is invalid with respect to CreateChildTasksAction
+  * @throws IOException if the JSON Element is invalid with respect to TriggerChildTasksAction
   */
   public static void validateJsonElement(JsonElement jsonElement) throws IOException {
       if (jsonElement == null) {
-        if (!CreateChildTasksAction.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
-          throw new IllegalArgumentException(String.format("The required field(s) %s in CreateChildTasksAction is not found in the empty JSON string", CreateChildTasksAction.openapiRequiredFields.toString()));
+        if (!TriggerChildTasksAction.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in TriggerChildTasksAction is not found in the empty JSON string", TriggerChildTasksAction.openapiRequiredFields.toString()));
         }
       }
 
       // check to make sure all required properties/fields are present in the JSON string
-      for (String requiredField : CreateChildTasksAction.openapiRequiredFields) {
+      for (String requiredField : TriggerChildTasksAction.openapiRequiredFields) {
         if (jsonElement.getAsJsonObject().get(requiredField) == null) {
           throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonElement.toString()));
         }
@@ -243,38 +226,31 @@ public class CreateChildTasksAction {
       if (!jsonObj.get("type").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `type` to be a primitive type in the JSON string but got `%s`", jsonObj.get("type").toString()));
       }
-      // ensure the json data is an array
-      if (!jsonObj.get("childTaskConfigurations").isJsonArray()) {
-        throw new IllegalArgumentException(String.format("Expected the field `childTaskConfigurations` to be an array in the JSON string but got `%s`", jsonObj.get("childTaskConfigurations").toString()));
+      if (!jsonObj.get("trigger").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `trigger` to be a primitive type in the JSON string but got `%s`", jsonObj.get("trigger").toString()));
       }
-
-      JsonArray jsonArraychildTaskConfigurations = jsonObj.getAsJsonArray("childTaskConfigurations");
-      // validate the required field `childTaskConfigurations` (array)
-      for (int i = 0; i < jsonArraychildTaskConfigurations.size(); i++) {
-        CreateChildTaskConfiguration.validateJsonElement(jsonArraychildTaskConfigurations.get(i));
-      };
   }
 
   public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!CreateChildTasksAction.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'CreateChildTasksAction' and its subtypes
+       if (!TriggerChildTasksAction.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'TriggerChildTasksAction' and its subtypes
        }
        final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<CreateChildTasksAction> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(CreateChildTasksAction.class));
+       final TypeAdapter<TriggerChildTasksAction> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(TriggerChildTasksAction.class));
 
-       return (TypeAdapter<T>) new TypeAdapter<CreateChildTasksAction>() {
+       return (TypeAdapter<T>) new TypeAdapter<TriggerChildTasksAction>() {
            @Override
-           public void write(JsonWriter out, CreateChildTasksAction value) throws IOException {
+           public void write(JsonWriter out, TriggerChildTasksAction value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              elementAdapter.write(out, obj);
            }
 
            @Override
-           public CreateChildTasksAction read(JsonReader in) throws IOException {
+           public TriggerChildTasksAction read(JsonReader in) throws IOException {
              JsonElement jsonElement = elementAdapter.read(in);
              validateJsonElement(jsonElement);
              return thisAdapter.fromJsonTree(jsonElement);
@@ -285,18 +261,18 @@ public class CreateChildTasksAction {
   }
 
  /**
-  * Create an instance of CreateChildTasksAction given an JSON string
+  * Create an instance of TriggerChildTasksAction given an JSON string
   *
   * @param jsonString JSON string
-  * @return An instance of CreateChildTasksAction
-  * @throws IOException if the JSON string is invalid with respect to CreateChildTasksAction
+  * @return An instance of TriggerChildTasksAction
+  * @throws IOException if the JSON string is invalid with respect to TriggerChildTasksAction
   */
-  public static CreateChildTasksAction fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, CreateChildTasksAction.class);
+  public static TriggerChildTasksAction fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, TriggerChildTasksAction.class);
   }
 
  /**
-  * Convert an instance of CreateChildTasksAction to an JSON string
+  * Convert an instance of TriggerChildTasksAction to an JSON string
   *
   * @return JSON string
   */
