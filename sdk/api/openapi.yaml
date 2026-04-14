@@ -40,7 +40,7 @@ info:
     | <a name="973">973</a>|Workflow already exists.| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1675
+  version: 0.1.1677
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -5122,6 +5122,63 @@ paths:
       x-content-type: application/json-patch+json
       x-accepts: application/json
   /api/workflows/{scope}/{code}:
+    delete:
+      operationId: DeleteWorkflow
+      parameters:
+      - description: The scope that identifies a Workflow
+        explode: false
+        in: path
+        name: scope
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      - description: The code that identifies a Workflow
+        explode: false
+        in: path
+        name: code
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletedEntityResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        "404":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Workflow not found.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] DeleteWorkflow: Delete a Workflow"
+      tags:
+      - Workflows
+      x-fbn-apistatus: Experimental
+      x-accepts: application/json
     get:
       operationId: GetWorkflow
       parameters:
@@ -6566,14 +6623,12 @@ components:
         taskDefinitionId:
           code: code
           scope: scope
+        stackingKey: stackingKey
         workflowId:
           code: code
           scope: scope
-        stackingKey: stackingKey
       properties:
         taskDefinitionId:
-          $ref: '#/components/schemas/ResourceId'
-        workflowId:
           $ref: '#/components/schemas/ResourceId'
         correlationIds:
           description: A set of guid identifiers that allow correlation across the
@@ -6593,6 +6648,8 @@ components:
           description: The key for the Stack that this Task should be added to
           nullable: true
           type: string
+        workflowId:
+          $ref: '#/components/schemas/ResourceId'
       type: object
     CreateWorkerRequest:
       additionalProperties: false
