@@ -8,6 +8,7 @@ All URIs are relative to *https://fbn-prd.lusid.com/workflow*
 | [**deleteWorkflow**](WorkflowsApi.md#deleteWorkflow) | **DELETE** /api/workflows/{scope}/{code} | [EXPERIMENTAL] DeleteWorkflow: Delete a Workflow |
 | [**getWorkflow**](WorkflowsApi.md#getWorkflow) | **GET** /api/workflows/{scope}/{code} | GetWorkflow: Get a Workflow |
 | [**listWorkflows**](WorkflowsApi.md#listWorkflows) | **GET** /api/workflows | ListWorkflows: List Workflows |
+| [**updateWorkflow**](WorkflowsApi.md#updateWorkflow) | **PUT** /api/workflows/{scope}/{code} | [EXPERIMENTAL] UpdateWorkflow: Update an existing Workflow |
 
 
 
@@ -380,6 +381,100 @@ public class WorkflowsApiExample {
 | **200** | OK |  -  |
 | **400** | The details of the input related failure |  -  |
 | **404** | No Workflows found. |  -  |
+| **0** | Error response |  -  |
+
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
+
+
+## updateWorkflow
+
+> WorkflowResponse updateWorkflow(scope, code, updateWorkflowRequest)
+
+[EXPERIMENTAL] UpdateWorkflow: Update an existing Workflow
+
+### Example
+
+```java
+import com.finbourne.workflow.model.*;
+import com.finbourne.workflow.api.WorkflowsApi;
+import com.finbourne.workflow.extensions.ApiConfigurationException;
+import com.finbourne.workflow.extensions.ApiFactoryBuilder;
+import com.finbourne.workflow.extensions.auth.FinbourneTokenException;
+
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+
+public class WorkflowsApiExample {
+
+    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, ApiConfigurationException, FinbourneTokenException {
+        String fileName = "secrets.json";
+        try(PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
+          writer.write("{" +
+            "\"api\": {" +
+            "    \"tokenUrl\": \"<your-token-url>\"," +
+            "    \"workflowUrl\": \"https://<your-domain>.lusid.com/workflow\"," +
+            "    \"username\": \"<your-username>\"," +
+            "    \"password\": \"<your-password>\"," +
+            "    \"clientId\": \"<your-client-id>\"," +
+            "    \"clientSecret\": \"<your-client-secret>\"" +
+            "  }" +
+            "}");
+        }
+
+        // uncomment the below to use configuration overrides
+        // ConfigurationOptions opts = new ConfigurationOptions();
+        // opts.setTotalTimeoutMs(2000);
+        
+        // uncomment the below to use an api factory with overrides
+        // ApiFactory apiFactory = ApiFactoryBuilder.build(fileName, opts);
+        // WorkflowsApi apiInstance = apiFactory.build(WorkflowsApi.class);
+
+        WorkflowsApi apiInstance = ApiFactoryBuilder.build(fileName).build(WorkflowsApi.class);
+        String scope = "scope_example"; // String | The scope that identifies a Workflow
+        String code = "code_example"; // String | The code that identifies a Workflow
+        UpdateWorkflowRequest updateWorkflowRequest = new UpdateWorkflowRequest(); // UpdateWorkflowRequest | The data to update a Workflow
+        try {
+            // uncomment the below to set overrides at the request level
+            // WorkflowResponse result = apiInstance.updateWorkflow(scope, code, updateWorkflowRequest).execute(opts);
+
+            WorkflowResponse result = apiInstance.updateWorkflow(scope, code, updateWorkflowRequest).execute();
+            System.out.println(result.toJson());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling WorkflowsApi#updateWorkflow");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **scope** | **String**| The scope that identifies a Workflow | |
+| **code** | **String**| The code that identifies a Workflow | |
+| **updateWorkflowRequest** | [**UpdateWorkflowRequest**](UpdateWorkflowRequest.md)| The data to update a Workflow | |
+
+### Return type
+
+[**WorkflowResponse**](WorkflowResponse.md)
+
+### HTTP request headers
+
+- **Content-Type**: application/json-patch+json, application/json, text/json, application/*+json
+- **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+| **400** | The details of the input related failure |  -  |
+| **404** | Workflow not found. |  -  |
 | **0** | Error response |  -  |
 
 [Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)

@@ -40,7 +40,7 @@ info:
     | <a name="973">973</a>|Workflow already exists.| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1677
+  version: 0.1.1682
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -5412,6 +5412,274 @@ paths:
       tags:
       - Workflows
       x-fbn-apistatus: Stable
+      x-accepts: application/json
+    put:
+      operationId: UpdateWorkflow
+      parameters:
+      - description: The scope that identifies a Workflow
+        explode: false
+        in: path
+        name: scope
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      - description: The code that identifies a Workflow
+        explode: false
+        in: path
+        name: code
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json-patch+json:
+            example:
+              displayName: Example Workflow
+              description: An updated example workflow that references a root task
+                definition
+              rootTaskDefinitionId:
+                scope: default
+                code: ExampleTaskDefinition
+            schema:
+              $ref: '#/components/schemas/UpdateWorkflowRequest'
+          application/json:
+            example:
+              displayName: Example Workflow
+              description: An updated example workflow that references a root task
+                definition
+              rootTaskDefinitionId:
+                scope: default
+                code: ExampleTaskDefinition
+            schema:
+              $ref: '#/components/schemas/UpdateWorkflowRequest'
+          text/json:
+            example:
+              displayName: Example Workflow
+              description: An updated example workflow that references a root task
+                definition
+              rootTaskDefinitionId:
+                scope: default
+                code: ExampleTaskDefinition
+            schema:
+              $ref: '#/components/schemas/UpdateWorkflowRequest'
+          application/*+json:
+            example:
+              displayName: Example Workflow
+              description: An updated example workflow that references a root task
+                definition
+              rootTaskDefinitionId:
+                scope: default
+                code: ExampleTaskDefinition
+            schema:
+              $ref: '#/components/schemas/UpdateWorkflowRequest'
+        description: The data to update a Workflow
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                id:
+                  scope: default
+                  code: ExampleWorkflow
+                version:
+                  asAtCreated: 2022-01-01T01:02:03.0000000+00:00
+                  userIdCreated: User-1
+                  requestIdCreated: RequestId-1
+                  asAtModified: 2022-01-01T01:02:03.0000000+00:00
+                  userIdModified: User-1
+                  requestIdModified: RequestId-1
+                  asAtVersionNumber: 1
+                displayName: Example Workflow
+                description: An example workflow that references a root task definition
+                rootTaskDefinitionId:
+                  scope: default
+                  code: ExampleTaskDefinition
+                workflowStructure:
+                  nodes:
+                    taskDefinitions:
+                    - id:
+                        scope: A1
+                        code: ZZZ
+                      version:
+                        asAtCreated: 2022-01-01T01:02:03.0000000+00:00
+                        userIdCreated: User-1
+                        requestIdCreated: RequestId-1
+                        asAtModified: 2022-01-01T01:02:03.0000000+00:00
+                        userIdModified: User-1
+                        requestIdModified: RequestId-1
+                        asAtVersionNumber: 1
+                      displayName: An example TaskDefinition
+                      description: Test
+                      states:
+                      - name: Submitted
+                        displayName: Submitted
+                        description: Submitted ready to start
+                        category: NotStarted
+                      - name: InProgress
+                        displayName: In progress
+                        description: In progress
+                        category: InProgress
+                      - name: SendingSurvey
+                        displayName: In Progress sending survey
+                        description: Sending survey
+                        category: InProgress
+                      - name: Done
+                        displayName: Done
+                        description: Task has finished successfully
+                        category: CompletedSuccess
+                      - name: SurveyNotSent
+                        displayName: Survey Not Sent
+                        description: Survey has not been sent
+                        category: InProgress
+                      - name: NotDone
+                        displayName: Not Done
+                        description: Task is not done
+                        category: Other
+                      fieldSchema:
+                      - name: clientId
+                        type: String
+                        displayName: Client Id
+                        description: Id for the client
+                        containsUrl: false
+                      - name: assignee
+                        type: String
+                        readOnlyStates:
+                          stateType: SelectedStates
+                          selectedStates:
+                          - Submitted
+                          - Done
+                          - SurveyNotSent
+                          - NotDone
+                      - name: resolutionDetail
+                        type: String
+                        readOnlyStates:
+                          stateType: TerminalState
+                        category: LargetextArea
+                      initialState:
+                        name: Submitted
+                        requiredFields:
+                        - clientId
+                      triggers:
+                      - name: start
+                        trigger:
+                          type: External
+                        displayName: Start
+                        description: Start the task
+                      - name: cancel
+                        trigger:
+                          type: External
+                      - name: resolve
+                        trigger:
+                          type: External
+                      - name: timeout
+                        trigger:
+                          type: External
+                      - name: success
+                        trigger:
+                          type: External
+                      - name: failure
+                        trigger:
+                          type: External
+                      actions:
+                      - name: health-check
+                        runAsUserId: user-id
+                        actionDetails:
+                          type: RunWorker
+                          workerId:
+                            scope: Health
+                            code: HealthCheckWorker
+                          workerAsAt: 2022-01-01T01:02:03.0000000+00:00
+                          workerParameters: {}
+                          workerStatusTriggers:
+                            started: null
+                            completedWithResults: null
+                            completedNoResults: null
+                            failedToStart: null
+                            failedToComplete: null
+                          childTaskConfigurations:
+                          - taskDefinitionId:
+                              scope: AAA
+                              code: BBB
+                            mapStackingKeyFrom: null
+                            childTaskFields:
+                              assignee:
+                                mapFrom: foo
+                                setTo: bar
+                            resultMatchingPattern: null
+                            taskDefinitionAsAt: null
+                            initialTrigger: test-trigger
+                          workerTimeout: 120
+                        displayName: Health Check
+                        description: Health check
+                      transitions:
+                      - fromState: Submitted
+                        toState: InProgress
+                        trigger: start
+                        guard: "fields['assignee'] exists AND fields['assignee'] NOT\
+                          \ eq ''"
+                        displayName: Start
+                        description: Start the worker
+                        guardDescription: Field assignee exists
+                        guardConditionNotMetMessage: Assignee does not exist
+                      - fromState: InProgress
+                        toState: SendingSurvey
+                        trigger: resolve
+                        guard: "fields['resolutionDetail'] exists AND fields['resolutionDetail']\
+                          \ NOT eq ''"
+                        action: health-check
+                      - fromState: SendingSurvey
+                        toState: Done
+                        trigger: success
+                      - fromState: SendingSurvey
+                        toState: SurveyNotSent
+                        trigger: failure
+                      - fromState: SendingSurvey
+                        toState: NotDone
+                        trigger: timeout
+                      - fromState: InProgress
+                        toState: NotDone
+                        trigger: cancel
+                        guard: "fields['cancellationDetail'] exists AND fields['cancellationDetail']\
+                          \ NOT eq ''"
+                  edges:
+                    childTaskDefinitions: []
+              schema:
+                $ref: '#/components/schemas/WorkflowResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        "404":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Workflow not found.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] UpdateWorkflow: Update an existing Workflow"
+      tags:
+      - Workflows
+      x-fbn-apistatus: Experimental
+      x-content-type: application/json-patch+json
       x-accepts: application/json
 components:
   schemas:
@@ -11301,6 +11569,35 @@ components:
       required:
       - displayName
       - workerConfiguration
+      type: object
+    UpdateWorkflowRequest:
+      additionalProperties: false
+      description: Contains required info to update an existing Workflow
+      example:
+        displayName: displayName
+        rootTaskDefinitionId:
+          code: code
+          scope: scope
+        description: description
+      properties:
+        displayName:
+          description: Human readable name
+          maxLength: 512
+          minLength: 1
+          pattern: "^[\\s\\S]*$"
+          type: string
+        description:
+          description: Human readable description
+          maxLength: 1024
+          minLength: 0
+          nullable: true
+          pattern: "^[\\s\\S]*$"
+          type: string
+        rootTaskDefinitionId:
+          $ref: '#/components/schemas/ResourceId'
+      required:
+      - displayName
+      - rootTaskDefinitionId
       type: object
     ValueConstraints:
       additionalProperties: false

@@ -31,6 +31,7 @@ import com.finbourne.workflow.model.LusidProblemDetails;
 import com.finbourne.workflow.model.LusidValidationProblemDetails;
 import java.time.OffsetDateTime;
 import com.finbourne.workflow.model.PagedResourceListOfWorkflowResponse;
+import com.finbourne.workflow.model.UpdateWorkflowRequest;
 import com.finbourne.workflow.model.WorkflowResponse;
 
 import java.lang.reflect.Type;
@@ -1129,5 +1130,264 @@ public class WorkflowsApi {
      */
     public APIlistWorkflowsRequest listWorkflows() {
         return new APIlistWorkflowsRequest();
+    }
+    private okhttp3.Call updateWorkflowCall(String scope, String code, UpdateWorkflowRequest updateWorkflowRequest, final ApiCallback _callback) throws ApiException {
+        return updateWorkflowCall(scope, code, updateWorkflowRequest,  _callback, new ConfigurationOptions());
+    }
+
+    private okhttp3.Call updateWorkflowCall(String scope, String code, UpdateWorkflowRequest updateWorkflowRequest, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = updateWorkflowRequest;
+
+        // create path and map variables
+        String localVarPath = "/api/workflows/{scope}/{code}"
+            .replace("{" + "scope" + "}", localVarApiClient.escapeString(scope.toString()))
+            .replace("{" + "code" + "}", localVarApiClient.escapeString(code.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json-patch+json",
+            "application/json",
+            "text/json",
+            "application/*+json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "oauth2" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback, opts);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call updateWorkflowValidateBeforeCall(String scope, String code, UpdateWorkflowRequest updateWorkflowRequest, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
+        // verify the required parameter 'scope' is set
+        if (scope == null) {
+            throw new ApiException("Missing the required parameter 'scope' when calling updateWorkflow(Async)");
+        }
+
+        // verify the required parameter 'code' is set
+        if (code == null) {
+            throw new ApiException("Missing the required parameter 'code' when calling updateWorkflow(Async)");
+        }
+
+        // verify the required parameter 'updateWorkflowRequest' is set
+        if (updateWorkflowRequest == null) {
+            throw new ApiException("Missing the required parameter 'updateWorkflowRequest' when calling updateWorkflow(Async)");
+        }
+
+        return updateWorkflowCall(scope, code, updateWorkflowRequest, _callback, opts);
+
+    }
+
+
+    private ApiResponse<WorkflowResponse> updateWorkflowWithHttpInfo(String scope, String code, UpdateWorkflowRequest updateWorkflowRequest) throws ApiException {
+        okhttp3.Call localVarCall = updateWorkflowValidateBeforeCall(scope, code, updateWorkflowRequest, null, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<WorkflowResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private ApiResponse<WorkflowResponse> updateWorkflowWithHttpInfo(String scope, String code, UpdateWorkflowRequest updateWorkflowRequest, ConfigurationOptions opts) throws ApiException {
+        okhttp3.Call localVarCall = updateWorkflowValidateBeforeCall(scope, code, updateWorkflowRequest, null, opts);
+        Type localVarReturnType = new TypeToken<WorkflowResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private okhttp3.Call updateWorkflowAsync(String scope, String code, UpdateWorkflowRequest updateWorkflowRequest, final ApiCallback<WorkflowResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = updateWorkflowValidateBeforeCall(scope, code, updateWorkflowRequest, _callback, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<WorkflowResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    private okhttp3.Call updateWorkflowAsync(String scope, String code, UpdateWorkflowRequest updateWorkflowRequest, final ApiCallback<WorkflowResponse> _callback, ConfigurationOptions opts) throws ApiException {
+
+        okhttp3.Call localVarCall = updateWorkflowValidateBeforeCall(scope, code, updateWorkflowRequest, _callback, opts);
+        Type localVarReturnType = new TypeToken<WorkflowResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    public class APIupdateWorkflowRequest {
+        private final String scope;
+        private final String code;
+        private final UpdateWorkflowRequest updateWorkflowRequest;
+
+        private APIupdateWorkflowRequest(String scope, String code, UpdateWorkflowRequest updateWorkflowRequest) {
+            this.scope = scope;
+            this.code = code;
+            this.updateWorkflowRequest = updateWorkflowRequest;
+        }
+
+        /**
+         * Build call for updateWorkflow
+         * @param _callback ApiCallback API callback
+         * @return Call to execute
+         * @throws ApiException If fail to serialize the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Workflow not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call buildCall(final ApiCallback _callback) throws ApiException {
+            return updateWorkflowCall(scope, code, updateWorkflowRequest, _callback);
+        }
+
+        /**
+         * Execute updateWorkflow request
+         * @return WorkflowResponse
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Workflow not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public WorkflowResponse execute() throws ApiException {
+            ApiResponse<WorkflowResponse> localVarResp = updateWorkflowWithHttpInfo(scope, code, updateWorkflowRequest);
+            return localVarResp.getData();
+        }
+
+        /**
+         * Execute updateWorkflow request. Use any specified configuration options to override any other configuration for this request only.
+         * @return WorkflowResponse
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Workflow not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public WorkflowResponse execute(ConfigurationOptions opts) throws ApiException {
+            ApiResponse<WorkflowResponse> localVarResp = updateWorkflowWithHttpInfo(scope, code, updateWorkflowRequest, opts);
+            return localVarResp.getData();
+        }
+
+        /**
+         * Execute updateWorkflow request with HTTP info returned
+         * @return ApiResponse&lt;WorkflowResponse&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Workflow not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<WorkflowResponse> executeWithHttpInfo() throws ApiException {
+            return updateWorkflowWithHttpInfo(scope, code, updateWorkflowRequest);
+        }
+
+        /**
+         * Execute updateWorkflow request with HTTP info returned. Use any specified configuration options to override any other configuration for this request only.
+         * @return ApiResponse&lt;WorkflowResponse&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Workflow not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<WorkflowResponse> executeWithHttpInfo(ConfigurationOptions opts) throws ApiException {
+            return updateWorkflowWithHttpInfo(scope, code, updateWorkflowRequest, opts);
+        }
+
+        /**
+         * Execute updateWorkflow request (asynchronously)
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Workflow not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<WorkflowResponse> _callback) throws ApiException {
+            return updateWorkflowAsync(scope, code, updateWorkflowRequest, _callback);
+        }
+
+        /**
+         * Execute updateWorkflow request (asynchronously). Use any specified configuration options to override any other configuration for this request only.
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Workflow not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<WorkflowResponse> _callback, ConfigurationOptions opts) throws ApiException {
+            return updateWorkflowAsync(scope, code, updateWorkflowRequest, _callback, opts);
+        }
+    }
+
+    /**
+     * [EXPERIMENTAL] UpdateWorkflow: Update an existing Workflow
+     * 
+     * @param scope The scope that identifies a Workflow (required)
+     * @param code The code that identifies a Workflow (required)
+     * @param updateWorkflowRequest The data to update a Workflow (required)
+     * @return APIupdateWorkflowRequest
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Workflow not found. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+     </table>
+     */
+    public APIupdateWorkflowRequest updateWorkflow(String scope, String code, UpdateWorkflowRequest updateWorkflowRequest) {
+        return new APIupdateWorkflowRequest(scope, code, updateWorkflowRequest);
     }
 }
