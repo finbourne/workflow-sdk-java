@@ -18,6 +18,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.util.Arrays;
+import org.openapitools.jackson.nullable.JsonNullable;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -102,6 +103,10 @@ public class TriggerChildTasksAction {
   @SerializedName(SERIALIZED_NAME_TRIGGER)
   private String trigger;
 
+  public static final String SERIALIZED_NAME_FILTER = "filter";
+  @SerializedName(SERIALIZED_NAME_FILTER)
+  private String filter;
+
   public TriggerChildTasksAction() {
   }
 
@@ -147,6 +152,27 @@ public class TriggerChildTasksAction {
   }
 
 
+  public TriggerChildTasksAction filter(String filter) {
+    
+    this.filter = filter;
+    return this;
+  }
+
+   /**
+   * Optional LUSID filter expression to limit the action to a subset of the child tasks
+   * @return filter
+  **/
+  @jakarta.annotation.Nullable
+  public String getFilter() {
+    return filter;
+  }
+
+
+  public void setFilter(String filter) {
+    this.filter = filter;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -158,12 +184,24 @@ public class TriggerChildTasksAction {
     }
     TriggerChildTasksAction triggerChildTasksAction = (TriggerChildTasksAction) o;
     return Objects.equals(this.type, triggerChildTasksAction.type) &&
-        Objects.equals(this.trigger, triggerChildTasksAction.trigger);
+        Objects.equals(this.trigger, triggerChildTasksAction.trigger) &&
+        Objects.equals(this.filter, triggerChildTasksAction.filter);
+  }
+
+  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
+    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(type, trigger);
+    return Objects.hash(type, trigger, filter);
+  }
+
+  private static <T> int hashCodeNullable(JsonNullable<T> a) {
+    if (a == null) {
+      return 1;
+    }
+    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
   }
 
   @Override
@@ -172,6 +210,7 @@ public class TriggerChildTasksAction {
     sb.append("class TriggerChildTasksAction {\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    trigger: ").append(toIndentedString(trigger)).append("\n");
+    sb.append("    filter: ").append(toIndentedString(filter)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -196,6 +235,7 @@ public class TriggerChildTasksAction {
     openapiFields = new HashSet<String>();
     openapiFields.add("type");
     openapiFields.add("trigger");
+    openapiFields.add("filter");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -228,6 +268,9 @@ public class TriggerChildTasksAction {
       }
       if (!jsonObj.get("trigger").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `trigger` to be a primitive type in the JSON string but got `%s`", jsonObj.get("trigger").toString()));
+      }
+      if ((jsonObj.get("filter") != null && !jsonObj.get("filter").isJsonNull()) && !jsonObj.get("filter").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `filter` to be a primitive type in the JSON string but got `%s`", jsonObj.get("filter").toString()));
       }
   }
 

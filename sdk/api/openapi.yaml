@@ -40,7 +40,7 @@ info:
     | <a name="973">973</a>|Workflow already exists.| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1682
+  version: 0.1.1724
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -11068,6 +11068,12 @@ components:
           minLength: 1
           pattern: "^[a-zA-Z0-9\\-_]+$"
           type: string
+        filter:
+          description: Optional LUSID filter expression to limit the action to a subset
+            of the child tasks
+          maxLength: 1024
+          nullable: true
+          type: string
       required:
       - trigger
       - type
@@ -11084,6 +11090,11 @@ components:
           type: string
         trigger:
           description: Trigger on child tasks to be invoked
+          nullable: true
+          type: string
+        filter:
+          description: Optional LUSID filter expression to limit the action to a subset
+            of the child tasks
           nullable: true
           type: string
       type: object

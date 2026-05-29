@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **String** | Type name for this Action | [default to String]
 **trigger** | **String** | Trigger on child tasks to be invoked | [default to String]
+**filter** | **String** | Optional LUSID filter expression to limit the action to a subset of the child tasks | [optional] [default to String]
 
 ```java
 import com.finbourne.workflow.model.TriggerChildTasksAction;
@@ -16,11 +17,13 @@ import java.net.URI;
 
 String Type = "example Type";
 String Trigger = "example Trigger";
+@jakarta.annotation.Nullable String Filter = "example Filter";
 
 
 TriggerChildTasksAction triggerChildTasksActionInstance = new TriggerChildTasksAction()
     .Type(Type)
-    .Trigger(Trigger);
+    .Trigger(Trigger)
+    .Filter(Filter);
 ```
 
 

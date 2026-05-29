@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **workerStatusTriggers** | [**WorkerStatusTriggers**](WorkerStatusTriggers.md) |  | [optional] [default to WorkerStatusTriggers]
 **workerTimeout** | **Integer** | Worker WorkerTimeout in seconds | [optional] [default to Integer]
 **trigger** | **String** | Trigger on parent task to be invoked | [default to String]
+**filter** | **String** | Optional LUSID filter expression to limit the action to a subset of the child tasks | [optional] [default to String]
 
 ```java
 import com.finbourne.workflow.model.ActionDetails;

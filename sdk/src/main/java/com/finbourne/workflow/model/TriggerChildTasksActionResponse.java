@@ -103,6 +103,10 @@ public class TriggerChildTasksActionResponse {
   @SerializedName(SERIALIZED_NAME_TRIGGER)
   private String trigger;
 
+  public static final String SERIALIZED_NAME_FILTER = "filter";
+  @SerializedName(SERIALIZED_NAME_FILTER)
+  private String filter;
+
   public TriggerChildTasksActionResponse() {
   }
 
@@ -148,6 +152,27 @@ public class TriggerChildTasksActionResponse {
   }
 
 
+  public TriggerChildTasksActionResponse filter(String filter) {
+    
+    this.filter = filter;
+    return this;
+  }
+
+   /**
+   * Optional LUSID filter expression to limit the action to a subset of the child tasks
+   * @return filter
+  **/
+  @jakarta.annotation.Nullable
+  public String getFilter() {
+    return filter;
+  }
+
+
+  public void setFilter(String filter) {
+    this.filter = filter;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -159,7 +184,8 @@ public class TriggerChildTasksActionResponse {
     }
     TriggerChildTasksActionResponse triggerChildTasksActionResponse = (TriggerChildTasksActionResponse) o;
     return Objects.equals(this.type, triggerChildTasksActionResponse.type) &&
-        Objects.equals(this.trigger, triggerChildTasksActionResponse.trigger);
+        Objects.equals(this.trigger, triggerChildTasksActionResponse.trigger) &&
+        Objects.equals(this.filter, triggerChildTasksActionResponse.filter);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -168,7 +194,7 @@ public class TriggerChildTasksActionResponse {
 
   @Override
   public int hashCode() {
-    return Objects.hash(type, trigger);
+    return Objects.hash(type, trigger, filter);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -184,6 +210,7 @@ public class TriggerChildTasksActionResponse {
     sb.append("class TriggerChildTasksActionResponse {\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    trigger: ").append(toIndentedString(trigger)).append("\n");
+    sb.append("    filter: ").append(toIndentedString(filter)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -208,6 +235,7 @@ public class TriggerChildTasksActionResponse {
     openapiFields = new HashSet<String>();
     openapiFields.add("type");
     openapiFields.add("trigger");
+    openapiFields.add("filter");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -231,6 +259,9 @@ public class TriggerChildTasksActionResponse {
       }
       if ((jsonObj.get("trigger") != null && !jsonObj.get("trigger").isJsonNull()) && !jsonObj.get("trigger").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `trigger` to be a primitive type in the JSON string but got `%s`", jsonObj.get("trigger").toString()));
+      }
+      if ((jsonObj.get("filter") != null && !jsonObj.get("filter").isJsonNull()) && !jsonObj.get("filter").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `filter` to be a primitive type in the JSON string but got `%s`", jsonObj.get("filter").toString()));
       }
   }
 
