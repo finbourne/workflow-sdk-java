@@ -9,6 +9,7 @@ All URIs are relative to *https://fbn-prd.lusid.com/workflow*
 | [**getWorkflow**](WorkflowsApi.md#getWorkflow) | **GET** /api/workflows/{scope}/{code} | GetWorkflow: Get a Workflow |
 | [**listWorkflows**](WorkflowsApi.md#listWorkflows) | **GET** /api/workflows | ListWorkflows: List Workflows |
 | [**updateWorkflow**](WorkflowsApi.md#updateWorkflow) | **PUT** /api/workflows/{scope}/{code} | [EXPERIMENTAL] UpdateWorkflow: Update an existing Workflow |
+| [**upsertWorkflowProperties**](WorkflowsApi.md#upsertWorkflowProperties) | **POST** /api/workflows/{scope}/{code}/properties | [EXPERIMENTAL] UpsertWorkflowProperties: Add, update and remove properties on an existing Workflow in bulk. |
 
 
 
@@ -462,6 +463,102 @@ public class WorkflowsApiExample {
 ### Return type
 
 [**WorkflowResponse**](WorkflowResponse.md)
+
+### HTTP request headers
+
+- **Content-Type**: application/json-patch+json, application/json, text/json, application/*+json
+- **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+| **400** | The details of the input related failure |  -  |
+| **404** | Workflow not found. |  -  |
+| **0** | Error response |  -  |
+
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
+
+
+## upsertWorkflowProperties
+
+> BatchUpsertWorkflowPropertiesResponse upsertWorkflowProperties(scope, code, requestBody, successMode)
+
+[EXPERIMENTAL] UpsertWorkflowProperties: Add, update and remove properties on an existing Workflow in bulk.
+
+### Example
+
+```java
+import com.finbourne.workflow.model.*;
+import com.finbourne.workflow.api.WorkflowsApi;
+import com.finbourne.workflow.extensions.ApiConfigurationException;
+import com.finbourne.workflow.extensions.ApiFactoryBuilder;
+import com.finbourne.workflow.extensions.auth.FinbourneTokenException;
+
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+
+public class WorkflowsApiExample {
+
+    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, ApiConfigurationException, FinbourneTokenException {
+        String fileName = "secrets.json";
+        try(PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
+          writer.write("{" +
+            "\"api\": {" +
+            "    \"tokenUrl\": \"<your-token-url>\"," +
+            "    \"workflowUrl\": \"https://<your-domain>.lusid.com/workflow\"," +
+            "    \"username\": \"<your-username>\"," +
+            "    \"password\": \"<your-password>\"," +
+            "    \"clientId\": \"<your-client-id>\"," +
+            "    \"clientSecret\": \"<your-client-secret>\"" +
+            "  }" +
+            "}");
+        }
+
+        // uncomment the below to use configuration overrides
+        // ConfigurationOptions opts = new ConfigurationOptions();
+        // opts.setTotalTimeoutMs(2000);
+        
+        // uncomment the below to use an api factory with overrides
+        // ApiFactory apiFactory = ApiFactoryBuilder.build(fileName, opts);
+        // WorkflowsApi apiInstance = apiFactory.build(WorkflowsApi.class);
+
+        WorkflowsApi apiInstance = ApiFactoryBuilder.build(fileName).build(WorkflowsApi.class);
+        String scope = "scope_example"; // String | The scope that identifies a Workflow
+        String code = "code_example"; // String | The code that identifies a Workflow
+        Map<String, PerpetualProperty> requestBody = new HashMap(); // Map<String, PerpetualProperty> | The properties to upsert, keyed by property key. A null value deletes the property.
+        String successMode = "Partial"; // String | Whether the batch should fail Atomically or Partially. Defaults to Partial.
+        try {
+            // uncomment the below to set overrides at the request level
+            // BatchUpsertWorkflowPropertiesResponse result = apiInstance.upsertWorkflowProperties(scope, code, requestBody, successMode).execute(opts);
+
+            BatchUpsertWorkflowPropertiesResponse result = apiInstance.upsertWorkflowProperties(scope, code, requestBody, successMode).execute();
+            System.out.println(result.toJson());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling WorkflowsApi#upsertWorkflowProperties");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **scope** | **String**| The scope that identifies a Workflow | |
+| **code** | **String**| The code that identifies a Workflow | |
+| **requestBody** | [**Map&lt;String, PerpetualProperty&gt;**](PerpetualProperty.md)| The properties to upsert, keyed by property key. A null value deletes the property. | |
+| **successMode** | **String**| Whether the batch should fail Atomically or Partially. Defaults to Partial. | [optional] [default to Partial] |
+
+### Return type
+
+[**BatchUpsertWorkflowPropertiesResponse**](BatchUpsertWorkflowPropertiesResponse.md)
 
 ### HTTP request headers
 

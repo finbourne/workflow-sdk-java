@@ -40,7 +40,7 @@ info:
     | <a name="973">973</a>|Workflow already exists.| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1729
+  version: 0.1.1739
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -5681,6 +5681,164 @@ paths:
       x-fbn-apistatus: Experimental
       x-content-type: application/json-patch+json
       x-accepts: application/json
+  /api/workflows/{scope}/{code}/properties:
+    post:
+      operationId: UpsertWorkflowProperties
+      parameters:
+      - description: The scope that identifies a Workflow
+        explode: false
+        in: path
+        name: scope
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      - description: The code that identifies a Workflow
+        explode: false
+        in: path
+        name: code
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      - description: Whether the batch should fail Atomically or Partially. Defaults
+          to Partial.
+        explode: true
+        in: query
+        name: successMode
+        required: false
+        schema:
+          default: Partial
+          maxLength: 64
+          minLength: 1
+          type: string
+        style: form
+      requestBody:
+        content:
+          application/json-patch+json:
+            example:
+              Workflow/myScope/reviewer:
+                key: Workflow/myScope/reviewer
+                value:
+                  labelValue: Jane Doe
+              Workflow/myScope/priority:
+                key: Workflow/myScope/priority
+                value:
+                  metricValue:
+                    value: 1
+              Workflow/myScope/obsoleteProperty:
+                key: Workflow/myScope/obsoleteProperty
+            schema:
+              additionalProperties:
+                $ref: '#/components/schemas/PerpetualProperty'
+              type: object
+          application/json:
+            example:
+              Workflow/myScope/reviewer:
+                key: Workflow/myScope/reviewer
+                value:
+                  labelValue: Jane Doe
+              Workflow/myScope/priority:
+                key: Workflow/myScope/priority
+                value:
+                  metricValue:
+                    value: 1
+              Workflow/myScope/obsoleteProperty:
+                key: Workflow/myScope/obsoleteProperty
+            schema:
+              additionalProperties:
+                $ref: '#/components/schemas/PerpetualProperty'
+              type: object
+          text/json:
+            example:
+              Workflow/myScope/reviewer:
+                key: Workflow/myScope/reviewer
+                value:
+                  labelValue: Jane Doe
+              Workflow/myScope/priority:
+                key: Workflow/myScope/priority
+                value:
+                  metricValue:
+                    value: 1
+              Workflow/myScope/obsoleteProperty:
+                key: Workflow/myScope/obsoleteProperty
+            schema:
+              additionalProperties:
+                $ref: '#/components/schemas/PerpetualProperty'
+              type: object
+          application/*+json:
+            example:
+              Workflow/myScope/reviewer:
+                key: Workflow/myScope/reviewer
+                value:
+                  labelValue: Jane Doe
+              Workflow/myScope/priority:
+                key: Workflow/myScope/priority
+                value:
+                  metricValue:
+                    value: 1
+              Workflow/myScope/obsoleteProperty:
+                key: Workflow/myScope/obsoleteProperty
+            schema:
+              additionalProperties:
+                $ref: '#/components/schemas/PerpetualProperty'
+              type: object
+        description: "The properties to upsert, keyed by property key. A null value\
+          \ deletes the property."
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                values:
+                  Workflow/myScope/reviewer:
+                    key: Workflow/myScope/reviewer
+                    value:
+                      labelValue: Jane Doe
+                failed:
+                  Workflow/myScope/undefinedProperty:
+                    id: Workflow/myScope/undefinedProperty
+                    type: UpsertWorkflowPropertiesFailure
+                    detail: The property key 'Workflow/myScope/undefinedProperty'
+                      does not have a property definition.
+                asAtDate: 2024-01-01T00:00:00.0000000+00:00
+              schema:
+                $ref: '#/components/schemas/BatchUpsertWorkflowPropertiesResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        "404":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Workflow not found.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] UpsertWorkflowProperties: Add, update and remove properties\
+        \ on an existing Workflow in bulk."
+      tags:
+      - Workflows
+      x-fbn-apistatus: Experimental
+      x-content-type: application/json-patch+json
+      x-accepts: application/json
 components:
   schemas:
     AccessControlledAction:
@@ -6372,6 +6530,65 @@ components:
           nullable: true
           readOnly: true
           type: array
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          nullable: true
+          type: array
+      type: object
+    BatchUpsertWorkflowPropertiesResponse:
+      additionalProperties: false
+      description: The result of a batch upsert of properties on a Workflow.
+      example:
+        values:
+          key:
+            value:
+              metricValue:
+                unit: unit
+                value: 0.8008281904610115
+              labelValue: labelValue
+              labelValueSet:
+                values:
+                - values
+                - values
+            key: key
+        links:
+        - method: method
+          description: description
+          href: https://openapi-generator.tech
+          relation: relation
+        - method: method
+          description: description
+          href: https://openapi-generator.tech
+          relation: relation
+        failed:
+          key:
+            id: id
+            detail: detail
+            type: type
+            errorDetails:
+            - key: errorDetails
+            - key: errorDetails
+        asAtDate: 2000-01-23T04:56:07.000+00:00
+      properties:
+        values:
+          additionalProperties:
+            $ref: '#/components/schemas/PerpetualProperty'
+          description: "The properties that were successfully upserted or deleted,\
+            \ keyed by property key."
+          nullable: true
+          type: object
+        failed:
+          additionalProperties:
+            $ref: '#/components/schemas/ErrorDetail'
+          description: "The properties that could not be upserted or deleted, keyed\
+            \ by property key."
+          nullable: true
+          type: object
+        asAtDate:
+          description: The asAt datetime at which the properties were updated or created.
+          format: date-time
+          type: string
         links:
           items:
             $ref: '#/components/schemas/Link'
@@ -7591,6 +7808,23 @@ components:
       required:
       - name
       type: object
+    LabelValueSet:
+      additionalProperties: false
+      description: The set of string labels that make up a multi-value property.
+      example:
+        values:
+        - values
+        - values
+      properties:
+        values:
+          description: The distinct string values of the multi-value property.
+          items:
+            type: string
+          minItems: 1
+          type: array
+      required:
+      - values
+      type: object
     LibraryResponse:
       additionalProperties: false
       description: Readonly configuration for any Library Worker
@@ -7764,6 +7998,24 @@ components:
       required:
       - code
       - name
+      type: object
+    MetricValue:
+      additionalProperties: false
+      description: "The numeric value of a metric property, with an optional unit."
+      example:
+        unit: unit
+        value: 0.8008281904610115
+      properties:
+        value:
+          description: The numerical value of the property.
+          format: double
+          type: number
+        unit:
+          description: The unit identifier for the value.
+          maxLength: 1024
+          minLength: 0
+          nullable: true
+          type: string
       type: object
     PagedResourceListOfEventHandler:
       additionalProperties: false
@@ -9142,6 +9394,60 @@ components:
           nullable: true
       required:
       - name
+      type: object
+    PerpetualProperty:
+      additionalProperties: false
+      description: |-
+        A perpetual property (i.e. without effective dates) on a Workflow.
+        A property is deleted by supplying a null Finbourne.Workflow.WebApi.Common.Dto.Json.Properties.PerpetualProperty.Value.
+      example:
+        value:
+          metricValue:
+            unit: unit
+            value: 0.8008281904610115
+          labelValue: labelValue
+          labelValueSet:
+            values:
+            - values
+            - values
+        key: key
+      properties:
+        key:
+          description: "The property key in the form {domain}/{scope}/{code}. The\
+            \ domain must be 'Workflow'."
+          maxLength: 1024
+          minLength: 0
+          type: string
+        value:
+          $ref: '#/components/schemas/PropertyValue'
+      required:
+      - key
+      type: object
+    PropertyValue:
+      additionalProperties: false
+      description: |-
+        The value of a property. Exactly one of Finbourne.Workflow.WebApi.Common.Dto.Json.Properties.PropertyValue.LabelValue, Finbourne.Workflow.WebApi.Common.Dto.Json.Properties.PropertyValue.MetricValue
+        or Finbourne.Workflow.WebApi.Common.Dto.Json.Properties.PropertyValue.LabelValueSet should be supplied.
+      example:
+        metricValue:
+          unit: unit
+          value: 0.8008281904610115
+        labelValue: labelValue
+        labelValueSet:
+          values:
+          - values
+          - values
+      properties:
+        labelValue:
+          description: The value of a text property.
+          maxLength: 1024
+          minLength: 0
+          nullable: true
+          type: string
+        metricValue:
+          $ref: '#/components/schemas/MetricValue'
+        labelValueSet:
+          $ref: '#/components/schemas/LabelValueSet'
       type: object
     ReadOnlyStates:
       additionalProperties: false
