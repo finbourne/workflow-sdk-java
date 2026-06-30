@@ -567,11 +567,11 @@ public class WorkflowsApi {
     public APIdeleteWorkflowRequest deleteWorkflow(String scope, String code) {
         return new APIdeleteWorkflowRequest(scope, code);
     }
-    private okhttp3.Call getWorkflowCall(String scope, String code, OffsetDateTime asAt, final ApiCallback _callback) throws ApiException {
-        return getWorkflowCall(scope, code, asAt,  _callback, new ConfigurationOptions());
+    private okhttp3.Call getWorkflowCall(String scope, String code, OffsetDateTime asAt, List<String> propertyKeys, final ApiCallback _callback) throws ApiException {
+        return getWorkflowCall(scope, code, asAt, propertyKeys,  _callback, new ConfigurationOptions());
     }
 
-    private okhttp3.Call getWorkflowCall(String scope, String code, OffsetDateTime asAt, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
+    private okhttp3.Call getWorkflowCall(String scope, String code, OffsetDateTime asAt, List<String> propertyKeys, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -602,6 +602,10 @@ public class WorkflowsApi {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("asAt", asAt));
         }
 
+        if (propertyKeys != null) {
+            localVarCollectionQueryParams.addAll(localVarApiClient.parameterToPairs("multi", "propertyKeys", propertyKeys));
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -622,7 +626,7 @@ public class WorkflowsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getWorkflowValidateBeforeCall(String scope, String code, OffsetDateTime asAt, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
+    private okhttp3.Call getWorkflowValidateBeforeCall(String scope, String code, OffsetDateTime asAt, List<String> propertyKeys, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         // verify the required parameter 'scope' is set
         if (scope == null) {
             throw new ApiException("Missing the required parameter 'scope' when calling getWorkflow(Async)");
@@ -633,34 +637,34 @@ public class WorkflowsApi {
             throw new ApiException("Missing the required parameter 'code' when calling getWorkflow(Async)");
         }
 
-        return getWorkflowCall(scope, code, asAt, _callback, opts);
+        return getWorkflowCall(scope, code, asAt, propertyKeys, _callback, opts);
 
     }
 
 
-    private ApiResponse<WorkflowResponse> getWorkflowWithHttpInfo(String scope, String code, OffsetDateTime asAt) throws ApiException {
-        okhttp3.Call localVarCall = getWorkflowValidateBeforeCall(scope, code, asAt, null, new ConfigurationOptions());
+    private ApiResponse<WorkflowResponse> getWorkflowWithHttpInfo(String scope, String code, OffsetDateTime asAt, List<String> propertyKeys) throws ApiException {
+        okhttp3.Call localVarCall = getWorkflowValidateBeforeCall(scope, code, asAt, propertyKeys, null, new ConfigurationOptions());
         Type localVarReturnType = new TypeToken<WorkflowResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
-    private ApiResponse<WorkflowResponse> getWorkflowWithHttpInfo(String scope, String code, OffsetDateTime asAt, ConfigurationOptions opts) throws ApiException {
-        okhttp3.Call localVarCall = getWorkflowValidateBeforeCall(scope, code, asAt, null, opts);
+    private ApiResponse<WorkflowResponse> getWorkflowWithHttpInfo(String scope, String code, OffsetDateTime asAt, List<String> propertyKeys, ConfigurationOptions opts) throws ApiException {
+        okhttp3.Call localVarCall = getWorkflowValidateBeforeCall(scope, code, asAt, propertyKeys, null, opts);
         Type localVarReturnType = new TypeToken<WorkflowResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
-    private okhttp3.Call getWorkflowAsync(String scope, String code, OffsetDateTime asAt, final ApiCallback<WorkflowResponse> _callback) throws ApiException {
+    private okhttp3.Call getWorkflowAsync(String scope, String code, OffsetDateTime asAt, List<String> propertyKeys, final ApiCallback<WorkflowResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getWorkflowValidateBeforeCall(scope, code, asAt, _callback, new ConfigurationOptions());
+        okhttp3.Call localVarCall = getWorkflowValidateBeforeCall(scope, code, asAt, propertyKeys, _callback, new ConfigurationOptions());
         Type localVarReturnType = new TypeToken<WorkflowResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 
-    private okhttp3.Call getWorkflowAsync(String scope, String code, OffsetDateTime asAt, final ApiCallback<WorkflowResponse> _callback, ConfigurationOptions opts) throws ApiException {
+    private okhttp3.Call getWorkflowAsync(String scope, String code, OffsetDateTime asAt, List<String> propertyKeys, final ApiCallback<WorkflowResponse> _callback, ConfigurationOptions opts) throws ApiException {
 
-        okhttp3.Call localVarCall = getWorkflowValidateBeforeCall(scope, code, asAt, _callback, opts);
+        okhttp3.Call localVarCall = getWorkflowValidateBeforeCall(scope, code, asAt, propertyKeys, _callback, opts);
         Type localVarReturnType = new TypeToken<WorkflowResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -670,6 +674,7 @@ public class WorkflowsApi {
         private final String scope;
         private final String code;
         private OffsetDateTime asAt;
+        private List<String> propertyKeys;
 
         private APIgetWorkflowRequest(String scope, String code) {
             this.scope = scope;
@@ -683,6 +688,16 @@ public class WorkflowsApi {
          */
         public APIgetWorkflowRequest asAt(OffsetDateTime asAt) {
             this.asAt = asAt;
+            return this;
+        }
+
+        /**
+         * Set propertyKeys
+         * @param propertyKeys The property keys (in the Workflow or TaskDefinition domain) whose values to return on the Workflow. (optional)
+         * @return APIgetWorkflowRequest
+         */
+        public APIgetWorkflowRequest propertyKeys(List<String> propertyKeys) {
+            this.propertyKeys = propertyKeys;
             return this;
         }
 
@@ -701,7 +716,7 @@ public class WorkflowsApi {
          </table>
          */
         public okhttp3.Call buildCall(final ApiCallback _callback) throws ApiException {
-            return getWorkflowCall(scope, code, asAt, _callback);
+            return getWorkflowCall(scope, code, asAt, propertyKeys, _callback);
         }
 
         /**
@@ -718,7 +733,7 @@ public class WorkflowsApi {
          </table>
          */
         public WorkflowResponse execute() throws ApiException {
-            ApiResponse<WorkflowResponse> localVarResp = getWorkflowWithHttpInfo(scope, code, asAt);
+            ApiResponse<WorkflowResponse> localVarResp = getWorkflowWithHttpInfo(scope, code, asAt, propertyKeys);
             return localVarResp.getData();
         }
 
@@ -736,7 +751,7 @@ public class WorkflowsApi {
          </table>
          */
         public WorkflowResponse execute(ConfigurationOptions opts) throws ApiException {
-            ApiResponse<WorkflowResponse> localVarResp = getWorkflowWithHttpInfo(scope, code, asAt, opts);
+            ApiResponse<WorkflowResponse> localVarResp = getWorkflowWithHttpInfo(scope, code, asAt, propertyKeys, opts);
             return localVarResp.getData();
         }
 
@@ -754,7 +769,7 @@ public class WorkflowsApi {
          </table>
          */
         public ApiResponse<WorkflowResponse> executeWithHttpInfo() throws ApiException {
-            return getWorkflowWithHttpInfo(scope, code, asAt);
+            return getWorkflowWithHttpInfo(scope, code, asAt, propertyKeys);
         }
 
         /**
@@ -771,7 +786,7 @@ public class WorkflowsApi {
          </table>
          */
         public ApiResponse<WorkflowResponse> executeWithHttpInfo(ConfigurationOptions opts) throws ApiException {
-            return getWorkflowWithHttpInfo(scope, code, asAt, opts);
+            return getWorkflowWithHttpInfo(scope, code, asAt, propertyKeys, opts);
         }
 
         /**
@@ -789,7 +804,7 @@ public class WorkflowsApi {
          </table>
          */
         public okhttp3.Call executeAsync(final ApiCallback<WorkflowResponse> _callback) throws ApiException {
-            return getWorkflowAsync(scope, code, asAt, _callback);
+            return getWorkflowAsync(scope, code, asAt, propertyKeys, _callback);
         }
 
         /**
@@ -807,7 +822,7 @@ public class WorkflowsApi {
          </table>
          */
         public okhttp3.Call executeAsync(final ApiCallback<WorkflowResponse> _callback, ConfigurationOptions opts) throws ApiException {
-            return getWorkflowAsync(scope, code, asAt, _callback, opts);
+            return getWorkflowAsync(scope, code, asAt, propertyKeys, _callback, opts);
         }
     }
 

@@ -197,7 +197,7 @@ public class WorkflowsApiExample {
 
 ## getWorkflow
 
-> WorkflowResponse getWorkflow(scope, code, asAt)
+> WorkflowResponse getWorkflow(scope, code, asAt, propertyKeys)
 
 GetWorkflow: Get a Workflow
 
@@ -243,11 +243,12 @@ public class WorkflowsApiExample {
         String scope = "scope_example"; // String | The scope that identifies a Workflow
         String code = "code_example"; // String | The code that identifies a Workflow
         OffsetDateTime asAt = OffsetDateTime.now(); // OffsetDateTime | The asAt datetime at which to retrieve the Workflow. Defaults to returning the latest version if not specified.
+        List<String> propertyKeys = Arrays.asList(); // List<String> | The property keys (in the Workflow or TaskDefinition domain) whose values to return on the Workflow.
         try {
             // uncomment the below to set overrides at the request level
-            // WorkflowResponse result = apiInstance.getWorkflow(scope, code, asAt).execute(opts);
+            // WorkflowResponse result = apiInstance.getWorkflow(scope, code, asAt, propertyKeys).execute(opts);
 
-            WorkflowResponse result = apiInstance.getWorkflow(scope, code, asAt).execute();
+            WorkflowResponse result = apiInstance.getWorkflow(scope, code, asAt, propertyKeys).execute();
             System.out.println(result.toJson());
         } catch (ApiException e) {
             System.err.println("Exception when calling WorkflowsApi#getWorkflow");
@@ -267,6 +268,7 @@ public class WorkflowsApiExample {
 | **scope** | **String**| The scope that identifies a Workflow | |
 | **code** | **String**| The code that identifies a Workflow | |
 | **asAt** | **OffsetDateTime**| The asAt datetime at which to retrieve the Workflow. Defaults to returning the latest version if not specified. | [optional] |
+| **propertyKeys** | [**List&lt;String&gt;**](String.md)| The property keys (in the Workflow or TaskDefinition domain) whose values to return on the Workflow. | [optional] |
 
 ### Return type
 

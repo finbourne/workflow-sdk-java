@@ -40,7 +40,7 @@ info:
     | <a name="973">973</a>|Workflow already exists.| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1739
+  version: 0.1.1743
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -4882,6 +4882,16 @@ paths:
               rootTaskDefinitionId:
                 scope: default
                 code: ExampleTaskDefinition
+              properties:
+                Workflow/default/reviewer:
+                  key: Workflow/default/reviewer
+                  value:
+                    labelValue: Jane Doe
+                Workflow/default/priority:
+                  key: Workflow/default/priority
+                  value:
+                    metricValue:
+                      value: 1
             schema:
               $ref: '#/components/schemas/CreateWorkflowRequest'
           application/json:
@@ -4894,6 +4904,16 @@ paths:
               rootTaskDefinitionId:
                 scope: default
                 code: ExampleTaskDefinition
+              properties:
+                Workflow/default/reviewer:
+                  key: Workflow/default/reviewer
+                  value:
+                    labelValue: Jane Doe
+                Workflow/default/priority:
+                  key: Workflow/default/priority
+                  value:
+                    metricValue:
+                      value: 1
             schema:
               $ref: '#/components/schemas/CreateWorkflowRequest'
           text/json:
@@ -4906,6 +4926,16 @@ paths:
               rootTaskDefinitionId:
                 scope: default
                 code: ExampleTaskDefinition
+              properties:
+                Workflow/default/reviewer:
+                  key: Workflow/default/reviewer
+                  value:
+                    labelValue: Jane Doe
+                Workflow/default/priority:
+                  key: Workflow/default/priority
+                  value:
+                    metricValue:
+                      value: 1
             schema:
               $ref: '#/components/schemas/CreateWorkflowRequest'
           application/*+json:
@@ -4918,6 +4948,16 @@ paths:
               rootTaskDefinitionId:
                 scope: default
                 code: ExampleTaskDefinition
+              properties:
+                Workflow/default/reviewer:
+                  key: Workflow/default/reviewer
+                  value:
+                    labelValue: Jane Doe
+                Workflow/default/priority:
+                  key: Workflow/default/priority
+                  value:
+                    metricValue:
+                      value: 1
             schema:
               $ref: '#/components/schemas/CreateWorkflowRequest'
         description: The data to create a Workflow
@@ -5215,6 +5255,18 @@ paths:
           type: string
         style: form
         x-nullable: true
+      - description: The property keys (in the Workflow or TaskDefinition domain)
+          whose values to return on the Workflow.
+        explode: true
+        in: query
+        name: propertyKeys
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+        x-nullable: true
       responses:
         "200":
           content:
@@ -5448,6 +5500,13 @@ paths:
               rootTaskDefinitionId:
                 scope: default
                 code: ExampleTaskDefinition
+              properties:
+                Workflow/default/reviewer:
+                  key: Workflow/default/reviewer
+                  value:
+                    labelValue: John Smith
+                Workflow/default/obsoleteProperty:
+                  key: Workflow/default/obsoleteProperty
             schema:
               $ref: '#/components/schemas/UpdateWorkflowRequest'
           application/json:
@@ -5458,6 +5517,13 @@ paths:
               rootTaskDefinitionId:
                 scope: default
                 code: ExampleTaskDefinition
+              properties:
+                Workflow/default/reviewer:
+                  key: Workflow/default/reviewer
+                  value:
+                    labelValue: John Smith
+                Workflow/default/obsoleteProperty:
+                  key: Workflow/default/obsoleteProperty
             schema:
               $ref: '#/components/schemas/UpdateWorkflowRequest'
           text/json:
@@ -5468,6 +5534,13 @@ paths:
               rootTaskDefinitionId:
                 scope: default
                 code: ExampleTaskDefinition
+              properties:
+                Workflow/default/reviewer:
+                  key: Workflow/default/reviewer
+                  value:
+                    labelValue: John Smith
+                Workflow/default/obsoleteProperty:
+                  key: Workflow/default/obsoleteProperty
             schema:
               $ref: '#/components/schemas/UpdateWorkflowRequest'
           application/*+json:
@@ -5478,6 +5551,13 @@ paths:
               rootTaskDefinitionId:
                 scope: default
                 code: ExampleTaskDefinition
+              properties:
+                Workflow/default/reviewer:
+                  key: Workflow/default/reviewer
+                  value:
+                    labelValue: John Smith
+                Workflow/default/obsoleteProperty:
+                  key: Workflow/default/obsoleteProperty
             schema:
               $ref: '#/components/schemas/UpdateWorkflowRequest'
         description: The data to update a Workflow
@@ -7182,6 +7262,18 @@ components:
         id:
           code: code
           scope: scope
+        properties:
+          key:
+            value:
+              metricValue:
+                unit: unit
+                value: 0.8008281904610115
+              labelValue: labelValue
+              labelValueSet:
+                values:
+                - values
+                - values
+            key: key
       properties:
         id:
           $ref: '#/components/schemas/ResourceId'
@@ -7200,6 +7292,13 @@ components:
           type: string
         rootTaskDefinitionId:
           $ref: '#/components/schemas/ResourceId'
+        properties:
+          additionalProperties:
+            $ref: '#/components/schemas/PerpetualProperty'
+          description: "The properties to set on the Workflow, keyed by property key.\
+            \ Optional."
+          nullable: true
+          type: object
       required:
       - displayName
       - id
@@ -9048,6 +9147,18 @@ components:
             requestIdCreated: requestIdCreated
             userIdCreated: userIdCreated
             requestIdModified: requestIdModified
+          properties:
+            key:
+              value:
+                metricValue:
+                  unit: unit
+                  value: 0.8008281904610115
+                labelValue: labelValue
+                labelValueSet:
+                  values:
+                  - values
+                  - values
+              key: key
         - workflowStructure:
             nodes:
               taskDefinitions:
@@ -9303,6 +9414,18 @@ components:
             requestIdCreated: requestIdCreated
             userIdCreated: userIdCreated
             requestIdModified: requestIdModified
+          properties:
+            key:
+              value:
+                metricValue:
+                  unit: unit
+                  value: 0.8008281904610115
+                labelValue: labelValue
+                labelValueSet:
+                  values:
+                  - values
+                  - values
+              key: key
         links:
         - method: method
           description: description
@@ -11896,6 +12019,18 @@ components:
           code: code
           scope: scope
         description: description
+        properties:
+          key:
+            value:
+              metricValue:
+                unit: unit
+                value: 0.8008281904610115
+              labelValue: labelValue
+              labelValueSet:
+                values:
+                - values
+                - values
+            key: key
       properties:
         displayName:
           description: Human readable name
@@ -11912,6 +12047,14 @@ components:
           type: string
         rootTaskDefinitionId:
           $ref: '#/components/schemas/ResourceId'
+        properties:
+          additionalProperties:
+            $ref: '#/components/schemas/PerpetualProperty'
+          description: |-
+            The properties to set on the Workflow, keyed by property key. Optional.
+            A null property value deletes the property.
+          nullable: true
+          type: object
       required:
       - displayName
       - rootTaskDefinitionId
@@ -12442,6 +12585,18 @@ components:
           requestIdCreated: requestIdCreated
           userIdCreated: userIdCreated
           requestIdModified: requestIdModified
+        properties:
+          key:
+            value:
+              metricValue:
+                unit: unit
+                value: 0.8008281904610115
+              labelValue: labelValue
+              labelValueSet:
+                values:
+                - values
+                - values
+            key: key
       properties:
         id:
           $ref: '#/components/schemas/ResourceId'
@@ -12459,6 +12614,12 @@ components:
           $ref: '#/components/schemas/ResourceId'
         workflowStructure:
           $ref: '#/components/schemas/WorkflowStructure'
+        properties:
+          additionalProperties:
+            $ref: '#/components/schemas/PerpetualProperty'
+          description: "The properties of the Workflow, keyed by property key."
+          nullable: true
+          type: object
       required:
       - displayName
       - id
