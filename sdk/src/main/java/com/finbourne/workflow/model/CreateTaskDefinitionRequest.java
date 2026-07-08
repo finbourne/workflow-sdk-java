@@ -13,6 +13,7 @@ package com.finbourne.workflow.model;
 import java.util.Objects;
 import com.finbourne.workflow.model.ActionDefinition;
 import com.finbourne.workflow.model.InitialState;
+import com.finbourne.workflow.model.PerpetualProperty;
 import com.finbourne.workflow.model.ResourceId;
 import com.finbourne.workflow.model.TaskFieldDefinition;
 import com.finbourne.workflow.model.TaskStateDefinition;
@@ -26,7 +27,9 @@ import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import com.google.gson.Gson;
@@ -94,6 +97,10 @@ public class CreateTaskDefinitionRequest {
   public static final String SERIALIZED_NAME_ACTIONS = "actions";
   @SerializedName(SERIALIZED_NAME_ACTIONS)
   private List<ActionDefinition> actions;
+
+  public static final String SERIALIZED_NAME_PROPERTIES = "properties";
+  @SerializedName(SERIALIZED_NAME_PROPERTIES)
+  private Map<String, PerpetualProperty> properties;
 
   public CreateTaskDefinitionRequest() {
   }
@@ -327,6 +334,35 @@ public class CreateTaskDefinitionRequest {
   }
 
 
+  public CreateTaskDefinitionRequest properties(Map<String, PerpetualProperty> properties) {
+    
+    this.properties = properties;
+    return this;
+  }
+
+  public CreateTaskDefinitionRequest putPropertiesItem(String key, PerpetualProperty propertiesItem) {
+    if (this.properties == null) {
+      this.properties = new HashMap<>();
+    }
+    this.properties.put(key, propertiesItem);
+    return this;
+  }
+
+   /**
+   * The properties to set on the Task Definition, keyed by property key. Optional.
+   * @return properties
+  **/
+  @jakarta.annotation.Nullable
+  public Map<String, PerpetualProperty> getProperties() {
+    return properties;
+  }
+
+
+  public void setProperties(Map<String, PerpetualProperty> properties) {
+    this.properties = properties;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -345,7 +381,8 @@ public class CreateTaskDefinitionRequest {
         Objects.equals(this.initialState, createTaskDefinitionRequest.initialState) &&
         Objects.equals(this.triggers, createTaskDefinitionRequest.triggers) &&
         Objects.equals(this.transitions, createTaskDefinitionRequest.transitions) &&
-        Objects.equals(this.actions, createTaskDefinitionRequest.actions);
+        Objects.equals(this.actions, createTaskDefinitionRequest.actions) &&
+        Objects.equals(this.properties, createTaskDefinitionRequest.properties);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -354,7 +391,7 @@ public class CreateTaskDefinitionRequest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, displayName, description, states, fieldSchema, initialState, triggers, transitions, actions);
+    return Objects.hash(id, displayName, description, states, fieldSchema, initialState, triggers, transitions, actions, properties);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -377,6 +414,7 @@ public class CreateTaskDefinitionRequest {
     sb.append("    triggers: ").append(toIndentedString(triggers)).append("\n");
     sb.append("    transitions: ").append(toIndentedString(transitions)).append("\n");
     sb.append("    actions: ").append(toIndentedString(actions)).append("\n");
+    sb.append("    properties: ").append(toIndentedString(properties)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -408,6 +446,7 @@ public class CreateTaskDefinitionRequest {
     openapiFields.add("triggers");
     openapiFields.add("transitions");
     openapiFields.add("actions");
+    openapiFields.add("properties");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();

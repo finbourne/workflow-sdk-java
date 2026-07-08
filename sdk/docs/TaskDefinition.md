@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **triggers** | [**List&lt;TransitionTriggerDefinition&gt;**](TransitionTriggerDefinition.md) | The Triggers for State transition | [optional] [default to List<TransitionTriggerDefinition>]
 **actions** | [**List&lt;ActionDefinitionResponse&gt;**](ActionDefinitionResponse.md) | The Actions of this Task - executed after a Transition completion | [optional] [default to List<ActionDefinitionResponse>]
 **transitions** | [**List&lt;TaskTransitionDefinition&gt;**](TaskTransitionDefinition.md) | The Transitions between States | [optional] [default to List<TaskTransitionDefinition>]
+**properties** | [**Map&lt;String, PerpetualProperty&gt;**](PerpetualProperty.md) | The properties of the Task Definition, keyed by property key. Only populated when set on the request (Create/Update) or when property keys are requested (Get/List). | [optional] [default to Map<String, PerpetualProperty>]
 
 ```java
 import com.finbourne.workflow.model.TaskDefinition;
@@ -32,6 +33,7 @@ InitialState InitialState = new InitialState();
 @jakarta.annotation.Nullable List<TransitionTriggerDefinition> Triggers = new List<TransitionTriggerDefinition>();
 @jakarta.annotation.Nullable List<ActionDefinitionResponse> Actions = new List<ActionDefinitionResponse>();
 @jakarta.annotation.Nullable List<TaskTransitionDefinition> Transitions = new List<TaskTransitionDefinition>();
+@jakarta.annotation.Nullable Map<String, PerpetualProperty> Properties = new Map<String, PerpetualProperty>();
 
 
 TaskDefinition taskDefinitionInstance = new TaskDefinition()
@@ -44,7 +46,8 @@ TaskDefinition taskDefinitionInstance = new TaskDefinition()
     .InitialState(InitialState)
     .Triggers(Triggers)
     .Actions(Actions)
-    .Transitions(Transitions);
+    .Transitions(Transitions)
+    .Properties(Properties);
 ```
 
 

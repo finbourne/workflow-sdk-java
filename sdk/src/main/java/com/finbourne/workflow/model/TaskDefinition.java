@@ -13,6 +13,7 @@ package com.finbourne.workflow.model;
 import java.util.Objects;
 import com.finbourne.workflow.model.ActionDefinitionResponse;
 import com.finbourne.workflow.model.InitialState;
+import com.finbourne.workflow.model.PerpetualProperty;
 import com.finbourne.workflow.model.ResourceId;
 import com.finbourne.workflow.model.TaskFieldDefinition;
 import com.finbourne.workflow.model.TaskStateDefinition;
@@ -27,7 +28,9 @@ import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import com.google.gson.Gson;
@@ -99,6 +102,10 @@ public class TaskDefinition {
   public static final String SERIALIZED_NAME_TRANSITIONS = "transitions";
   @SerializedName(SERIALIZED_NAME_TRANSITIONS)
   private List<TaskTransitionDefinition> transitions;
+
+  public static final String SERIALIZED_NAME_PROPERTIES = "properties";
+  @SerializedName(SERIALIZED_NAME_PROPERTIES)
+  private Map<String, PerpetualProperty> properties;
 
   public TaskDefinition() {
   }
@@ -353,6 +360,35 @@ public class TaskDefinition {
   }
 
 
+  public TaskDefinition properties(Map<String, PerpetualProperty> properties) {
+    
+    this.properties = properties;
+    return this;
+  }
+
+  public TaskDefinition putPropertiesItem(String key, PerpetualProperty propertiesItem) {
+    if (this.properties == null) {
+      this.properties = new HashMap<>();
+    }
+    this.properties.put(key, propertiesItem);
+    return this;
+  }
+
+   /**
+   * The properties of the Task Definition, keyed by property key. Only populated when set on the request (Create/Update) or when property keys are requested (Get/List).
+   * @return properties
+  **/
+  @jakarta.annotation.Nullable
+  public Map<String, PerpetualProperty> getProperties() {
+    return properties;
+  }
+
+
+  public void setProperties(Map<String, PerpetualProperty> properties) {
+    this.properties = properties;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -372,7 +408,8 @@ public class TaskDefinition {
         Objects.equals(this.initialState, taskDefinition.initialState) &&
         Objects.equals(this.triggers, taskDefinition.triggers) &&
         Objects.equals(this.actions, taskDefinition.actions) &&
-        Objects.equals(this.transitions, taskDefinition.transitions);
+        Objects.equals(this.transitions, taskDefinition.transitions) &&
+        Objects.equals(this.properties, taskDefinition.properties);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -381,7 +418,7 @@ public class TaskDefinition {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, version, displayName, description, states, fieldSchema, initialState, triggers, actions, transitions);
+    return Objects.hash(id, version, displayName, description, states, fieldSchema, initialState, triggers, actions, transitions, properties);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -405,6 +442,7 @@ public class TaskDefinition {
     sb.append("    triggers: ").append(toIndentedString(triggers)).append("\n");
     sb.append("    actions: ").append(toIndentedString(actions)).append("\n");
     sb.append("    transitions: ").append(toIndentedString(transitions)).append("\n");
+    sb.append("    properties: ").append(toIndentedString(properties)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -437,6 +475,7 @@ public class TaskDefinition {
     openapiFields.add("triggers");
     openapiFields.add("actions");
     openapiFields.add("transitions");
+    openapiFields.add("properties");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
