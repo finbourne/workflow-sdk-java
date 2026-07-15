@@ -19,8 +19,11 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
+import org.openapitools.jackson.nullable.JsonNullable;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -71,6 +74,14 @@ public class TaskSummary {
   public static final String SERIALIZED_NAME_STATE = "state";
   @SerializedName(SERIALIZED_NAME_STATE)
   private String state;
+
+  public static final String SERIALIZED_NAME_STATE_DISPLAY_NAME = "stateDisplayName";
+  @SerializedName(SERIALIZED_NAME_STATE_DISPLAY_NAME)
+  private String stateDisplayName;
+
+  public static final String SERIALIZED_NAME_CORRELATION_IDS = "correlationIds";
+  @SerializedName(SERIALIZED_NAME_CORRELATION_IDS)
+  private List<String> correlationIds;
 
   public TaskSummary() {
   }
@@ -180,6 +191,56 @@ public class TaskSummary {
   }
 
 
+  public TaskSummary stateDisplayName(String stateDisplayName) {
+    
+    this.stateDisplayName = stateDisplayName;
+    return this;
+  }
+
+   /**
+   * The display name of the current State, from the Task Definition, if one is provided
+   * @return stateDisplayName
+  **/
+  @jakarta.annotation.Nullable
+  public String getStateDisplayName() {
+    return stateDisplayName;
+  }
+
+
+  public void setStateDisplayName(String stateDisplayName) {
+    this.stateDisplayName = stateDisplayName;
+  }
+
+
+  public TaskSummary correlationIds(List<String> correlationIds) {
+    
+    this.correlationIds = correlationIds;
+    return this;
+  }
+
+  public TaskSummary addCorrelationIdsItem(String correlationIdsItem) {
+    if (this.correlationIds == null) {
+      this.correlationIds = new ArrayList<>();
+    }
+    this.correlationIds.add(correlationIdsItem);
+    return this;
+  }
+
+   /**
+   * User-provided ID used to link entities and tasks
+   * @return correlationIds
+  **/
+  @jakarta.annotation.Nullable
+  public List<String> getCorrelationIds() {
+    return correlationIds;
+  }
+
+
+  public void setCorrelationIds(List<String> correlationIds) {
+    this.correlationIds = correlationIds;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -194,12 +255,25 @@ public class TaskSummary {
         Objects.equals(this.taskDefinitionId, taskSummary.taskDefinitionId) &&
         Objects.equals(this.taskDefinitionVersion, taskSummary.taskDefinitionVersion) &&
         Objects.equals(this.taskDefinitionDisplayName, taskSummary.taskDefinitionDisplayName) &&
-        Objects.equals(this.state, taskSummary.state);
+        Objects.equals(this.state, taskSummary.state) &&
+        Objects.equals(this.stateDisplayName, taskSummary.stateDisplayName) &&
+        Objects.equals(this.correlationIds, taskSummary.correlationIds);
+  }
+
+  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
+    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, taskDefinitionId, taskDefinitionVersion, taskDefinitionDisplayName, state);
+    return Objects.hash(id, taskDefinitionId, taskDefinitionVersion, taskDefinitionDisplayName, state, stateDisplayName, correlationIds);
+  }
+
+  private static <T> int hashCodeNullable(JsonNullable<T> a) {
+    if (a == null) {
+      return 1;
+    }
+    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
   }
 
   @Override
@@ -211,6 +285,8 @@ public class TaskSummary {
     sb.append("    taskDefinitionVersion: ").append(toIndentedString(taskDefinitionVersion)).append("\n");
     sb.append("    taskDefinitionDisplayName: ").append(toIndentedString(taskDefinitionDisplayName)).append("\n");
     sb.append("    state: ").append(toIndentedString(state)).append("\n");
+    sb.append("    stateDisplayName: ").append(toIndentedString(stateDisplayName)).append("\n");
+    sb.append("    correlationIds: ").append(toIndentedString(correlationIds)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -238,6 +314,8 @@ public class TaskSummary {
     openapiFields.add("taskDefinitionVersion");
     openapiFields.add("taskDefinitionDisplayName");
     openapiFields.add("state");
+    openapiFields.add("stateDisplayName");
+    openapiFields.add("correlationIds");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -280,6 +358,13 @@ public class TaskSummary {
       }
       if (!jsonObj.get("state").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `state` to be a primitive type in the JSON string but got `%s`", jsonObj.get("state").toString()));
+      }
+      if ((jsonObj.get("stateDisplayName") != null && !jsonObj.get("stateDisplayName").isJsonNull()) && !jsonObj.get("stateDisplayName").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `stateDisplayName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("stateDisplayName").toString()));
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("correlationIds") != null && !jsonObj.get("correlationIds").isJsonNull() && !jsonObj.get("correlationIds").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `correlationIds` to be an array in the JSON string but got `%s`", jsonObj.get("correlationIds").toString()));
       }
   }
 

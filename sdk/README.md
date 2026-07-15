@@ -18,6 +18,7 @@ Class | Method | HTTP request | Description
 *TaskDefinitionsApi* | [**listTaskDefinitions**](docs/TaskDefinitionsApi.md#listtaskdefinitions) | **GET** /api/taskdefinitions | ListTaskDefinitions: List Task Definitions
 *TaskDefinitionsApi* | [**listTasksForTaskDefinition**](docs/TaskDefinitionsApi.md#listtasksfortaskdefinition) | **GET** /api/taskdefinitions/{scope}/{code}/tasks | ListTasksForTaskDefinition: List Tasks for a Task Definition
 *TaskDefinitionsApi* | [**updateTaskDefinition**](docs/TaskDefinitionsApi.md#updatetaskdefinition) | **PUT** /api/taskdefinitions/{scope}/{code} | UpdateTaskDefinition: Update an existing Task Definition
+*TaskDefinitionsApi* | [**upsertTaskDefinitionProperties**](docs/TaskDefinitionsApi.md#upserttaskdefinitionproperties) | **POST** /api/taskdefinitions/{scope}/{code}/properties | [EXPERIMENTAL] UpsertTaskDefinitionProperties: Add, update and remove properties on an existing Task Definition in bulk.
 *TasksApi* | [**batchUpdateTasks**](docs/TasksApi.md#batchupdatetasks) | **PATCH** /api/tasks/$update | BatchUpdateTasks: Batch update tasks
 *TasksApi* | [**createTask**](docs/TasksApi.md#createtask) | **POST** /api/tasks | CreateTask: Create a new Task
 *TasksApi* | [**deleteTask**](docs/TasksApi.md#deletetask) | **DELETE** /api/tasks/{id} | DeleteTask: Delete a Task
@@ -56,6 +57,7 @@ Class | Method | HTTP request | Description
  - [ActionLogOrigin](docs/ActionLogOrigin.md)
  - [BatchUpdateTasksRequest](docs/BatchUpdateTasksRequest.md)
  - [BatchUpdateTasksResponse](docs/BatchUpdateTasksResponse.md)
+ - [BatchUpsertTaskDefinitionPropertiesResponse](docs/BatchUpsertTaskDefinitionPropertiesResponse.md)
  - [BatchUpsertWorkflowPropertiesResponse](docs/BatchUpsertWorkflowPropertiesResponse.md)
  - [CalendarReference](docs/CalendarReference.md)
  - [ChangeItem](docs/ChangeItem.md)

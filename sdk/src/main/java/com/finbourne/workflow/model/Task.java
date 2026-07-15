@@ -11,6 +11,7 @@
 package com.finbourne.workflow.model;
 
 import java.util.Objects;
+import com.finbourne.workflow.model.PerpetualProperty;
 import com.finbourne.workflow.model.ResourceId;
 import com.finbourne.workflow.model.Stack;
 import com.finbourne.workflow.model.TaskDefinitionVersion;
@@ -26,7 +27,9 @@ import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import org.openapitools.jackson.nullable.JsonNullable;
 
@@ -87,6 +90,10 @@ public class Task {
   public static final String SERIALIZED_NAME_STATE = "state";
   @SerializedName(SERIALIZED_NAME_STATE)
   private String state;
+
+  public static final String SERIALIZED_NAME_STATE_DISPLAY_NAME = "stateDisplayName";
+  @SerializedName(SERIALIZED_NAME_STATE_DISPLAY_NAME)
+  private String stateDisplayName;
 
   public static final String SERIALIZED_NAME_ULTIMATE_PARENT_TASK = "ultimateParentTask";
   @SerializedName(SERIALIZED_NAME_ULTIMATE_PARENT_TASK)
@@ -159,6 +166,10 @@ public class Task {
   public static final String SERIALIZED_NAME_OPEN_DURATION_SINCE_LAST_TRANSITION = "openDurationSinceLastTransition";
   @SerializedName(SERIALIZED_NAME_OPEN_DURATION_SINCE_LAST_TRANSITION)
   private Long openDurationSinceLastTransition;
+
+  public static final String SERIALIZED_NAME_PROPERTIES = "properties";
+  @SerializedName(SERIALIZED_NAME_PROPERTIES)
+  private Map<String, PerpetualProperty> properties;
 
   public Task() {
   }
@@ -307,6 +318,27 @@ public class Task {
 
   public void setState(String state) {
     this.state = state;
+  }
+
+
+  public Task stateDisplayName(String stateDisplayName) {
+    
+    this.stateDisplayName = stateDisplayName;
+    return this;
+  }
+
+   /**
+   * The display name of the current State, from the Task Definition, if one is provided
+   * @return stateDisplayName
+  **/
+  @jakarta.annotation.Nullable
+  public String getStateDisplayName() {
+    return stateDisplayName;
+  }
+
+
+  public void setStateDisplayName(String stateDisplayName) {
+    this.stateDisplayName = stateDisplayName;
   }
 
 
@@ -712,6 +744,35 @@ public class Task {
   }
 
 
+  public Task properties(Map<String, PerpetualProperty> properties) {
+    
+    this.properties = properties;
+    return this;
+  }
+
+  public Task putPropertiesItem(String key, PerpetualProperty propertiesItem) {
+    if (this.properties == null) {
+      this.properties = new HashMap<>();
+    }
+    this.properties.put(key, propertiesItem);
+    return this;
+  }
+
+   /**
+   * The requested TaskDefinition and Workflow properties decorated onto this Task, keyed by property key. Only populated when property keys were requested.
+   * @return properties
+  **/
+  @jakarta.annotation.Nullable
+  public Map<String, PerpetualProperty> getProperties() {
+    return properties;
+  }
+
+
+  public void setProperties(Map<String, PerpetualProperty> properties) {
+    this.properties = properties;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -729,6 +790,7 @@ public class Task {
         Objects.equals(this.workflowId, task.workflowId) &&
         Objects.equals(this.workflowDisplayName, task.workflowDisplayName) &&
         Objects.equals(this.state, task.state) &&
+        Objects.equals(this.stateDisplayName, task.stateDisplayName) &&
         Objects.equals(this.ultimateParentTask, task.ultimateParentTask) &&
         Objects.equals(this.parentTask, task.parentTask) &&
         Objects.equals(this.childTasks, task.childTasks) &&
@@ -746,7 +808,8 @@ public class Task {
         Objects.equals(this.completionStatus, task.completionStatus) &&
         Objects.equals(this.openDuration, task.openDuration) &&
         Objects.equals(this.openDurationSinceLastUpdate, task.openDurationSinceLastUpdate) &&
-        Objects.equals(this.openDurationSinceLastTransition, task.openDurationSinceLastTransition);
+        Objects.equals(this.openDurationSinceLastTransition, task.openDurationSinceLastTransition) &&
+        Objects.equals(this.properties, task.properties);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -755,7 +818,7 @@ public class Task {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, taskDefinitionId, taskDefinitionVersion, taskDefinitionDisplayName, workflowId, workflowDisplayName, state, ultimateParentTask, parentTask, childTasks, correlationIds, version, terminalState, asAtLastTransition, fields, stackingKey, stack, actionLogIdCreated, actionLogIdModified, actionLogIdSubmitted, hierarchicalPosition, completionStatus, openDuration, openDurationSinceLastUpdate, openDurationSinceLastTransition);
+    return Objects.hash(id, taskDefinitionId, taskDefinitionVersion, taskDefinitionDisplayName, workflowId, workflowDisplayName, state, stateDisplayName, ultimateParentTask, parentTask, childTasks, correlationIds, version, terminalState, asAtLastTransition, fields, stackingKey, stack, actionLogIdCreated, actionLogIdModified, actionLogIdSubmitted, hierarchicalPosition, completionStatus, openDuration, openDurationSinceLastUpdate, openDurationSinceLastTransition, properties);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -776,6 +839,7 @@ public class Task {
     sb.append("    workflowId: ").append(toIndentedString(workflowId)).append("\n");
     sb.append("    workflowDisplayName: ").append(toIndentedString(workflowDisplayName)).append("\n");
     sb.append("    state: ").append(toIndentedString(state)).append("\n");
+    sb.append("    stateDisplayName: ").append(toIndentedString(stateDisplayName)).append("\n");
     sb.append("    ultimateParentTask: ").append(toIndentedString(ultimateParentTask)).append("\n");
     sb.append("    parentTask: ").append(toIndentedString(parentTask)).append("\n");
     sb.append("    childTasks: ").append(toIndentedString(childTasks)).append("\n");
@@ -794,6 +858,7 @@ public class Task {
     sb.append("    openDuration: ").append(toIndentedString(openDuration)).append("\n");
     sb.append("    openDurationSinceLastUpdate: ").append(toIndentedString(openDurationSinceLastUpdate)).append("\n");
     sb.append("    openDurationSinceLastTransition: ").append(toIndentedString(openDurationSinceLastTransition)).append("\n");
+    sb.append("    properties: ").append(toIndentedString(properties)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -823,6 +888,7 @@ public class Task {
     openapiFields.add("workflowId");
     openapiFields.add("workflowDisplayName");
     openapiFields.add("state");
+    openapiFields.add("stateDisplayName");
     openapiFields.add("ultimateParentTask");
     openapiFields.add("parentTask");
     openapiFields.add("childTasks");
@@ -841,6 +907,7 @@ public class Task {
     openapiFields.add("openDuration");
     openapiFields.add("openDurationSinceLastUpdate");
     openapiFields.add("openDurationSinceLastTransition");
+    openapiFields.add("properties");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -892,6 +959,9 @@ public class Task {
       }
       if (!jsonObj.get("state").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `state` to be a primitive type in the JSON string but got `%s`", jsonObj.get("state").toString()));
+      }
+      if ((jsonObj.get("stateDisplayName") != null && !jsonObj.get("stateDisplayName").isJsonNull()) && !jsonObj.get("stateDisplayName").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `stateDisplayName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("stateDisplayName").toString()));
       }
       // validate the required field `ultimateParentTask`
       TaskSummary.validateJsonElement(jsonObj.get("ultimateParentTask"));

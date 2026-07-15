@@ -40,7 +40,7 @@ info:
     | <a name="973">973</a>|Workflow already exists.| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1753
+  version: 0.1.1764
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -1953,6 +1953,17 @@ paths:
           type: string
         style: form
         x-nullable: true
+      - description: The property keys whose values to return on the Task Definition.
+        explode: true
+        in: query
+        name: propertyKeys
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+        x-nullable: true
       responses:
         "200":
           content:
@@ -2881,6 +2892,164 @@ paths:
       x-fbn-apistatus: Stable
       x-content-type: application/json-patch+json
       x-accepts: application/json
+  /api/taskdefinitions/{scope}/{code}/properties:
+    post:
+      operationId: UpsertTaskDefinitionProperties
+      parameters:
+      - description: The scope that identifies a Task Definition
+        explode: false
+        in: path
+        name: scope
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      - description: The code that identifies a Task Definition
+        explode: false
+        in: path
+        name: code
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      - description: Whether the batch should fail Atomically or Partially. Defaults
+          to Partial.
+        explode: true
+        in: query
+        name: successMode
+        required: false
+        schema:
+          default: Partial
+          maxLength: 64
+          minLength: 1
+          type: string
+        style: form
+      requestBody:
+        content:
+          application/json-patch+json:
+            example:
+              TaskDefinition/myScope/category:
+                key: TaskDefinition/myScope/category
+                value:
+                  labelValue: exception-management
+              TaskDefinition/myScope/priority:
+                key: TaskDefinition/myScope/priority
+                value:
+                  metricValue:
+                    value: 1
+              TaskDefinition/myScope/obsoleteProperty:
+                key: TaskDefinition/myScope/obsoleteProperty
+            schema:
+              additionalProperties:
+                $ref: '#/components/schemas/PerpetualProperty'
+              type: object
+          application/json:
+            example:
+              TaskDefinition/myScope/category:
+                key: TaskDefinition/myScope/category
+                value:
+                  labelValue: exception-management
+              TaskDefinition/myScope/priority:
+                key: TaskDefinition/myScope/priority
+                value:
+                  metricValue:
+                    value: 1
+              TaskDefinition/myScope/obsoleteProperty:
+                key: TaskDefinition/myScope/obsoleteProperty
+            schema:
+              additionalProperties:
+                $ref: '#/components/schemas/PerpetualProperty'
+              type: object
+          text/json:
+            example:
+              TaskDefinition/myScope/category:
+                key: TaskDefinition/myScope/category
+                value:
+                  labelValue: exception-management
+              TaskDefinition/myScope/priority:
+                key: TaskDefinition/myScope/priority
+                value:
+                  metricValue:
+                    value: 1
+              TaskDefinition/myScope/obsoleteProperty:
+                key: TaskDefinition/myScope/obsoleteProperty
+            schema:
+              additionalProperties:
+                $ref: '#/components/schemas/PerpetualProperty'
+              type: object
+          application/*+json:
+            example:
+              TaskDefinition/myScope/category:
+                key: TaskDefinition/myScope/category
+                value:
+                  labelValue: exception-management
+              TaskDefinition/myScope/priority:
+                key: TaskDefinition/myScope/priority
+                value:
+                  metricValue:
+                    value: 1
+              TaskDefinition/myScope/obsoleteProperty:
+                key: TaskDefinition/myScope/obsoleteProperty
+            schema:
+              additionalProperties:
+                $ref: '#/components/schemas/PerpetualProperty'
+              type: object
+        description: "The properties to upsert, keyed by property key. A null value\
+          \ deletes the property."
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                values:
+                  TaskDefinition/myScope/category:
+                    key: TaskDefinition/myScope/category
+                    value:
+                      labelValue: exception-management
+                failed:
+                  TaskDefinition/myScope/undefinedProperty:
+                    id: TaskDefinition/myScope/undefinedProperty
+                    type: UpsertTaskDefinitionPropertiesFailure
+                    detail: The property key 'TaskDefinition/myScope/undefinedProperty'
+                      does not have a property definition.
+                asAtDate: 2024-01-01T00:00:00.0000000+00:00
+              schema:
+                $ref: '#/components/schemas/BatchUpsertTaskDefinitionPropertiesResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        "404":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Task Definition not found.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] UpsertTaskDefinitionProperties: Add, update and remove\
+        \ properties on an existing Task Definition in bulk."
+      tags:
+      - Task Definitions
+      x-fbn-apistatus: Experimental
+      x-content-type: application/json-patch+json
+      x-accepts: application/json
   /api/taskdefinitions/{scope}/{code}/tasks:
     get:
       operationId: ListTasksForTaskDefinition
@@ -2916,6 +3085,18 @@ paths:
         schema:
           format: date-time
           type: string
+        style: form
+        x-nullable: true
+      - description: The property keys (in the TaskDefinition or Workflow domain)
+          whose values to return on each Task.
+        explode: true
+        in: query
+        name: propertyKeys
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
         style: form
         x-nullable: true
       responses:
@@ -2982,6 +3163,18 @@ paths:
         explode: true
         in: query
         name: sortBy
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+        x-nullable: true
+      - description: The property keys (in the TaskDefinition or Workflow domain)
+          whose values to return on each Task.
+        explode: true
+        in: query
+        name: propertyKeys
         required: false
         schema:
           items:
@@ -3147,6 +3340,8 @@ paths:
                     asAtModified: 0001-01-01T00:00:00.0000000+00:00
                   taskDefinitionDisplayName: Test Definition
                   state: foo
+                  correlationIds:
+                  - correlation-id
                 correlationIds:
                 - correlation-id
                 terminalState: false
@@ -3456,6 +3651,18 @@ paths:
           type: string
         style: form
         x-nullable: true
+      - description: The property keys (in the TaskDefinition or Workflow domain)
+          whose values to return on the Task.
+        explode: true
+        in: query
+        name: propertyKeys
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+        x-nullable: true
       responses:
         "200":
           content:
@@ -3478,6 +3685,8 @@ paths:
                     asAtModified: 0001-01-01T00:00:00.0000000+00:00
                   taskDefinitionDisplayName: Test Definition
                   state: foo
+                  correlationIds:
+                  - correlation-id
                 correlationIds:
                 - correlation-id
                 terminalState: false
@@ -3604,6 +3813,8 @@ paths:
                     asAtModified: 0001-01-01T00:00:00.0000000+00:00
                   taskDefinitionDisplayName: Test Definition
                   state: foo
+                  correlationIds:
+                  - correlation-id
                 correlationIds:
                 - correlation-id
                 terminalState: false
@@ -6426,12 +6637,17 @@ components:
           correlationIds:
           - correlationIds
           - correlationIds
+          stateDisplayName: stateDisplayName
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           state: state
           taskDefinitionDisplayName: taskDefinitionDisplayName
           parentTask:
+            correlationIds:
+            - correlationIds
+            - correlationIds
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             state: state
             taskDefinitionDisplayName: taskDefinitionDisplayName
@@ -6451,16 +6667,24 @@ components:
             requestIdModified: requestIdModified
           actionLogIdModified: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           childTasks:
-          - taskDefinitionVersion:
+          - correlationIds:
+            - correlationIds
+            - correlationIds
+            taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             state: state
             taskDefinitionDisplayName: taskDefinitionDisplayName
             taskDefinitionId:
               code: code
               scope: scope
-          - taskDefinitionVersion:
+          - correlationIds:
+            - correlationIds
+            - correlationIds
+            taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             state: state
             taskDefinitionDisplayName: taskDefinitionDisplayName
@@ -6469,8 +6693,12 @@ components:
               scope: scope
           asAtLastTransition: 2000-01-23T04:56:07.000+00:00
           ultimateParentTask:
+            correlationIds:
+            - correlationIds
+            - correlationIds
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             state: state
             taskDefinitionDisplayName: taskDefinitionDisplayName
@@ -6488,6 +6716,18 @@ components:
           workflowId:
             code: code
             scope: scope
+          properties:
+            key:
+              value:
+                metricValue:
+                  unit: unit
+                  value: 0.8008281904610115
+                labelValue: labelValue
+                labelValueSet:
+                  values:
+                  - values
+                  - values
+              key: key
           openDurationSinceLastTransition: 5
         - terminalState: true
           stack:
@@ -6509,12 +6749,17 @@ components:
           correlationIds:
           - correlationIds
           - correlationIds
+          stateDisplayName: stateDisplayName
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           state: state
           taskDefinitionDisplayName: taskDefinitionDisplayName
           parentTask:
+            correlationIds:
+            - correlationIds
+            - correlationIds
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             state: state
             taskDefinitionDisplayName: taskDefinitionDisplayName
@@ -6534,16 +6779,24 @@ components:
             requestIdModified: requestIdModified
           actionLogIdModified: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           childTasks:
-          - taskDefinitionVersion:
+          - correlationIds:
+            - correlationIds
+            - correlationIds
+            taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             state: state
             taskDefinitionDisplayName: taskDefinitionDisplayName
             taskDefinitionId:
               code: code
               scope: scope
-          - taskDefinitionVersion:
+          - correlationIds:
+            - correlationIds
+            - correlationIds
+            taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             state: state
             taskDefinitionDisplayName: taskDefinitionDisplayName
@@ -6552,8 +6805,12 @@ components:
               scope: scope
           asAtLastTransition: 2000-01-23T04:56:07.000+00:00
           ultimateParentTask:
+            correlationIds:
+            - correlationIds
+            - correlationIds
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             state: state
             taskDefinitionDisplayName: taskDefinitionDisplayName
@@ -6571,6 +6828,18 @@ components:
           workflowId:
             code: code
             scope: scope
+          properties:
+            key:
+              value:
+                metricValue:
+                  unit: unit
+                  value: 0.8008281904610115
+                labelValue: labelValue
+                labelValueSet:
+                  values:
+                  - values
+                  - values
+              key: key
           openDurationSinceLastTransition: 5
         links:
         - method: method
@@ -6610,6 +6879,65 @@ components:
           nullable: true
           readOnly: true
           type: array
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          nullable: true
+          type: array
+      type: object
+    BatchUpsertTaskDefinitionPropertiesResponse:
+      additionalProperties: false
+      description: The result of a batch upsert of properties on a Task Definition.
+      example:
+        values:
+          key:
+            value:
+              metricValue:
+                unit: unit
+                value: 0.8008281904610115
+              labelValue: labelValue
+              labelValueSet:
+                values:
+                - values
+                - values
+            key: key
+        links:
+        - method: method
+          description: description
+          href: https://openapi-generator.tech
+          relation: relation
+        - method: method
+          description: description
+          href: https://openapi-generator.tech
+          relation: relation
+        failed:
+          key:
+            id: id
+            detail: detail
+            type: type
+            errorDetails:
+            - key: errorDetails
+            - key: errorDetails
+        asAtDate: 2000-01-23T04:56:07.000+00:00
+      properties:
+        values:
+          additionalProperties:
+            $ref: '#/components/schemas/PerpetualProperty'
+          description: "The properties that were successfully upserted or deleted,\
+            \ keyed by property key."
+          nullable: true
+          type: object
+        failed:
+          additionalProperties:
+            $ref: '#/components/schemas/ErrorDetail'
+          description: "The properties that could not be upserted or deleted, keyed\
+            \ by property key."
+          nullable: true
+          type: object
+        asAtDate:
+          description: The asAt datetime at which the properties were updated or created.
+          format: date-time
+          type: string
         links:
           items:
             $ref: '#/components/schemas/Link'
@@ -8344,12 +8672,17 @@ components:
           correlationIds:
           - correlationIds
           - correlationIds
+          stateDisplayName: stateDisplayName
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           state: state
           taskDefinitionDisplayName: taskDefinitionDisplayName
           parentTask:
+            correlationIds:
+            - correlationIds
+            - correlationIds
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             state: state
             taskDefinitionDisplayName: taskDefinitionDisplayName
@@ -8369,16 +8702,24 @@ components:
             requestIdModified: requestIdModified
           actionLogIdModified: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           childTasks:
-          - taskDefinitionVersion:
+          - correlationIds:
+            - correlationIds
+            - correlationIds
+            taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             state: state
             taskDefinitionDisplayName: taskDefinitionDisplayName
             taskDefinitionId:
               code: code
               scope: scope
-          - taskDefinitionVersion:
+          - correlationIds:
+            - correlationIds
+            - correlationIds
+            taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             state: state
             taskDefinitionDisplayName: taskDefinitionDisplayName
@@ -8387,8 +8728,12 @@ components:
               scope: scope
           asAtLastTransition: 2000-01-23T04:56:07.000+00:00
           ultimateParentTask:
+            correlationIds:
+            - correlationIds
+            - correlationIds
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             state: state
             taskDefinitionDisplayName: taskDefinitionDisplayName
@@ -8406,6 +8751,18 @@ components:
           workflowId:
             code: code
             scope: scope
+          properties:
+            key:
+              value:
+                metricValue:
+                  unit: unit
+                  value: 0.8008281904610115
+                labelValue: labelValue
+                labelValueSet:
+                  values:
+                  - values
+                  - values
+              key: key
           openDurationSinceLastTransition: 5
         - terminalState: true
           stack:
@@ -8427,12 +8784,17 @@ components:
           correlationIds:
           - correlationIds
           - correlationIds
+          stateDisplayName: stateDisplayName
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           state: state
           taskDefinitionDisplayName: taskDefinitionDisplayName
           parentTask:
+            correlationIds:
+            - correlationIds
+            - correlationIds
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             state: state
             taskDefinitionDisplayName: taskDefinitionDisplayName
@@ -8452,16 +8814,24 @@ components:
             requestIdModified: requestIdModified
           actionLogIdModified: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           childTasks:
-          - taskDefinitionVersion:
+          - correlationIds:
+            - correlationIds
+            - correlationIds
+            taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             state: state
             taskDefinitionDisplayName: taskDefinitionDisplayName
             taskDefinitionId:
               code: code
               scope: scope
-          - taskDefinitionVersion:
+          - correlationIds:
+            - correlationIds
+            - correlationIds
+            taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             state: state
             taskDefinitionDisplayName: taskDefinitionDisplayName
@@ -8470,8 +8840,12 @@ components:
               scope: scope
           asAtLastTransition: 2000-01-23T04:56:07.000+00:00
           ultimateParentTask:
+            correlationIds:
+            - correlationIds
+            - correlationIds
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             state: state
             taskDefinitionDisplayName: taskDefinitionDisplayName
@@ -8489,6 +8863,18 @@ components:
           workflowId:
             code: code
             scope: scope
+          properties:
+            key:
+              value:
+                metricValue:
+                  unit: unit
+                  value: 0.8008281904610115
+                labelValue: labelValue
+                labelValueSet:
+                  values:
+                  - values
+                  - values
+              key: key
           openDurationSinceLastTransition: 5
         links:
         - method: method
@@ -10122,12 +10508,17 @@ components:
           correlationIds:
           - correlationIds
           - correlationIds
+          stateDisplayName: stateDisplayName
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           state: state
           taskDefinitionDisplayName: taskDefinitionDisplayName
           parentTask:
+            correlationIds:
+            - correlationIds
+            - correlationIds
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             state: state
             taskDefinitionDisplayName: taskDefinitionDisplayName
@@ -10147,16 +10538,24 @@ components:
             requestIdModified: requestIdModified
           actionLogIdModified: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           childTasks:
-          - taskDefinitionVersion:
+          - correlationIds:
+            - correlationIds
+            - correlationIds
+            taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             state: state
             taskDefinitionDisplayName: taskDefinitionDisplayName
             taskDefinitionId:
               code: code
               scope: scope
-          - taskDefinitionVersion:
+          - correlationIds:
+            - correlationIds
+            - correlationIds
+            taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             state: state
             taskDefinitionDisplayName: taskDefinitionDisplayName
@@ -10165,8 +10564,12 @@ components:
               scope: scope
           asAtLastTransition: 2000-01-23T04:56:07.000+00:00
           ultimateParentTask:
+            correlationIds:
+            - correlationIds
+            - correlationIds
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             state: state
             taskDefinitionDisplayName: taskDefinitionDisplayName
@@ -10184,6 +10587,18 @@ components:
           workflowId:
             code: code
             scope: scope
+          properties:
+            key:
+              value:
+                metricValue:
+                  unit: unit
+                  value: 0.8008281904610115
+                labelValue: labelValue
+                labelValueSet:
+                  values:
+                  - values
+                  - values
+              key: key
           openDurationSinceLastTransition: 5
         - terminalState: true
           stack:
@@ -10205,12 +10620,17 @@ components:
           correlationIds:
           - correlationIds
           - correlationIds
+          stateDisplayName: stateDisplayName
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           state: state
           taskDefinitionDisplayName: taskDefinitionDisplayName
           parentTask:
+            correlationIds:
+            - correlationIds
+            - correlationIds
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             state: state
             taskDefinitionDisplayName: taskDefinitionDisplayName
@@ -10230,16 +10650,24 @@ components:
             requestIdModified: requestIdModified
           actionLogIdModified: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           childTasks:
-          - taskDefinitionVersion:
+          - correlationIds:
+            - correlationIds
+            - correlationIds
+            taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             state: state
             taskDefinitionDisplayName: taskDefinitionDisplayName
             taskDefinitionId:
               code: code
               scope: scope
-          - taskDefinitionVersion:
+          - correlationIds:
+            - correlationIds
+            - correlationIds
+            taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             state: state
             taskDefinitionDisplayName: taskDefinitionDisplayName
@@ -10248,8 +10676,12 @@ components:
               scope: scope
           asAtLastTransition: 2000-01-23T04:56:07.000+00:00
           ultimateParentTask:
+            correlationIds:
+            - correlationIds
+            - correlationIds
             taskDefinitionVersion:
               asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             state: state
             taskDefinitionDisplayName: taskDefinitionDisplayName
@@ -10267,6 +10699,18 @@ components:
           workflowId:
             code: code
             scope: scope
+          properties:
+            key:
+              value:
+                metricValue:
+                  unit: unit
+                  value: 0.8008281904610115
+                labelValue: labelValue
+                labelValueSet:
+                  values:
+                  - values
+                  - values
+              key: key
           openDurationSinceLastTransition: 5
         links:
         - method: method
@@ -10782,12 +11226,17 @@ components:
         correlationIds:
         - correlationIds
         - correlationIds
+        stateDisplayName: stateDisplayName
         id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         state: state
         taskDefinitionDisplayName: taskDefinitionDisplayName
         parentTask:
+          correlationIds:
+          - correlationIds
+          - correlationIds
           taskDefinitionVersion:
             asAtModified: 2000-01-23T04:56:07.000+00:00
+          stateDisplayName: stateDisplayName
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           state: state
           taskDefinitionDisplayName: taskDefinitionDisplayName
@@ -10807,16 +11256,24 @@ components:
           requestIdModified: requestIdModified
         actionLogIdModified: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         childTasks:
-        - taskDefinitionVersion:
+        - correlationIds:
+          - correlationIds
+          - correlationIds
+          taskDefinitionVersion:
             asAtModified: 2000-01-23T04:56:07.000+00:00
+          stateDisplayName: stateDisplayName
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           state: state
           taskDefinitionDisplayName: taskDefinitionDisplayName
           taskDefinitionId:
             code: code
             scope: scope
-        - taskDefinitionVersion:
+        - correlationIds:
+          - correlationIds
+          - correlationIds
+          taskDefinitionVersion:
             asAtModified: 2000-01-23T04:56:07.000+00:00
+          stateDisplayName: stateDisplayName
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           state: state
           taskDefinitionDisplayName: taskDefinitionDisplayName
@@ -10825,8 +11282,12 @@ components:
             scope: scope
         asAtLastTransition: 2000-01-23T04:56:07.000+00:00
         ultimateParentTask:
+          correlationIds:
+          - correlationIds
+          - correlationIds
           taskDefinitionVersion:
             asAtModified: 2000-01-23T04:56:07.000+00:00
+          stateDisplayName: stateDisplayName
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           state: state
           taskDefinitionDisplayName: taskDefinitionDisplayName
@@ -10844,6 +11305,18 @@ components:
         workflowId:
           code: code
           scope: scope
+        properties:
+          key:
+            value:
+              metricValue:
+                unit: unit
+                value: 0.8008281904610115
+              labelValue: labelValue
+              labelValueSet:
+                values:
+                - values
+                - values
+            key: key
         openDurationSinceLastTransition: 5
       properties:
         id:
@@ -10868,6 +11341,11 @@ components:
         state:
           description: Current State
           minLength: 1
+          type: string
+        stateDisplayName:
+          description: "The display name of the current State, from the Task Definition,\
+            \ if one is provided"
+          nullable: true
           type: string
         ultimateParentTask:
           $ref: '#/components/schemas/TaskSummary'
@@ -10952,6 +11430,14 @@ components:
           format: int64
           nullable: true
           type: integer
+        properties:
+          additionalProperties:
+            $ref: '#/components/schemas/PerpetualProperty'
+          description: |-
+            The requested TaskDefinition and Workflow properties decorated onto this Task, keyed by property key.
+            Only populated when property keys were requested.
+          nullable: true
+          type: object
       required:
       - id
       - state
@@ -11382,8 +11868,12 @@ components:
       additionalProperties: false
       description: Summary of a Task created based on a Task Definition
       example:
+        correlationIds:
+        - correlationIds
+        - correlationIds
         taskDefinitionVersion:
           asAtModified: 2000-01-23T04:56:07.000+00:00
+        stateDisplayName: stateDisplayName
         id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         state: state
         taskDefinitionDisplayName: taskDefinitionDisplayName
@@ -11407,6 +11897,17 @@ components:
           description: Current State
           minLength: 1
           type: string
+        stateDisplayName:
+          description: "The display name of the current State, from the Task Definition,\
+            \ if one is provided"
+          nullable: true
+          type: string
+        correlationIds:
+          description: User-provided ID used to link entities and tasks
+          items:
+            type: string
+          nullable: true
+          type: array
       required:
       - id
       - state

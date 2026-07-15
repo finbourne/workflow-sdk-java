@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **workflowId** | [**ResourceId**](ResourceId.md) |  | [optional] [default to ResourceId]
 **workflowDisplayName** | **String** | The display name of the Workflow that this Task is a member of, if any | [optional] [default to String]
 **state** | **String** | Current State | [default to String]
+**stateDisplayName** | **String** | The display name of the current State, from the Task Definition, if one is provided | [optional] [default to String]
 **ultimateParentTask** | [**TaskSummary**](TaskSummary.md) |  | [default to TaskSummary]
 **parentTask** | [**TaskSummary**](TaskSummary.md) |  | [optional] [default to TaskSummary]
 **childTasks** | [**List&lt;TaskSummary&gt;**](TaskSummary.md) | This Task&#39;s child tasks | [optional] [default to List<TaskSummary>]
@@ -30,6 +31,7 @@ Name | Type | Description | Notes
 **openDuration** | **Long** | Duration in seconds since the Task was created. If the Task is Completed, this is the duration from creation to the last transition. | [optional] [default to Long]
 **openDurationSinceLastUpdate** | **Long** | Duration in seconds since the Task was last updated. 0 if the Task is Completed. | [optional] [default to Long]
 **openDurationSinceLastTransition** | **Long** | Duration in seconds since the Task last transitioned. 0 if the Task is Completed. | [optional] [default to Long]
+**properties** | [**Map&lt;String, PerpetualProperty&gt;**](PerpetualProperty.md) | The requested TaskDefinition and Workflow properties decorated onto this Task, keyed by property key. Only populated when property keys were requested. | [optional] [default to Map<String, PerpetualProperty>]
 
 ```java
 import com.finbourne.workflow.model.Task;
@@ -44,6 +46,7 @@ String TaskDefinitionDisplayName = "example TaskDefinitionDisplayName";
 ResourceId WorkflowId = new ResourceId();
 @jakarta.annotation.Nullable String WorkflowDisplayName = "example WorkflowDisplayName";
 String State = "example State";
+@jakarta.annotation.Nullable String StateDisplayName = "example StateDisplayName";
 TaskSummary UltimateParentTask = new TaskSummary();
 TaskSummary ParentTask = new TaskSummary();
 @jakarta.annotation.Nullable List<TaskSummary> ChildTasks = new List<TaskSummary>();
@@ -62,6 +65,7 @@ Stack Stack = new Stack();
 @jakarta.annotation.Nullable Long OpenDuration = new Long("100.00");
 @jakarta.annotation.Nullable Long OpenDurationSinceLastUpdate = new Long("100.00");
 @jakarta.annotation.Nullable Long OpenDurationSinceLastTransition = new Long("100.00");
+@jakarta.annotation.Nullable Map<String, PerpetualProperty> Properties = new Map<String, PerpetualProperty>();
 
 
 Task taskInstance = new Task()
@@ -72,6 +76,7 @@ Task taskInstance = new Task()
     .WorkflowId(WorkflowId)
     .WorkflowDisplayName(WorkflowDisplayName)
     .State(State)
+    .StateDisplayName(StateDisplayName)
     .UltimateParentTask(UltimateParentTask)
     .ParentTask(ParentTask)
     .ChildTasks(ChildTasks)
@@ -89,7 +94,8 @@ Task taskInstance = new Task()
     .CompletionStatus(CompletionStatus)
     .OpenDuration(OpenDuration)
     .OpenDurationSinceLastUpdate(OpenDurationSinceLastUpdate)
-    .OpenDurationSinceLastTransition(OpenDurationSinceLastTransition);
+    .OpenDurationSinceLastTransition(OpenDurationSinceLastTransition)
+    .Properties(Properties);
 ```
 
 

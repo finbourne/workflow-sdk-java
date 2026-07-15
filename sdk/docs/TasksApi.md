@@ -377,7 +377,7 @@ public class TasksApiExample {
 
 ## getTask
 
-> Task getTask(id, asAt)
+> Task getTask(id, asAt, propertyKeys)
 
 GetTask: Get a Task
 
@@ -422,11 +422,12 @@ public class TasksApiExample {
         TasksApi apiInstance = ApiFactoryBuilder.build(fileName).build(TasksApi.class);
         String id = "id_example"; // String | Id of the Task to retrieve
         OffsetDateTime asAt = OffsetDateTime.now(); // OffsetDateTime | The asAt datetime at which to retrieve the Task. Defaults to returning the latest version of the Task if not specified.
+        List<String> propertyKeys = Arrays.asList(); // List<String> | The property keys (in the TaskDefinition or Workflow domain) whose values to return on the Task.
         try {
             // uncomment the below to set overrides at the request level
-            // Task result = apiInstance.getTask(id, asAt).execute(opts);
+            // Task result = apiInstance.getTask(id, asAt, propertyKeys).execute(opts);
 
-            Task result = apiInstance.getTask(id, asAt).execute();
+            Task result = apiInstance.getTask(id, asAt, propertyKeys).execute();
             System.out.println(result.toJson());
         } catch (ApiException e) {
             System.err.println("Exception when calling TasksApi#getTask");
@@ -445,6 +446,7 @@ public class TasksApiExample {
 |------------- | ------------- | ------------- | -------------|
 | **id** | **String**| Id of the Task to retrieve | |
 | **asAt** | **OffsetDateTime**| The asAt datetime at which to retrieve the Task. Defaults to returning the latest version of the Task if not specified. | [optional] |
+| **propertyKeys** | [**List&lt;String&gt;**](String.md)| The property keys (in the TaskDefinition or Workflow domain) whose values to return on the Task. | [optional] |
 
 ### Return type
 
@@ -561,7 +563,7 @@ public class TasksApiExample {
 
 ## listTasks
 
-> PagedResourceListOfTask listTasks(asAt, filter, sortBy, limit, page)
+> PagedResourceListOfTask listTasks(asAt, filter, sortBy, propertyKeys, limit, page)
 
 ListTasks: List Tasks
 
@@ -607,13 +609,14 @@ public class TasksApiExample {
         OffsetDateTime asAt = OffsetDateTime.now(); // OffsetDateTime | The asAt datetime at which to list the Tasks. Defaults to return the latest version of each Task if not specified.
         String filter = "filter_example"; // String | Expression to filter the result set. Read more about filtering results from LUSID here: https://support.lusid.com/filtering-results-from-lusid.
         List<String> sortBy = Arrays.asList(); // List<String> | A list of field names or properties to sort by, each optionally suffixed by \" ASC\" or \" DESC\"
+        List<String> propertyKeys = Arrays.asList(); // List<String> | The property keys (in the TaskDefinition or Workflow domain) whose values to return on each Task.
         Integer limit = 10; // Integer | When paginating, limit the number of returned results to this many.
         String page = "page_example"; // String | The pagination token to use to continue listing tasks from a previous call to list tasks. This value is returned from the previous call. If a pagination token is provided the sortBy, filter, effectiveAt, and asAt fields must not have changed since the original request.
         try {
             // uncomment the below to set overrides at the request level
-            // PagedResourceListOfTask result = apiInstance.listTasks(asAt, filter, sortBy, limit, page).execute(opts);
+            // PagedResourceListOfTask result = apiInstance.listTasks(asAt, filter, sortBy, propertyKeys, limit, page).execute(opts);
 
-            PagedResourceListOfTask result = apiInstance.listTasks(asAt, filter, sortBy, limit, page).execute();
+            PagedResourceListOfTask result = apiInstance.listTasks(asAt, filter, sortBy, propertyKeys, limit, page).execute();
             System.out.println(result.toJson());
         } catch (ApiException e) {
             System.err.println("Exception when calling TasksApi#listTasks");
@@ -633,6 +636,7 @@ public class TasksApiExample {
 | **asAt** | **OffsetDateTime**| The asAt datetime at which to list the Tasks. Defaults to return the latest version of each Task if not specified. | [optional] |
 | **filter** | **String**| Expression to filter the result set. Read more about filtering results from LUSID here: https://support.lusid.com/filtering-results-from-lusid. | [optional] |
 | **sortBy** | [**List&lt;String&gt;**](String.md)| A list of field names or properties to sort by, each optionally suffixed by \&quot; ASC\&quot; or \&quot; DESC\&quot; | [optional] |
+| **propertyKeys** | [**List&lt;String&gt;**](String.md)| The property keys (in the TaskDefinition or Workflow domain) whose values to return on each Task. | [optional] |
 | **limit** | **Integer**| When paginating, limit the number of returned results to this many. | [optional] [default to 10] |
 | **page** | **String**| The pagination token to use to continue listing tasks from a previous call to list tasks. This value is returned from the previous call. If a pagination token is provided the sortBy, filter, effectiveAt, and asAt fields must not have changed since the original request. | [optional] |
 

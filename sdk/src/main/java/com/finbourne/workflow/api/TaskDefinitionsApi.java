@@ -25,12 +25,14 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import com.finbourne.workflow.model.BatchUpsertTaskDefinitionPropertiesResponse;
 import com.finbourne.workflow.model.CreateTaskDefinitionRequest;
 import com.finbourne.workflow.model.DeletedEntityResponse;
 import com.finbourne.workflow.model.LusidProblemDetails;
 import com.finbourne.workflow.model.LusidValidationProblemDetails;
 import java.time.OffsetDateTime;
 import com.finbourne.workflow.model.PagedResourceListOfTaskDefinition;
+import com.finbourne.workflow.model.PerpetualProperty;
 import com.finbourne.workflow.model.ResourceListOfTask;
 import com.finbourne.workflow.model.TaskDefinition;
 import com.finbourne.workflow.model.UpdateTaskDefinitionRequest;
@@ -558,11 +560,11 @@ public class TaskDefinitionsApi {
     public APIdeleteTaskDefinitionRequest deleteTaskDefinition(String scope, String code) {
         return new APIdeleteTaskDefinitionRequest(scope, code);
     }
-    private okhttp3.Call getTaskDefinitionCall(String scope, String code, OffsetDateTime asAt, final ApiCallback _callback) throws ApiException {
-        return getTaskDefinitionCall(scope, code, asAt,  _callback, new ConfigurationOptions());
+    private okhttp3.Call getTaskDefinitionCall(String scope, String code, OffsetDateTime asAt, List<String> propertyKeys, final ApiCallback _callback) throws ApiException {
+        return getTaskDefinitionCall(scope, code, asAt, propertyKeys,  _callback, new ConfigurationOptions());
     }
 
-    private okhttp3.Call getTaskDefinitionCall(String scope, String code, OffsetDateTime asAt, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
+    private okhttp3.Call getTaskDefinitionCall(String scope, String code, OffsetDateTime asAt, List<String> propertyKeys, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -593,6 +595,10 @@ public class TaskDefinitionsApi {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("asAt", asAt));
         }
 
+        if (propertyKeys != null) {
+            localVarCollectionQueryParams.addAll(localVarApiClient.parameterToPairs("multi", "propertyKeys", propertyKeys));
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -613,7 +619,7 @@ public class TaskDefinitionsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getTaskDefinitionValidateBeforeCall(String scope, String code, OffsetDateTime asAt, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
+    private okhttp3.Call getTaskDefinitionValidateBeforeCall(String scope, String code, OffsetDateTime asAt, List<String> propertyKeys, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         // verify the required parameter 'scope' is set
         if (scope == null) {
             throw new ApiException("Missing the required parameter 'scope' when calling getTaskDefinition(Async)");
@@ -624,34 +630,34 @@ public class TaskDefinitionsApi {
             throw new ApiException("Missing the required parameter 'code' when calling getTaskDefinition(Async)");
         }
 
-        return getTaskDefinitionCall(scope, code, asAt, _callback, opts);
+        return getTaskDefinitionCall(scope, code, asAt, propertyKeys, _callback, opts);
 
     }
 
 
-    private ApiResponse<TaskDefinition> getTaskDefinitionWithHttpInfo(String scope, String code, OffsetDateTime asAt) throws ApiException {
-        okhttp3.Call localVarCall = getTaskDefinitionValidateBeforeCall(scope, code, asAt, null, new ConfigurationOptions());
+    private ApiResponse<TaskDefinition> getTaskDefinitionWithHttpInfo(String scope, String code, OffsetDateTime asAt, List<String> propertyKeys) throws ApiException {
+        okhttp3.Call localVarCall = getTaskDefinitionValidateBeforeCall(scope, code, asAt, propertyKeys, null, new ConfigurationOptions());
         Type localVarReturnType = new TypeToken<TaskDefinition>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
-    private ApiResponse<TaskDefinition> getTaskDefinitionWithHttpInfo(String scope, String code, OffsetDateTime asAt, ConfigurationOptions opts) throws ApiException {
-        okhttp3.Call localVarCall = getTaskDefinitionValidateBeforeCall(scope, code, asAt, null, opts);
+    private ApiResponse<TaskDefinition> getTaskDefinitionWithHttpInfo(String scope, String code, OffsetDateTime asAt, List<String> propertyKeys, ConfigurationOptions opts) throws ApiException {
+        okhttp3.Call localVarCall = getTaskDefinitionValidateBeforeCall(scope, code, asAt, propertyKeys, null, opts);
         Type localVarReturnType = new TypeToken<TaskDefinition>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
-    private okhttp3.Call getTaskDefinitionAsync(String scope, String code, OffsetDateTime asAt, final ApiCallback<TaskDefinition> _callback) throws ApiException {
+    private okhttp3.Call getTaskDefinitionAsync(String scope, String code, OffsetDateTime asAt, List<String> propertyKeys, final ApiCallback<TaskDefinition> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getTaskDefinitionValidateBeforeCall(scope, code, asAt, _callback, new ConfigurationOptions());
+        okhttp3.Call localVarCall = getTaskDefinitionValidateBeforeCall(scope, code, asAt, propertyKeys, _callback, new ConfigurationOptions());
         Type localVarReturnType = new TypeToken<TaskDefinition>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 
-    private okhttp3.Call getTaskDefinitionAsync(String scope, String code, OffsetDateTime asAt, final ApiCallback<TaskDefinition> _callback, ConfigurationOptions opts) throws ApiException {
+    private okhttp3.Call getTaskDefinitionAsync(String scope, String code, OffsetDateTime asAt, List<String> propertyKeys, final ApiCallback<TaskDefinition> _callback, ConfigurationOptions opts) throws ApiException {
 
-        okhttp3.Call localVarCall = getTaskDefinitionValidateBeforeCall(scope, code, asAt, _callback, opts);
+        okhttp3.Call localVarCall = getTaskDefinitionValidateBeforeCall(scope, code, asAt, propertyKeys, _callback, opts);
         Type localVarReturnType = new TypeToken<TaskDefinition>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -661,6 +667,7 @@ public class TaskDefinitionsApi {
         private final String scope;
         private final String code;
         private OffsetDateTime asAt;
+        private List<String> propertyKeys;
 
         private APIgetTaskDefinitionRequest(String scope, String code) {
             this.scope = scope;
@@ -674,6 +681,16 @@ public class TaskDefinitionsApi {
          */
         public APIgetTaskDefinitionRequest asAt(OffsetDateTime asAt) {
             this.asAt = asAt;
+            return this;
+        }
+
+        /**
+         * Set propertyKeys
+         * @param propertyKeys The property keys whose values to return on the Task Definition. (optional)
+         * @return APIgetTaskDefinitionRequest
+         */
+        public APIgetTaskDefinitionRequest propertyKeys(List<String> propertyKeys) {
+            this.propertyKeys = propertyKeys;
             return this;
         }
 
@@ -692,7 +709,7 @@ public class TaskDefinitionsApi {
          </table>
          */
         public okhttp3.Call buildCall(final ApiCallback _callback) throws ApiException {
-            return getTaskDefinitionCall(scope, code, asAt, _callback);
+            return getTaskDefinitionCall(scope, code, asAt, propertyKeys, _callback);
         }
 
         /**
@@ -709,7 +726,7 @@ public class TaskDefinitionsApi {
          </table>
          */
         public TaskDefinition execute() throws ApiException {
-            ApiResponse<TaskDefinition> localVarResp = getTaskDefinitionWithHttpInfo(scope, code, asAt);
+            ApiResponse<TaskDefinition> localVarResp = getTaskDefinitionWithHttpInfo(scope, code, asAt, propertyKeys);
             return localVarResp.getData();
         }
 
@@ -727,7 +744,7 @@ public class TaskDefinitionsApi {
          </table>
          */
         public TaskDefinition execute(ConfigurationOptions opts) throws ApiException {
-            ApiResponse<TaskDefinition> localVarResp = getTaskDefinitionWithHttpInfo(scope, code, asAt, opts);
+            ApiResponse<TaskDefinition> localVarResp = getTaskDefinitionWithHttpInfo(scope, code, asAt, propertyKeys, opts);
             return localVarResp.getData();
         }
 
@@ -745,7 +762,7 @@ public class TaskDefinitionsApi {
          </table>
          */
         public ApiResponse<TaskDefinition> executeWithHttpInfo() throws ApiException {
-            return getTaskDefinitionWithHttpInfo(scope, code, asAt);
+            return getTaskDefinitionWithHttpInfo(scope, code, asAt, propertyKeys);
         }
 
         /**
@@ -762,7 +779,7 @@ public class TaskDefinitionsApi {
          </table>
          */
         public ApiResponse<TaskDefinition> executeWithHttpInfo(ConfigurationOptions opts) throws ApiException {
-            return getTaskDefinitionWithHttpInfo(scope, code, asAt, opts);
+            return getTaskDefinitionWithHttpInfo(scope, code, asAt, propertyKeys, opts);
         }
 
         /**
@@ -780,7 +797,7 @@ public class TaskDefinitionsApi {
          </table>
          */
         public okhttp3.Call executeAsync(final ApiCallback<TaskDefinition> _callback) throws ApiException {
-            return getTaskDefinitionAsync(scope, code, asAt, _callback);
+            return getTaskDefinitionAsync(scope, code, asAt, propertyKeys, _callback);
         }
 
         /**
@@ -798,7 +815,7 @@ public class TaskDefinitionsApi {
          </table>
          */
         public okhttp3.Call executeAsync(final ApiCallback<TaskDefinition> _callback, ConfigurationOptions opts) throws ApiException {
-            return getTaskDefinitionAsync(scope, code, asAt, _callback, opts);
+            return getTaskDefinitionAsync(scope, code, asAt, propertyKeys, _callback, opts);
         }
     }
 
@@ -1124,11 +1141,11 @@ public class TaskDefinitionsApi {
     public APIlistTaskDefinitionsRequest listTaskDefinitions() {
         return new APIlistTaskDefinitionsRequest();
     }
-    private okhttp3.Call listTasksForTaskDefinitionCall(String scope, String code, OffsetDateTime asAt, final ApiCallback _callback) throws ApiException {
-        return listTasksForTaskDefinitionCall(scope, code, asAt,  _callback, new ConfigurationOptions());
+    private okhttp3.Call listTasksForTaskDefinitionCall(String scope, String code, OffsetDateTime asAt, List<String> propertyKeys, final ApiCallback _callback) throws ApiException {
+        return listTasksForTaskDefinitionCall(scope, code, asAt, propertyKeys,  _callback, new ConfigurationOptions());
     }
 
-    private okhttp3.Call listTasksForTaskDefinitionCall(String scope, String code, OffsetDateTime asAt, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
+    private okhttp3.Call listTasksForTaskDefinitionCall(String scope, String code, OffsetDateTime asAt, List<String> propertyKeys, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1159,6 +1176,10 @@ public class TaskDefinitionsApi {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("asAt", asAt));
         }
 
+        if (propertyKeys != null) {
+            localVarCollectionQueryParams.addAll(localVarApiClient.parameterToPairs("multi", "propertyKeys", propertyKeys));
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -1179,7 +1200,7 @@ public class TaskDefinitionsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call listTasksForTaskDefinitionValidateBeforeCall(String scope, String code, OffsetDateTime asAt, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
+    private okhttp3.Call listTasksForTaskDefinitionValidateBeforeCall(String scope, String code, OffsetDateTime asAt, List<String> propertyKeys, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         // verify the required parameter 'scope' is set
         if (scope == null) {
             throw new ApiException("Missing the required parameter 'scope' when calling listTasksForTaskDefinition(Async)");
@@ -1190,34 +1211,34 @@ public class TaskDefinitionsApi {
             throw new ApiException("Missing the required parameter 'code' when calling listTasksForTaskDefinition(Async)");
         }
 
-        return listTasksForTaskDefinitionCall(scope, code, asAt, _callback, opts);
+        return listTasksForTaskDefinitionCall(scope, code, asAt, propertyKeys, _callback, opts);
 
     }
 
 
-    private ApiResponse<ResourceListOfTask> listTasksForTaskDefinitionWithHttpInfo(String scope, String code, OffsetDateTime asAt) throws ApiException {
-        okhttp3.Call localVarCall = listTasksForTaskDefinitionValidateBeforeCall(scope, code, asAt, null, new ConfigurationOptions());
+    private ApiResponse<ResourceListOfTask> listTasksForTaskDefinitionWithHttpInfo(String scope, String code, OffsetDateTime asAt, List<String> propertyKeys) throws ApiException {
+        okhttp3.Call localVarCall = listTasksForTaskDefinitionValidateBeforeCall(scope, code, asAt, propertyKeys, null, new ConfigurationOptions());
         Type localVarReturnType = new TypeToken<ResourceListOfTask>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
-    private ApiResponse<ResourceListOfTask> listTasksForTaskDefinitionWithHttpInfo(String scope, String code, OffsetDateTime asAt, ConfigurationOptions opts) throws ApiException {
-        okhttp3.Call localVarCall = listTasksForTaskDefinitionValidateBeforeCall(scope, code, asAt, null, opts);
+    private ApiResponse<ResourceListOfTask> listTasksForTaskDefinitionWithHttpInfo(String scope, String code, OffsetDateTime asAt, List<String> propertyKeys, ConfigurationOptions opts) throws ApiException {
+        okhttp3.Call localVarCall = listTasksForTaskDefinitionValidateBeforeCall(scope, code, asAt, propertyKeys, null, opts);
         Type localVarReturnType = new TypeToken<ResourceListOfTask>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
-    private okhttp3.Call listTasksForTaskDefinitionAsync(String scope, String code, OffsetDateTime asAt, final ApiCallback<ResourceListOfTask> _callback) throws ApiException {
+    private okhttp3.Call listTasksForTaskDefinitionAsync(String scope, String code, OffsetDateTime asAt, List<String> propertyKeys, final ApiCallback<ResourceListOfTask> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = listTasksForTaskDefinitionValidateBeforeCall(scope, code, asAt, _callback, new ConfigurationOptions());
+        okhttp3.Call localVarCall = listTasksForTaskDefinitionValidateBeforeCall(scope, code, asAt, propertyKeys, _callback, new ConfigurationOptions());
         Type localVarReturnType = new TypeToken<ResourceListOfTask>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 
-    private okhttp3.Call listTasksForTaskDefinitionAsync(String scope, String code, OffsetDateTime asAt, final ApiCallback<ResourceListOfTask> _callback, ConfigurationOptions opts) throws ApiException {
+    private okhttp3.Call listTasksForTaskDefinitionAsync(String scope, String code, OffsetDateTime asAt, List<String> propertyKeys, final ApiCallback<ResourceListOfTask> _callback, ConfigurationOptions opts) throws ApiException {
 
-        okhttp3.Call localVarCall = listTasksForTaskDefinitionValidateBeforeCall(scope, code, asAt, _callback, opts);
+        okhttp3.Call localVarCall = listTasksForTaskDefinitionValidateBeforeCall(scope, code, asAt, propertyKeys, _callback, opts);
         Type localVarReturnType = new TypeToken<ResourceListOfTask>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1227,6 +1248,7 @@ public class TaskDefinitionsApi {
         private final String scope;
         private final String code;
         private OffsetDateTime asAt;
+        private List<String> propertyKeys;
 
         private APIlistTasksForTaskDefinitionRequest(String scope, String code) {
             this.scope = scope;
@@ -1240,6 +1262,16 @@ public class TaskDefinitionsApi {
          */
         public APIlistTasksForTaskDefinitionRequest asAt(OffsetDateTime asAt) {
             this.asAt = asAt;
+            return this;
+        }
+
+        /**
+         * Set propertyKeys
+         * @param propertyKeys The property keys (in the TaskDefinition or Workflow domain) whose values to return on each Task. (optional)
+         * @return APIlistTasksForTaskDefinitionRequest
+         */
+        public APIlistTasksForTaskDefinitionRequest propertyKeys(List<String> propertyKeys) {
+            this.propertyKeys = propertyKeys;
             return this;
         }
 
@@ -1258,7 +1290,7 @@ public class TaskDefinitionsApi {
          </table>
          */
         public okhttp3.Call buildCall(final ApiCallback _callback) throws ApiException {
-            return listTasksForTaskDefinitionCall(scope, code, asAt, _callback);
+            return listTasksForTaskDefinitionCall(scope, code, asAt, propertyKeys, _callback);
         }
 
         /**
@@ -1275,7 +1307,7 @@ public class TaskDefinitionsApi {
          </table>
          */
         public ResourceListOfTask execute() throws ApiException {
-            ApiResponse<ResourceListOfTask> localVarResp = listTasksForTaskDefinitionWithHttpInfo(scope, code, asAt);
+            ApiResponse<ResourceListOfTask> localVarResp = listTasksForTaskDefinitionWithHttpInfo(scope, code, asAt, propertyKeys);
             return localVarResp.getData();
         }
 
@@ -1293,7 +1325,7 @@ public class TaskDefinitionsApi {
          </table>
          */
         public ResourceListOfTask execute(ConfigurationOptions opts) throws ApiException {
-            ApiResponse<ResourceListOfTask> localVarResp = listTasksForTaskDefinitionWithHttpInfo(scope, code, asAt, opts);
+            ApiResponse<ResourceListOfTask> localVarResp = listTasksForTaskDefinitionWithHttpInfo(scope, code, asAt, propertyKeys, opts);
             return localVarResp.getData();
         }
 
@@ -1311,7 +1343,7 @@ public class TaskDefinitionsApi {
          </table>
          */
         public ApiResponse<ResourceListOfTask> executeWithHttpInfo() throws ApiException {
-            return listTasksForTaskDefinitionWithHttpInfo(scope, code, asAt);
+            return listTasksForTaskDefinitionWithHttpInfo(scope, code, asAt, propertyKeys);
         }
 
         /**
@@ -1328,7 +1360,7 @@ public class TaskDefinitionsApi {
          </table>
          */
         public ApiResponse<ResourceListOfTask> executeWithHttpInfo(ConfigurationOptions opts) throws ApiException {
-            return listTasksForTaskDefinitionWithHttpInfo(scope, code, asAt, opts);
+            return listTasksForTaskDefinitionWithHttpInfo(scope, code, asAt, propertyKeys, opts);
         }
 
         /**
@@ -1346,7 +1378,7 @@ public class TaskDefinitionsApi {
          </table>
          */
         public okhttp3.Call executeAsync(final ApiCallback<ResourceListOfTask> _callback) throws ApiException {
-            return listTasksForTaskDefinitionAsync(scope, code, asAt, _callback);
+            return listTasksForTaskDefinitionAsync(scope, code, asAt, propertyKeys, _callback);
         }
 
         /**
@@ -1364,7 +1396,7 @@ public class TaskDefinitionsApi {
          </table>
          */
         public okhttp3.Call executeAsync(final ApiCallback<ResourceListOfTask> _callback, ConfigurationOptions opts) throws ApiException {
-            return listTasksForTaskDefinitionAsync(scope, code, asAt, _callback, opts);
+            return listTasksForTaskDefinitionAsync(scope, code, asAt, propertyKeys, _callback, opts);
         }
     }
 
@@ -1644,5 +1676,279 @@ public class TaskDefinitionsApi {
      */
     public APIupdateTaskDefinitionRequest updateTaskDefinition(String scope, String code, UpdateTaskDefinitionRequest updateTaskDefinitionRequest) {
         return new APIupdateTaskDefinitionRequest(scope, code, updateTaskDefinitionRequest);
+    }
+    private okhttp3.Call upsertTaskDefinitionPropertiesCall(String scope, String code, Map<String, PerpetualProperty> requestBody, String successMode, final ApiCallback _callback) throws ApiException {
+        return upsertTaskDefinitionPropertiesCall(scope, code, requestBody, successMode,  _callback, new ConfigurationOptions());
+    }
+
+    private okhttp3.Call upsertTaskDefinitionPropertiesCall(String scope, String code, Map<String, PerpetualProperty> requestBody, String successMode, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = requestBody;
+
+        // create path and map variables
+        String localVarPath = "/api/taskdefinitions/{scope}/{code}/properties"
+            .replace("{" + "scope" + "}", localVarApiClient.escapeString(scope.toString()))
+            .replace("{" + "code" + "}", localVarApiClient.escapeString(code.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        if (successMode != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("successMode", successMode));
+        }
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json-patch+json",
+            "application/json",
+            "text/json",
+            "application/*+json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "oauth2" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback, opts);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call upsertTaskDefinitionPropertiesValidateBeforeCall(String scope, String code, Map<String, PerpetualProperty> requestBody, String successMode, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
+        // verify the required parameter 'scope' is set
+        if (scope == null) {
+            throw new ApiException("Missing the required parameter 'scope' when calling upsertTaskDefinitionProperties(Async)");
+        }
+
+        // verify the required parameter 'code' is set
+        if (code == null) {
+            throw new ApiException("Missing the required parameter 'code' when calling upsertTaskDefinitionProperties(Async)");
+        }
+
+        // verify the required parameter 'requestBody' is set
+        if (requestBody == null) {
+            throw new ApiException("Missing the required parameter 'requestBody' when calling upsertTaskDefinitionProperties(Async)");
+        }
+
+        return upsertTaskDefinitionPropertiesCall(scope, code, requestBody, successMode, _callback, opts);
+
+    }
+
+
+    private ApiResponse<BatchUpsertTaskDefinitionPropertiesResponse> upsertTaskDefinitionPropertiesWithHttpInfo(String scope, String code, Map<String, PerpetualProperty> requestBody, String successMode) throws ApiException {
+        okhttp3.Call localVarCall = upsertTaskDefinitionPropertiesValidateBeforeCall(scope, code, requestBody, successMode, null, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<BatchUpsertTaskDefinitionPropertiesResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private ApiResponse<BatchUpsertTaskDefinitionPropertiesResponse> upsertTaskDefinitionPropertiesWithHttpInfo(String scope, String code, Map<String, PerpetualProperty> requestBody, String successMode, ConfigurationOptions opts) throws ApiException {
+        okhttp3.Call localVarCall = upsertTaskDefinitionPropertiesValidateBeforeCall(scope, code, requestBody, successMode, null, opts);
+        Type localVarReturnType = new TypeToken<BatchUpsertTaskDefinitionPropertiesResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private okhttp3.Call upsertTaskDefinitionPropertiesAsync(String scope, String code, Map<String, PerpetualProperty> requestBody, String successMode, final ApiCallback<BatchUpsertTaskDefinitionPropertiesResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = upsertTaskDefinitionPropertiesValidateBeforeCall(scope, code, requestBody, successMode, _callback, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<BatchUpsertTaskDefinitionPropertiesResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    private okhttp3.Call upsertTaskDefinitionPropertiesAsync(String scope, String code, Map<String, PerpetualProperty> requestBody, String successMode, final ApiCallback<BatchUpsertTaskDefinitionPropertiesResponse> _callback, ConfigurationOptions opts) throws ApiException {
+
+        okhttp3.Call localVarCall = upsertTaskDefinitionPropertiesValidateBeforeCall(scope, code, requestBody, successMode, _callback, opts);
+        Type localVarReturnType = new TypeToken<BatchUpsertTaskDefinitionPropertiesResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    public class APIupsertTaskDefinitionPropertiesRequest {
+        private final String scope;
+        private final String code;
+        private final Map<String, PerpetualProperty> requestBody;
+        private String successMode;
+
+        private APIupsertTaskDefinitionPropertiesRequest(String scope, String code, Map<String, PerpetualProperty> requestBody) {
+            this.scope = scope;
+            this.code = code;
+            this.requestBody = requestBody;
+        }
+
+        /**
+         * Set successMode
+         * @param successMode Whether the batch should fail Atomically or Partially. Defaults to Partial. (optional, default to Partial)
+         * @return APIupsertTaskDefinitionPropertiesRequest
+         */
+        public APIupsertTaskDefinitionPropertiesRequest successMode(String successMode) {
+            this.successMode = successMode;
+            return this;
+        }
+
+        /**
+         * Build call for upsertTaskDefinitionProperties
+         * @param _callback ApiCallback API callback
+         * @return Call to execute
+         * @throws ApiException If fail to serialize the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Task Definition not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call buildCall(final ApiCallback _callback) throws ApiException {
+            return upsertTaskDefinitionPropertiesCall(scope, code, requestBody, successMode, _callback);
+        }
+
+        /**
+         * Execute upsertTaskDefinitionProperties request
+         * @return BatchUpsertTaskDefinitionPropertiesResponse
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Task Definition not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public BatchUpsertTaskDefinitionPropertiesResponse execute() throws ApiException {
+            ApiResponse<BatchUpsertTaskDefinitionPropertiesResponse> localVarResp = upsertTaskDefinitionPropertiesWithHttpInfo(scope, code, requestBody, successMode);
+            return localVarResp.getData();
+        }
+
+        /**
+         * Execute upsertTaskDefinitionProperties request. Use any specified configuration options to override any other configuration for this request only.
+         * @return BatchUpsertTaskDefinitionPropertiesResponse
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Task Definition not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public BatchUpsertTaskDefinitionPropertiesResponse execute(ConfigurationOptions opts) throws ApiException {
+            ApiResponse<BatchUpsertTaskDefinitionPropertiesResponse> localVarResp = upsertTaskDefinitionPropertiesWithHttpInfo(scope, code, requestBody, successMode, opts);
+            return localVarResp.getData();
+        }
+
+        /**
+         * Execute upsertTaskDefinitionProperties request with HTTP info returned
+         * @return ApiResponse&lt;BatchUpsertTaskDefinitionPropertiesResponse&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Task Definition not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<BatchUpsertTaskDefinitionPropertiesResponse> executeWithHttpInfo() throws ApiException {
+            return upsertTaskDefinitionPropertiesWithHttpInfo(scope, code, requestBody, successMode);
+        }
+
+        /**
+         * Execute upsertTaskDefinitionProperties request with HTTP info returned. Use any specified configuration options to override any other configuration for this request only.
+         * @return ApiResponse&lt;BatchUpsertTaskDefinitionPropertiesResponse&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Task Definition not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<BatchUpsertTaskDefinitionPropertiesResponse> executeWithHttpInfo(ConfigurationOptions opts) throws ApiException {
+            return upsertTaskDefinitionPropertiesWithHttpInfo(scope, code, requestBody, successMode, opts);
+        }
+
+        /**
+         * Execute upsertTaskDefinitionProperties request (asynchronously)
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Task Definition not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<BatchUpsertTaskDefinitionPropertiesResponse> _callback) throws ApiException {
+            return upsertTaskDefinitionPropertiesAsync(scope, code, requestBody, successMode, _callback);
+        }
+
+        /**
+         * Execute upsertTaskDefinitionProperties request (asynchronously). Use any specified configuration options to override any other configuration for this request only.
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Task Definition not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<BatchUpsertTaskDefinitionPropertiesResponse> _callback, ConfigurationOptions opts) throws ApiException {
+            return upsertTaskDefinitionPropertiesAsync(scope, code, requestBody, successMode, _callback, opts);
+        }
+    }
+
+    /**
+     * [EXPERIMENTAL] UpsertTaskDefinitionProperties: Add, update and remove properties on an existing Task Definition in bulk.
+     * 
+     * @param scope The scope that identifies a Task Definition (required)
+     * @param code The code that identifies a Task Definition (required)
+     * @param requestBody The properties to upsert, keyed by property key. A null value deletes the property. (required)
+     * @return APIupsertTaskDefinitionPropertiesRequest
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Task Definition not found. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+     </table>
+     */
+    public APIupsertTaskDefinitionPropertiesRequest upsertTaskDefinitionProperties(String scope, String code, Map<String, PerpetualProperty> requestBody) {
+        return new APIupsertTaskDefinitionPropertiesRequest(scope, code, requestBody);
     }
 }

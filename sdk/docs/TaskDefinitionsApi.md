@@ -10,6 +10,7 @@ All URIs are relative to *https://fbn-prd.lusid.com/workflow*
 | [**listTaskDefinitions**](TaskDefinitionsApi.md#listTaskDefinitions) | **GET** /api/taskdefinitions | ListTaskDefinitions: List Task Definitions |
 | [**listTasksForTaskDefinition**](TaskDefinitionsApi.md#listTasksForTaskDefinition) | **GET** /api/taskdefinitions/{scope}/{code}/tasks | ListTasksForTaskDefinition: List Tasks for a Task Definition |
 | [**updateTaskDefinition**](TaskDefinitionsApi.md#updateTaskDefinition) | **PUT** /api/taskdefinitions/{scope}/{code} | UpdateTaskDefinition: Update an existing Task Definition |
+| [**upsertTaskDefinitionProperties**](TaskDefinitionsApi.md#upsertTaskDefinitionProperties) | **POST** /api/taskdefinitions/{scope}/{code}/properties | [EXPERIMENTAL] UpsertTaskDefinitionProperties: Add, update and remove properties on an existing Task Definition in bulk. |
 
 
 
@@ -196,7 +197,7 @@ public class TaskDefinitionsApiExample {
 
 ## getTaskDefinition
 
-> TaskDefinition getTaskDefinition(scope, code, asAt)
+> TaskDefinition getTaskDefinition(scope, code, asAt, propertyKeys)
 
 GetTaskDefinition: Get a Task Definition
 
@@ -242,11 +243,12 @@ public class TaskDefinitionsApiExample {
         String scope = "scope_example"; // String | The scope that identifies a Task Definition
         String code = "code_example"; // String | The code that identifies a Task Definition
         OffsetDateTime asAt = OffsetDateTime.now(); // OffsetDateTime | The asAt datetime at which to retrieve the Task Definition. Defaults to returning the latest version of the Task Definition if not specified.
+        List<String> propertyKeys = Arrays.asList(); // List<String> | The property keys whose values to return on the Task Definition.
         try {
             // uncomment the below to set overrides at the request level
-            // TaskDefinition result = apiInstance.getTaskDefinition(scope, code, asAt).execute(opts);
+            // TaskDefinition result = apiInstance.getTaskDefinition(scope, code, asAt, propertyKeys).execute(opts);
 
-            TaskDefinition result = apiInstance.getTaskDefinition(scope, code, asAt).execute();
+            TaskDefinition result = apiInstance.getTaskDefinition(scope, code, asAt, propertyKeys).execute();
             System.out.println(result.toJson());
         } catch (ApiException e) {
             System.err.println("Exception when calling TaskDefinitionsApi#getTaskDefinition");
@@ -266,6 +268,7 @@ public class TaskDefinitionsApiExample {
 | **scope** | **String**| The scope that identifies a Task Definition | |
 | **code** | **String**| The code that identifies a Task Definition | |
 | **asAt** | **OffsetDateTime**| The asAt datetime at which to retrieve the Task Definition. Defaults to returning the latest version of the Task Definition if not specified. | [optional] |
+| **propertyKeys** | [**List&lt;String&gt;**](String.md)| The property keys whose values to return on the Task Definition. | [optional] |
 
 ### Return type
 
@@ -388,7 +391,7 @@ public class TaskDefinitionsApiExample {
 
 ## listTasksForTaskDefinition
 
-> ResourceListOfTask listTasksForTaskDefinition(scope, code, asAt)
+> ResourceListOfTask listTasksForTaskDefinition(scope, code, asAt, propertyKeys)
 
 ListTasksForTaskDefinition: List Tasks for a Task Definition
 
@@ -434,11 +437,12 @@ public class TaskDefinitionsApiExample {
         String scope = "scope_example"; // String | The scope that identifies a Task Definition
         String code = "code_example"; // String | The code that identifies a Task Definition
         OffsetDateTime asAt = OffsetDateTime.now(); // OffsetDateTime | The asAt datetime at which to list the Tasks. Defaults to return the latest version of each Task if not specified.
+        List<String> propertyKeys = Arrays.asList(); // List<String> | The property keys (in the TaskDefinition or Workflow domain) whose values to return on each Task.
         try {
             // uncomment the below to set overrides at the request level
-            // ResourceListOfTask result = apiInstance.listTasksForTaskDefinition(scope, code, asAt).execute(opts);
+            // ResourceListOfTask result = apiInstance.listTasksForTaskDefinition(scope, code, asAt, propertyKeys).execute(opts);
 
-            ResourceListOfTask result = apiInstance.listTasksForTaskDefinition(scope, code, asAt).execute();
+            ResourceListOfTask result = apiInstance.listTasksForTaskDefinition(scope, code, asAt, propertyKeys).execute();
             System.out.println(result.toJson());
         } catch (ApiException e) {
             System.err.println("Exception when calling TaskDefinitionsApi#listTasksForTaskDefinition");
@@ -458,6 +462,7 @@ public class TaskDefinitionsApiExample {
 | **scope** | **String**| The scope that identifies a Task Definition | |
 | **code** | **String**| The code that identifies a Task Definition | |
 | **asAt** | **OffsetDateTime**| The asAt datetime at which to list the Tasks. Defaults to return the latest version of each Task if not specified. | [optional] |
+| **propertyKeys** | [**List&lt;String&gt;**](String.md)| The property keys (in the TaskDefinition or Workflow domain) whose values to return on each Task. | [optional] |
 
 ### Return type
 
@@ -556,6 +561,102 @@ public class TaskDefinitionsApiExample {
 ### Return type
 
 [**TaskDefinition**](TaskDefinition.md)
+
+### HTTP request headers
+
+- **Content-Type**: application/json-patch+json, application/json, text/json, application/*+json
+- **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+| **400** | The details of the input related failure |  -  |
+| **404** | Task Definition not found. |  -  |
+| **0** | Error response |  -  |
+
+[Back to top](#) &#8226; [Back to API list](../README.md#documentation-for-api-endpoints) &#8226; [Back to Model list](../README.md#documentation-for-models) &#8226; [Back to README](../README.md)
+
+
+## upsertTaskDefinitionProperties
+
+> BatchUpsertTaskDefinitionPropertiesResponse upsertTaskDefinitionProperties(scope, code, requestBody, successMode)
+
+[EXPERIMENTAL] UpsertTaskDefinitionProperties: Add, update and remove properties on an existing Task Definition in bulk.
+
+### Example
+
+```java
+import com.finbourne.workflow.model.*;
+import com.finbourne.workflow.api.TaskDefinitionsApi;
+import com.finbourne.workflow.extensions.ApiConfigurationException;
+import com.finbourne.workflow.extensions.ApiFactoryBuilder;
+import com.finbourne.workflow.extensions.auth.FinbourneTokenException;
+
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+
+public class TaskDefinitionsApiExample {
+
+    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, ApiConfigurationException, FinbourneTokenException {
+        String fileName = "secrets.json";
+        try(PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
+          writer.write("{" +
+            "\"api\": {" +
+            "    \"tokenUrl\": \"<your-token-url>\"," +
+            "    \"workflowUrl\": \"https://<your-domain>.lusid.com/workflow\"," +
+            "    \"username\": \"<your-username>\"," +
+            "    \"password\": \"<your-password>\"," +
+            "    \"clientId\": \"<your-client-id>\"," +
+            "    \"clientSecret\": \"<your-client-secret>\"" +
+            "  }" +
+            "}");
+        }
+
+        // uncomment the below to use configuration overrides
+        // ConfigurationOptions opts = new ConfigurationOptions();
+        // opts.setTotalTimeoutMs(2000);
+        
+        // uncomment the below to use an api factory with overrides
+        // ApiFactory apiFactory = ApiFactoryBuilder.build(fileName, opts);
+        // TaskDefinitionsApi apiInstance = apiFactory.build(TaskDefinitionsApi.class);
+
+        TaskDefinitionsApi apiInstance = ApiFactoryBuilder.build(fileName).build(TaskDefinitionsApi.class);
+        String scope = "scope_example"; // String | The scope that identifies a Task Definition
+        String code = "code_example"; // String | The code that identifies a Task Definition
+        Map<String, PerpetualProperty> requestBody = new HashMap(); // Map<String, PerpetualProperty> | The properties to upsert, keyed by property key. A null value deletes the property.
+        String successMode = "Partial"; // String | Whether the batch should fail Atomically or Partially. Defaults to Partial.
+        try {
+            // uncomment the below to set overrides at the request level
+            // BatchUpsertTaskDefinitionPropertiesResponse result = apiInstance.upsertTaskDefinitionProperties(scope, code, requestBody, successMode).execute(opts);
+
+            BatchUpsertTaskDefinitionPropertiesResponse result = apiInstance.upsertTaskDefinitionProperties(scope, code, requestBody, successMode).execute();
+            System.out.println(result.toJson());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling TaskDefinitionsApi#upsertTaskDefinitionProperties");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **scope** | **String**| The scope that identifies a Task Definition | |
+| **code** | **String**| The code that identifies a Task Definition | |
+| **requestBody** | [**Map&lt;String, PerpetualProperty&gt;**](PerpetualProperty.md)| The properties to upsert, keyed by property key. A null value deletes the property. | |
+| **successMode** | **String**| Whether the batch should fail Atomically or Partially. Defaults to Partial. | [optional] [default to Partial] |
+
+### Return type
+
+[**BatchUpsertTaskDefinitionPropertiesResponse**](BatchUpsertTaskDefinitionPropertiesResponse.md)
 
 ### HTTP request headers
 
