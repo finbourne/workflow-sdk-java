@@ -837,11 +837,11 @@ public class TaskDefinitionsApi {
     public APIgetTaskDefinitionRequest getTaskDefinition(String scope, String code) {
         return new APIgetTaskDefinitionRequest(scope, code);
     }
-    private okhttp3.Call listTaskDefinitionsCall(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback _callback) throws ApiException {
-        return listTaskDefinitionsCall(asAt, filter, sortBy, limit, page,  _callback, new ConfigurationOptions());
+    private okhttp3.Call listTaskDefinitionsCall(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, List<String> propertyKeys, final ApiCallback _callback) throws ApiException {
+        return listTaskDefinitionsCall(asAt, filter, sortBy, limit, page, propertyKeys,  _callback, new ConfigurationOptions());
     }
 
-    private okhttp3.Call listTaskDefinitionsCall(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
+    private okhttp3.Call listTaskDefinitionsCall(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, List<String> propertyKeys, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -886,6 +886,10 @@ public class TaskDefinitionsApi {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("page", page));
         }
 
+        if (propertyKeys != null) {
+            localVarCollectionQueryParams.addAll(localVarApiClient.parameterToPairs("multi", "propertyKeys", propertyKeys));
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -906,35 +910,35 @@ public class TaskDefinitionsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call listTaskDefinitionsValidateBeforeCall(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
-        return listTaskDefinitionsCall(asAt, filter, sortBy, limit, page, _callback, opts);
+    private okhttp3.Call listTaskDefinitionsValidateBeforeCall(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, List<String> propertyKeys, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
+        return listTaskDefinitionsCall(asAt, filter, sortBy, limit, page, propertyKeys, _callback, opts);
 
     }
 
 
-    private ApiResponse<PagedResourceListOfTaskDefinition> listTaskDefinitionsWithHttpInfo(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page) throws ApiException {
-        okhttp3.Call localVarCall = listTaskDefinitionsValidateBeforeCall(asAt, filter, sortBy, limit, page, null, new ConfigurationOptions());
+    private ApiResponse<PagedResourceListOfTaskDefinition> listTaskDefinitionsWithHttpInfo(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, List<String> propertyKeys) throws ApiException {
+        okhttp3.Call localVarCall = listTaskDefinitionsValidateBeforeCall(asAt, filter, sortBy, limit, page, propertyKeys, null, new ConfigurationOptions());
         Type localVarReturnType = new TypeToken<PagedResourceListOfTaskDefinition>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
-    private ApiResponse<PagedResourceListOfTaskDefinition> listTaskDefinitionsWithHttpInfo(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, ConfigurationOptions opts) throws ApiException {
-        okhttp3.Call localVarCall = listTaskDefinitionsValidateBeforeCall(asAt, filter, sortBy, limit, page, null, opts);
+    private ApiResponse<PagedResourceListOfTaskDefinition> listTaskDefinitionsWithHttpInfo(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, List<String> propertyKeys, ConfigurationOptions opts) throws ApiException {
+        okhttp3.Call localVarCall = listTaskDefinitionsValidateBeforeCall(asAt, filter, sortBy, limit, page, propertyKeys, null, opts);
         Type localVarReturnType = new TypeToken<PagedResourceListOfTaskDefinition>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
-    private okhttp3.Call listTaskDefinitionsAsync(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback<PagedResourceListOfTaskDefinition> _callback) throws ApiException {
+    private okhttp3.Call listTaskDefinitionsAsync(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, List<String> propertyKeys, final ApiCallback<PagedResourceListOfTaskDefinition> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = listTaskDefinitionsValidateBeforeCall(asAt, filter, sortBy, limit, page, _callback, new ConfigurationOptions());
+        okhttp3.Call localVarCall = listTaskDefinitionsValidateBeforeCall(asAt, filter, sortBy, limit, page, propertyKeys, _callback, new ConfigurationOptions());
         Type localVarReturnType = new TypeToken<PagedResourceListOfTaskDefinition>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 
-    private okhttp3.Call listTaskDefinitionsAsync(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback<PagedResourceListOfTaskDefinition> _callback, ConfigurationOptions opts) throws ApiException {
+    private okhttp3.Call listTaskDefinitionsAsync(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, List<String> propertyKeys, final ApiCallback<PagedResourceListOfTaskDefinition> _callback, ConfigurationOptions opts) throws ApiException {
 
-        okhttp3.Call localVarCall = listTaskDefinitionsValidateBeforeCall(asAt, filter, sortBy, limit, page, _callback, opts);
+        okhttp3.Call localVarCall = listTaskDefinitionsValidateBeforeCall(asAt, filter, sortBy, limit, page, propertyKeys, _callback, opts);
         Type localVarReturnType = new TypeToken<PagedResourceListOfTaskDefinition>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -946,6 +950,7 @@ public class TaskDefinitionsApi {
         private List<String> sortBy;
         private Integer limit;
         private String page;
+        private List<String> propertyKeys;
 
         private APIlistTaskDefinitionsRequest() {
         }
@@ -1001,6 +1006,16 @@ public class TaskDefinitionsApi {
         }
 
         /**
+         * Set propertyKeys
+         * @param propertyKeys The property keys whose values to return on each Task Definition. (optional)
+         * @return APIlistTaskDefinitionsRequest
+         */
+        public APIlistTaskDefinitionsRequest propertyKeys(List<String> propertyKeys) {
+            this.propertyKeys = propertyKeys;
+            return this;
+        }
+
+        /**
          * Build call for listTaskDefinitions
          * @param _callback ApiCallback API callback
          * @return Call to execute
@@ -1015,7 +1030,7 @@ public class TaskDefinitionsApi {
          </table>
          */
         public okhttp3.Call buildCall(final ApiCallback _callback) throws ApiException {
-            return listTaskDefinitionsCall(asAt, filter, sortBy, limit, page, _callback);
+            return listTaskDefinitionsCall(asAt, filter, sortBy, limit, page, propertyKeys, _callback);
         }
 
         /**
@@ -1032,7 +1047,7 @@ public class TaskDefinitionsApi {
          </table>
          */
         public PagedResourceListOfTaskDefinition execute() throws ApiException {
-            ApiResponse<PagedResourceListOfTaskDefinition> localVarResp = listTaskDefinitionsWithHttpInfo(asAt, filter, sortBy, limit, page);
+            ApiResponse<PagedResourceListOfTaskDefinition> localVarResp = listTaskDefinitionsWithHttpInfo(asAt, filter, sortBy, limit, page, propertyKeys);
             return localVarResp.getData();
         }
 
@@ -1050,7 +1065,7 @@ public class TaskDefinitionsApi {
          </table>
          */
         public PagedResourceListOfTaskDefinition execute(ConfigurationOptions opts) throws ApiException {
-            ApiResponse<PagedResourceListOfTaskDefinition> localVarResp = listTaskDefinitionsWithHttpInfo(asAt, filter, sortBy, limit, page, opts);
+            ApiResponse<PagedResourceListOfTaskDefinition> localVarResp = listTaskDefinitionsWithHttpInfo(asAt, filter, sortBy, limit, page, propertyKeys, opts);
             return localVarResp.getData();
         }
 
@@ -1068,7 +1083,7 @@ public class TaskDefinitionsApi {
          </table>
          */
         public ApiResponse<PagedResourceListOfTaskDefinition> executeWithHttpInfo() throws ApiException {
-            return listTaskDefinitionsWithHttpInfo(asAt, filter, sortBy, limit, page);
+            return listTaskDefinitionsWithHttpInfo(asAt, filter, sortBy, limit, page, propertyKeys);
         }
 
         /**
@@ -1085,7 +1100,7 @@ public class TaskDefinitionsApi {
          </table>
          */
         public ApiResponse<PagedResourceListOfTaskDefinition> executeWithHttpInfo(ConfigurationOptions opts) throws ApiException {
-            return listTaskDefinitionsWithHttpInfo(asAt, filter, sortBy, limit, page, opts);
+            return listTaskDefinitionsWithHttpInfo(asAt, filter, sortBy, limit, page, propertyKeys, opts);
         }
 
         /**
@@ -1103,7 +1118,7 @@ public class TaskDefinitionsApi {
          </table>
          */
         public okhttp3.Call executeAsync(final ApiCallback<PagedResourceListOfTaskDefinition> _callback) throws ApiException {
-            return listTaskDefinitionsAsync(asAt, filter, sortBy, limit, page, _callback);
+            return listTaskDefinitionsAsync(asAt, filter, sortBy, limit, page, propertyKeys, _callback);
         }
 
         /**
@@ -1121,7 +1136,7 @@ public class TaskDefinitionsApi {
          </table>
          */
         public okhttp3.Call executeAsync(final ApiCallback<PagedResourceListOfTaskDefinition> _callback, ConfigurationOptions opts) throws ApiException {
-            return listTaskDefinitionsAsync(asAt, filter, sortBy, limit, page, _callback, opts);
+            return listTaskDefinitionsAsync(asAt, filter, sortBy, limit, page, propertyKeys, _callback, opts);
         }
     }
 

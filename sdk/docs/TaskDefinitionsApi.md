@@ -293,7 +293,7 @@ public class TaskDefinitionsApiExample {
 
 ## listTaskDefinitions
 
-> PagedResourceListOfTaskDefinition listTaskDefinitions(asAt, filter, sortBy, limit, page)
+> PagedResourceListOfTaskDefinition listTaskDefinitions(asAt, filter, sortBy, limit, page, propertyKeys)
 
 ListTaskDefinitions: List Task Definitions
 
@@ -341,11 +341,12 @@ public class TaskDefinitionsApiExample {
         List<String> sortBy = Arrays.asList(); // List<String> | A list of field names or properties to sort by, each suffixed by \" ASC\" or \" DESC\"
         Integer limit = 10; // Integer | When paginating, limit the number of returned results to this many.
         String page = "page_example"; // String | The pagination token to use to continue listing task definitions from a previous call to list task definitions. This value is returned from the previous call. If a pagination token is provided the sortBy, filter, effectiveAt, and asAt fields must not have changed since the original request.
+        List<String> propertyKeys = Arrays.asList(); // List<String> | The property keys whose values to return on each Task Definition.
         try {
             // uncomment the below to set overrides at the request level
-            // PagedResourceListOfTaskDefinition result = apiInstance.listTaskDefinitions(asAt, filter, sortBy, limit, page).execute(opts);
+            // PagedResourceListOfTaskDefinition result = apiInstance.listTaskDefinitions(asAt, filter, sortBy, limit, page, propertyKeys).execute(opts);
 
-            PagedResourceListOfTaskDefinition result = apiInstance.listTaskDefinitions(asAt, filter, sortBy, limit, page).execute();
+            PagedResourceListOfTaskDefinition result = apiInstance.listTaskDefinitions(asAt, filter, sortBy, limit, page, propertyKeys).execute();
             System.out.println(result.toJson());
         } catch (ApiException e) {
             System.err.println("Exception when calling TaskDefinitionsApi#listTaskDefinitions");
@@ -367,6 +368,7 @@ public class TaskDefinitionsApiExample {
 | **sortBy** | [**List&lt;String&gt;**](String.md)| A list of field names or properties to sort by, each suffixed by \&quot; ASC\&quot; or \&quot; DESC\&quot; | [optional] |
 | **limit** | **Integer**| When paginating, limit the number of returned results to this many. | [optional] [default to 10] |
 | **page** | **String**| The pagination token to use to continue listing task definitions from a previous call to list task definitions. This value is returned from the previous call. If a pagination token is provided the sortBy, filter, effectiveAt, and asAt fields must not have changed since the original request. | [optional] |
+| **propertyKeys** | [**List&lt;String&gt;**](String.md)| The property keys whose values to return on each Task Definition. | [optional] |
 
 ### Return type
 

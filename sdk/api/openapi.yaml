@@ -40,7 +40,7 @@ info:
     | <a name="973">973</a>|Workflow already exists.| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1764
+  version: 0.1.1765
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -946,6 +946,17 @@ paths:
           pattern: "^[a-zA-Z0-9\\+/]*={0,3}$"
           type: string
         style: form
+      - description: The property keys whose values to return on each Task Definition.
+        explode: true
+        in: query
+        name: propertyKeys
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+        x-nullable: true
       responses:
         "200":
           content:
