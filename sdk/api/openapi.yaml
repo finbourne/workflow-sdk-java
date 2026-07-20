@@ -40,7 +40,7 @@ info:
     | <a name="973">973</a>|Workflow already exists.| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1765
+  version: 0.1.1769
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -12468,6 +12468,18 @@ components:
           runAsUserId: runAsUserId
           actionDetails:
             type: type
+        properties:
+          key:
+            value:
+              metricValue:
+                unit: unit
+                value: 0.8008281904610115
+              labelValue: labelValue
+              labelValueSet:
+                values:
+                - values
+                - values
+            key: key
         states:
         - displayName: displayName
           name: name
@@ -12518,6 +12530,14 @@ components:
             $ref: '#/components/schemas/ActionDefinition'
           nullable: true
           type: array
+        properties:
+          additionalProperties:
+            $ref: '#/components/schemas/PerpetualProperty'
+          description: |-
+            The properties to set on the Task Definition, keyed by property key. Optional.
+            A null property value deletes the property.
+          nullable: true
+          type: object
       required:
       - displayName
       - initialState
