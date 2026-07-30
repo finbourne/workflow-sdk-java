@@ -1165,7 +1165,7 @@ public class TasksApi {
 
         /**
          * Set propertyKeys
-         * @param propertyKeys The property keys (in the TaskDefinition or Workflow domain) whose values to return on the Task. (optional)
+         * @param propertyKeys The property keys (in the TaskDefinition or Workflow domain) whose values to return on the Task. These values are a snapshot copied from the TaskDefinition and Workflow when the Task was created, so they reflect the state at creation time and are not affected by subsequent changes to the TaskDefinition or Workflow. (optional)
          * @return APIgetTaskRequest
          */
         public APIgetTaskRequest propertyKeys(List<String> propertyKeys) {
@@ -1718,7 +1718,7 @@ public class TasksApi {
 
         /**
          * Set propertyKeys
-         * @param propertyKeys The property keys (in the TaskDefinition or Workflow domain) whose values to return on each Task. (optional)
+         * @param propertyKeys The property keys (in the TaskDefinition or Workflow domain) whose values to return on each Task. These values are a snapshot copied from the TaskDefinition and Workflow when each Task was created, so they reflect the state at creation time and are not affected by subsequent changes to the TaskDefinition or Workflow. (optional)
          * @return APIlistTasksRequest
          */
         public APIlistTasksRequest propertyKeys(List<String> propertyKeys) {

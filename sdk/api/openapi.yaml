@@ -40,7 +40,7 @@ info:
     | <a name="973">973</a>|Workflow already exists.| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1769
+  version: 0.1.1785
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -3181,8 +3181,11 @@ paths:
           type: array
         style: form
         x-nullable: true
-      - description: The property keys (in the TaskDefinition or Workflow domain)
-          whose values to return on each Task.
+      - description: "The property keys (in the TaskDefinition or Workflow domain)\
+          \ whose values to return on each Task. These values are a snapshot copied\
+          \ from the TaskDefinition and Workflow when each Task was created, so they\
+          \ reflect the state at creation time and are not affected by subsequent\
+          \ changes to the TaskDefinition or Workflow."
         explode: true
         in: query
         name: propertyKeys
@@ -3662,8 +3665,11 @@ paths:
           type: string
         style: form
         x-nullable: true
-      - description: The property keys (in the TaskDefinition or Workflow domain)
-          whose values to return on the Task.
+      - description: "The property keys (in the TaskDefinition or Workflow domain)\
+          \ whose values to return on the Task. These values are a snapshot copied\
+          \ from the TaskDefinition and Workflow when the Task was created, so they\
+          \ reflect the state at creation time and are not affected by subsequent\
+          \ changes to the TaskDefinition or Workflow."
         explode: true
         in: query
         name: propertyKeys
@@ -4890,6 +4896,18 @@ paths:
           pattern: "^[a-zA-Z0-9\\+/]*={0,3}$"
           type: string
         style: form
+      - description: The property keys (in the Workflow or TaskDefinition domain)
+          whose values to return on each Workflow.
+        explode: true
+        in: query
+        name: propertyKeys
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+        x-nullable: true
       responses:
         "200":
           content:

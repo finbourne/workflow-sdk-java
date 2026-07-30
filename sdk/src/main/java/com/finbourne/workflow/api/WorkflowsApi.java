@@ -844,11 +844,11 @@ public class WorkflowsApi {
     public APIgetWorkflowRequest getWorkflow(String scope, String code) {
         return new APIgetWorkflowRequest(scope, code);
     }
-    private okhttp3.Call listWorkflowsCall(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback _callback) throws ApiException {
-        return listWorkflowsCall(asAt, filter, sortBy, limit, page,  _callback, new ConfigurationOptions());
+    private okhttp3.Call listWorkflowsCall(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, List<String> propertyKeys, final ApiCallback _callback) throws ApiException {
+        return listWorkflowsCall(asAt, filter, sortBy, limit, page, propertyKeys,  _callback, new ConfigurationOptions());
     }
 
-    private okhttp3.Call listWorkflowsCall(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
+    private okhttp3.Call listWorkflowsCall(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, List<String> propertyKeys, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -893,6 +893,10 @@ public class WorkflowsApi {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("page", page));
         }
 
+        if (propertyKeys != null) {
+            localVarCollectionQueryParams.addAll(localVarApiClient.parameterToPairs("multi", "propertyKeys", propertyKeys));
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -913,35 +917,35 @@ public class WorkflowsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call listWorkflowsValidateBeforeCall(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
-        return listWorkflowsCall(asAt, filter, sortBy, limit, page, _callback, opts);
+    private okhttp3.Call listWorkflowsValidateBeforeCall(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, List<String> propertyKeys, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
+        return listWorkflowsCall(asAt, filter, sortBy, limit, page, propertyKeys, _callback, opts);
 
     }
 
 
-    private ApiResponse<PagedResourceListOfWorkflowResponse> listWorkflowsWithHttpInfo(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page) throws ApiException {
-        okhttp3.Call localVarCall = listWorkflowsValidateBeforeCall(asAt, filter, sortBy, limit, page, null, new ConfigurationOptions());
+    private ApiResponse<PagedResourceListOfWorkflowResponse> listWorkflowsWithHttpInfo(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, List<String> propertyKeys) throws ApiException {
+        okhttp3.Call localVarCall = listWorkflowsValidateBeforeCall(asAt, filter, sortBy, limit, page, propertyKeys, null, new ConfigurationOptions());
         Type localVarReturnType = new TypeToken<PagedResourceListOfWorkflowResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
-    private ApiResponse<PagedResourceListOfWorkflowResponse> listWorkflowsWithHttpInfo(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, ConfigurationOptions opts) throws ApiException {
-        okhttp3.Call localVarCall = listWorkflowsValidateBeforeCall(asAt, filter, sortBy, limit, page, null, opts);
+    private ApiResponse<PagedResourceListOfWorkflowResponse> listWorkflowsWithHttpInfo(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, List<String> propertyKeys, ConfigurationOptions opts) throws ApiException {
+        okhttp3.Call localVarCall = listWorkflowsValidateBeforeCall(asAt, filter, sortBy, limit, page, propertyKeys, null, opts);
         Type localVarReturnType = new TypeToken<PagedResourceListOfWorkflowResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
-    private okhttp3.Call listWorkflowsAsync(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback<PagedResourceListOfWorkflowResponse> _callback) throws ApiException {
+    private okhttp3.Call listWorkflowsAsync(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, List<String> propertyKeys, final ApiCallback<PagedResourceListOfWorkflowResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = listWorkflowsValidateBeforeCall(asAt, filter, sortBy, limit, page, _callback, new ConfigurationOptions());
+        okhttp3.Call localVarCall = listWorkflowsValidateBeforeCall(asAt, filter, sortBy, limit, page, propertyKeys, _callback, new ConfigurationOptions());
         Type localVarReturnType = new TypeToken<PagedResourceListOfWorkflowResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 
-    private okhttp3.Call listWorkflowsAsync(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback<PagedResourceListOfWorkflowResponse> _callback, ConfigurationOptions opts) throws ApiException {
+    private okhttp3.Call listWorkflowsAsync(OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, List<String> propertyKeys, final ApiCallback<PagedResourceListOfWorkflowResponse> _callback, ConfigurationOptions opts) throws ApiException {
 
-        okhttp3.Call localVarCall = listWorkflowsValidateBeforeCall(asAt, filter, sortBy, limit, page, _callback, opts);
+        okhttp3.Call localVarCall = listWorkflowsValidateBeforeCall(asAt, filter, sortBy, limit, page, propertyKeys, _callback, opts);
         Type localVarReturnType = new TypeToken<PagedResourceListOfWorkflowResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -953,6 +957,7 @@ public class WorkflowsApi {
         private List<String> sortBy;
         private Integer limit;
         private String page;
+        private List<String> propertyKeys;
 
         private APIlistWorkflowsRequest() {
         }
@@ -1008,6 +1013,16 @@ public class WorkflowsApi {
         }
 
         /**
+         * Set propertyKeys
+         * @param propertyKeys The property keys (in the Workflow or TaskDefinition domain) whose values to return on each Workflow. (optional)
+         * @return APIlistWorkflowsRequest
+         */
+        public APIlistWorkflowsRequest propertyKeys(List<String> propertyKeys) {
+            this.propertyKeys = propertyKeys;
+            return this;
+        }
+
+        /**
          * Build call for listWorkflows
          * @param _callback ApiCallback API callback
          * @return Call to execute
@@ -1022,7 +1037,7 @@ public class WorkflowsApi {
          </table>
          */
         public okhttp3.Call buildCall(final ApiCallback _callback) throws ApiException {
-            return listWorkflowsCall(asAt, filter, sortBy, limit, page, _callback);
+            return listWorkflowsCall(asAt, filter, sortBy, limit, page, propertyKeys, _callback);
         }
 
         /**
@@ -1039,7 +1054,7 @@ public class WorkflowsApi {
          </table>
          */
         public PagedResourceListOfWorkflowResponse execute() throws ApiException {
-            ApiResponse<PagedResourceListOfWorkflowResponse> localVarResp = listWorkflowsWithHttpInfo(asAt, filter, sortBy, limit, page);
+            ApiResponse<PagedResourceListOfWorkflowResponse> localVarResp = listWorkflowsWithHttpInfo(asAt, filter, sortBy, limit, page, propertyKeys);
             return localVarResp.getData();
         }
 
@@ -1057,7 +1072,7 @@ public class WorkflowsApi {
          </table>
          */
         public PagedResourceListOfWorkflowResponse execute(ConfigurationOptions opts) throws ApiException {
-            ApiResponse<PagedResourceListOfWorkflowResponse> localVarResp = listWorkflowsWithHttpInfo(asAt, filter, sortBy, limit, page, opts);
+            ApiResponse<PagedResourceListOfWorkflowResponse> localVarResp = listWorkflowsWithHttpInfo(asAt, filter, sortBy, limit, page, propertyKeys, opts);
             return localVarResp.getData();
         }
 
@@ -1075,7 +1090,7 @@ public class WorkflowsApi {
          </table>
          */
         public ApiResponse<PagedResourceListOfWorkflowResponse> executeWithHttpInfo() throws ApiException {
-            return listWorkflowsWithHttpInfo(asAt, filter, sortBy, limit, page);
+            return listWorkflowsWithHttpInfo(asAt, filter, sortBy, limit, page, propertyKeys);
         }
 
         /**
@@ -1092,7 +1107,7 @@ public class WorkflowsApi {
          </table>
          */
         public ApiResponse<PagedResourceListOfWorkflowResponse> executeWithHttpInfo(ConfigurationOptions opts) throws ApiException {
-            return listWorkflowsWithHttpInfo(asAt, filter, sortBy, limit, page, opts);
+            return listWorkflowsWithHttpInfo(asAt, filter, sortBy, limit, page, propertyKeys, opts);
         }
 
         /**
@@ -1110,7 +1125,7 @@ public class WorkflowsApi {
          </table>
          */
         public okhttp3.Call executeAsync(final ApiCallback<PagedResourceListOfWorkflowResponse> _callback) throws ApiException {
-            return listWorkflowsAsync(asAt, filter, sortBy, limit, page, _callback);
+            return listWorkflowsAsync(asAt, filter, sortBy, limit, page, propertyKeys, _callback);
         }
 
         /**
@@ -1128,7 +1143,7 @@ public class WorkflowsApi {
          </table>
          */
         public okhttp3.Call executeAsync(final ApiCallback<PagedResourceListOfWorkflowResponse> _callback, ConfigurationOptions opts) throws ApiException {
-            return listWorkflowsAsync(asAt, filter, sortBy, limit, page, _callback, opts);
+            return listWorkflowsAsync(asAt, filter, sortBy, limit, page, propertyKeys, _callback, opts);
         }
     }
 
