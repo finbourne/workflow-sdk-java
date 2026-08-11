@@ -91,6 +91,8 @@ Class | Method | HTTP request | Description
  - [GroupReconciliationResponse](docs/GroupReconciliationResponse.md)
  - [HealthCheck](docs/HealthCheck.md)
  - [HealthCheckResponse](docs/HealthCheckResponse.md)
+ - [HorizonIntegration](docs/HorizonIntegration.md)
+ - [HorizonIntegrationResponse](docs/HorizonIntegrationResponse.md)
  - [IdSelectorDefinition](docs/IdSelectorDefinition.md)
  - [IdentifierPartSchema](docs/IdentifierPartSchema.md)
  - [InitialState](docs/InitialState.md)
