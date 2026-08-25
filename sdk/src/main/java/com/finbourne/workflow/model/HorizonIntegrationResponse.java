@@ -99,6 +99,10 @@ public class HorizonIntegrationResponse {
   @SerializedName(SERIALIZED_NAME_TYPE)
   private TypeEnum type;
 
+  public static final String SERIALIZED_NAME_INTEGRATION_INSTANCE_ID = "integrationInstanceId";
+  @SerializedName(SERIALIZED_NAME_INTEGRATION_INSTANCE_ID)
+  private String integrationInstanceId;
+
   public HorizonIntegrationResponse() {
   }
 
@@ -123,6 +127,27 @@ public class HorizonIntegrationResponse {
   }
 
 
+  public HorizonIntegrationResponse integrationInstanceId(String integrationInstanceId) {
+    
+    this.integrationInstanceId = integrationInstanceId;
+    return this;
+  }
+
+   /**
+   * The id of the Horizon integration instance the worker executes. Null on the library worker.
+   * @return integrationInstanceId
+  **/
+  @jakarta.annotation.Nullable
+  public String getIntegrationInstanceId() {
+    return integrationInstanceId;
+  }
+
+
+  public void setIntegrationInstanceId(String integrationInstanceId) {
+    this.integrationInstanceId = integrationInstanceId;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -133,7 +158,8 @@ public class HorizonIntegrationResponse {
       return false;
     }
     HorizonIntegrationResponse horizonIntegrationResponse = (HorizonIntegrationResponse) o;
-    return Objects.equals(this.type, horizonIntegrationResponse.type);
+    return Objects.equals(this.type, horizonIntegrationResponse.type) &&
+        Objects.equals(this.integrationInstanceId, horizonIntegrationResponse.integrationInstanceId);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -142,7 +168,7 @@ public class HorizonIntegrationResponse {
 
   @Override
   public int hashCode() {
-    return Objects.hash(type);
+    return Objects.hash(type, integrationInstanceId);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -157,6 +183,7 @@ public class HorizonIntegrationResponse {
     StringBuilder sb = new StringBuilder();
     sb.append("class HorizonIntegrationResponse {\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    integrationInstanceId: ").append(toIndentedString(integrationInstanceId)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -180,6 +207,7 @@ public class HorizonIntegrationResponse {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
     openapiFields.add("type");
+    openapiFields.add("integrationInstanceId");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -200,6 +228,9 @@ public class HorizonIntegrationResponse {
         JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("type") != null && !jsonObj.get("type").isJsonNull()) && !jsonObj.get("type").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `type` to be a primitive type in the JSON string but got `%s`", jsonObj.get("type").toString()));
+      }
+      if ((jsonObj.get("integrationInstanceId") != null && !jsonObj.get("integrationInstanceId").isJsonNull()) && !jsonObj.get("integrationInstanceId").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `integrationInstanceId` to be a primitive type in the JSON string but got `%s`", jsonObj.get("integrationInstanceId").toString()));
       }
   }
 

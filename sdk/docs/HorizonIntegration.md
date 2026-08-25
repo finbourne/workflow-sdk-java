@@ -6,6 +6,7 @@ Configuration for a Worker that executes a Horizon integration instance
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **String** | The type of worker | [default to String]
+**integrationInstanceId** | **String** | The id of the Horizon integration instance the worker executes. | [default to String]
 
 ```java
 import com.finbourne.workflow.model.HorizonIntegration;
@@ -14,10 +15,12 @@ import java.lang.System;
 import java.net.URI;
 
 String Type = "example Type";
+String IntegrationInstanceId = "example IntegrationInstanceId";
 
 
 HorizonIntegration horizonIntegrationInstance = new HorizonIntegration()
-    .Type(Type);
+    .Type(Type)
+    .IntegrationInstanceId(IntegrationInstanceId);
 ```
 
 

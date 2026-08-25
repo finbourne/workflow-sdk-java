@@ -98,6 +98,10 @@ public class HorizonIntegration {
   @SerializedName(SERIALIZED_NAME_TYPE)
   private TypeEnum type;
 
+  public static final String SERIALIZED_NAME_INTEGRATION_INSTANCE_ID = "integrationInstanceId";
+  @SerializedName(SERIALIZED_NAME_INTEGRATION_INSTANCE_ID)
+  private String integrationInstanceId;
+
   public HorizonIntegration() {
   }
 
@@ -122,6 +126,27 @@ public class HorizonIntegration {
   }
 
 
+  public HorizonIntegration integrationInstanceId(String integrationInstanceId) {
+    
+    this.integrationInstanceId = integrationInstanceId;
+    return this;
+  }
+
+   /**
+   * The id of the Horizon integration instance the worker executes.
+   * @return integrationInstanceId
+  **/
+  @jakarta.annotation.Nonnull
+  public String getIntegrationInstanceId() {
+    return integrationInstanceId;
+  }
+
+
+  public void setIntegrationInstanceId(String integrationInstanceId) {
+    this.integrationInstanceId = integrationInstanceId;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -132,12 +157,13 @@ public class HorizonIntegration {
       return false;
     }
     HorizonIntegration horizonIntegration = (HorizonIntegration) o;
-    return Objects.equals(this.type, horizonIntegration.type);
+    return Objects.equals(this.type, horizonIntegration.type) &&
+        Objects.equals(this.integrationInstanceId, horizonIntegration.integrationInstanceId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(type);
+    return Objects.hash(type, integrationInstanceId);
   }
 
   @Override
@@ -145,6 +171,7 @@ public class HorizonIntegration {
     StringBuilder sb = new StringBuilder();
     sb.append("class HorizonIntegration {\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    integrationInstanceId: ").append(toIndentedString(integrationInstanceId)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -168,10 +195,12 @@ public class HorizonIntegration {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
     openapiFields.add("type");
+    openapiFields.add("integrationInstanceId");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
     openapiRequiredFields.add("type");
+    openapiRequiredFields.add("integrationInstanceId");
   }
 
  /**
@@ -196,6 +225,9 @@ public class HorizonIntegration {
         JsonObject jsonObj = jsonElement.getAsJsonObject();
       if (!jsonObj.get("type").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `type` to be a primitive type in the JSON string but got `%s`", jsonObj.get("type").toString()));
+      }
+      if (!jsonObj.get("integrationInstanceId").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `integrationInstanceId` to be a primitive type in the JSON string but got `%s`", jsonObj.get("integrationInstanceId").toString()));
       }
   }
 

@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **String** | The type of worker | [default to String]
 **url** | [**URI**](URI.md) | The URL to check, eg: https://www.google.com/ | [default to URI]
+**integrationInstanceId** | **String** | The id of the Horizon integration instance the worker executes. | [default to String]
 **name** | **String** | Name of the view in Luminesce | [default to String]
 **jobId** | [**ResourceId**](ResourceId.md) |  | [default to ResourceId]
 
