@@ -38,6 +38,8 @@ WorkerConfigurationResponse config = new WorkerConfigurationResponse(workerConfi
 
 * [LusidEntityDataQualityCheckResponse](./LusidEntityDataQualityCheckResponse.md)
 
+* [PortfolioHoldingDataQualityCheckResponse](./PortfolioHoldingDataQualityCheckResponse.md)
+
 * [SchedulerJobResponse](./SchedulerJobResponse.md)
 
 * [SleepResponse](./SleepResponse.md)

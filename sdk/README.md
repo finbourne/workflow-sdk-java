@@ -114,6 +114,8 @@ Class | Method | HTTP request | Description
  - [Parameter](docs/Parameter.md)
  - [ParameterValue](docs/ParameterValue.md)
  - [PerpetualProperty](docs/PerpetualProperty.md)
+ - [PortfolioHoldingDataQualityCheck](docs/PortfolioHoldingDataQualityCheck.md)
+ - [PortfolioHoldingDataQualityCheckResponse](docs/PortfolioHoldingDataQualityCheckResponse.md)
  - [PropertyValue](docs/PropertyValue.md)
  - [ReadOnlyStates](docs/ReadOnlyStates.md)
  - [RecurrencePattern](docs/RecurrencePattern.md)

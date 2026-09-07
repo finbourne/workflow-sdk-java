@@ -36,6 +36,8 @@ WorkerConfiguration config = new WorkerConfiguration(workerConfiguration);
 
 * [LusidEntityDataQualityCheck](./LusidEntityDataQualityCheck.md)
 
+* [PortfolioHoldingDataQualityCheck](./PortfolioHoldingDataQualityCheck.md)
+
 * [SchedulerJob](./SchedulerJob.md)
 
 * [Sleep](./Sleep.md)

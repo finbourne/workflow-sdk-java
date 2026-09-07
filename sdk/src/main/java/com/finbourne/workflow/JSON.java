@@ -159,6 +159,8 @@ public class JSON {
         gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.Parameter.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.ParameterValue.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.PerpetualProperty.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.PortfolioHoldingDataQualityCheck.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.PortfolioHoldingDataQualityCheckResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.PropertyValue.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.ReadOnlyStates.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.RecurrencePattern.CustomTypeAdapterFactory());

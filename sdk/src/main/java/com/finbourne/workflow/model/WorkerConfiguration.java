@@ -17,6 +17,7 @@ import com.finbourne.workflow.model.HealthCheck;
 import com.finbourne.workflow.model.HorizonIntegration;
 import com.finbourne.workflow.model.LuminesceView;
 import com.finbourne.workflow.model.LusidEntityDataQualityCheck;
+import com.finbourne.workflow.model.PortfolioHoldingDataQualityCheck;
 import com.finbourne.workflow.model.ResourceId;
 import com.finbourne.workflow.model.SchedulerJob;
 import com.finbourne.workflow.model.Sleep;
@@ -82,6 +83,7 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
             final TypeAdapter<HorizonIntegration> adapterHorizonIntegration = gson.getDelegateAdapter(this, TypeToken.get(HorizonIntegration.class));
             final TypeAdapter<LuminesceView> adapterLuminesceView = gson.getDelegateAdapter(this, TypeToken.get(LuminesceView.class));
             final TypeAdapter<LusidEntityDataQualityCheck> adapterLusidEntityDataQualityCheck = gson.getDelegateAdapter(this, TypeToken.get(LusidEntityDataQualityCheck.class));
+            final TypeAdapter<PortfolioHoldingDataQualityCheck> adapterPortfolioHoldingDataQualityCheck = gson.getDelegateAdapter(this, TypeToken.get(PortfolioHoldingDataQualityCheck.class));
             final TypeAdapter<SchedulerJob> adapterSchedulerJob = gson.getDelegateAdapter(this, TypeToken.get(SchedulerJob.class));
             final TypeAdapter<Sleep> adapterSleep = gson.getDelegateAdapter(this, TypeToken.get(Sleep.class));
 
@@ -129,6 +131,12 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
                       elementAdapter.write(out, element);
                       return;
                     }
+                    // check if the actual instance is of the type `PortfolioHoldingDataQualityCheck`
+                    if (value.getActualInstance() instanceof PortfolioHoldingDataQualityCheck) {
+                      JsonElement element = adapterPortfolioHoldingDataQualityCheck.toJsonTree((PortfolioHoldingDataQualityCheck)value.getActualInstance());
+                      elementAdapter.write(out, element);
+                      return;
+                    }
                     // check if the actual instance is of the type `SchedulerJob`
                     if (value.getActualInstance() instanceof SchedulerJob) {
                       JsonElement element = adapterSchedulerJob.toJsonTree((SchedulerJob)value.getActualInstance());
@@ -141,7 +149,7 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
                       elementAdapter.write(out, element);
                       return;
                     }
-                    throw new IOException("Failed to serialize as the type doesn't match oneOf schemas: Fail, GroupReconciliation, HealthCheck, HorizonIntegration, LuminesceView, LusidEntityDataQualityCheck, SchedulerJob, Sleep");
+                    throw new IOException("Failed to serialize as the type doesn't match oneOf schemas: Fail, GroupReconciliation, HealthCheck, HorizonIntegration, LuminesceView, LusidEntityDataQualityCheck, PortfolioHoldingDataQualityCheck, SchedulerJob, Sleep");
                 }
 
                 @Override
@@ -225,6 +233,18 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
                       errorMessages.add(String.format("Deserialization for LusidEntityDataQualityCheck failed with `%s`.", e.getMessage()));
                       log.log(Level.FINER, "Input data does not match schema 'LusidEntityDataQualityCheck'", e);
                     }
+                    // deserialize PortfolioHoldingDataQualityCheck
+                    try {
+                      // validate the JSON object to see if any exception is thrown
+                      PortfolioHoldingDataQualityCheck.validateJsonElement(jsonElement);
+                      actualAdapter = adapterPortfolioHoldingDataQualityCheck;
+                      match++;
+                      log.log(Level.FINER, "Input data matches schema 'PortfolioHoldingDataQualityCheck'");
+                    } catch (Exception e) {
+                      // deserialization failed, continue
+                      errorMessages.add(String.format("Deserialization for PortfolioHoldingDataQualityCheck failed with `%s`.", e.getMessage()));
+                      log.log(Level.FINER, "Input data does not match schema 'PortfolioHoldingDataQualityCheck'", e);
+                    }
                     // deserialize SchedulerJob
                     try {
                       // validate the JSON object to see if any exception is thrown
@@ -299,6 +319,11 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
         setActualInstance(o);
     }
 
+    public WorkerConfiguration(PortfolioHoldingDataQualityCheck o) {
+        super("oneOf", Boolean.FALSE);
+        setActualInstance(o);
+    }
+
     public WorkerConfiguration(SchedulerJob o) {
         super("oneOf", Boolean.FALSE);
         setActualInstance(o);
@@ -316,6 +341,7 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
         schemas.put("HorizonIntegration", HorizonIntegration.class);
         schemas.put("LuminesceView", LuminesceView.class);
         schemas.put("LusidEntityDataQualityCheck", LusidEntityDataQualityCheck.class);
+        schemas.put("PortfolioHoldingDataQualityCheck", PortfolioHoldingDataQualityCheck.class);
         schemas.put("SchedulerJob", SchedulerJob.class);
         schemas.put("Sleep", Sleep.class);
     }
@@ -328,7 +354,7 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
     /**
      * Set the instance that matches the oneOf child schema, check
      * the instance parameter is valid against the oneOf child schemas:
-     * Fail, GroupReconciliation, HealthCheck, HorizonIntegration, LuminesceView, LusidEntityDataQualityCheck, SchedulerJob, Sleep
+     * Fail, GroupReconciliation, HealthCheck, HorizonIntegration, LuminesceView, LusidEntityDataQualityCheck, PortfolioHoldingDataQualityCheck, SchedulerJob, Sleep
      *
      * It could be an instance of the 'oneOf' schemas.
      */
@@ -364,6 +390,11 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
             return;
         }
 
+        if (instance instanceof PortfolioHoldingDataQualityCheck) {
+            super.setActualInstance(instance);
+            return;
+        }
+
         if (instance instanceof SchedulerJob) {
             super.setActualInstance(instance);
             return;
@@ -374,14 +405,14 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
             return;
         }
 
-        throw new RuntimeException("Invalid instance type. Must be Fail, GroupReconciliation, HealthCheck, HorizonIntegration, LuminesceView, LusidEntityDataQualityCheck, SchedulerJob, Sleep");
+        throw new RuntimeException("Invalid instance type. Must be Fail, GroupReconciliation, HealthCheck, HorizonIntegration, LuminesceView, LusidEntityDataQualityCheck, PortfolioHoldingDataQualityCheck, SchedulerJob, Sleep");
     }
 
     /**
      * Get the actual instance, which can be the following:
-     * Fail, GroupReconciliation, HealthCheck, HorizonIntegration, LuminesceView, LusidEntityDataQualityCheck, SchedulerJob, Sleep
+     * Fail, GroupReconciliation, HealthCheck, HorizonIntegration, LuminesceView, LusidEntityDataQualityCheck, PortfolioHoldingDataQualityCheck, SchedulerJob, Sleep
      *
-     * @return The actual instance (Fail, GroupReconciliation, HealthCheck, HorizonIntegration, LuminesceView, LusidEntityDataQualityCheck, SchedulerJob, Sleep)
+     * @return The actual instance (Fail, GroupReconciliation, HealthCheck, HorizonIntegration, LuminesceView, LusidEntityDataQualityCheck, PortfolioHoldingDataQualityCheck, SchedulerJob, Sleep)
      */
     @Override
     public Object getActualInstance() {
@@ -447,6 +478,16 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
      */
     public LusidEntityDataQualityCheck getLusidEntityDataQualityCheck() throws ClassCastException {
         return (LusidEntityDataQualityCheck)super.getActualInstance();
+    }
+    /**
+     * Get the actual instance of `PortfolioHoldingDataQualityCheck`. If the actual instance is not `PortfolioHoldingDataQualityCheck`,
+     * the ClassCastException will be thrown.
+     *
+     * @return The actual instance of `PortfolioHoldingDataQualityCheck`
+     * @throws ClassCastException if the instance is not `PortfolioHoldingDataQualityCheck`
+     */
+    public PortfolioHoldingDataQualityCheck getPortfolioHoldingDataQualityCheck() throws ClassCastException {
+        return (PortfolioHoldingDataQualityCheck)super.getActualInstance();
     }
     /**
      * Get the actual instance of `SchedulerJob`. If the actual instance is not `SchedulerJob`,
@@ -527,6 +568,14 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
       errorMessages.add(String.format("Deserialization for LusidEntityDataQualityCheck failed with `%s`.", e.getMessage()));
       // continue to the next one
     }
+    // validate the json string with PortfolioHoldingDataQualityCheck
+    try {
+      PortfolioHoldingDataQualityCheck.validateJsonElement(jsonElement);
+      validCount++;
+    } catch (Exception e) {
+      errorMessages.add(String.format("Deserialization for PortfolioHoldingDataQualityCheck failed with `%s`.", e.getMessage()));
+      // continue to the next one
+    }
     // validate the json string with SchedulerJob
     try {
       SchedulerJob.validateJsonElement(jsonElement);
@@ -544,7 +593,7 @@ public class WorkerConfiguration extends AbstractOpenApiSchema {
       // continue to the next one
     }
     if (validCount != 1) {
-      throw new IOException(String.format("The JSON string is invalid for WorkerConfiguration with oneOf schemas: Fail, GroupReconciliation, HealthCheck, HorizonIntegration, LuminesceView, LusidEntityDataQualityCheck, SchedulerJob, Sleep. %d class(es) match the result, expected 1. Detailed failure message for oneOf schemas: %s. JSON: %s", validCount, errorMessages, jsonElement.toString()));
+      throw new IOException(String.format("The JSON string is invalid for WorkerConfiguration with oneOf schemas: Fail, GroupReconciliation, HealthCheck, HorizonIntegration, LuminesceView, LusidEntityDataQualityCheck, PortfolioHoldingDataQualityCheck, SchedulerJob, Sleep. %d class(es) match the result, expected 1. Detailed failure message for oneOf schemas: %s. JSON: %s", validCount, errorMessages, jsonElement.toString()));
     }
   }
 

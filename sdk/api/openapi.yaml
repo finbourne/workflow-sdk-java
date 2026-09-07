@@ -40,7 +40,7 @@ info:
     | <a name="973">973</a>|Workflow already exists.| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1820
+  version: 0.1.1834
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -8048,6 +8048,7 @@ components:
           - HorizonIntegration
           - LuminesceView
           - LusidEntityDataQualityCheck
+          - PortfolioHoldingDataQualityCheck
           - SchedulerJob
           - Sleep
           minLength: 1
@@ -8069,6 +8070,7 @@ components:
           - Library
           - LuminesceView
           - LusidEntityDataQualityCheck
+          - PortfolioHoldingDataQualityCheck
           - SchedulerJob
           - Sleep
           nullable: true
@@ -10094,6 +10096,32 @@ components:
           $ref: '#/components/schemas/PropertyValue'
       required:
       - key
+      type: object
+    PortfolioHoldingDataQualityCheck:
+      additionalProperties: false
+      description: Configuration for a Worker that runs a portfolio holding Data quality
+        check in LUSID
+      properties:
+        type:
+          description: The type of worker
+          enum:
+          - PortfolioHoldingDataQualityCheck
+          minLength: 1
+          type: string
+      required:
+      - type
+      type: object
+    PortfolioHoldingDataQualityCheckResponse:
+      additionalProperties: false
+      description: Readonly configuration for the Portfolio Holding Data Quality Check
+        Worker
+      properties:
+        type:
+          description: The type of worker
+          enum:
+          - PortfolioHoldingDataQualityCheck
+          nullable: true
+          type: string
       type: object
     PropertyValue:
       additionalProperties: false
@@ -12983,6 +13011,7 @@ components:
       - $ref: '#/components/schemas/HorizonIntegration'
       - $ref: '#/components/schemas/LuminesceView'
       - $ref: '#/components/schemas/LusidEntityDataQualityCheck'
+      - $ref: '#/components/schemas/PortfolioHoldingDataQualityCheck'
       - $ref: '#/components/schemas/SchedulerJob'
       - $ref: '#/components/schemas/Sleep'
       properties:
@@ -13004,6 +13033,7 @@ components:
       - $ref: '#/components/schemas/LibraryResponse'
       - $ref: '#/components/schemas/LuminesceViewResponse'
       - $ref: '#/components/schemas/LusidEntityDataQualityCheckResponse'
+      - $ref: '#/components/schemas/PortfolioHoldingDataQualityCheckResponse'
       - $ref: '#/components/schemas/SchedulerJobResponse'
       - $ref: '#/components/schemas/SleepResponse'
       type: object
