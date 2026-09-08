@@ -35,6 +35,7 @@ import com.finbourne.workflow.model.PagedResourceListOfWorkflowResponse;
 import com.finbourne.workflow.model.PerpetualProperty;
 import com.finbourne.workflow.model.UpdateWorkflowRequest;
 import com.finbourne.workflow.model.WorkflowResponse;
+import com.finbourne.workflow.model.WorkflowWithStructureResponse;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -642,30 +643,30 @@ public class WorkflowsApi {
     }
 
 
-    private ApiResponse<WorkflowResponse> getWorkflowWithHttpInfo(String scope, String code, OffsetDateTime asAt, List<String> propertyKeys) throws ApiException {
+    private ApiResponse<WorkflowWithStructureResponse> getWorkflowWithHttpInfo(String scope, String code, OffsetDateTime asAt, List<String> propertyKeys) throws ApiException {
         okhttp3.Call localVarCall = getWorkflowValidateBeforeCall(scope, code, asAt, propertyKeys, null, new ConfigurationOptions());
-        Type localVarReturnType = new TypeToken<WorkflowResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<WorkflowWithStructureResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
-    private ApiResponse<WorkflowResponse> getWorkflowWithHttpInfo(String scope, String code, OffsetDateTime asAt, List<String> propertyKeys, ConfigurationOptions opts) throws ApiException {
+    private ApiResponse<WorkflowWithStructureResponse> getWorkflowWithHttpInfo(String scope, String code, OffsetDateTime asAt, List<String> propertyKeys, ConfigurationOptions opts) throws ApiException {
         okhttp3.Call localVarCall = getWorkflowValidateBeforeCall(scope, code, asAt, propertyKeys, null, opts);
-        Type localVarReturnType = new TypeToken<WorkflowResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<WorkflowWithStructureResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
-    private okhttp3.Call getWorkflowAsync(String scope, String code, OffsetDateTime asAt, List<String> propertyKeys, final ApiCallback<WorkflowResponse> _callback) throws ApiException {
+    private okhttp3.Call getWorkflowAsync(String scope, String code, OffsetDateTime asAt, List<String> propertyKeys, final ApiCallback<WorkflowWithStructureResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getWorkflowValidateBeforeCall(scope, code, asAt, propertyKeys, _callback, new ConfigurationOptions());
-        Type localVarReturnType = new TypeToken<WorkflowResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<WorkflowWithStructureResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 
-    private okhttp3.Call getWorkflowAsync(String scope, String code, OffsetDateTime asAt, List<String> propertyKeys, final ApiCallback<WorkflowResponse> _callback, ConfigurationOptions opts) throws ApiException {
+    private okhttp3.Call getWorkflowAsync(String scope, String code, OffsetDateTime asAt, List<String> propertyKeys, final ApiCallback<WorkflowWithStructureResponse> _callback, ConfigurationOptions opts) throws ApiException {
 
         okhttp3.Call localVarCall = getWorkflowValidateBeforeCall(scope, code, asAt, propertyKeys, _callback, opts);
-        Type localVarReturnType = new TypeToken<WorkflowResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<WorkflowWithStructureResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -721,7 +722,7 @@ public class WorkflowsApi {
 
         /**
          * Execute getWorkflow request
-         * @return WorkflowResponse
+         * @return WorkflowWithStructureResponse
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
          * @http.response.details
          <table summary="Response Details" border="1">
@@ -732,14 +733,14 @@ public class WorkflowsApi {
             <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
          </table>
          */
-        public WorkflowResponse execute() throws ApiException {
-            ApiResponse<WorkflowResponse> localVarResp = getWorkflowWithHttpInfo(scope, code, asAt, propertyKeys);
+        public WorkflowWithStructureResponse execute() throws ApiException {
+            ApiResponse<WorkflowWithStructureResponse> localVarResp = getWorkflowWithHttpInfo(scope, code, asAt, propertyKeys);
             return localVarResp.getData();
         }
 
         /**
          * Execute getWorkflow request. Use any specified configuration options to override any other configuration for this request only.
-         * @return WorkflowResponse
+         * @return WorkflowWithStructureResponse
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
          * @http.response.details
          <table summary="Response Details" border="1">
@@ -750,14 +751,14 @@ public class WorkflowsApi {
             <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
          </table>
          */
-        public WorkflowResponse execute(ConfigurationOptions opts) throws ApiException {
-            ApiResponse<WorkflowResponse> localVarResp = getWorkflowWithHttpInfo(scope, code, asAt, propertyKeys, opts);
+        public WorkflowWithStructureResponse execute(ConfigurationOptions opts) throws ApiException {
+            ApiResponse<WorkflowWithStructureResponse> localVarResp = getWorkflowWithHttpInfo(scope, code, asAt, propertyKeys, opts);
             return localVarResp.getData();
         }
 
         /**
          * Execute getWorkflow request with HTTP info returned
-         * @return ApiResponse&lt;WorkflowResponse&gt;
+         * @return ApiResponse&lt;WorkflowWithStructureResponse&gt;
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
          * @http.response.details
          <table summary="Response Details" border="1">
@@ -768,13 +769,13 @@ public class WorkflowsApi {
             <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
          </table>
          */
-        public ApiResponse<WorkflowResponse> executeWithHttpInfo() throws ApiException {
+        public ApiResponse<WorkflowWithStructureResponse> executeWithHttpInfo() throws ApiException {
             return getWorkflowWithHttpInfo(scope, code, asAt, propertyKeys);
         }
 
         /**
          * Execute getWorkflow request with HTTP info returned. Use any specified configuration options to override any other configuration for this request only.
-         * @return ApiResponse&lt;WorkflowResponse&gt;
+         * @return ApiResponse&lt;WorkflowWithStructureResponse&gt;
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
          * @http.response.details
          <table summary="Response Details" border="1">
@@ -785,7 +786,7 @@ public class WorkflowsApi {
             <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
          </table>
          */
-        public ApiResponse<WorkflowResponse> executeWithHttpInfo(ConfigurationOptions opts) throws ApiException {
+        public ApiResponse<WorkflowWithStructureResponse> executeWithHttpInfo(ConfigurationOptions opts) throws ApiException {
             return getWorkflowWithHttpInfo(scope, code, asAt, propertyKeys, opts);
         }
 
@@ -803,7 +804,7 @@ public class WorkflowsApi {
             <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
          </table>
          */
-        public okhttp3.Call executeAsync(final ApiCallback<WorkflowResponse> _callback) throws ApiException {
+        public okhttp3.Call executeAsync(final ApiCallback<WorkflowWithStructureResponse> _callback) throws ApiException {
             return getWorkflowAsync(scope, code, asAt, propertyKeys, _callback);
         }
 
@@ -821,7 +822,7 @@ public class WorkflowsApi {
             <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
          </table>
          */
-        public okhttp3.Call executeAsync(final ApiCallback<WorkflowResponse> _callback, ConfigurationOptions opts) throws ApiException {
+        public okhttp3.Call executeAsync(final ApiCallback<WorkflowWithStructureResponse> _callback, ConfigurationOptions opts) throws ApiException {
             return getWorkflowAsync(scope, code, asAt, propertyKeys, _callback, opts);
         }
     }

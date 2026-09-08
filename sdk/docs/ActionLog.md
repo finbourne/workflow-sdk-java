@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **origin** | [**ActionLogOrigin**](ActionLogOrigin.md) |  | [default to ActionLogOrigin]
 **actionType** | **String** | The type of the Action | [default to String]
 **runAsUserId** | **String** | The ID of the user that the Action was performed by. If not specified, the actions were performed by the \&quot;current user\&quot;. | [optional] [default to String]
-**loggedItems** | [**List&lt;ActionLogItem&gt;**](ActionLogItem.md) | The logged items for this Action | [default to List<ActionLogItem>]
+**loggedItems** | [**List&lt;ActionLogItem&gt;**](ActionLogItem.md) | The logged items for this Action, ordered by timestamp with the earliest item first | [default to List<ActionLogItem>]
 
 ```java
 import com.finbourne.workflow.model.ActionLog;

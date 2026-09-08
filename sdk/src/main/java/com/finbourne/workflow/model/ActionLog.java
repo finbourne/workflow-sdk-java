@@ -177,7 +177,7 @@ public class ActionLog {
   }
 
    /**
-   * The logged items for this Action
+   * The logged items for this Action, ordered by timestamp with the earliest item first
    * @return loggedItems
   **/
   @jakarta.annotation.Nonnull

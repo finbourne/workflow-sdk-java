@@ -14,6 +14,7 @@ import java.util.Objects;
 import com.finbourne.workflow.model.PerpetualProperty;
 import com.finbourne.workflow.model.ResourceId;
 import com.finbourne.workflow.model.VersionInfo;
+import com.finbourne.workflow.model.WorkflowStructure;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -51,10 +52,10 @@ import java.util.Set;
 import com.finbourne.workflow.JSON;
 
 /**
- * A Workflow
+ * A Workflow, including its structure
  */
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class WorkflowResponse {
+public class WorkflowWithStructureResponse {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
   private ResourceId id;
@@ -75,14 +76,18 @@ public class WorkflowResponse {
   @SerializedName(SERIALIZED_NAME_ROOT_TASK_DEFINITION_ID)
   private ResourceId rootTaskDefinitionId;
 
+  public static final String SERIALIZED_NAME_WORKFLOW_STRUCTURE = "workflowStructure";
+  @SerializedName(SERIALIZED_NAME_WORKFLOW_STRUCTURE)
+  private WorkflowStructure workflowStructure;
+
   public static final String SERIALIZED_NAME_PROPERTIES = "properties";
   @SerializedName(SERIALIZED_NAME_PROPERTIES)
   private Map<String, PerpetualProperty> properties;
 
-  public WorkflowResponse() {
+  public WorkflowWithStructureResponse() {
   }
 
-  public WorkflowResponse id(ResourceId id) {
+  public WorkflowWithStructureResponse id(ResourceId id) {
     
     this.id = id;
     return this;
@@ -103,7 +108,7 @@ public class WorkflowResponse {
   }
 
 
-  public WorkflowResponse version(VersionInfo version) {
+  public WorkflowWithStructureResponse version(VersionInfo version) {
     
     this.version = version;
     return this;
@@ -124,7 +129,7 @@ public class WorkflowResponse {
   }
 
 
-  public WorkflowResponse displayName(String displayName) {
+  public WorkflowWithStructureResponse displayName(String displayName) {
     
     this.displayName = displayName;
     return this;
@@ -145,7 +150,7 @@ public class WorkflowResponse {
   }
 
 
-  public WorkflowResponse description(String description) {
+  public WorkflowWithStructureResponse description(String description) {
     
     this.description = description;
     return this;
@@ -166,7 +171,7 @@ public class WorkflowResponse {
   }
 
 
-  public WorkflowResponse rootTaskDefinitionId(ResourceId rootTaskDefinitionId) {
+  public WorkflowWithStructureResponse rootTaskDefinitionId(ResourceId rootTaskDefinitionId) {
     
     this.rootTaskDefinitionId = rootTaskDefinitionId;
     return this;
@@ -187,13 +192,34 @@ public class WorkflowResponse {
   }
 
 
-  public WorkflowResponse properties(Map<String, PerpetualProperty> properties) {
+  public WorkflowWithStructureResponse workflowStructure(WorkflowStructure workflowStructure) {
+    
+    this.workflowStructure = workflowStructure;
+    return this;
+  }
+
+   /**
+   * Get workflowStructure
+   * @return workflowStructure
+  **/
+  @jakarta.annotation.Nonnull
+  public WorkflowStructure getWorkflowStructure() {
+    return workflowStructure;
+  }
+
+
+  public void setWorkflowStructure(WorkflowStructure workflowStructure) {
+    this.workflowStructure = workflowStructure;
+  }
+
+
+  public WorkflowWithStructureResponse properties(Map<String, PerpetualProperty> properties) {
     
     this.properties = properties;
     return this;
   }
 
-  public WorkflowResponse putPropertiesItem(String key, PerpetualProperty propertiesItem) {
+  public WorkflowWithStructureResponse putPropertiesItem(String key, PerpetualProperty propertiesItem) {
     if (this.properties == null) {
       this.properties = new HashMap<>();
     }
@@ -202,7 +228,7 @@ public class WorkflowResponse {
   }
 
    /**
-   * The properties of the Workflow, keyed by property key.
+   * The properties of the Workflow, keyed by property key
    * @return properties
   **/
   @jakarta.annotation.Nullable
@@ -225,13 +251,14 @@ public class WorkflowResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    WorkflowResponse workflowResponse = (WorkflowResponse) o;
-    return Objects.equals(this.id, workflowResponse.id) &&
-        Objects.equals(this.version, workflowResponse.version) &&
-        Objects.equals(this.displayName, workflowResponse.displayName) &&
-        Objects.equals(this.description, workflowResponse.description) &&
-        Objects.equals(this.rootTaskDefinitionId, workflowResponse.rootTaskDefinitionId) &&
-        Objects.equals(this.properties, workflowResponse.properties);
+    WorkflowWithStructureResponse workflowWithStructureResponse = (WorkflowWithStructureResponse) o;
+    return Objects.equals(this.id, workflowWithStructureResponse.id) &&
+        Objects.equals(this.version, workflowWithStructureResponse.version) &&
+        Objects.equals(this.displayName, workflowWithStructureResponse.displayName) &&
+        Objects.equals(this.description, workflowWithStructureResponse.description) &&
+        Objects.equals(this.rootTaskDefinitionId, workflowWithStructureResponse.rootTaskDefinitionId) &&
+        Objects.equals(this.workflowStructure, workflowWithStructureResponse.workflowStructure) &&
+        Objects.equals(this.properties, workflowWithStructureResponse.properties);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -240,7 +267,7 @@ public class WorkflowResponse {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, version, displayName, description, rootTaskDefinitionId, properties);
+    return Objects.hash(id, version, displayName, description, rootTaskDefinitionId, workflowStructure, properties);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -253,12 +280,13 @@ public class WorkflowResponse {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class WorkflowResponse {\n");
+    sb.append("class WorkflowWithStructureResponse {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    version: ").append(toIndentedString(version)).append("\n");
     sb.append("    displayName: ").append(toIndentedString(displayName)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    rootTaskDefinitionId: ").append(toIndentedString(rootTaskDefinitionId)).append("\n");
+    sb.append("    workflowStructure: ").append(toIndentedString(workflowStructure)).append("\n");
     sb.append("    properties: ").append(toIndentedString(properties)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -287,6 +315,7 @@ public class WorkflowResponse {
     openapiFields.add("displayName");
     openapiFields.add("description");
     openapiFields.add("rootTaskDefinitionId");
+    openapiFields.add("workflowStructure");
     openapiFields.add("properties");
 
     // a set of required properties/fields (JSON key names)
@@ -294,23 +323,24 @@ public class WorkflowResponse {
     openapiRequiredFields.add("id");
     openapiRequiredFields.add("displayName");
     openapiRequiredFields.add("rootTaskDefinitionId");
+    openapiRequiredFields.add("workflowStructure");
   }
 
  /**
   * Validates the JSON Element and throws an exception if issues found
   *
   * @param jsonElement JSON Element
-  * @throws IOException if the JSON Element is invalid with respect to WorkflowResponse
+  * @throws IOException if the JSON Element is invalid with respect to WorkflowWithStructureResponse
   */
   public static void validateJsonElement(JsonElement jsonElement) throws IOException {
       if (jsonElement == null) {
-        if (!WorkflowResponse.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
-          throw new IllegalArgumentException(String.format("The required field(s) %s in WorkflowResponse is not found in the empty JSON string", WorkflowResponse.openapiRequiredFields.toString()));
+        if (!WorkflowWithStructureResponse.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in WorkflowWithStructureResponse is not found in the empty JSON string", WorkflowWithStructureResponse.openapiRequiredFields.toString()));
         }
       }
 
       // check to make sure all required properties/fields are present in the JSON string
-      for (String requiredField : WorkflowResponse.openapiRequiredFields) {
+      for (String requiredField : WorkflowWithStructureResponse.openapiRequiredFields) {
         if (jsonElement.getAsJsonObject().get(requiredField) == null) {
           throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonElement.toString()));
         }
@@ -330,28 +360,30 @@ public class WorkflowResponse {
       }
       // validate the required field `rootTaskDefinitionId`
       ResourceId.validateJsonElement(jsonObj.get("rootTaskDefinitionId"));
+      // validate the required field `workflowStructure`
+      WorkflowStructure.validateJsonElement(jsonObj.get("workflowStructure"));
   }
 
   public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!WorkflowResponse.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'WorkflowResponse' and its subtypes
+       if (!WorkflowWithStructureResponse.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'WorkflowWithStructureResponse' and its subtypes
        }
        final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<WorkflowResponse> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(WorkflowResponse.class));
+       final TypeAdapter<WorkflowWithStructureResponse> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(WorkflowWithStructureResponse.class));
 
-       return (TypeAdapter<T>) new TypeAdapter<WorkflowResponse>() {
+       return (TypeAdapter<T>) new TypeAdapter<WorkflowWithStructureResponse>() {
            @Override
-           public void write(JsonWriter out, WorkflowResponse value) throws IOException {
+           public void write(JsonWriter out, WorkflowWithStructureResponse value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              elementAdapter.write(out, obj);
            }
 
            @Override
-           public WorkflowResponse read(JsonReader in) throws IOException {
+           public WorkflowWithStructureResponse read(JsonReader in) throws IOException {
              JsonElement jsonElement = elementAdapter.read(in);
              validateJsonElement(jsonElement);
              return thisAdapter.fromJsonTree(jsonElement);
@@ -362,18 +394,18 @@ public class WorkflowResponse {
   }
 
  /**
-  * Create an instance of WorkflowResponse given an JSON string
+  * Create an instance of WorkflowWithStructureResponse given an JSON string
   *
   * @param jsonString JSON string
-  * @return An instance of WorkflowResponse
-  * @throws IOException if the JSON string is invalid with respect to WorkflowResponse
+  * @return An instance of WorkflowWithStructureResponse
+  * @throws IOException if the JSON string is invalid with respect to WorkflowWithStructureResponse
   */
-  public static WorkflowResponse fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, WorkflowResponse.class);
+  public static WorkflowWithStructureResponse fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, WorkflowWithStructureResponse.class);
   }
 
  /**
-  * Convert an instance of WorkflowResponse to an JSON string
+  * Convert an instance of WorkflowWithStructureResponse to an JSON string
   *
   * @return JSON string
   */

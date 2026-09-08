@@ -180,5 +180,6 @@ Class | Method | HTTP request | Description
  - [WorkflowStructure](docs/WorkflowStructure.md)
  - [WorkflowStructureEdges](docs/WorkflowStructureEdges.md)
  - [WorkflowStructureNodes](docs/WorkflowStructureNodes.md)
+ - [WorkflowWithStructureResponse](docs/WorkflowWithStructureResponse.md)
  - [YearRegularity](docs/YearRegularity.md)
 

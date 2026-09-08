@@ -197,7 +197,7 @@ public class WorkflowsApiExample {
 
 ## getWorkflow
 
-> WorkflowResponse getWorkflow(scope, code, asAt, propertyKeys)
+> WorkflowWithStructureResponse getWorkflow(scope, code, asAt, propertyKeys)
 
 GetWorkflow: Get a Workflow
 
@@ -246,9 +246,9 @@ public class WorkflowsApiExample {
         List<String> propertyKeys = Arrays.asList(); // List<String> | The property keys (in the Workflow or TaskDefinition domain) whose values to return on the Workflow.
         try {
             // uncomment the below to set overrides at the request level
-            // WorkflowResponse result = apiInstance.getWorkflow(scope, code, asAt, propertyKeys).execute(opts);
+            // WorkflowWithStructureResponse result = apiInstance.getWorkflow(scope, code, asAt, propertyKeys).execute(opts);
 
-            WorkflowResponse result = apiInstance.getWorkflow(scope, code, asAt, propertyKeys).execute();
+            WorkflowWithStructureResponse result = apiInstance.getWorkflow(scope, code, asAt, propertyKeys).execute();
             System.out.println(result.toJson());
         } catch (ApiException e) {
             System.err.println("Exception when calling WorkflowsApi#getWorkflow");
@@ -272,7 +272,7 @@ public class WorkflowsApiExample {
 
 ### Return type
 
-[**WorkflowResponse**](WorkflowResponse.md)
+[**WorkflowWithStructureResponse**](WorkflowWithStructureResponse.md)
 
 ### HTTP request headers
 

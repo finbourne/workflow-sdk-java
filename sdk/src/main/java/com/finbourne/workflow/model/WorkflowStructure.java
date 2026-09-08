@@ -47,7 +47,7 @@ import java.util.Set;
 import com.finbourne.workflow.JSON;
 
 /**
- * Describes the structure of a Workflow as a graph of Task Definitions
+ * Describes the structure of a Workflow as a graph of Task Definitions. Only populated in GetWorkflow responses.
  */
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class WorkflowStructure {

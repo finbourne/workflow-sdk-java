@@ -225,6 +225,7 @@ public class JSON {
         gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.WorkflowStructure.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.WorkflowStructureEdges.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.WorkflowStructureNodes.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.WorkflowWithStructureResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.YearRegularity.CustomTypeAdapterFactory());
         gson = gsonBuilder.create();
     }
