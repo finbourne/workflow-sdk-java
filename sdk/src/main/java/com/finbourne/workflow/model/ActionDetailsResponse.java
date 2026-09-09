@@ -13,6 +13,7 @@ package com.finbourne.workflow.model;
 import java.util.Objects;
 import com.finbourne.workflow.model.CreateChildTasksActionResponse;
 import com.finbourne.workflow.model.FieldMapping;
+import com.finbourne.workflow.model.ReRunConfiguration;
 import com.finbourne.workflow.model.ResourceId;
 import com.finbourne.workflow.model.ResultantChildTaskConfiguration;
 import com.finbourne.workflow.model.RunWorkerActionResponse;

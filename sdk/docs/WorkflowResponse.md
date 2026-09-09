@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **displayName** | **String** | Human readable name | [default to String]
 **description** | **String** | Human readable description | [optional] [default to String]
 **rootTaskDefinitionId** | [**ResourceId**](ResourceId.md) |  | [default to ResourceId]
+**workflowStructure** | [**WorkflowStructure**](WorkflowStructure.md) |  | [default to WorkflowStructure]
 **properties** | [**Map&lt;String, PerpetualProperty&gt;**](PerpetualProperty.md) | The properties of the Workflow, keyed by property key. | [optional] [default to Map<String, PerpetualProperty>]
 
 ```java
@@ -23,6 +24,7 @@ VersionInfo Version = new VersionInfo();
 String DisplayName = "example DisplayName";
 @jakarta.annotation.Nullable String Description = "example Description";
 ResourceId RootTaskDefinitionId = new ResourceId();
+WorkflowStructure WorkflowStructure = new WorkflowStructure();
 @jakarta.annotation.Nullable Map<String, PerpetualProperty> Properties = new Map<String, PerpetualProperty>();
 
 
@@ -32,6 +34,7 @@ WorkflowResponse workflowResponseInstance = new WorkflowResponse()
     .DisplayName(DisplayName)
     .Description(Description)
     .RootTaskDefinitionId(RootTaskDefinitionId)
+    .WorkflowStructure(WorkflowStructure)
     .Properties(Properties);
 ```
 

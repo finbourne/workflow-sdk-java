@@ -14,6 +14,7 @@ import java.util.Objects;
 import com.finbourne.workflow.model.PerpetualProperty;
 import com.finbourne.workflow.model.ResourceId;
 import com.finbourne.workflow.model.VersionInfo;
+import com.finbourne.workflow.model.WorkflowStructure;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -74,6 +75,10 @@ public class WorkflowResponse {
   public static final String SERIALIZED_NAME_ROOT_TASK_DEFINITION_ID = "rootTaskDefinitionId";
   @SerializedName(SERIALIZED_NAME_ROOT_TASK_DEFINITION_ID)
   private ResourceId rootTaskDefinitionId;
+
+  public static final String SERIALIZED_NAME_WORKFLOW_STRUCTURE = "workflowStructure";
+  @SerializedName(SERIALIZED_NAME_WORKFLOW_STRUCTURE)
+  private WorkflowStructure workflowStructure;
 
   public static final String SERIALIZED_NAME_PROPERTIES = "properties";
   @SerializedName(SERIALIZED_NAME_PROPERTIES)
@@ -187,6 +192,27 @@ public class WorkflowResponse {
   }
 
 
+  public WorkflowResponse workflowStructure(WorkflowStructure workflowStructure) {
+    
+    this.workflowStructure = workflowStructure;
+    return this;
+  }
+
+   /**
+   * Get workflowStructure
+   * @return workflowStructure
+  **/
+  @jakarta.annotation.Nonnull
+  public WorkflowStructure getWorkflowStructure() {
+    return workflowStructure;
+  }
+
+
+  public void setWorkflowStructure(WorkflowStructure workflowStructure) {
+    this.workflowStructure = workflowStructure;
+  }
+
+
   public WorkflowResponse properties(Map<String, PerpetualProperty> properties) {
     
     this.properties = properties;
@@ -231,6 +257,7 @@ public class WorkflowResponse {
         Objects.equals(this.displayName, workflowResponse.displayName) &&
         Objects.equals(this.description, workflowResponse.description) &&
         Objects.equals(this.rootTaskDefinitionId, workflowResponse.rootTaskDefinitionId) &&
+        Objects.equals(this.workflowStructure, workflowResponse.workflowStructure) &&
         Objects.equals(this.properties, workflowResponse.properties);
   }
 
@@ -240,7 +267,7 @@ public class WorkflowResponse {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, version, displayName, description, rootTaskDefinitionId, properties);
+    return Objects.hash(id, version, displayName, description, rootTaskDefinitionId, workflowStructure, properties);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -259,6 +286,7 @@ public class WorkflowResponse {
     sb.append("    displayName: ").append(toIndentedString(displayName)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    rootTaskDefinitionId: ").append(toIndentedString(rootTaskDefinitionId)).append("\n");
+    sb.append("    workflowStructure: ").append(toIndentedString(workflowStructure)).append("\n");
     sb.append("    properties: ").append(toIndentedString(properties)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -287,6 +315,7 @@ public class WorkflowResponse {
     openapiFields.add("displayName");
     openapiFields.add("description");
     openapiFields.add("rootTaskDefinitionId");
+    openapiFields.add("workflowStructure");
     openapiFields.add("properties");
 
     // a set of required properties/fields (JSON key names)
@@ -294,6 +323,7 @@ public class WorkflowResponse {
     openapiRequiredFields.add("id");
     openapiRequiredFields.add("displayName");
     openapiRequiredFields.add("rootTaskDefinitionId");
+    openapiRequiredFields.add("workflowStructure");
   }
 
  /**
@@ -330,6 +360,8 @@ public class WorkflowResponse {
       }
       // validate the required field `rootTaskDefinitionId`
       ResourceId.validateJsonElement(jsonObj.get("rootTaskDefinitionId"));
+      // validate the required field `workflowStructure`
+      WorkflowStructure.validateJsonElement(jsonObj.get("workflowStructure"));
   }
 
   public static class CustomTypeAdapterFactory implements TypeAdapterFactory {

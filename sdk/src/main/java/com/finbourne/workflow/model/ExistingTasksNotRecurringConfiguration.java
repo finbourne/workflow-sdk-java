@@ -11,8 +11,6 @@
 package com.finbourne.workflow.model;
 
 import java.util.Objects;
-import com.finbourne.workflow.model.WorkflowStructureEdges;
-import com.finbourne.workflow.model.WorkflowStructureNodes;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -20,6 +18,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.util.Arrays;
+import org.openapitools.jackson.nullable.JsonNullable;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -47,60 +46,35 @@ import java.util.Set;
 import com.finbourne.workflow.JSON;
 
 /**
- * Describes the structure of a Workflow as a graph of Task Definitions
+ * Behaviour applied to an existing (non-terminal) child task whose stacking key is not matched by any new child task candidate (i.e. it did not recur on this run)
  */
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class WorkflowStructure {
-  public static final String SERIALIZED_NAME_NODES = "nodes";
-  @SerializedName(SERIALIZED_NAME_NODES)
-  private WorkflowStructureNodes nodes;
+public class ExistingTasksNotRecurringConfiguration {
+  public static final String SERIALIZED_NAME_TRIGGER = "trigger";
+  @SerializedName(SERIALIZED_NAME_TRIGGER)
+  private String trigger;
 
-  public static final String SERIALIZED_NAME_EDGES = "edges";
-  @SerializedName(SERIALIZED_NAME_EDGES)
-  private WorkflowStructureEdges edges;
-
-  public WorkflowStructure() {
+  public ExistingTasksNotRecurringConfiguration() {
   }
 
-  public WorkflowStructure nodes(WorkflowStructureNodes nodes) {
+  public ExistingTasksNotRecurringConfiguration trigger(String trigger) {
     
-    this.nodes = nodes;
+    this.trigger = trigger;
     return this;
   }
 
    /**
-   * Get nodes
-   * @return nodes
+   * The existing task receives this trigger
+   * @return trigger
   **/
   @jakarta.annotation.Nullable
-  public WorkflowStructureNodes getNodes() {
-    return nodes;
+  public String getTrigger() {
+    return trigger;
   }
 
 
-  public void setNodes(WorkflowStructureNodes nodes) {
-    this.nodes = nodes;
-  }
-
-
-  public WorkflowStructure edges(WorkflowStructureEdges edges) {
-    
-    this.edges = edges;
-    return this;
-  }
-
-   /**
-   * Get edges
-   * @return edges
-  **/
-  @jakarta.annotation.Nullable
-  public WorkflowStructureEdges getEdges() {
-    return edges;
-  }
-
-
-  public void setEdges(WorkflowStructureEdges edges) {
-    this.edges = edges;
+  public void setTrigger(String trigger) {
+    this.trigger = trigger;
   }
 
 
@@ -113,22 +87,31 @@ public class WorkflowStructure {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    WorkflowStructure workflowStructure = (WorkflowStructure) o;
-    return Objects.equals(this.nodes, workflowStructure.nodes) &&
-        Objects.equals(this.edges, workflowStructure.edges);
+    ExistingTasksNotRecurringConfiguration existingTasksNotRecurringConfiguration = (ExistingTasksNotRecurringConfiguration) o;
+    return Objects.equals(this.trigger, existingTasksNotRecurringConfiguration.trigger);
+  }
+
+  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
+    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(nodes, edges);
+    return Objects.hash(trigger);
+  }
+
+  private static <T> int hashCodeNullable(JsonNullable<T> a) {
+    if (a == null) {
+      return 1;
+    }
+    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class WorkflowStructure {\n");
-    sb.append("    nodes: ").append(toIndentedString(nodes)).append("\n");
-    sb.append("    edges: ").append(toIndentedString(edges)).append("\n");
+    sb.append("class ExistingTasksNotRecurringConfiguration {\n");
+    sb.append("    trigger: ").append(toIndentedString(trigger)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -151,8 +134,7 @@ public class WorkflowStructure {
   static {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
-    openapiFields.add("nodes");
-    openapiFields.add("edges");
+    openapiFields.add("trigger");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -162,22 +144,17 @@ public class WorkflowStructure {
   * Validates the JSON Element and throws an exception if issues found
   *
   * @param jsonElement JSON Element
-  * @throws IOException if the JSON Element is invalid with respect to WorkflowStructure
+  * @throws IOException if the JSON Element is invalid with respect to ExistingTasksNotRecurringConfiguration
   */
   public static void validateJsonElement(JsonElement jsonElement) throws IOException {
       if (jsonElement == null) {
-        if (!WorkflowStructure.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
-          throw new IllegalArgumentException(String.format("The required field(s) %s in WorkflowStructure is not found in the empty JSON string", WorkflowStructure.openapiRequiredFields.toString()));
+        if (!ExistingTasksNotRecurringConfiguration.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in ExistingTasksNotRecurringConfiguration is not found in the empty JSON string", ExistingTasksNotRecurringConfiguration.openapiRequiredFields.toString()));
         }
       }
         JsonObject jsonObj = jsonElement.getAsJsonObject();
-      // validate the optional field `nodes`
-      if (jsonObj.get("nodes") != null && !jsonObj.get("nodes").isJsonNull()) {
-        WorkflowStructureNodes.validateJsonElement(jsonObj.get("nodes"));
-      }
-      // validate the optional field `edges`
-      if (jsonObj.get("edges") != null && !jsonObj.get("edges").isJsonNull()) {
-        WorkflowStructureEdges.validateJsonElement(jsonObj.get("edges"));
+      if ((jsonObj.get("trigger") != null && !jsonObj.get("trigger").isJsonNull()) && !jsonObj.get("trigger").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `trigger` to be a primitive type in the JSON string but got `%s`", jsonObj.get("trigger").toString()));
       }
   }
 
@@ -185,22 +162,22 @@ public class WorkflowStructure {
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!WorkflowStructure.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'WorkflowStructure' and its subtypes
+       if (!ExistingTasksNotRecurringConfiguration.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'ExistingTasksNotRecurringConfiguration' and its subtypes
        }
        final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<WorkflowStructure> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(WorkflowStructure.class));
+       final TypeAdapter<ExistingTasksNotRecurringConfiguration> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(ExistingTasksNotRecurringConfiguration.class));
 
-       return (TypeAdapter<T>) new TypeAdapter<WorkflowStructure>() {
+       return (TypeAdapter<T>) new TypeAdapter<ExistingTasksNotRecurringConfiguration>() {
            @Override
-           public void write(JsonWriter out, WorkflowStructure value) throws IOException {
+           public void write(JsonWriter out, ExistingTasksNotRecurringConfiguration value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              elementAdapter.write(out, obj);
            }
 
            @Override
-           public WorkflowStructure read(JsonReader in) throws IOException {
+           public ExistingTasksNotRecurringConfiguration read(JsonReader in) throws IOException {
              JsonElement jsonElement = elementAdapter.read(in);
              validateJsonElement(jsonElement);
              return thisAdapter.fromJsonTree(jsonElement);
@@ -211,18 +188,18 @@ public class WorkflowStructure {
   }
 
  /**
-  * Create an instance of WorkflowStructure given an JSON string
+  * Create an instance of ExistingTasksNotRecurringConfiguration given an JSON string
   *
   * @param jsonString JSON string
-  * @return An instance of WorkflowStructure
-  * @throws IOException if the JSON string is invalid with respect to WorkflowStructure
+  * @return An instance of ExistingTasksNotRecurringConfiguration
+  * @throws IOException if the JSON string is invalid with respect to ExistingTasksNotRecurringConfiguration
   */
-  public static WorkflowStructure fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, WorkflowStructure.class);
+  public static ExistingTasksNotRecurringConfiguration fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, ExistingTasksNotRecurringConfiguration.class);
   }
 
  /**
-  * Convert an instance of WorkflowStructure to an JSON string
+  * Convert an instance of ExistingTasksNotRecurringConfiguration to an JSON string
   *
   * @return JSON string
   */

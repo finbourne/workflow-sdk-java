@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **workerAsAt** | [**OffsetDateTime**](OffsetDateTime.md) | Worker AsAt | [optional] [default to OffsetDateTime]
 **workerParameters** | [**Map&lt;String, FieldMapping&gt;**](FieldMapping.md) | Parameters for this Worker | [optional] [default to Map<String, FieldMapping>]
 **workerStatusTriggers** | [**WorkerStatusTriggers**](WorkerStatusTriggers.md) |  | [optional] [default to WorkerStatusTriggers]
+**reRunConfigurations** | [**List&lt;ReRunConfiguration&gt;**](ReRunConfiguration.md) | Configuration governing how re-run results are reconciled against existing child tasks from a previous run of this action against the same parent Task instance | [optional] [default to List<ReRunConfiguration>]
 **workerTimeout** | **Integer** | Worker timeout in seconds | [optional] [default to Integer]
 **trigger** | **String** | Trigger on parent task to be invoked | [optional] [default to String]
 **filter** | **String** | Optional LUSID filter expression to limit the action to a subset of the child tasks | [optional] [default to String]

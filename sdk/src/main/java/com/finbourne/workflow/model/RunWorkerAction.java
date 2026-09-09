@@ -12,6 +12,7 @@ package com.finbourne.workflow.model;
 
 import java.util.Objects;
 import com.finbourne.workflow.model.FieldMapping;
+import com.finbourne.workflow.model.ReRunConfiguration;
 import com.finbourne.workflow.model.ResourceId;
 import com.finbourne.workflow.model.ResultantChildTaskConfiguration;
 import com.finbourne.workflow.model.WorkerStatusTriggers;
@@ -127,6 +128,10 @@ public class RunWorkerAction {
   public static final String SERIALIZED_NAME_CHILD_TASK_CONFIGURATIONS = "childTaskConfigurations";
   @SerializedName(SERIALIZED_NAME_CHILD_TASK_CONFIGURATIONS)
   private List<ResultantChildTaskConfiguration> childTaskConfigurations;
+
+  public static final String SERIALIZED_NAME_RE_RUN_CONFIGURATIONS = "reRunConfigurations";
+  @SerializedName(SERIALIZED_NAME_RE_RUN_CONFIGURATIONS)
+  private List<ReRunConfiguration> reRunConfigurations;
 
   public static final String SERIALIZED_NAME_WORKER_TIMEOUT = "workerTimeout";
   @SerializedName(SERIALIZED_NAME_WORKER_TIMEOUT)
@@ -277,6 +282,35 @@ public class RunWorkerAction {
   }
 
 
+  public RunWorkerAction reRunConfigurations(List<ReRunConfiguration> reRunConfigurations) {
+    
+    this.reRunConfigurations = reRunConfigurations;
+    return this;
+  }
+
+  public RunWorkerAction addReRunConfigurationsItem(ReRunConfiguration reRunConfigurationsItem) {
+    if (this.reRunConfigurations == null) {
+      this.reRunConfigurations = new ArrayList<>();
+    }
+    this.reRunConfigurations.add(reRunConfigurationsItem);
+    return this;
+  }
+
+   /**
+   * Configuration governing how re-run results are reconciled against existing child tasks from a previous run of this action against the same parent Task instance
+   * @return reRunConfigurations
+  **/
+  @jakarta.annotation.Nullable
+  public List<ReRunConfiguration> getReRunConfigurations() {
+    return reRunConfigurations;
+  }
+
+
+  public void setReRunConfigurations(List<ReRunConfiguration> reRunConfigurations) {
+    this.reRunConfigurations = reRunConfigurations;
+  }
+
+
   public RunWorkerAction workerTimeout(Integer workerTimeout) {
     
     this.workerTimeout = workerTimeout;
@@ -314,6 +348,7 @@ public class RunWorkerAction {
         Objects.equals(this.workerParameters, runWorkerAction.workerParameters) &&
         Objects.equals(this.workerStatusTriggers, runWorkerAction.workerStatusTriggers) &&
         Objects.equals(this.childTaskConfigurations, runWorkerAction.childTaskConfigurations) &&
+        Objects.equals(this.reRunConfigurations, runWorkerAction.reRunConfigurations) &&
         Objects.equals(this.workerTimeout, runWorkerAction.workerTimeout);
   }
 
@@ -323,7 +358,7 @@ public class RunWorkerAction {
 
   @Override
   public int hashCode() {
-    return Objects.hash(type, workerId, workerAsAt, workerParameters, workerStatusTriggers, childTaskConfigurations, workerTimeout);
+    return Objects.hash(type, workerId, workerAsAt, workerParameters, workerStatusTriggers, childTaskConfigurations, reRunConfigurations, workerTimeout);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -343,6 +378,7 @@ public class RunWorkerAction {
     sb.append("    workerParameters: ").append(toIndentedString(workerParameters)).append("\n");
     sb.append("    workerStatusTriggers: ").append(toIndentedString(workerStatusTriggers)).append("\n");
     sb.append("    childTaskConfigurations: ").append(toIndentedString(childTaskConfigurations)).append("\n");
+    sb.append("    reRunConfigurations: ").append(toIndentedString(reRunConfigurations)).append("\n");
     sb.append("    workerTimeout: ").append(toIndentedString(workerTimeout)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -372,6 +408,7 @@ public class RunWorkerAction {
     openapiFields.add("workerParameters");
     openapiFields.add("workerStatusTriggers");
     openapiFields.add("childTaskConfigurations");
+    openapiFields.add("reRunConfigurations");
     openapiFields.add("workerTimeout");
 
     // a set of required properties/fields (JSON key names)
@@ -420,6 +457,20 @@ public class RunWorkerAction {
           // validate the optional field `childTaskConfigurations` (array)
           for (int i = 0; i < jsonArraychildTaskConfigurations.size(); i++) {
             ResultantChildTaskConfiguration.validateJsonElement(jsonArraychildTaskConfigurations.get(i));
+          };
+        }
+      }
+      if (jsonObj.get("reRunConfigurations") != null && !jsonObj.get("reRunConfigurations").isJsonNull()) {
+        JsonArray jsonArrayreRunConfigurations = jsonObj.getAsJsonArray("reRunConfigurations");
+        if (jsonArrayreRunConfigurations != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("reRunConfigurations").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `reRunConfigurations` to be an array in the JSON string but got `%s`", jsonObj.get("reRunConfigurations").toString()));
+          }
+
+          // validate the optional field `reRunConfigurations` (array)
+          for (int i = 0; i < jsonArrayreRunConfigurations.size(); i++) {
+            ReRunConfiguration.validateJsonElement(jsonArrayreRunConfigurations.get(i));
           };
         }
       }
