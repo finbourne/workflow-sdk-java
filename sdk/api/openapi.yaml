@@ -40,7 +40,7 @@ info:
     | <a name="973">973</a>|Workflow already exists.| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1845
+  version: 0.1.1848
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -281,6 +281,8 @@ paths:
         schema:
           default: 10
           format: int32
+          maximum: 5000
+          minimum: 1
           type: integer
         style: form
         x-nullable: true
@@ -928,6 +930,8 @@ paths:
         schema:
           default: 10
           format: int32
+          maximum: 5000
+          minimum: 1
           type: integer
         style: form
         x-nullable: true
@@ -3205,6 +3209,8 @@ paths:
         schema:
           default: 10
           format: int32
+          maximum: 5000
+          minimum: 1
           type: integer
         style: form
         x-nullable: true
@@ -3998,6 +4004,8 @@ paths:
         schema:
           default: 10
           format: int32
+          maximum: 5000
+          minimum: 1
           type: integer
         style: form
         x-nullable: true
@@ -4879,6 +4887,8 @@ paths:
         schema:
           default: 10
           format: int32
+          maximum: 5000
+          minimum: 1
           type: integer
         style: form
         x-nullable: true
