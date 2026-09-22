@@ -12,6 +12,9 @@ Class | Method | HTTP request | Description
 *EventHandlersApi* | [**getEventHandler**](docs/EventHandlersApi.md#geteventhandler) | **GET** /api/eventhandlers/{scope}/{code} | GetEventHandler: Get an Event Handler
 *EventHandlersApi* | [**listEventHandlers**](docs/EventHandlersApi.md#listeventhandlers) | **GET** /api/eventhandlers | ListEventHandlers: List Event Handlers
 *EventHandlersApi* | [**updateEventHandler**](docs/EventHandlersApi.md#updateeventhandler) | **PUT** /api/eventhandlers/{scope}/{code} | UpdateEventHandler: Update an existing Event handler
+*LaunchersApi* | [**createLauncher**](docs/LaunchersApi.md#createlauncher) | **POST** /api/workflows/{scope}/{code}/launchers | [EXPERIMENTAL] CreateLauncher: Create a new Launcher on a Workflow
+*LaunchersApi* | [**deleteLauncher**](docs/LaunchersApi.md#deletelauncher) | **DELETE** /api/workflows/{scope}/{code}/launchers/{launcherId} | [EXPERIMENTAL] DeleteLauncher: Delete a Launcher of a Workflow
+*LaunchersApi* | [**updateLauncher**](docs/LaunchersApi.md#updatelauncher) | **PUT** /api/workflows/{scope}/{code}/launchers/{launcherId} | [EXPERIMENTAL] UpdateLauncher: Update an existing Launcher of a Workflow
 *TaskDefinitionsApi* | [**createTaskDefinition**](docs/TaskDefinitionsApi.md#createtaskdefinition) | **POST** /api/taskdefinitions | CreateTaskDefinition: Create a new Task Definition
 *TaskDefinitionsApi* | [**deleteTaskDefinition**](docs/TaskDefinitionsApi.md#deletetaskdefinition) | **DELETE** /api/taskdefinitions/{scope}/{code} | DeleteTaskDefinition: Delete a Task Definition
 *TaskDefinitionsApi* | [**getTaskDefinition**](docs/TaskDefinitionsApi.md#gettaskdefinition) | **GET** /api/taskdefinitions/{scope}/{code} | GetTaskDefinition: Get a Task Definition
@@ -59,13 +62,16 @@ Class | Method | HTTP request | Description
  - [BatchUpdateTasksResponse](docs/BatchUpdateTasksResponse.md)
  - [BatchUpsertTaskDefinitionPropertiesResponse](docs/BatchUpsertTaskDefinitionPropertiesResponse.md)
  - [BatchUpsertWorkflowPropertiesResponse](docs/BatchUpsertWorkflowPropertiesResponse.md)
+ - [CalendarContext](docs/CalendarContext.md)
  - [CalendarReference](docs/CalendarReference.md)
  - [ChangeItem](docs/ChangeItem.md)
  - [ChildTaskDefinitionEdge](docs/ChildTaskDefinitionEdge.md)
+ - [CorrelationIdMapping](docs/CorrelationIdMapping.md)
  - [CreateChildTaskConfiguration](docs/CreateChildTaskConfiguration.md)
  - [CreateChildTasksAction](docs/CreateChildTasksAction.md)
  - [CreateChildTasksActionResponse](docs/CreateChildTasksActionResponse.md)
  - [CreateEventHandlerRequest](docs/CreateEventHandlerRequest.md)
+ - [CreateLauncherRequest](docs/CreateLauncherRequest.md)
  - [CreateNewTaskActivity](docs/CreateNewTaskActivity.md)
  - [CreateNewTaskActivityResponse](docs/CreateNewTaskActivityResponse.md)
  - [CreateTaskDefinitionRequest](docs/CreateTaskDefinitionRequest.md)
@@ -75,6 +81,7 @@ Class | Method | HTTP request | Description
  - [CutLabelReference](docs/CutLabelReference.md)
  - [DateAdjustment](docs/DateAdjustment.md)
  - [DateRegularity](docs/DateRegularity.md)
+ - [DateTimeAdjustment](docs/DateTimeAdjustment.md)
  - [DayOfYear](docs/DayOfYear.md)
  - [DayRegularity](docs/DayRegularity.md)
  - [DeleteTasksRequest](docs/DeleteTasksRequest.md)
@@ -82,7 +89,10 @@ Class | Method | HTTP request | Description
  - [ErrorDetail](docs/ErrorDetail.md)
  - [EventHandler](docs/EventHandler.md)
  - [EventHandlerMapping](docs/EventHandlerMapping.md)
+ - [EventLauncherDetails](docs/EventLauncherDetails.md)
+ - [EventLauncherDetailsResponse](docs/EventLauncherDetailsResponse.md)
  - [EventMatchingPattern](docs/EventMatchingPattern.md)
+ - [EventTaskFieldMapping](docs/EventTaskFieldMapping.md)
  - [ExistingTasksNotRecurringConfiguration](docs/ExistingTasksNotRecurringConfiguration.md)
  - [ExistingTasksRecurringConfiguration](docs/ExistingTasksRecurringConfiguration.md)
  - [Fail](docs/Fail.md)
@@ -99,6 +109,13 @@ Class | Method | HTTP request | Description
  - [IdentifierPartSchema](docs/IdentifierPartSchema.md)
  - [InitialState](docs/InitialState.md)
  - [LabelValueSet](docs/LabelValueSet.md)
+ - [LauncherDetails](docs/LauncherDetails.md)
+ - [LauncherDetailsResponse](docs/LauncherDetailsResponse.md)
+ - [LauncherEventMatchingPattern](docs/LauncherEventMatchingPattern.md)
+ - [LauncherMapping](docs/LauncherMapping.md)
+ - [LauncherResponse](docs/LauncherResponse.md)
+ - [LauncherSchedule](docs/LauncherSchedule.md)
+ - [LauncherSummaries](docs/LauncherSummaries.md)
  - [LibraryResponse](docs/LibraryResponse.md)
  - [Link](docs/Link.md)
  - [LuminesceView](docs/LuminesceView.md)
@@ -137,8 +154,11 @@ Class | Method | HTTP request | Description
  - [RunWorkerActionResponse](docs/RunWorkerActionResponse.md)
  - [RunWorkerRequest](docs/RunWorkerRequest.md)
  - [RunWorkerResponse](docs/RunWorkerResponse.md)
+ - [ScheduleLauncherDetails](docs/ScheduleLauncherDetails.md)
+ - [ScheduleLauncherDetailsResponse](docs/ScheduleLauncherDetailsResponse.md)
  - [ScheduleMatchingPattern](docs/ScheduleMatchingPattern.md)
  - [ScheduleMatchingPatternContext](docs/ScheduleMatchingPatternContext.md)
+ - [ScheduleTaskFieldMapping](docs/ScheduleTaskFieldMapping.md)
  - [ScheduledTimeAdjustment](docs/ScheduledTimeAdjustment.md)
  - [SchedulerJob](docs/SchedulerJob.md)
  - [SchedulerJobResponse](docs/SchedulerJobResponse.md)
@@ -167,6 +187,7 @@ Class | Method | HTTP request | Description
  - [TriggerParentTaskActionResponse](docs/TriggerParentTaskActionResponse.md)
  - [TriggerSchema](docs/TriggerSchema.md)
  - [UpdateEventHandlerRequest](docs/UpdateEventHandlerRequest.md)
+ - [UpdateLauncherRequest](docs/UpdateLauncherRequest.md)
  - [UpdateMatchingTasksActivity](docs/UpdateMatchingTasksActivity.md)
  - [UpdateMatchingTasksActivityResponse](docs/UpdateMatchingTasksActivityResponse.md)
  - [UpdateTaskDefinitionRequest](docs/UpdateTaskDefinitionRequest.md)

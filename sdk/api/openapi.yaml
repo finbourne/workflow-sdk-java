@@ -40,7 +40,7 @@ info:
     | <a name="973">973</a>|Workflow already exists.| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1858
+  version: 0.1.1862
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -114,6 +114,8 @@ tags:
   name: Application Metadata
 - description: Workflow endpoint for managing Event Handlers
   name: Event Handlers
+- description: Workflow endpoint for managing the Launchers of a Workflow
+  name: Launchers
 - description: Workflow endpoint for managing Task Definitions
   name: Task Definitions
 - description: Workflow endpoint for managing Tasks
@@ -6015,6 +6017,983 @@ paths:
       x-fbn-apistatus: Experimental
       x-content-type: application/json-patch+json
       x-accepts: application/json
+  /api/workflows/{scope}/{code}/launchers:
+    post:
+      operationId: CreateLauncher
+      parameters:
+      - description: The scope that identifies the Workflow that owns the Launcher
+        explode: false
+        in: path
+        name: scope
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      - description: The code that identifies the Workflow that owns the Launcher
+        explode: false
+        in: path
+        name: code
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json-patch+json:
+            examples:
+              Schedule launcher:
+                value:
+                  launcherId: EveryWeekday
+                  displayName: An example Schedule launcher
+                  description: "Starts a run of the workflow at 09:00 on every weekday,\
+                    \ London time"
+                  status: Active
+                  launcherDetails:
+                    launcherType: Schedule
+                    schedule:
+                      calendarContext: London
+                      recurrencePattern:
+                        timeConstraints:
+                          startDate: 2025-01-01
+                          timesOfDay:
+                          - hours: 9
+                            minutes: 0
+                            type: Specified
+                        dateRegularity:
+                          frequency: 1
+                          daysOfWeek:
+                          - Monday
+                          - Tuesday
+                          - Wednesday
+                          - Thursday
+                          - Friday
+                          type: Week
+                        businessDayAdjustment: Following
+                    calendarContexts:
+                    - name: London
+                      timeZone: Europe/London
+                      holidayCalendars:
+                      - scope: A1
+                        code: UkHolidays
+                    mapTaskFields:
+                      asAtDate:
+                        mapFrom: ScheduledTime
+                        dateTimeAdjustment:
+                          calendarContext: London
+                          dateAdjustment:
+                            deltaDays: -1
+                            businessDayAdjustment: Previous
+                          timeAdjustment:
+                            setTo:
+                              hours: 23
+                              minutes: 59
+                              type: Specified
+                    runAsUserId:
+                      setTo: ExampleUserId
+                    setTaskFields:
+                      clientId: client-1
+                    setCorrelationIds:
+                    - example-correlation-id
+                    initialTrigger: Start
+              Event launcher:
+                value:
+                  launcherId: OnPortfolioCreated
+                  displayName: An example Event launcher
+                  description: Starts a run of the workflow when a portfolio is created
+                  status: Active
+                  launcherDetails:
+                    launcherType: Event
+                    eventMatchingPattern:
+                      eventType: PortfolioCreated
+                      filter: body.portfolioScope eq 'TestScope'
+                    mapTaskFields:
+                      asAtDate:
+                        mapFrom: header.timestamp
+                    mapCorrelationIds:
+                    - mapFrom: body.portfolioCode
+                    runAsUserId:
+                      mapFrom: header.userId
+                    setTaskFields:
+                      clientId: client-1
+                    setCorrelationIds: []
+                    initialTrigger: Start
+            schema:
+              $ref: '#/components/schemas/CreateLauncherRequest'
+          application/json:
+            examples:
+              Schedule launcher:
+                value:
+                  launcherId: EveryWeekday
+                  displayName: An example Schedule launcher
+                  description: "Starts a run of the workflow at 09:00 on every weekday,\
+                    \ London time"
+                  status: Active
+                  launcherDetails:
+                    launcherType: Schedule
+                    schedule:
+                      calendarContext: London
+                      recurrencePattern:
+                        timeConstraints:
+                          startDate: 2025-01-01
+                          timesOfDay:
+                          - hours: 9
+                            minutes: 0
+                            type: Specified
+                        dateRegularity:
+                          frequency: 1
+                          daysOfWeek:
+                          - Monday
+                          - Tuesday
+                          - Wednesday
+                          - Thursday
+                          - Friday
+                          type: Week
+                        businessDayAdjustment: Following
+                    calendarContexts:
+                    - name: London
+                      timeZone: Europe/London
+                      holidayCalendars:
+                      - scope: A1
+                        code: UkHolidays
+                    mapTaskFields:
+                      asAtDate:
+                        mapFrom: ScheduledTime
+                        dateTimeAdjustment:
+                          calendarContext: London
+                          dateAdjustment:
+                            deltaDays: -1
+                            businessDayAdjustment: Previous
+                          timeAdjustment:
+                            setTo:
+                              hours: 23
+                              minutes: 59
+                              type: Specified
+                    runAsUserId:
+                      setTo: ExampleUserId
+                    setTaskFields:
+                      clientId: client-1
+                    setCorrelationIds:
+                    - example-correlation-id
+                    initialTrigger: Start
+              Event launcher:
+                value:
+                  launcherId: OnPortfolioCreated
+                  displayName: An example Event launcher
+                  description: Starts a run of the workflow when a portfolio is created
+                  status: Active
+                  launcherDetails:
+                    launcherType: Event
+                    eventMatchingPattern:
+                      eventType: PortfolioCreated
+                      filter: body.portfolioScope eq 'TestScope'
+                    mapTaskFields:
+                      asAtDate:
+                        mapFrom: header.timestamp
+                    mapCorrelationIds:
+                    - mapFrom: body.portfolioCode
+                    runAsUserId:
+                      mapFrom: header.userId
+                    setTaskFields:
+                      clientId: client-1
+                    setCorrelationIds: []
+                    initialTrigger: Start
+            schema:
+              $ref: '#/components/schemas/CreateLauncherRequest'
+          text/json:
+            examples:
+              Schedule launcher:
+                value:
+                  launcherId: EveryWeekday
+                  displayName: An example Schedule launcher
+                  description: "Starts a run of the workflow at 09:00 on every weekday,\
+                    \ London time"
+                  status: Active
+                  launcherDetails:
+                    launcherType: Schedule
+                    schedule:
+                      calendarContext: London
+                      recurrencePattern:
+                        timeConstraints:
+                          startDate: 2025-01-01
+                          timesOfDay:
+                          - hours: 9
+                            minutes: 0
+                            type: Specified
+                        dateRegularity:
+                          frequency: 1
+                          daysOfWeek:
+                          - Monday
+                          - Tuesday
+                          - Wednesday
+                          - Thursday
+                          - Friday
+                          type: Week
+                        businessDayAdjustment: Following
+                    calendarContexts:
+                    - name: London
+                      timeZone: Europe/London
+                      holidayCalendars:
+                      - scope: A1
+                        code: UkHolidays
+                    mapTaskFields:
+                      asAtDate:
+                        mapFrom: ScheduledTime
+                        dateTimeAdjustment:
+                          calendarContext: London
+                          dateAdjustment:
+                            deltaDays: -1
+                            businessDayAdjustment: Previous
+                          timeAdjustment:
+                            setTo:
+                              hours: 23
+                              minutes: 59
+                              type: Specified
+                    runAsUserId:
+                      setTo: ExampleUserId
+                    setTaskFields:
+                      clientId: client-1
+                    setCorrelationIds:
+                    - example-correlation-id
+                    initialTrigger: Start
+              Event launcher:
+                value:
+                  launcherId: OnPortfolioCreated
+                  displayName: An example Event launcher
+                  description: Starts a run of the workflow when a portfolio is created
+                  status: Active
+                  launcherDetails:
+                    launcherType: Event
+                    eventMatchingPattern:
+                      eventType: PortfolioCreated
+                      filter: body.portfolioScope eq 'TestScope'
+                    mapTaskFields:
+                      asAtDate:
+                        mapFrom: header.timestamp
+                    mapCorrelationIds:
+                    - mapFrom: body.portfolioCode
+                    runAsUserId:
+                      mapFrom: header.userId
+                    setTaskFields:
+                      clientId: client-1
+                    setCorrelationIds: []
+                    initialTrigger: Start
+            schema:
+              $ref: '#/components/schemas/CreateLauncherRequest'
+          application/*+json:
+            examples:
+              Schedule launcher:
+                value:
+                  launcherId: EveryWeekday
+                  displayName: An example Schedule launcher
+                  description: "Starts a run of the workflow at 09:00 on every weekday,\
+                    \ London time"
+                  status: Active
+                  launcherDetails:
+                    launcherType: Schedule
+                    schedule:
+                      calendarContext: London
+                      recurrencePattern:
+                        timeConstraints:
+                          startDate: 2025-01-01
+                          timesOfDay:
+                          - hours: 9
+                            minutes: 0
+                            type: Specified
+                        dateRegularity:
+                          frequency: 1
+                          daysOfWeek:
+                          - Monday
+                          - Tuesday
+                          - Wednesday
+                          - Thursday
+                          - Friday
+                          type: Week
+                        businessDayAdjustment: Following
+                    calendarContexts:
+                    - name: London
+                      timeZone: Europe/London
+                      holidayCalendars:
+                      - scope: A1
+                        code: UkHolidays
+                    mapTaskFields:
+                      asAtDate:
+                        mapFrom: ScheduledTime
+                        dateTimeAdjustment:
+                          calendarContext: London
+                          dateAdjustment:
+                            deltaDays: -1
+                            businessDayAdjustment: Previous
+                          timeAdjustment:
+                            setTo:
+                              hours: 23
+                              minutes: 59
+                              type: Specified
+                    runAsUserId:
+                      setTo: ExampleUserId
+                    setTaskFields:
+                      clientId: client-1
+                    setCorrelationIds:
+                    - example-correlation-id
+                    initialTrigger: Start
+              Event launcher:
+                value:
+                  launcherId: OnPortfolioCreated
+                  displayName: An example Event launcher
+                  description: Starts a run of the workflow when a portfolio is created
+                  status: Active
+                  launcherDetails:
+                    launcherType: Event
+                    eventMatchingPattern:
+                      eventType: PortfolioCreated
+                      filter: body.portfolioScope eq 'TestScope'
+                    mapTaskFields:
+                      asAtDate:
+                        mapFrom: header.timestamp
+                    mapCorrelationIds:
+                    - mapFrom: body.portfolioCode
+                    runAsUserId:
+                      mapFrom: header.userId
+                    setTaskFields:
+                      clientId: client-1
+                    setCorrelationIds: []
+                    initialTrigger: Start
+            schema:
+              $ref: '#/components/schemas/CreateLauncherRequest'
+        description: The data to create a Launcher
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              example:
+                workflowId:
+                  scope: A1
+                  code: CustodyReconciliation
+                launcherId: EveryWeekday
+                displayName: An example Schedule launcher
+                description: "Starts a run of the workflow at 09:00 on every weekday,\
+                  \ London time"
+                status: Active
+                launcherDetails:
+                  launcherType: Schedule
+                  schedule:
+                    calendarContext: London
+                    recurrencePattern:
+                      timeConstraints:
+                        startDate: 2025-01-01
+                        timesOfDay:
+                        - hours: 9
+                          minutes: 0
+                          type: Specified
+                      dateRegularity:
+                        frequency: 1
+                        daysOfWeek:
+                        - Monday
+                        - Tuesday
+                        - Wednesday
+                        - Thursday
+                        - Friday
+                        type: Week
+                      businessDayAdjustment: Following
+                  calendarContexts:
+                  - name: London
+                    timeZone: Europe/London
+                    holidayCalendars:
+                    - scope: A1
+                      code: UkHolidays
+                  mapTaskFields:
+                    asAtDate:
+                      mapFrom: ScheduledTime
+                      dateTimeAdjustment:
+                        calendarContext: London
+                        dateAdjustment:
+                          deltaDays: -1
+                          businessDayAdjustment: Previous
+                        timeAdjustment:
+                          setTo:
+                            hours: 23
+                            minutes: 59
+                            type: Specified
+                  runAsUserId:
+                    setTo: ExampleUserId
+                  setTaskFields:
+                    clientId: client-1
+                  setCorrelationIds:
+                  - example-correlation-id
+                  initialTrigger: Start
+                summaries:
+                  fields: {}
+                version:
+                  asAtCreated: 2022-01-01T01:02:03.0000000+00:00
+                  userIdCreated: User-1
+                  requestIdCreated: RequestId-1
+                  asAtModified: 2022-01-01T01:02:03.0000000+00:00
+                  userIdModified: User-1
+                  requestIdModified: RequestId-1
+                  asAtVersionNumber: 1
+              schema:
+                $ref: '#/components/schemas/LauncherResponse'
+          description: Created
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        "404":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Workflow not found.
+        "409":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Launcher already exists.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] CreateLauncher: Create a new Launcher on a Workflow"
+      tags:
+      - Launchers
+      x-fbn-apistatus: Experimental
+      x-content-type: application/json-patch+json
+      x-accepts: application/json
+  /api/workflows/{scope}/{code}/launchers/{launcherId}:
+    delete:
+      description: If the Launcher does not exist a failure will be returned
+      operationId: DeleteLauncher
+      parameters:
+      - description: The scope that identifies the Workflow that owns the Launcher
+        explode: false
+        in: path
+        name: scope
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      - description: The code that identifies the Workflow that owns the Launcher
+        explode: false
+        in: path
+        name: code
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      - description: The identifier of the Launcher inside its Workflow
+        explode: false
+        in: path
+        name: launcherId
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletedEntityResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        "404":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Launcher not found.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] DeleteLauncher: Delete a Launcher of a Workflow"
+      tags:
+      - Launchers
+      x-fbn-apistatus: Experimental
+      x-accepts: application/json
+    put:
+      description: The type of a Launcher cannot be changed
+      operationId: UpdateLauncher
+      parameters:
+      - description: The scope that identifies the Workflow that owns the Launcher
+        explode: false
+        in: path
+        name: scope
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      - description: The code that identifies the Workflow that owns the Launcher
+        explode: false
+        in: path
+        name: code
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      - description: The identifier of the Launcher inside its Workflow
+        explode: false
+        in: path
+        name: launcherId
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json-patch+json:
+            examples:
+              Schedule launcher:
+                value:
+                  displayName: An example Schedule launcher
+                  description: "Starts a run of the workflow at 09:00 on every weekday,\
+                    \ London time"
+                  status: Active
+                  launcherDetails:
+                    launcherType: Schedule
+                    schedule:
+                      calendarContext: London
+                      recurrencePattern:
+                        timeConstraints:
+                          startDate: 2025-01-01
+                          timesOfDay:
+                          - hours: 9
+                            minutes: 0
+                            type: Specified
+                        dateRegularity:
+                          frequency: 1
+                          daysOfWeek:
+                          - Monday
+                          - Tuesday
+                          - Wednesday
+                          - Thursday
+                          - Friday
+                          type: Week
+                        businessDayAdjustment: Following
+                    calendarContexts:
+                    - name: London
+                      timeZone: Europe/London
+                      holidayCalendars:
+                      - scope: A1
+                        code: UkHolidays
+                    mapTaskFields:
+                      asAtDate:
+                        mapFrom: ScheduledTime
+                        dateTimeAdjustment:
+                          calendarContext: London
+                          dateAdjustment:
+                            deltaDays: -1
+                            businessDayAdjustment: Previous
+                          timeAdjustment:
+                            setTo:
+                              hours: 23
+                              minutes: 59
+                              type: Specified
+                    runAsUserId:
+                      setTo: ExampleUserId
+                    setTaskFields:
+                      clientId: client-1
+                    setCorrelationIds:
+                    - example-correlation-id
+                    initialTrigger: Start
+              Event launcher:
+                value:
+                  displayName: An example Event launcher
+                  description: Starts a run of the workflow when a portfolio is created
+                  status: Active
+                  launcherDetails:
+                    launcherType: Event
+                    eventMatchingPattern:
+                      eventType: PortfolioCreated
+                      filter: body.portfolioScope eq 'TestScope'
+                    mapTaskFields:
+                      asAtDate:
+                        mapFrom: header.timestamp
+                    mapCorrelationIds:
+                    - mapFrom: body.portfolioCode
+                    runAsUserId:
+                      mapFrom: header.userId
+                    setTaskFields:
+                      clientId: client-1
+                    setCorrelationIds: []
+                    initialTrigger: Start
+            schema:
+              $ref: '#/components/schemas/UpdateLauncherRequest'
+          application/json:
+            examples:
+              Schedule launcher:
+                value:
+                  displayName: An example Schedule launcher
+                  description: "Starts a run of the workflow at 09:00 on every weekday,\
+                    \ London time"
+                  status: Active
+                  launcherDetails:
+                    launcherType: Schedule
+                    schedule:
+                      calendarContext: London
+                      recurrencePattern:
+                        timeConstraints:
+                          startDate: 2025-01-01
+                          timesOfDay:
+                          - hours: 9
+                            minutes: 0
+                            type: Specified
+                        dateRegularity:
+                          frequency: 1
+                          daysOfWeek:
+                          - Monday
+                          - Tuesday
+                          - Wednesday
+                          - Thursday
+                          - Friday
+                          type: Week
+                        businessDayAdjustment: Following
+                    calendarContexts:
+                    - name: London
+                      timeZone: Europe/London
+                      holidayCalendars:
+                      - scope: A1
+                        code: UkHolidays
+                    mapTaskFields:
+                      asAtDate:
+                        mapFrom: ScheduledTime
+                        dateTimeAdjustment:
+                          calendarContext: London
+                          dateAdjustment:
+                            deltaDays: -1
+                            businessDayAdjustment: Previous
+                          timeAdjustment:
+                            setTo:
+                              hours: 23
+                              minutes: 59
+                              type: Specified
+                    runAsUserId:
+                      setTo: ExampleUserId
+                    setTaskFields:
+                      clientId: client-1
+                    setCorrelationIds:
+                    - example-correlation-id
+                    initialTrigger: Start
+              Event launcher:
+                value:
+                  displayName: An example Event launcher
+                  description: Starts a run of the workflow when a portfolio is created
+                  status: Active
+                  launcherDetails:
+                    launcherType: Event
+                    eventMatchingPattern:
+                      eventType: PortfolioCreated
+                      filter: body.portfolioScope eq 'TestScope'
+                    mapTaskFields:
+                      asAtDate:
+                        mapFrom: header.timestamp
+                    mapCorrelationIds:
+                    - mapFrom: body.portfolioCode
+                    runAsUserId:
+                      mapFrom: header.userId
+                    setTaskFields:
+                      clientId: client-1
+                    setCorrelationIds: []
+                    initialTrigger: Start
+            schema:
+              $ref: '#/components/schemas/UpdateLauncherRequest'
+          text/json:
+            examples:
+              Schedule launcher:
+                value:
+                  displayName: An example Schedule launcher
+                  description: "Starts a run of the workflow at 09:00 on every weekday,\
+                    \ London time"
+                  status: Active
+                  launcherDetails:
+                    launcherType: Schedule
+                    schedule:
+                      calendarContext: London
+                      recurrencePattern:
+                        timeConstraints:
+                          startDate: 2025-01-01
+                          timesOfDay:
+                          - hours: 9
+                            minutes: 0
+                            type: Specified
+                        dateRegularity:
+                          frequency: 1
+                          daysOfWeek:
+                          - Monday
+                          - Tuesday
+                          - Wednesday
+                          - Thursday
+                          - Friday
+                          type: Week
+                        businessDayAdjustment: Following
+                    calendarContexts:
+                    - name: London
+                      timeZone: Europe/London
+                      holidayCalendars:
+                      - scope: A1
+                        code: UkHolidays
+                    mapTaskFields:
+                      asAtDate:
+                        mapFrom: ScheduledTime
+                        dateTimeAdjustment:
+                          calendarContext: London
+                          dateAdjustment:
+                            deltaDays: -1
+                            businessDayAdjustment: Previous
+                          timeAdjustment:
+                            setTo:
+                              hours: 23
+                              minutes: 59
+                              type: Specified
+                    runAsUserId:
+                      setTo: ExampleUserId
+                    setTaskFields:
+                      clientId: client-1
+                    setCorrelationIds:
+                    - example-correlation-id
+                    initialTrigger: Start
+              Event launcher:
+                value:
+                  displayName: An example Event launcher
+                  description: Starts a run of the workflow when a portfolio is created
+                  status: Active
+                  launcherDetails:
+                    launcherType: Event
+                    eventMatchingPattern:
+                      eventType: PortfolioCreated
+                      filter: body.portfolioScope eq 'TestScope'
+                    mapTaskFields:
+                      asAtDate:
+                        mapFrom: header.timestamp
+                    mapCorrelationIds:
+                    - mapFrom: body.portfolioCode
+                    runAsUserId:
+                      mapFrom: header.userId
+                    setTaskFields:
+                      clientId: client-1
+                    setCorrelationIds: []
+                    initialTrigger: Start
+            schema:
+              $ref: '#/components/schemas/UpdateLauncherRequest'
+          application/*+json:
+            examples:
+              Schedule launcher:
+                value:
+                  displayName: An example Schedule launcher
+                  description: "Starts a run of the workflow at 09:00 on every weekday,\
+                    \ London time"
+                  status: Active
+                  launcherDetails:
+                    launcherType: Schedule
+                    schedule:
+                      calendarContext: London
+                      recurrencePattern:
+                        timeConstraints:
+                          startDate: 2025-01-01
+                          timesOfDay:
+                          - hours: 9
+                            minutes: 0
+                            type: Specified
+                        dateRegularity:
+                          frequency: 1
+                          daysOfWeek:
+                          - Monday
+                          - Tuesday
+                          - Wednesday
+                          - Thursday
+                          - Friday
+                          type: Week
+                        businessDayAdjustment: Following
+                    calendarContexts:
+                    - name: London
+                      timeZone: Europe/London
+                      holidayCalendars:
+                      - scope: A1
+                        code: UkHolidays
+                    mapTaskFields:
+                      asAtDate:
+                        mapFrom: ScheduledTime
+                        dateTimeAdjustment:
+                          calendarContext: London
+                          dateAdjustment:
+                            deltaDays: -1
+                            businessDayAdjustment: Previous
+                          timeAdjustment:
+                            setTo:
+                              hours: 23
+                              minutes: 59
+                              type: Specified
+                    runAsUserId:
+                      setTo: ExampleUserId
+                    setTaskFields:
+                      clientId: client-1
+                    setCorrelationIds:
+                    - example-correlation-id
+                    initialTrigger: Start
+              Event launcher:
+                value:
+                  displayName: An example Event launcher
+                  description: Starts a run of the workflow when a portfolio is created
+                  status: Active
+                  launcherDetails:
+                    launcherType: Event
+                    eventMatchingPattern:
+                      eventType: PortfolioCreated
+                      filter: body.portfolioScope eq 'TestScope'
+                    mapTaskFields:
+                      asAtDate:
+                        mapFrom: header.timestamp
+                    mapCorrelationIds:
+                    - mapFrom: body.portfolioCode
+                    runAsUserId:
+                      mapFrom: header.userId
+                    setTaskFields:
+                      clientId: client-1
+                    setCorrelationIds: []
+                    initialTrigger: Start
+            schema:
+              $ref: '#/components/schemas/UpdateLauncherRequest'
+        description: The data to update a Launcher
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                workflowId:
+                  scope: A1
+                  code: CustodyReconciliation
+                launcherId: EveryWeekday
+                displayName: An example Schedule launcher
+                description: "Starts a run of the workflow at 09:00 on every weekday,\
+                  \ London time"
+                status: Active
+                launcherDetails:
+                  launcherType: Schedule
+                  schedule:
+                    calendarContext: London
+                    recurrencePattern:
+                      timeConstraints:
+                        startDate: 2025-01-01
+                        timesOfDay:
+                        - hours: 9
+                          minutes: 0
+                          type: Specified
+                      dateRegularity:
+                        frequency: 1
+                        daysOfWeek:
+                        - Monday
+                        - Tuesday
+                        - Wednesday
+                        - Thursday
+                        - Friday
+                        type: Week
+                      businessDayAdjustment: Following
+                  calendarContexts:
+                  - name: London
+                    timeZone: Europe/London
+                    holidayCalendars:
+                    - scope: A1
+                      code: UkHolidays
+                  mapTaskFields:
+                    asAtDate:
+                      mapFrom: ScheduledTime
+                      dateTimeAdjustment:
+                        calendarContext: London
+                        dateAdjustment:
+                          deltaDays: -1
+                          businessDayAdjustment: Previous
+                        timeAdjustment:
+                          setTo:
+                            hours: 23
+                            minutes: 59
+                            type: Specified
+                  runAsUserId:
+                    setTo: ExampleUserId
+                  setTaskFields:
+                    clientId: client-1
+                  setCorrelationIds:
+                  - example-correlation-id
+                  initialTrigger: Start
+                summaries:
+                  fields: {}
+                version:
+                  asAtCreated: 2022-01-01T01:02:03.0000000+00:00
+                  userIdCreated: User-1
+                  requestIdCreated: RequestId-1
+                  asAtModified: 2022-01-01T01:02:03.0000000+00:00
+                  userIdModified: User-1
+                  requestIdModified: RequestId-1
+                  asAtVersionNumber: 1
+              schema:
+                $ref: '#/components/schemas/LauncherResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        "404":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Launcher not found.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] UpdateLauncher: Update an existing Launcher of a Workflow"
+      tags:
+      - Launchers
+      x-fbn-apistatus: Experimental
+      x-content-type: application/json-patch+json
+      x-accepts: application/json
   /api/workflows/{scope}/{code}/properties:
     post:
       operationId: UpsertWorkflowProperties
@@ -7055,6 +8034,35 @@ components:
           nullable: true
           type: array
       type: object
+    CalendarContext:
+      additionalProperties: false
+      description: A named time zone and set of holiday calendars.
+      properties:
+        name:
+          description: The name the schedule and the date and time adjustments use
+            to name this context
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        timeZone:
+          description: "The time zone to use. A TZ identifier, for example \"Europe/London\""
+          maxLength: 100
+          minLength: 1
+          type: string
+        holidayCalendars:
+          description: The holiday calendars that decide which dates are business
+            days in this context
+          items:
+            $ref: '#/components/schemas/CalendarReference'
+          maxItems: 5
+          minItems: 0
+          nullable: true
+          type: array
+      required:
+      - name
+      - timeZone
+      type: object
     CalendarReference:
       additionalProperties: false
       description: Reference to a Calendar in LUSID
@@ -7149,6 +8157,21 @@ components:
           $ref: '#/components/schemas/VersionedTaskDefinitionId'
         child:
           $ref: '#/components/schemas/VersionedTaskDefinitionId'
+      type: object
+    CorrelationIdMapping:
+      additionalProperties: false
+      description: "How an Event Launcher fills one correlation ID of the root task\
+        \ from the event that arrived.\n \nA mapped correlation ID joins the fixed\
+        \ correlation IDs of the Launcher"
+      properties:
+        mapFrom:
+          description: "The path into the event the correlation ID is taken from,\
+            \ for example body.fileId"
+          maxLength: 1024
+          minLength: 1
+          type: string
+      required:
+      - mapFrom
       type: object
     CreateChildTaskConfiguration:
       additionalProperties: false
@@ -7328,6 +8351,57 @@ components:
       - status
       - taskActivity
       - taskDefinitionId
+      type: object
+    CreateLauncherRequest:
+      additionalProperties: false
+      description: Contains information for creating a Launcher on a Workflow.
+      example:
+        launcherId: launcherId
+        displayName: displayName
+        description: description
+        launcherDetails:
+          setTaskFields:
+            key: ""
+          setCorrelationIds:
+          - setCorrelationIds
+          - setCorrelationIds
+          runAsUserId:
+            setTo: setTo
+            mapFrom: mapFrom
+          launcherType: launcherType
+          initialTrigger: initialTrigger
+        status: status
+      properties:
+        launcherId:
+          description: The identifier of the Launcher inside its Workflow
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        displayName:
+          description: Human-readable name
+          maxLength: 150
+          minLength: 1
+          pattern: "^[\\s\\S]*$"
+          type: string
+        description:
+          description: Human-readable description
+          maxLength: 2000
+          minLength: 0
+          nullable: true
+          pattern: "^[\\s\\S]*$"
+          type: string
+        status:
+          description: "The current status of the Launcher. One of - Active, Inactive"
+          minLength: 1
+          type: string
+        launcherDetails:
+          $ref: '#/components/schemas/LauncherDetails'
+      required:
+      - displayName
+      - launcherDetails
+      - launcherId
+      - status
       type: object
     CreateNewTaskActivity:
       additionalProperties: false
@@ -7767,6 +8841,27 @@ components:
       required:
       - type
       type: object
+    DateTimeAdjustment:
+      additionalProperties: false
+      description: "A change applied to the date and the time of a source value, in\
+        \ a named calendar context.\n \nAt least one of Finbourne.Workflow.WebApi.Common.Dto.Json.Launchers.DateTimeAdjustment.DateAdjustment\
+        \ or Finbourne.Workflow.WebApi.Common.Dto.Json.Launchers.DateTimeAdjustment.TimeAdjustment\
+        \ must be given"
+      properties:
+        calendarContext:
+          description: |-
+            The name of the calendar context this change happens in, which must be one the Launcher declares. When it is
+            left out a Schedule Launcher uses the context of its schedule
+          maxLength: 64
+          minLength: 1
+          nullable: true
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        dateAdjustment:
+          $ref: '#/components/schemas/DateAdjustment'
+        timeAdjustment:
+          $ref: '#/components/schemas/TimeAdjustment'
+      type: object
     DayOfYear:
       additionalProperties: false
       description: A day in the year
@@ -8030,6 +9125,107 @@ components:
           nullable: true
           type: string
       type: object
+    EventLauncherDetails:
+      additionalProperties: false
+      description: |-
+        A Launcher that starts a run of its Workflow when a matching platform event arrives, and can fill fields and
+        correlation IDs of the root task from that event
+      properties:
+        launcherType:
+          enum:
+          - Event
+          minLength: 1
+          type: string
+        eventMatchingPattern:
+          $ref: '#/components/schemas/LauncherEventMatchingPattern'
+        mapTaskFields:
+          additionalProperties:
+            $ref: '#/components/schemas/EventTaskFieldMapping'
+          description: "Fields of the root task filled from the event, keyed by the\
+            \ field name on the root task definition"
+          nullable: true
+          type: object
+        mapCorrelationIds:
+          description: Correlation IDs of the root task filled from the event
+          items:
+            $ref: '#/components/schemas/CorrelationIdMapping'
+          nullable: true
+          type: array
+        runAsUserId:
+          $ref: '#/components/schemas/LauncherMapping'
+        setTaskFields:
+          additionalProperties:
+            nullable: true
+          description: "Fields of the root task set to a fixed value, keyed by the\
+            \ field name on the root task definition"
+          nullable: true
+          type: object
+        setCorrelationIds:
+          description: Correlation IDs put on the root task as given
+          items:
+            type: string
+          nullable: true
+          type: array
+        initialTrigger:
+          description: |-
+            The trigger given to the root task once it is made and all of its fields are filled. When it is left out the
+            root task is left in its initial state
+          maxLength: 1024
+          minLength: 0
+          nullable: true
+          type: string
+      required:
+      - eventMatchingPattern
+      - launcherType
+      - runAsUserId
+      type: object
+    EventLauncherDetailsResponse:
+      additionalProperties: false
+      description: "A read only Event Launcher, which starts a run of its Workflow\
+        \ when a matching platform event arrives"
+      properties:
+        launcherType:
+          enum:
+          - Event
+          nullable: true
+          type: string
+        eventMatchingPattern:
+          $ref: '#/components/schemas/LauncherEventMatchingPattern'
+        mapTaskFields:
+          additionalProperties:
+            $ref: '#/components/schemas/EventTaskFieldMapping'
+          description: "Fields of the root task filled from the event, keyed by the\
+            \ field name on the root task definition"
+          nullable: true
+          type: object
+        mapCorrelationIds:
+          description: Correlation IDs of the root task filled from the event
+          items:
+            $ref: '#/components/schemas/CorrelationIdMapping'
+          nullable: true
+          type: array
+        runAsUserId:
+          $ref: '#/components/schemas/LauncherMapping'
+        setTaskFields:
+          additionalProperties:
+            nullable: true
+          description: "Fields of the root task set to a fixed value, keyed by the\
+            \ field name on the root task definition"
+          nullable: true
+          type: object
+        setCorrelationIds:
+          description: Correlation IDs put on the root task as given
+          items:
+            type: string
+          nullable: true
+          type: array
+        initialTrigger:
+          description: |-
+            The trigger given to the root task once it is made and all of its fields are filled, or null when the root
+            task is left in its initial state
+          nullable: true
+          type: string
+      type: object
     EventMatchingPattern:
       additionalProperties: false
       description: The matching event pattern object
@@ -8057,6 +9253,22 @@ components:
           type: string
       required:
       - eventType
+      type: object
+    EventTaskFieldMapping:
+      additionalProperties: false
+      description: How an Event Launcher fills one field of the root task from the
+        event that arrived
+      properties:
+        mapFrom:
+          description: "The path into the event the value is taken from, for example\
+            \ header.timestamp"
+          maxLength: 1024
+          minLength: 1
+          type: string
+        dateTimeAdjustment:
+          $ref: '#/components/schemas/DateTimeAdjustment'
+      required:
+      - mapFrom
       type: object
     ExistingTasksNotRecurringConfiguration:
       additionalProperties: false
@@ -8408,6 +9620,266 @@ components:
           type: array
       required:
       - values
+      type: object
+    LauncherDetails:
+      additionalProperties: false
+      description: "What makes a Launcher start a run of its Workflow, and what it\
+        \ puts on the root task when it does.\n \nThe members here belong to every\
+        \ Launcher. Finbourne.Workflow.WebApi.Common.Dto.Json.Launchers.Requests.ScheduleLauncherDetails\
+        \ and\nFinbourne.Workflow.WebApi.Common.Dto.Json.Launchers.Requests.EventLauncherDetails\
+        \ add what only a schedule or only an event needs"
+      example:
+        setTaskFields:
+          key: ""
+        setCorrelationIds:
+        - setCorrelationIds
+        - setCorrelationIds
+        runAsUserId:
+          setTo: setTo
+          mapFrom: mapFrom
+        launcherType: launcherType
+        initialTrigger: initialTrigger
+      oneOf:
+      - $ref: '#/components/schemas/EventLauncherDetails'
+      - $ref: '#/components/schemas/ScheduleLauncherDetails'
+      properties:
+        launcherType:
+          description: "The type of Launcher. One of - Schedule, Event"
+          minLength: 1
+          type: string
+        runAsUserId:
+          $ref: '#/components/schemas/LauncherMapping'
+        setTaskFields:
+          additionalProperties:
+            nullable: true
+          description: "Fields of the root task set to a fixed value, keyed by the\
+            \ field name on the root task definition"
+          nullable: true
+          type: object
+        setCorrelationIds:
+          description: Correlation IDs put on the root task as given
+          items:
+            type: string
+          nullable: true
+          type: array
+        initialTrigger:
+          description: |-
+            The trigger given to the root task once it is made and all of its fields are filled. When it is left out the
+            root task is left in its initial state
+          maxLength: 1024
+          minLength: 0
+          nullable: true
+          type: string
+      required:
+      - launcherType
+      - runAsUserId
+      type: object
+    LauncherDetailsResponse:
+      additionalProperties: false
+      description: "What makes a Launcher start a run of its Workflow, and what it\
+        \ puts on the root task when it does, in a read\nonly form.\n \nThe members\
+        \ here belong to every Launcher. Finbourne.Workflow.WebApi.Common.Dto.Json.Launchers.ScheduleLauncherDetailsResponse\
+        \ and\nFinbourne.Workflow.WebApi.Common.Dto.Json.Launchers.EventLauncherDetailsResponse\
+        \ add what only a schedule or only an event needs"
+      example:
+        setTaskFields:
+          key: ""
+        setCorrelationIds:
+        - setCorrelationIds
+        - setCorrelationIds
+        runAsUserId:
+          setTo: setTo
+          mapFrom: mapFrom
+        launcherType: launcherType
+        initialTrigger: initialTrigger
+      oneOf:
+      - $ref: '#/components/schemas/EventLauncherDetailsResponse'
+      - $ref: '#/components/schemas/ScheduleLauncherDetailsResponse'
+      properties:
+        launcherType:
+          description: "The type of Launcher. One of - Schedule, Event"
+          nullable: true
+          type: string
+        runAsUserId:
+          $ref: '#/components/schemas/LauncherMapping'
+        setTaskFields:
+          additionalProperties:
+            nullable: true
+          description: "Fields of the root task set to a fixed value, keyed by the\
+            \ field name on the root task definition"
+          nullable: true
+          type: object
+        setCorrelationIds:
+          description: Correlation IDs put on the root task as given
+          items:
+            type: string
+          nullable: true
+          type: array
+        initialTrigger:
+          description: |-
+            The trigger given to the root task once it is made and all of its fields are filled, or null when the root
+            task is left in its initial state
+          nullable: true
+          type: string
+      type: object
+    LauncherEventMatchingPattern:
+      additionalProperties: false
+      description: Which events make an Event Launcher start a run of its Workflow
+      properties:
+        eventType:
+          description: |-
+            The type of event to listen for. The list of available event types can be discovered by calling the
+            ListEventTypes API endpoint in the Notifications service.
+            Note that event types published by the Workflow service itself are not supported as Launcher triggers, and
+            giving one will be rejected.
+          maxLength: 512
+          minLength: 0
+          pattern: "^[a-zA-Z]*$"
+          type: string
+        filter:
+          description: |-
+            A filter on the event. See https://support.lusid.com/filtering-results-from-lusid for more information.
+            An empty filter matches every event of the type
+          nullable: true
+          type: string
+      required:
+      - eventType
+      type: object
+    LauncherMapping:
+      additionalProperties: false
+      description: "A value a Launcher either gives as it is or takes from somewhere.\n\
+        \ \nExactly one of Finbourne.Workflow.WebApi.Common.Dto.Json.Launchers.LauncherMapping.SetTo\
+        \ or Finbourne.Workflow.WebApi.Common.Dto.Json.Launchers.LauncherMapping.MapFrom\
+        \ must be given. Only an Event Launcher has an event\nto take a value from,\
+        \ so a Schedule Launcher can only use Finbourne.Workflow.WebApi.Common.Dto.Json.Launchers.LauncherMapping.SetTo"
+      example:
+        setTo: setTo
+        mapFrom: mapFrom
+      properties:
+        setTo:
+          description: "The value to use, given as it is"
+          maxLength: 1024
+          minLength: 0
+          nullable: true
+          type: string
+        mapFrom:
+          description: "The path the value is taken from, for example header.userId"
+          maxLength: 1024
+          minLength: 0
+          nullable: true
+          type: string
+      type: object
+    LauncherResponse:
+      additionalProperties: false
+      description: |-
+        A Launcher, which starts a run of one Workflow either at the times a schedule gives or when a matching event
+        arrives
+      example:
+        launcherId: launcherId
+        displayName: displayName
+        description: description
+        launcherDetails:
+          setTaskFields:
+            key: ""
+          setCorrelationIds:
+          - setCorrelationIds
+          - setCorrelationIds
+          runAsUserId:
+            setTo: setTo
+            mapFrom: mapFrom
+          launcherType: launcherType
+          initialTrigger: initialTrigger
+        version:
+          asAtModified: 2000-01-23T04:56:07.000+00:00
+          userIdModified: userIdModified
+          asAtVersionNumber: 0
+          asAtCreated: 2000-01-23T04:56:07.000+00:00
+          requestIdCreated: requestIdCreated
+          userIdCreated: userIdCreated
+          requestIdModified: requestIdModified
+        workflowId:
+          code: code
+          scope: scope
+        status: status
+        summaries:
+          schedule: schedule
+          fields:
+            key: fields
+      properties:
+        workflowId:
+          $ref: '#/components/schemas/ResourceId'
+        launcherId:
+          description: The identifier of this Launcher inside its Workflow
+          minLength: 1
+          type: string
+        displayName:
+          description: Human-readable name
+          minLength: 1
+          type: string
+        description:
+          description: Human-readable description
+          nullable: true
+          type: string
+        status:
+          description: "The current status of the Launcher. One of - Active, Inactive"
+          minLength: 1
+          type: string
+        launcherDetails:
+          $ref: '#/components/schemas/LauncherDetailsResponse'
+        summaries:
+          $ref: '#/components/schemas/LauncherSummaries'
+        version:
+          $ref: '#/components/schemas/VersionInfo'
+      required:
+      - displayName
+      - launcherDetails
+      - launcherId
+      - status
+      - workflowId
+      type: object
+    LauncherSchedule:
+      additionalProperties: false
+      description: When a Schedule Launcher starts a run of its Workflow
+      properties:
+        calendarContext:
+          description: "The name of the calendar context the schedule is read in,\
+            \ which must be one the Launcher declares"
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        recurrencePattern:
+          $ref: '#/components/schemas/RecurrencePattern'
+      required:
+      - calendarContext
+      - recurrencePattern
+      type: object
+    LauncherSummaries:
+      additionalProperties: false
+      description: "Sentences that say what a Launcher does, meant to be shown to\
+        \ a person.\n \nThese are rendered on read from the stored Launcher details.\
+        \ They are never stored and never accepted on a\nwrite, so the same Launcher\
+        \ always reads back the same summaries"
+      example:
+        schedule: schedule
+        fields:
+          key: fields
+      properties:
+        schedule:
+          description: "A sentence that says when the Launcher starts a run, for example\
+            \ \"At 09:00 every weekday, London time\".\n \nNull for an Event Launcher,\
+            \ which has no schedule"
+          nullable: true
+          type: string
+        fields:
+          additionalProperties:
+            nullable: true
+            type: string
+          description: |-
+            A sentence for each field of the root task the Launcher fills, keyed by the field name on the root task
+            definition. Empty when the Launcher fills no fields
+          nullable: true
+          type: object
       type: object
     LibraryResponse:
       additionalProperties: false
@@ -11222,6 +12694,115 @@ components:
       - dateAdjustment
       - timeAdjustment
       type: object
+    ScheduleLauncherDetails:
+      additionalProperties: false
+      description: |-
+        A Launcher that starts a run of its Workflow at the times a recurrence pattern gives, and can fill date and time
+        fields of the root task from the instant it fired
+      properties:
+        launcherType:
+          enum:
+          - Schedule
+          minLength: 1
+          type: string
+        schedule:
+          $ref: '#/components/schemas/LauncherSchedule'
+        calendarContexts:
+          description: "The named time zones and holiday calendars this Launcher works\
+            \ in.\n \nOnly a Schedule Launcher works in a calendar context"
+          items:
+            $ref: '#/components/schemas/CalendarContext'
+          maxItems: 10
+          minItems: 0
+          nullable: true
+          type: array
+        mapTaskFields:
+          additionalProperties:
+            $ref: '#/components/schemas/ScheduleTaskFieldMapping'
+          description: |-
+            Fields of the root task filled from the instant the schedule fired, keyed by the field name on the root task
+            definition
+          maxLength: 10
+          minLength: 0
+          nullable: true
+          type: object
+        runAsUserId:
+          $ref: '#/components/schemas/LauncherMapping'
+        setTaskFields:
+          additionalProperties:
+            nullable: true
+          description: "Fields of the root task set to a fixed value, keyed by the\
+            \ field name on the root task definition"
+          nullable: true
+          type: object
+        setCorrelationIds:
+          description: Correlation IDs put on the root task as given
+          items:
+            type: string
+          nullable: true
+          type: array
+        initialTrigger:
+          description: |-
+            The trigger given to the root task once it is made and all of its fields are filled. When it is left out the
+            root task is left in its initial state
+          maxLength: 1024
+          minLength: 0
+          nullable: true
+          type: string
+      required:
+      - launcherType
+      - runAsUserId
+      - schedule
+      type: object
+    ScheduleLauncherDetailsResponse:
+      additionalProperties: false
+      description: "A Schedule Launcher, which starts a run of its Workflow at the\
+        \ times a recurrence pattern gives"
+      properties:
+        launcherType:
+          enum:
+          - Schedule
+          nullable: true
+          type: string
+        schedule:
+          $ref: '#/components/schemas/LauncherSchedule'
+        calendarContexts:
+          description: "The named time zones and holiday calendars this Launcher works\
+            \ in.\n \nOnly a Schedule Launcher works in a calendar context"
+          items:
+            $ref: '#/components/schemas/CalendarContext'
+          nullable: true
+          type: array
+        mapTaskFields:
+          additionalProperties:
+            $ref: '#/components/schemas/ScheduleTaskFieldMapping'
+          description: |-
+            Fields of the root task filled from the instant the schedule fired, keyed by the field name on the root task
+            definition
+          nullable: true
+          type: object
+        runAsUserId:
+          $ref: '#/components/schemas/LauncherMapping'
+        setTaskFields:
+          additionalProperties:
+            nullable: true
+          description: "Fields of the root task set to a fixed value, keyed by the\
+            \ field name on the root task definition"
+          nullable: true
+          type: object
+        setCorrelationIds:
+          description: Correlation IDs put on the root task as given
+          items:
+            type: string
+          nullable: true
+          type: array
+        initialTrigger:
+          description: |-
+            The trigger given to the root task once it is made and all of its fields are filled, or null when the root
+            task is left in its initial state
+          nullable: true
+          type: string
+      type: object
     ScheduleMatchingPattern:
       additionalProperties: false
       description: The Schedule Matching Pattern to trigger on
@@ -11322,6 +12903,20 @@ components:
           type: string
         jobId:
           $ref: '#/components/schemas/ResourceId'
+      type: object
+    ScheduleTaskFieldMapping:
+      additionalProperties: false
+      description: How a Schedule Launcher fills one field of the root task from the
+        instant the schedule fired
+      properties:
+        mapFrom:
+          description: The value the field is taken from. One of - ScheduledTime
+          minLength: 1
+          type: string
+        dateTimeAdjustment:
+          $ref: '#/components/schemas/DateTimeAdjustment'
+      required:
+      - mapFrom
       type: object
     Sleep:
       additionalProperties: false
@@ -12551,6 +14146,49 @@ components:
       - status
       - taskActivity
       - taskDefinitionId
+      type: object
+    UpdateLauncherRequest:
+      additionalProperties: false
+      description: Contains information for updating a Launcher on a Workflow.
+      example:
+        displayName: displayName
+        description: description
+        launcherDetails:
+          setTaskFields:
+            key: ""
+          setCorrelationIds:
+          - setCorrelationIds
+          - setCorrelationIds
+          runAsUserId:
+            setTo: setTo
+            mapFrom: mapFrom
+          launcherType: launcherType
+          initialTrigger: initialTrigger
+        status: status
+      properties:
+        displayName:
+          description: Human-readable name
+          maxLength: 150
+          minLength: 1
+          pattern: "^[\\s\\S]*$"
+          type: string
+        description:
+          description: Human-readable description
+          maxLength: 2000
+          minLength: 0
+          nullable: true
+          pattern: "^[\\s\\S]*$"
+          type: string
+        status:
+          description: "The current status of the Launcher. One of - Active, Inactive"
+          minLength: 1
+          type: string
+        launcherDetails:
+          $ref: '#/components/schemas/LauncherDetails'
+      required:
+      - displayName
+      - launcherDetails
+      - status
       type: object
     UpdateMatchingTasksActivity:
       additionalProperties: false
@@ -14182,6 +15820,7 @@ x-tagGroups:
   - Action Logs
   - Application Metadata
   - Event Handlers
+  - Launchers
   - Task Definitions
   - Tasks
   - Workers
