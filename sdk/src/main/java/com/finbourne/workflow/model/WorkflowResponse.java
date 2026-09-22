@@ -80,6 +80,10 @@ public class WorkflowResponse {
   @SerializedName(SERIALIZED_NAME_WORKFLOW_STRUCTURE)
   private WorkflowStructure workflowStructure;
 
+  public static final String SERIALIZED_NAME_RUN_COUNT = "runCount";
+  @SerializedName(SERIALIZED_NAME_RUN_COUNT)
+  private Integer runCount;
+
   public static final String SERIALIZED_NAME_PROPERTIES = "properties";
   @SerializedName(SERIALIZED_NAME_PROPERTIES)
   private Map<String, PerpetualProperty> properties;
@@ -213,6 +217,27 @@ public class WorkflowResponse {
   }
 
 
+  public WorkflowResponse runCount(Integer runCount) {
+    
+    this.runCount = runCount;
+    return this;
+  }
+
+   /**
+   * The number of times this Workflow has been run. Starts at 0 and increments by 1 each time a new run is instantiated.
+   * @return runCount
+  **/
+  @jakarta.annotation.Nonnull
+  public Integer getRunCount() {
+    return runCount;
+  }
+
+
+  public void setRunCount(Integer runCount) {
+    this.runCount = runCount;
+  }
+
+
   public WorkflowResponse properties(Map<String, PerpetualProperty> properties) {
     
     this.properties = properties;
@@ -258,6 +283,7 @@ public class WorkflowResponse {
         Objects.equals(this.description, workflowResponse.description) &&
         Objects.equals(this.rootTaskDefinitionId, workflowResponse.rootTaskDefinitionId) &&
         Objects.equals(this.workflowStructure, workflowResponse.workflowStructure) &&
+        Objects.equals(this.runCount, workflowResponse.runCount) &&
         Objects.equals(this.properties, workflowResponse.properties);
   }
 
@@ -267,7 +293,7 @@ public class WorkflowResponse {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, version, displayName, description, rootTaskDefinitionId, workflowStructure, properties);
+    return Objects.hash(id, version, displayName, description, rootTaskDefinitionId, workflowStructure, runCount, properties);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -287,6 +313,7 @@ public class WorkflowResponse {
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    rootTaskDefinitionId: ").append(toIndentedString(rootTaskDefinitionId)).append("\n");
     sb.append("    workflowStructure: ").append(toIndentedString(workflowStructure)).append("\n");
+    sb.append("    runCount: ").append(toIndentedString(runCount)).append("\n");
     sb.append("    properties: ").append(toIndentedString(properties)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -316,6 +343,7 @@ public class WorkflowResponse {
     openapiFields.add("description");
     openapiFields.add("rootTaskDefinitionId");
     openapiFields.add("workflowStructure");
+    openapiFields.add("runCount");
     openapiFields.add("properties");
 
     // a set of required properties/fields (JSON key names)
@@ -324,6 +352,7 @@ public class WorkflowResponse {
     openapiRequiredFields.add("displayName");
     openapiRequiredFields.add("rootTaskDefinitionId");
     openapiRequiredFields.add("workflowStructure");
+    openapiRequiredFields.add("runCount");
   }
 
  /**

@@ -183,6 +183,7 @@ Class | Method | HTTP request | Description
  - [WorkerConfigurationResponse](docs/WorkerConfigurationResponse.md)
  - [WorkerStatusTriggers](docs/WorkerStatusTriggers.md)
  - [WorkflowResponse](docs/WorkflowResponse.md)
+ - [WorkflowRun](docs/WorkflowRun.md)
  - [WorkflowStructure](docs/WorkflowStructure.md)
  - [WorkflowStructureEdges](docs/WorkflowStructureEdges.md)
  - [WorkflowStructureNodes](docs/WorkflowStructureNodes.md)

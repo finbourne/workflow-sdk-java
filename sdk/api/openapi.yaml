@@ -40,7 +40,7 @@ info:
     | <a name="973">973</a>|Workflow already exists.| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1854
+  version: 0.1.1858
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -5089,6 +5089,7 @@ paths:
                             \ NOT eq ''"
                     edges:
                       childTaskDefinitions: []
+                  runCount: 0
                 links: []
               schema:
                 $ref: '#/components/schemas/PagedResourceListOfWorkflowResponse'
@@ -5382,6 +5383,7 @@ paths:
                           \ NOT eq ''"
                   edges:
                     childTaskDefinitions: []
+                runCount: 0
               schema:
                 $ref: '#/components/schemas/WorkflowResponse'
           description: Created
@@ -5687,6 +5689,7 @@ paths:
                           \ NOT eq ''"
                   edges:
                     childTaskDefinitions: []
+                runCount: 0
               schema:
                 $ref: '#/components/schemas/WorkflowResponse'
           description: OK
@@ -5982,6 +5985,7 @@ paths:
                           \ NOT eq ''"
                   edges:
                     childTaskDefinitions: []
+                runCount: 0
               schema:
                 $ref: '#/components/schemas/WorkflowResponse'
           description: OK
@@ -6665,14 +6669,18 @@ components:
             leadTaskState: leadTaskState
             stackStatus: stackStatus
             leadTaskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-            tasksInStack: 0
+            tasksInStack: 6
             memberAddedAsAt: 2000-01-23T04:56:07.000+00:00
           actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          openDurationSinceLastUpdate: 1
+          openDurationSinceLastUpdate: 5
           taskDefinitionId:
             code: code
             scope: scope
           stackingKey: stackingKey
+          workflowRun:
+            asAtCreated: 2000-01-23T04:56:07.000+00:00
+            id: 0
+            completionStatus: completionStatus
           actionLogIdSubmitted: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           correlationIds:
           - correlationIds
@@ -6696,7 +6704,7 @@ components:
               scope: scope
           workflowDisplayName: workflowDisplayName
           hierarchicalPosition: hierarchicalPosition
-          openDuration: 6
+          openDuration: 1
           version:
             asAtModified: 2000-01-23T04:56:07.000+00:00
             userIdModified: userIdModified
@@ -6777,14 +6785,18 @@ components:
             leadTaskState: leadTaskState
             stackStatus: stackStatus
             leadTaskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-            tasksInStack: 0
+            tasksInStack: 6
             memberAddedAsAt: 2000-01-23T04:56:07.000+00:00
           actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          openDurationSinceLastUpdate: 1
+          openDurationSinceLastUpdate: 5
           taskDefinitionId:
             code: code
             scope: scope
           stackingKey: stackingKey
+          workflowRun:
+            asAtCreated: 2000-01-23T04:56:07.000+00:00
+            id: 0
+            completionStatus: completionStatus
           actionLogIdSubmitted: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           correlationIds:
           - correlationIds
@@ -6808,7 +6820,7 @@ components:
               scope: scope
           workflowDisplayName: workflowDisplayName
           hierarchicalPosition: hierarchicalPosition
-          openDuration: 6
+          openDuration: 1
           version:
             asAtModified: 2000-01-23T04:56:07.000+00:00
             userIdModified: userIdModified
@@ -8804,14 +8816,18 @@ components:
             leadTaskState: leadTaskState
             stackStatus: stackStatus
             leadTaskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-            tasksInStack: 0
+            tasksInStack: 6
             memberAddedAsAt: 2000-01-23T04:56:07.000+00:00
           actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          openDurationSinceLastUpdate: 1
+          openDurationSinceLastUpdate: 5
           taskDefinitionId:
             code: code
             scope: scope
           stackingKey: stackingKey
+          workflowRun:
+            asAtCreated: 2000-01-23T04:56:07.000+00:00
+            id: 0
+            completionStatus: completionStatus
           actionLogIdSubmitted: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           correlationIds:
           - correlationIds
@@ -8835,7 +8851,7 @@ components:
               scope: scope
           workflowDisplayName: workflowDisplayName
           hierarchicalPosition: hierarchicalPosition
-          openDuration: 6
+          openDuration: 1
           version:
             asAtModified: 2000-01-23T04:56:07.000+00:00
             userIdModified: userIdModified
@@ -8916,14 +8932,18 @@ components:
             leadTaskState: leadTaskState
             stackStatus: stackStatus
             leadTaskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-            tasksInStack: 0
+            tasksInStack: 6
             memberAddedAsAt: 2000-01-23T04:56:07.000+00:00
           actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          openDurationSinceLastUpdate: 1
+          openDurationSinceLastUpdate: 5
           taskDefinitionId:
             code: code
             scope: scope
           stackingKey: stackingKey
+          workflowRun:
+            asAtCreated: 2000-01-23T04:56:07.000+00:00
+            id: 0
+            completionStatus: completionStatus
           actionLogIdSubmitted: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           correlationIds:
           - correlationIds
@@ -8947,7 +8967,7 @@ components:
               scope: scope
           workflowDisplayName: workflowDisplayName
           hierarchicalPosition: hierarchicalPosition
-          openDuration: 6
+          openDuration: 1
           version:
             asAtModified: 2000-01-23T04:56:07.000+00:00
             userIdModified: userIdModified
@@ -9736,6 +9756,7 @@ components:
           id:
             code: code
             scope: scope
+          runCount: 0
           version:
             asAtModified: 2000-01-23T04:56:07.000+00:00
             userIdModified: userIdModified
@@ -10027,6 +10048,7 @@ components:
           id:
             code: code
             scope: scope
+          runCount: 0
           version:
             asAtModified: 2000-01-23T04:56:07.000+00:00
             userIdModified: userIdModified
@@ -10683,14 +10705,18 @@ components:
             leadTaskState: leadTaskState
             stackStatus: stackStatus
             leadTaskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-            tasksInStack: 0
+            tasksInStack: 6
             memberAddedAsAt: 2000-01-23T04:56:07.000+00:00
           actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          openDurationSinceLastUpdate: 1
+          openDurationSinceLastUpdate: 5
           taskDefinitionId:
             code: code
             scope: scope
           stackingKey: stackingKey
+          workflowRun:
+            asAtCreated: 2000-01-23T04:56:07.000+00:00
+            id: 0
+            completionStatus: completionStatus
           actionLogIdSubmitted: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           correlationIds:
           - correlationIds
@@ -10714,7 +10740,7 @@ components:
               scope: scope
           workflowDisplayName: workflowDisplayName
           hierarchicalPosition: hierarchicalPosition
-          openDuration: 6
+          openDuration: 1
           version:
             asAtModified: 2000-01-23T04:56:07.000+00:00
             userIdModified: userIdModified
@@ -10795,14 +10821,18 @@ components:
             leadTaskState: leadTaskState
             stackStatus: stackStatus
             leadTaskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-            tasksInStack: 0
+            tasksInStack: 6
             memberAddedAsAt: 2000-01-23T04:56:07.000+00:00
           actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          openDurationSinceLastUpdate: 1
+          openDurationSinceLastUpdate: 5
           taskDefinitionId:
             code: code
             scope: scope
           stackingKey: stackingKey
+          workflowRun:
+            asAtCreated: 2000-01-23T04:56:07.000+00:00
+            id: 0
+            completionStatus: completionStatus
           actionLogIdSubmitted: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           correlationIds:
           - correlationIds
@@ -10826,7 +10856,7 @@ components:
               scope: scope
           workflowDisplayName: workflowDisplayName
           hierarchicalPosition: hierarchicalPosition
-          openDuration: 6
+          openDuration: 1
           version:
             asAtModified: 2000-01-23T04:56:07.000+00:00
             userIdModified: userIdModified
@@ -11393,7 +11423,7 @@ components:
         leadTaskState: leadTaskState
         stackStatus: stackStatus
         leadTaskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        tasksInStack: 0
+        tasksInStack: 6
         memberAddedAsAt: 2000-01-23T04:56:07.000+00:00
       properties:
         memberAddedAsAt:
@@ -11443,14 +11473,18 @@ components:
           leadTaskState: leadTaskState
           stackStatus: stackStatus
           leadTaskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          tasksInStack: 0
+          tasksInStack: 6
           memberAddedAsAt: 2000-01-23T04:56:07.000+00:00
         actionLogIdCreated: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        openDurationSinceLastUpdate: 1
+        openDurationSinceLastUpdate: 5
         taskDefinitionId:
           code: code
           scope: scope
         stackingKey: stackingKey
+        workflowRun:
+          asAtCreated: 2000-01-23T04:56:07.000+00:00
+          id: 0
+          completionStatus: completionStatus
         actionLogIdSubmitted: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         correlationIds:
         - correlationIds
@@ -11474,7 +11508,7 @@ components:
             scope: scope
         workflowDisplayName: workflowDisplayName
         hierarchicalPosition: hierarchicalPosition
-        openDuration: 6
+        openDuration: 1
         version:
           asAtModified: 2000-01-23T04:56:07.000+00:00
           userIdModified: userIdModified
@@ -11567,6 +11601,8 @@ components:
             \ of, if any"
           nullable: true
           type: string
+        workflowRun:
+          $ref: '#/components/schemas/WorkflowRun'
         state:
           description: Current State
           minLength: 1
@@ -13466,6 +13502,7 @@ components:
         id:
           code: code
           scope: scope
+        runCount: 0
         version:
           asAtModified: 2000-01-23T04:56:07.000+00:00
           userIdModified: userIdModified
@@ -13503,6 +13540,12 @@ components:
           $ref: '#/components/schemas/ResourceId'
         workflowStructure:
           $ref: '#/components/schemas/WorkflowStructure'
+        runCount:
+          description: |-
+            The number of times this Workflow has been run. Starts at 0 and increments by 1 each time a new run
+            is instantiated.
+          format: int32
+          type: integer
         properties:
           additionalProperties:
             $ref: '#/components/schemas/PerpetualProperty'
@@ -13513,7 +13556,38 @@ components:
       - displayName
       - id
       - rootTaskDefinitionId
+      - runCount
       - workflowStructure
+      type: object
+    WorkflowRun:
+      additionalProperties: false
+      description: |-
+        Information about the run of the Workflow that created this Task, inherited from the root/ultimate
+        parent Task.
+      example:
+        asAtCreated: 2000-01-23T04:56:07.000+00:00
+        id: 0
+        completionStatus: completionStatus
+      properties:
+        id:
+          description: "The id of this run of the Workflow. Assigned once, when the\
+            \ run is instantiated."
+          format: int32
+          type: integer
+        asAtCreated:
+          description: The version.asAtCreated of the root/ultimate parent Task of
+            this run.
+          format: date-time
+          type: string
+        completionStatus:
+          description: "The completion status of the root/ultimate parent Task of\
+            \ this run: NotStarted, InProgress, or Completed."
+          minLength: 1
+          type: string
+      required:
+      - asAtCreated
+      - completionStatus
+      - id
       type: object
     WorkflowStructure:
       additionalProperties: false
