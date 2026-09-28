@@ -40,7 +40,7 @@ info:
     | <a name="973">973</a>|Workflow already exists.| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1862
+  version: 0.1.1873
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -6018,6 +6018,197 @@ paths:
       x-content-type: application/json-patch+json
       x-accepts: application/json
   /api/workflows/{scope}/{code}/launchers:
+    get:
+      operationId: ListLaunchers
+      parameters:
+      - description: The scope that identifies the Workflow that owns the Launchers
+        explode: false
+        in: path
+        name: scope
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      - description: The code that identifies the Workflow that owns the Launchers
+        explode: false
+        in: path
+        name: code
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      - description: |-
+          The asAt datetime at which to list the Launchers. Defaults to return the latest version
+           of each Launcher if not specified.
+        explode: true
+        in: query
+        name: asAt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+        x-nullable: true
+      - description: |-
+          Expression to filter the result set. Read more about filtering results from LUSID here:
+           https://support.lusid.com/filtering-results-from-lusid.
+        explode: true
+        in: query
+        name: filter
+        required: false
+        schema:
+          maxLength: 16384
+          minLength: 0
+          pattern: "^[\\s\\S]*$"
+          type: string
+        style: form
+      - description: |-
+          A list of field names to sort by, each suffixed by " ASC" or " DESC". Defaults to
+           "launcherId ASC" if not specified.
+        explode: true
+        in: query
+        name: sortBy
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+        x-nullable: true
+      - description: "When paginating, limit the number of returned results to this\
+          \ many."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          maximum: 5000
+          minimum: 1
+          type: integer
+        style: form
+        x-nullable: true
+      - description: |-
+          The pagination token to use to continue listing Launchers from a previous call to list
+           Launchers. This value is returned from the previous call. If a pagination token is provided the sortBy,
+           filter, and asAt fields must not have changed since the original request.
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          maxLength: 500
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\+/]*={0,3}$"
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                values:
+                - workflowId:
+                    scope: A1
+                    code: CustodyReconciliation
+                  launcherId: EveryWeekday
+                  displayName: An example Schedule launcher
+                  description: "Starts a run of the workflow at 09:00 on every weekday,\
+                    \ London time"
+                  status: Active
+                  launcherDetails:
+                    launcherType: Schedule
+                    schedule:
+                      calendarContext: London
+                      recurrencePattern:
+                        timeConstraints:
+                          startDate: 2025-01-01
+                          timesOfDay:
+                          - hours: 9
+                            minutes: 0
+                            type: Specified
+                        dateRegularity:
+                          frequency: 1
+                          daysOfWeek:
+                          - Monday
+                          - Tuesday
+                          - Wednesday
+                          - Thursday
+                          - Friday
+                          type: Week
+                        businessDayAdjustment: Following
+                    calendarContexts:
+                    - name: London
+                      timeZone: Europe/London
+                      holidayCalendars:
+                      - scope: A1
+                        code: UkHolidays
+                    mapTaskFields:
+                      asAtDate:
+                        mapFrom: ScheduledTime
+                        dateTimeAdjustment:
+                          calendarContext: London
+                          dateAdjustment:
+                            deltaDays: -1
+                            businessDayAdjustment: Previous
+                          timeAdjustment:
+                            setTo:
+                              hours: 23
+                              minutes: 59
+                              type: Specified
+                    runAsUserId:
+                      setTo: ExampleUserId
+                    setTaskFields:
+                      clientId: client-1
+                    setCorrelationIds:
+                    - example-correlation-id
+                    initialTrigger: Start
+                  summaries:
+                    fields: {}
+                  version:
+                    asAtCreated: 2022-01-01T01:02:03.0000000+00:00
+                    userIdCreated: User-1
+                    requestIdCreated: RequestId-1
+                    asAtModified: 2022-01-01T01:02:03.0000000+00:00
+                    userIdModified: User-1
+                    requestIdModified: RequestId-1
+                    asAtVersionNumber: 1
+                links: []
+              schema:
+                $ref: '#/components/schemas/PagedResourceListOfLauncherResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        "404":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Workflow not found.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] ListLaunchers: List the Launchers of a Workflow"
+      tags:
+      - Launchers
+      x-fbn-apistatus: Experimental
+      x-accepts: application/json
     post:
       operationId: CreateLauncher
       parameters:
@@ -6538,6 +6729,152 @@ paths:
       security:
       - oauth2: []
       summary: "[EXPERIMENTAL] DeleteLauncher: Delete a Launcher of a Workflow"
+      tags:
+      - Launchers
+      x-fbn-apistatus: Experimental
+      x-accepts: application/json
+    get:
+      operationId: GetLauncher
+      parameters:
+      - description: The scope that identifies the Workflow that owns the Launcher
+        explode: false
+        in: path
+        name: scope
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      - description: The code that identifies the Workflow that owns the Launcher
+        explode: false
+        in: path
+        name: code
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      - description: The identifier of the Launcher inside its Workflow
+        explode: false
+        in: path
+        name: launcherId
+        required: true
+        schema:
+          maxLength: 64
+          minLength: 1
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        style: simple
+      - description: |-
+          The asAt datetime at which to retrieve the Launcher. Defaults to returning the latest
+           version if not specified.
+        explode: true
+        in: query
+        name: asAt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+        x-nullable: true
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                workflowId:
+                  scope: A1
+                  code: CustodyReconciliation
+                launcherId: EveryWeekday
+                displayName: An example Schedule launcher
+                description: "Starts a run of the workflow at 09:00 on every weekday,\
+                  \ London time"
+                status: Active
+                launcherDetails:
+                  launcherType: Schedule
+                  schedule:
+                    calendarContext: London
+                    recurrencePattern:
+                      timeConstraints:
+                        startDate: 2025-01-01
+                        timesOfDay:
+                        - hours: 9
+                          minutes: 0
+                          type: Specified
+                      dateRegularity:
+                        frequency: 1
+                        daysOfWeek:
+                        - Monday
+                        - Tuesday
+                        - Wednesday
+                        - Thursday
+                        - Friday
+                        type: Week
+                      businessDayAdjustment: Following
+                  calendarContexts:
+                  - name: London
+                    timeZone: Europe/London
+                    holidayCalendars:
+                    - scope: A1
+                      code: UkHolidays
+                  mapTaskFields:
+                    asAtDate:
+                      mapFrom: ScheduledTime
+                      dateTimeAdjustment:
+                        calendarContext: London
+                        dateAdjustment:
+                          deltaDays: -1
+                          businessDayAdjustment: Previous
+                        timeAdjustment:
+                          setTo:
+                            hours: 23
+                            minutes: 59
+                            type: Specified
+                  runAsUserId:
+                    setTo: ExampleUserId
+                  setTaskFields:
+                    clientId: client-1
+                  setCorrelationIds:
+                  - example-correlation-id
+                  initialTrigger: Start
+                summaries:
+                  fields: {}
+                version:
+                  asAtCreated: 2022-01-01T01:02:03.0000000+00:00
+                  userIdCreated: User-1
+                  requestIdCreated: RequestId-1
+                  asAtModified: 2022-01-01T01:02:03.0000000+00:00
+                  userIdModified: User-1
+                  requestIdModified: RequestId-1
+                  asAtVersionNumber: 1
+              schema:
+                $ref: '#/components/schemas/LauncherResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        "404":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Launcher not found.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "[EXPERIMENTAL] GetLauncher: Get a Launcher of a Workflow"
       tags:
       - Launchers
       x-fbn-apistatus: Experimental
@@ -9325,6 +9662,7 @@ components:
           - LuminesceView
           - LusidEntityDataQualityCheck
           - PortfolioHoldingDataQualityCheck
+          - PortfolioTransactionDataQualityCheck
           - SchedulerJob
           - Sleep
           minLength: 1
@@ -9347,6 +9685,7 @@ components:
           - LuminesceView
           - LusidEntityDataQualityCheck
           - PortfolioHoldingDataQualityCheck
+          - PortfolioTransactionDataQualityCheck
           - SchedulerJob
           - Sleep
           nullable: true
@@ -10261,6 +10600,105 @@ components:
         values:
           items:
             $ref: '#/components/schemas/EventHandler'
+          type: array
+        href:
+          format: uri
+          nullable: true
+          type: string
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          nullable: true
+          type: array
+      required:
+      - values
+      type: object
+    PagedResourceListOfLauncherResponse:
+      additionalProperties: false
+      example:
+        previousPage: previousPage
+        nextPage: nextPage
+        values:
+        - launcherId: launcherId
+          displayName: displayName
+          description: description
+          launcherDetails:
+            setTaskFields:
+              key: ""
+            setCorrelationIds:
+            - setCorrelationIds
+            - setCorrelationIds
+            runAsUserId:
+              setTo: setTo
+              mapFrom: mapFrom
+            launcherType: launcherType
+            initialTrigger: initialTrigger
+          version:
+            asAtModified: 2000-01-23T04:56:07.000+00:00
+            userIdModified: userIdModified
+            asAtVersionNumber: 0
+            asAtCreated: 2000-01-23T04:56:07.000+00:00
+            requestIdCreated: requestIdCreated
+            userIdCreated: userIdCreated
+            requestIdModified: requestIdModified
+          workflowId:
+            code: code
+            scope: scope
+          status: status
+          summaries:
+            schedule: schedule
+            fields:
+              key: fields
+        - launcherId: launcherId
+          displayName: displayName
+          description: description
+          launcherDetails:
+            setTaskFields:
+              key: ""
+            setCorrelationIds:
+            - setCorrelationIds
+            - setCorrelationIds
+            runAsUserId:
+              setTo: setTo
+              mapFrom: mapFrom
+            launcherType: launcherType
+            initialTrigger: initialTrigger
+          version:
+            asAtModified: 2000-01-23T04:56:07.000+00:00
+            userIdModified: userIdModified
+            asAtVersionNumber: 0
+            asAtCreated: 2000-01-23T04:56:07.000+00:00
+            requestIdCreated: requestIdCreated
+            userIdCreated: userIdCreated
+            requestIdModified: requestIdModified
+          workflowId:
+            code: code
+            scope: scope
+          status: status
+          summaries:
+            schedule: schedule
+            fields:
+              key: fields
+        links:
+        - method: method
+          description: description
+          href: https://openapi-generator.tech
+          relation: relation
+        - method: method
+          description: description
+          href: https://openapi-generator.tech
+          relation: relation
+        href: https://openapi-generator.tech
+      properties:
+        nextPage:
+          nullable: true
+          type: string
+        previousPage:
+          nullable: true
+          type: string
+        values:
+          items:
+            $ref: '#/components/schemas/LauncherResponse'
           type: array
         href:
           format: uri
@@ -11684,6 +12122,32 @@ components:
           description: The type of worker
           enum:
           - PortfolioHoldingDataQualityCheck
+          nullable: true
+          type: string
+      type: object
+    PortfolioTransactionDataQualityCheck:
+      additionalProperties: false
+      description: Configuration for a Worker that runs a portfolio transaction Data
+        quality check in LUSID
+      properties:
+        type:
+          description: The type of worker
+          enum:
+          - PortfolioTransactionDataQualityCheck
+          minLength: 1
+          type: string
+      required:
+      - type
+      type: object
+    PortfolioTransactionDataQualityCheckResponse:
+      additionalProperties: false
+      description: Readonly configuration for the Portfolio Transaction Data Quality
+        Check Worker
+      properties:
+        type:
+          description: The type of worker
+          enum:
+          - PortfolioTransactionDataQualityCheck
           nullable: true
           type: string
       type: object
@@ -14815,6 +15279,7 @@ components:
       - $ref: '#/components/schemas/LuminesceView'
       - $ref: '#/components/schemas/LusidEntityDataQualityCheck'
       - $ref: '#/components/schemas/PortfolioHoldingDataQualityCheck'
+      - $ref: '#/components/schemas/PortfolioTransactionDataQualityCheck'
       - $ref: '#/components/schemas/SchedulerJob'
       - $ref: '#/components/schemas/Sleep'
       properties:
@@ -14837,6 +15302,7 @@ components:
       - $ref: '#/components/schemas/LuminesceViewResponse'
       - $ref: '#/components/schemas/LusidEntityDataQualityCheckResponse'
       - $ref: '#/components/schemas/PortfolioHoldingDataQualityCheckResponse'
+      - $ref: '#/components/schemas/PortfolioTransactionDataQualityCheckResponse'
       - $ref: '#/components/schemas/SchedulerJobResponse'
       - $ref: '#/components/schemas/SleepResponse'
       type: object

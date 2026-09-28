@@ -14,6 +14,8 @@ Class | Method | HTTP request | Description
 *EventHandlersApi* | [**updateEventHandler**](docs/EventHandlersApi.md#updateeventhandler) | **PUT** /api/eventhandlers/{scope}/{code} | UpdateEventHandler: Update an existing Event handler
 *LaunchersApi* | [**createLauncher**](docs/LaunchersApi.md#createlauncher) | **POST** /api/workflows/{scope}/{code}/launchers | [EXPERIMENTAL] CreateLauncher: Create a new Launcher on a Workflow
 *LaunchersApi* | [**deleteLauncher**](docs/LaunchersApi.md#deletelauncher) | **DELETE** /api/workflows/{scope}/{code}/launchers/{launcherId} | [EXPERIMENTAL] DeleteLauncher: Delete a Launcher of a Workflow
+*LaunchersApi* | [**getLauncher**](docs/LaunchersApi.md#getlauncher) | **GET** /api/workflows/{scope}/{code}/launchers/{launcherId} | [EXPERIMENTAL] GetLauncher: Get a Launcher of a Workflow
+*LaunchersApi* | [**listLaunchers**](docs/LaunchersApi.md#listlaunchers) | **GET** /api/workflows/{scope}/{code}/launchers | [EXPERIMENTAL] ListLaunchers: List the Launchers of a Workflow
 *LaunchersApi* | [**updateLauncher**](docs/LaunchersApi.md#updatelauncher) | **PUT** /api/workflows/{scope}/{code}/launchers/{launcherId} | [EXPERIMENTAL] UpdateLauncher: Update an existing Launcher of a Workflow
 *TaskDefinitionsApi* | [**createTaskDefinition**](docs/TaskDefinitionsApi.md#createtaskdefinition) | **POST** /api/taskdefinitions | CreateTaskDefinition: Create a new Task Definition
 *TaskDefinitionsApi* | [**deleteTaskDefinition**](docs/TaskDefinitionsApi.md#deletetaskdefinition) | **DELETE** /api/taskdefinitions/{scope}/{code} | DeleteTaskDefinition: Delete a Task Definition
@@ -127,6 +129,7 @@ Class | Method | HTTP request | Description
  - [MetricValue](docs/MetricValue.md)
  - [NewTasksRecurringConfiguration](docs/NewTasksRecurringConfiguration.md)
  - [PagedResourceListOfEventHandler](docs/PagedResourceListOfEventHandler.md)
+ - [PagedResourceListOfLauncherResponse](docs/PagedResourceListOfLauncherResponse.md)
  - [PagedResourceListOfTask](docs/PagedResourceListOfTask.md)
  - [PagedResourceListOfTaskDefinition](docs/PagedResourceListOfTaskDefinition.md)
  - [PagedResourceListOfWorker](docs/PagedResourceListOfWorker.md)
@@ -136,6 +139,8 @@ Class | Method | HTTP request | Description
  - [PerpetualProperty](docs/PerpetualProperty.md)
  - [PortfolioHoldingDataQualityCheck](docs/PortfolioHoldingDataQualityCheck.md)
  - [PortfolioHoldingDataQualityCheckResponse](docs/PortfolioHoldingDataQualityCheckResponse.md)
+ - [PortfolioTransactionDataQualityCheck](docs/PortfolioTransactionDataQualityCheck.md)
+ - [PortfolioTransactionDataQualityCheckResponse](docs/PortfolioTransactionDataQualityCheckResponse.md)
  - [PropertyValue](docs/PropertyValue.md)
  - [ReRunConfiguration](docs/ReRunConfiguration.md)
  - [ReadOnlyStates](docs/ReadOnlyStates.md)

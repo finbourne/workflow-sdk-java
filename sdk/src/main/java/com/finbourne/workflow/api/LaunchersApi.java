@@ -30,6 +30,8 @@ import com.finbourne.workflow.model.DeletedEntityResponse;
 import com.finbourne.workflow.model.LauncherResponse;
 import com.finbourne.workflow.model.LusidProblemDetails;
 import com.finbourne.workflow.model.LusidValidationProblemDetails;
+import java.time.OffsetDateTime;
+import com.finbourne.workflow.model.PagedResourceListOfLauncherResponse;
 import com.finbourne.workflow.model.UpdateLauncherRequest;
 
 import java.lang.reflect.Type;
@@ -597,6 +599,599 @@ public class LaunchersApi {
      */
     public APIdeleteLauncherRequest deleteLauncher(String scope, String code, String launcherId) {
         return new APIdeleteLauncherRequest(scope, code, launcherId);
+    }
+    private okhttp3.Call getLauncherCall(String scope, String code, String launcherId, OffsetDateTime asAt, final ApiCallback _callback) throws ApiException {
+        return getLauncherCall(scope, code, launcherId, asAt,  _callback, new ConfigurationOptions());
+    }
+
+    private okhttp3.Call getLauncherCall(String scope, String code, String launcherId, OffsetDateTime asAt, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/api/workflows/{scope}/{code}/launchers/{launcherId}"
+            .replace("{" + "scope" + "}", localVarApiClient.escapeString(scope.toString()))
+            .replace("{" + "code" + "}", localVarApiClient.escapeString(code.toString()))
+            .replace("{" + "launcherId" + "}", localVarApiClient.escapeString(launcherId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        if (asAt != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("asAt", asAt));
+        }
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "oauth2" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback, opts);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call getLauncherValidateBeforeCall(String scope, String code, String launcherId, OffsetDateTime asAt, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
+        // verify the required parameter 'scope' is set
+        if (scope == null) {
+            throw new ApiException("Missing the required parameter 'scope' when calling getLauncher(Async)");
+        }
+
+        // verify the required parameter 'code' is set
+        if (code == null) {
+            throw new ApiException("Missing the required parameter 'code' when calling getLauncher(Async)");
+        }
+
+        // verify the required parameter 'launcherId' is set
+        if (launcherId == null) {
+            throw new ApiException("Missing the required parameter 'launcherId' when calling getLauncher(Async)");
+        }
+
+        return getLauncherCall(scope, code, launcherId, asAt, _callback, opts);
+
+    }
+
+
+    private ApiResponse<LauncherResponse> getLauncherWithHttpInfo(String scope, String code, String launcherId, OffsetDateTime asAt) throws ApiException {
+        okhttp3.Call localVarCall = getLauncherValidateBeforeCall(scope, code, launcherId, asAt, null, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<LauncherResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private ApiResponse<LauncherResponse> getLauncherWithHttpInfo(String scope, String code, String launcherId, OffsetDateTime asAt, ConfigurationOptions opts) throws ApiException {
+        okhttp3.Call localVarCall = getLauncherValidateBeforeCall(scope, code, launcherId, asAt, null, opts);
+        Type localVarReturnType = new TypeToken<LauncherResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private okhttp3.Call getLauncherAsync(String scope, String code, String launcherId, OffsetDateTime asAt, final ApiCallback<LauncherResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = getLauncherValidateBeforeCall(scope, code, launcherId, asAt, _callback, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<LauncherResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    private okhttp3.Call getLauncherAsync(String scope, String code, String launcherId, OffsetDateTime asAt, final ApiCallback<LauncherResponse> _callback, ConfigurationOptions opts) throws ApiException {
+
+        okhttp3.Call localVarCall = getLauncherValidateBeforeCall(scope, code, launcherId, asAt, _callback, opts);
+        Type localVarReturnType = new TypeToken<LauncherResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    public class APIgetLauncherRequest {
+        private final String scope;
+        private final String code;
+        private final String launcherId;
+        private OffsetDateTime asAt;
+
+        private APIgetLauncherRequest(String scope, String code, String launcherId) {
+            this.scope = scope;
+            this.code = code;
+            this.launcherId = launcherId;
+        }
+
+        /**
+         * Set asAt
+         * @param asAt The asAt datetime at which to retrieve the Launcher. Defaults to returning the latest  version if not specified. (optional)
+         * @return APIgetLauncherRequest
+         */
+        public APIgetLauncherRequest asAt(OffsetDateTime asAt) {
+            this.asAt = asAt;
+            return this;
+        }
+
+        /**
+         * Build call for getLauncher
+         * @param _callback ApiCallback API callback
+         * @return Call to execute
+         * @throws ApiException If fail to serialize the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Launcher not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call buildCall(final ApiCallback _callback) throws ApiException {
+            return getLauncherCall(scope, code, launcherId, asAt, _callback);
+        }
+
+        /**
+         * Execute getLauncher request
+         * @return LauncherResponse
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Launcher not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public LauncherResponse execute() throws ApiException {
+            ApiResponse<LauncherResponse> localVarResp = getLauncherWithHttpInfo(scope, code, launcherId, asAt);
+            return localVarResp.getData();
+        }
+
+        /**
+         * Execute getLauncher request. Use any specified configuration options to override any other configuration for this request only.
+         * @return LauncherResponse
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Launcher not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public LauncherResponse execute(ConfigurationOptions opts) throws ApiException {
+            ApiResponse<LauncherResponse> localVarResp = getLauncherWithHttpInfo(scope, code, launcherId, asAt, opts);
+            return localVarResp.getData();
+        }
+
+        /**
+         * Execute getLauncher request with HTTP info returned
+         * @return ApiResponse&lt;LauncherResponse&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Launcher not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<LauncherResponse> executeWithHttpInfo() throws ApiException {
+            return getLauncherWithHttpInfo(scope, code, launcherId, asAt);
+        }
+
+        /**
+         * Execute getLauncher request with HTTP info returned. Use any specified configuration options to override any other configuration for this request only.
+         * @return ApiResponse&lt;LauncherResponse&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Launcher not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<LauncherResponse> executeWithHttpInfo(ConfigurationOptions opts) throws ApiException {
+            return getLauncherWithHttpInfo(scope, code, launcherId, asAt, opts);
+        }
+
+        /**
+         * Execute getLauncher request (asynchronously)
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Launcher not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<LauncherResponse> _callback) throws ApiException {
+            return getLauncherAsync(scope, code, launcherId, asAt, _callback);
+        }
+
+        /**
+         * Execute getLauncher request (asynchronously). Use any specified configuration options to override any other configuration for this request only.
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Launcher not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<LauncherResponse> _callback, ConfigurationOptions opts) throws ApiException {
+            return getLauncherAsync(scope, code, launcherId, asAt, _callback, opts);
+        }
+    }
+
+    /**
+     * [EXPERIMENTAL] GetLauncher: Get a Launcher of a Workflow
+     * 
+     * @param scope The scope that identifies the Workflow that owns the Launcher (required)
+     * @param code The code that identifies the Workflow that owns the Launcher (required)
+     * @param launcherId The identifier of the Launcher inside its Workflow (required)
+     * @return APIgetLauncherRequest
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Launcher not found. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+     </table>
+     */
+    public APIgetLauncherRequest getLauncher(String scope, String code, String launcherId) {
+        return new APIgetLauncherRequest(scope, code, launcherId);
+    }
+    private okhttp3.Call listLaunchersCall(String scope, String code, OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback _callback) throws ApiException {
+        return listLaunchersCall(scope, code, asAt, filter, sortBy, limit, page,  _callback, new ConfigurationOptions());
+    }
+
+    private okhttp3.Call listLaunchersCall(String scope, String code, OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/api/workflows/{scope}/{code}/launchers"
+            .replace("{" + "scope" + "}", localVarApiClient.escapeString(scope.toString()))
+            .replace("{" + "code" + "}", localVarApiClient.escapeString(code.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        if (asAt != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("asAt", asAt));
+        }
+
+        if (filter != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("filter", filter));
+        }
+
+        if (sortBy != null) {
+            localVarCollectionQueryParams.addAll(localVarApiClient.parameterToPairs("multi", "sortBy", sortBy));
+        }
+
+        if (limit != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("limit", limit));
+        }
+
+        if (page != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("page", page));
+        }
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "oauth2" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback, opts);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call listLaunchersValidateBeforeCall(String scope, String code, OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback _callback, ConfigurationOptions opts) throws ApiException {
+        // verify the required parameter 'scope' is set
+        if (scope == null) {
+            throw new ApiException("Missing the required parameter 'scope' when calling listLaunchers(Async)");
+        }
+
+        // verify the required parameter 'code' is set
+        if (code == null) {
+            throw new ApiException("Missing the required parameter 'code' when calling listLaunchers(Async)");
+        }
+
+        return listLaunchersCall(scope, code, asAt, filter, sortBy, limit, page, _callback, opts);
+
+    }
+
+
+    private ApiResponse<PagedResourceListOfLauncherResponse> listLaunchersWithHttpInfo(String scope, String code, OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page) throws ApiException {
+        okhttp3.Call localVarCall = listLaunchersValidateBeforeCall(scope, code, asAt, filter, sortBy, limit, page, null, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<PagedResourceListOfLauncherResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private ApiResponse<PagedResourceListOfLauncherResponse> listLaunchersWithHttpInfo(String scope, String code, OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, ConfigurationOptions opts) throws ApiException {
+        okhttp3.Call localVarCall = listLaunchersValidateBeforeCall(scope, code, asAt, filter, sortBy, limit, page, null, opts);
+        Type localVarReturnType = new TypeToken<PagedResourceListOfLauncherResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private okhttp3.Call listLaunchersAsync(String scope, String code, OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback<PagedResourceListOfLauncherResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = listLaunchersValidateBeforeCall(scope, code, asAt, filter, sortBy, limit, page, _callback, new ConfigurationOptions());
+        Type localVarReturnType = new TypeToken<PagedResourceListOfLauncherResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    private okhttp3.Call listLaunchersAsync(String scope, String code, OffsetDateTime asAt, String filter, List<String> sortBy, Integer limit, String page, final ApiCallback<PagedResourceListOfLauncherResponse> _callback, ConfigurationOptions opts) throws ApiException {
+
+        okhttp3.Call localVarCall = listLaunchersValidateBeforeCall(scope, code, asAt, filter, sortBy, limit, page, _callback, opts);
+        Type localVarReturnType = new TypeToken<PagedResourceListOfLauncherResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    public class APIlistLaunchersRequest {
+        private final String scope;
+        private final String code;
+        private OffsetDateTime asAt;
+        private String filter;
+        private List<String> sortBy;
+        private Integer limit;
+        private String page;
+
+        private APIlistLaunchersRequest(String scope, String code) {
+            this.scope = scope;
+            this.code = code;
+        }
+
+        /**
+         * Set asAt
+         * @param asAt The asAt datetime at which to list the Launchers. Defaults to return the latest version  of each Launcher if not specified. (optional)
+         * @return APIlistLaunchersRequest
+         */
+        public APIlistLaunchersRequest asAt(OffsetDateTime asAt) {
+            this.asAt = asAt;
+            return this;
+        }
+
+        /**
+         * Set filter
+         * @param filter Expression to filter the result set. Read more about filtering results from LUSID here:  https://support.lusid.com/filtering-results-from-lusid. (optional)
+         * @return APIlistLaunchersRequest
+         */
+        public APIlistLaunchersRequest filter(String filter) {
+            this.filter = filter;
+            return this;
+        }
+
+        /**
+         * Set sortBy
+         * @param sortBy A list of field names to sort by, each suffixed by \&quot; ASC\&quot; or \&quot; DESC\&quot;. Defaults to  \&quot;launcherId ASC\&quot; if not specified. (optional)
+         * @return APIlistLaunchersRequest
+         */
+        public APIlistLaunchersRequest sortBy(List<String> sortBy) {
+            this.sortBy = sortBy;
+            return this;
+        }
+
+        /**
+         * Set limit
+         * @param limit When paginating, limit the number of returned results to this many. (optional, default to 10)
+         * @return APIlistLaunchersRequest
+         */
+        public APIlistLaunchersRequest limit(Integer limit) {
+            this.limit = limit;
+            return this;
+        }
+
+        /**
+         * Set page
+         * @param page The pagination token to use to continue listing Launchers from a previous call to list  Launchers. This value is returned from the previous call. If a pagination token is provided the sortBy,  filter, and asAt fields must not have changed since the original request. (optional)
+         * @return APIlistLaunchersRequest
+         */
+        public APIlistLaunchersRequest page(String page) {
+            this.page = page;
+            return this;
+        }
+
+        /**
+         * Build call for listLaunchers
+         * @param _callback ApiCallback API callback
+         * @return Call to execute
+         * @throws ApiException If fail to serialize the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Workflow not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call buildCall(final ApiCallback _callback) throws ApiException {
+            return listLaunchersCall(scope, code, asAt, filter, sortBy, limit, page, _callback);
+        }
+
+        /**
+         * Execute listLaunchers request
+         * @return PagedResourceListOfLauncherResponse
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Workflow not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public PagedResourceListOfLauncherResponse execute() throws ApiException {
+            ApiResponse<PagedResourceListOfLauncherResponse> localVarResp = listLaunchersWithHttpInfo(scope, code, asAt, filter, sortBy, limit, page);
+            return localVarResp.getData();
+        }
+
+        /**
+         * Execute listLaunchers request. Use any specified configuration options to override any other configuration for this request only.
+         * @return PagedResourceListOfLauncherResponse
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Workflow not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public PagedResourceListOfLauncherResponse execute(ConfigurationOptions opts) throws ApiException {
+            ApiResponse<PagedResourceListOfLauncherResponse> localVarResp = listLaunchersWithHttpInfo(scope, code, asAt, filter, sortBy, limit, page, opts);
+            return localVarResp.getData();
+        }
+
+        /**
+         * Execute listLaunchers request with HTTP info returned
+         * @return ApiResponse&lt;PagedResourceListOfLauncherResponse&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Workflow not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<PagedResourceListOfLauncherResponse> executeWithHttpInfo() throws ApiException {
+            return listLaunchersWithHttpInfo(scope, code, asAt, filter, sortBy, limit, page);
+        }
+
+        /**
+         * Execute listLaunchers request with HTTP info returned. Use any specified configuration options to override any other configuration for this request only.
+         * @return ApiResponse&lt;PagedResourceListOfLauncherResponse&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Workflow not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<PagedResourceListOfLauncherResponse> executeWithHttpInfo(ConfigurationOptions opts) throws ApiException {
+            return listLaunchersWithHttpInfo(scope, code, asAt, filter, sortBy, limit, page, opts);
+        }
+
+        /**
+         * Execute listLaunchers request (asynchronously)
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Workflow not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<PagedResourceListOfLauncherResponse> _callback) throws ApiException {
+            return listLaunchersAsync(scope, code, asAt, filter, sortBy, limit, page, _callback);
+        }
+
+        /**
+         * Execute listLaunchers request (asynchronously). Use any specified configuration options to override any other configuration for this request only.
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+            <tr><td> 404 </td><td> Workflow not found. </td><td>  -  </td></tr>
+            <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<PagedResourceListOfLauncherResponse> _callback, ConfigurationOptions opts) throws ApiException {
+            return listLaunchersAsync(scope, code, asAt, filter, sortBy, limit, page, _callback, opts);
+        }
+    }
+
+    /**
+     * [EXPERIMENTAL] ListLaunchers: List the Launchers of a Workflow
+     * 
+     * @param scope The scope that identifies the Workflow that owns the Launchers (required)
+     * @param code The code that identifies the Workflow that owns the Launchers (required)
+     * @return APIlistLaunchersRequest
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> The details of the input related failure </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Workflow not found. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Error response </td><td>  -  </td></tr>
+     </table>
+     */
+    public APIlistLaunchersRequest listLaunchers(String scope, String code) {
+        return new APIlistLaunchersRequest(scope, code);
     }
     private okhttp3.Call updateLauncherCall(String scope, String code, String launcherId, UpdateLauncherRequest updateLauncherRequest, final ApiCallback _callback) throws ApiException {
         return updateLauncherCall(scope, code, launcherId, updateLauncherRequest,  _callback, new ConfigurationOptions());

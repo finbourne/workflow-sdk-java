@@ -40,6 +40,8 @@ WorkerConfigurationResponse config = new WorkerConfigurationResponse(workerConfi
 
 * [PortfolioHoldingDataQualityCheckResponse](./PortfolioHoldingDataQualityCheckResponse.md)
 
+* [PortfolioTransactionDataQualityCheckResponse](./PortfolioTransactionDataQualityCheckResponse.md)
+
 * [SchedulerJobResponse](./SchedulerJobResponse.md)
 
 * [SleepResponse](./SleepResponse.md)
