@@ -11,6 +11,7 @@
 package com.finbourne.workflow.model;
 
 import java.util.Objects;
+import com.finbourne.workflow.model.VersionedTaskDefinitionId;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -18,8 +19,6 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import com.google.gson.Gson;
@@ -48,68 +47,60 @@ import java.util.Set;
 import com.finbourne.workflow.JSON;
 
 /**
- * Sentences that say what a Launcher does, meant to be shown to a person.   These are rendered on read from the stored Launcher details. They are never stored and never accepted on a write, so the same Launcher always reads back the same summaries
+ * Represents the relationship between a Launcher of a Workflow and the Task Definition it starts a run of
  */
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class LauncherSummaries {
-  public static final String SERIALIZED_NAME_SCHEDULE = "schedule";
-  @SerializedName(SERIALIZED_NAME_SCHEDULE)
-  private String schedule;
+public class LauncherEdge {
+  public static final String SERIALIZED_NAME_LAUNCHER_ID = "launcherId";
+  @SerializedName(SERIALIZED_NAME_LAUNCHER_ID)
+  private String launcherId;
 
-  public static final String SERIALIZED_NAME_FIELDS = "fields";
-  @SerializedName(SERIALIZED_NAME_FIELDS)
-  private Map<String, String> fields;
+  public static final String SERIALIZED_NAME_TARGET_TASK_DEFINITION = "targetTaskDefinition";
+  @SerializedName(SERIALIZED_NAME_TARGET_TASK_DEFINITION)
+  private VersionedTaskDefinitionId targetTaskDefinition;
 
-  public LauncherSummaries() {
+  public LauncherEdge() {
   }
 
-  public LauncherSummaries schedule(String schedule) {
+  public LauncherEdge launcherId(String launcherId) {
     
-    this.schedule = schedule;
+    this.launcherId = launcherId;
     return this;
   }
 
    /**
-   * A sentence that says when the Launcher starts a run, for example \&quot;Weekly on Mon at 09:00, rolled forward to the next business day\&quot;.   Null for an Event Launcher, which has no schedule
-   * @return schedule
+   * The identifier of the Launcher inside its Workflow
+   * @return launcherId
   **/
   @jakarta.annotation.Nullable
-  public String getSchedule() {
-    return schedule;
+  public String getLauncherId() {
+    return launcherId;
   }
 
 
-  public void setSchedule(String schedule) {
-    this.schedule = schedule;
+  public void setLauncherId(String launcherId) {
+    this.launcherId = launcherId;
   }
 
 
-  public LauncherSummaries fields(Map<String, String> fields) {
+  public LauncherEdge targetTaskDefinition(VersionedTaskDefinitionId targetTaskDefinition) {
     
-    this.fields = fields;
-    return this;
-  }
-
-  public LauncherSummaries putFieldsItem(String key, String fieldsItem) {
-    if (this.fields == null) {
-      this.fields = new HashMap<>();
-    }
-    this.fields.put(key, fieldsItem);
+    this.targetTaskDefinition = targetTaskDefinition;
     return this;
   }
 
    /**
-   * A sentence for each field of the root task the Launcher fills, keyed by the field name on the root task definition. Empty when the Launcher fills no fields
-   * @return fields
+   * Get targetTaskDefinition
+   * @return targetTaskDefinition
   **/
   @jakarta.annotation.Nullable
-  public Map<String, String> getFields() {
-    return fields;
+  public VersionedTaskDefinitionId getTargetTaskDefinition() {
+    return targetTaskDefinition;
   }
 
 
-  public void setFields(Map<String, String> fields) {
-    this.fields = fields;
+  public void setTargetTaskDefinition(VersionedTaskDefinitionId targetTaskDefinition) {
+    this.targetTaskDefinition = targetTaskDefinition;
   }
 
 
@@ -122,9 +113,9 @@ public class LauncherSummaries {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    LauncherSummaries launcherSummaries = (LauncherSummaries) o;
-    return Objects.equals(this.schedule, launcherSummaries.schedule) &&
-        Objects.equals(this.fields, launcherSummaries.fields);
+    LauncherEdge launcherEdge = (LauncherEdge) o;
+    return Objects.equals(this.launcherId, launcherEdge.launcherId) &&
+        Objects.equals(this.targetTaskDefinition, launcherEdge.targetTaskDefinition);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -133,7 +124,7 @@ public class LauncherSummaries {
 
   @Override
   public int hashCode() {
-    return Objects.hash(schedule, fields);
+    return Objects.hash(launcherId, targetTaskDefinition);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -146,9 +137,9 @@ public class LauncherSummaries {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class LauncherSummaries {\n");
-    sb.append("    schedule: ").append(toIndentedString(schedule)).append("\n");
-    sb.append("    fields: ").append(toIndentedString(fields)).append("\n");
+    sb.append("class LauncherEdge {\n");
+    sb.append("    launcherId: ").append(toIndentedString(launcherId)).append("\n");
+    sb.append("    targetTaskDefinition: ").append(toIndentedString(targetTaskDefinition)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -171,8 +162,8 @@ public class LauncherSummaries {
   static {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
-    openapiFields.add("schedule");
-    openapiFields.add("fields");
+    openapiFields.add("launcherId");
+    openapiFields.add("targetTaskDefinition");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -182,17 +173,21 @@ public class LauncherSummaries {
   * Validates the JSON Element and throws an exception if issues found
   *
   * @param jsonElement JSON Element
-  * @throws IOException if the JSON Element is invalid with respect to LauncherSummaries
+  * @throws IOException if the JSON Element is invalid with respect to LauncherEdge
   */
   public static void validateJsonElement(JsonElement jsonElement) throws IOException {
       if (jsonElement == null) {
-        if (!LauncherSummaries.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
-          throw new IllegalArgumentException(String.format("The required field(s) %s in LauncherSummaries is not found in the empty JSON string", LauncherSummaries.openapiRequiredFields.toString()));
+        if (!LauncherEdge.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in LauncherEdge is not found in the empty JSON string", LauncherEdge.openapiRequiredFields.toString()));
         }
       }
         JsonObject jsonObj = jsonElement.getAsJsonObject();
-      if ((jsonObj.get("schedule") != null && !jsonObj.get("schedule").isJsonNull()) && !jsonObj.get("schedule").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `schedule` to be a primitive type in the JSON string but got `%s`", jsonObj.get("schedule").toString()));
+      if ((jsonObj.get("launcherId") != null && !jsonObj.get("launcherId").isJsonNull()) && !jsonObj.get("launcherId").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `launcherId` to be a primitive type in the JSON string but got `%s`", jsonObj.get("launcherId").toString()));
+      }
+      // validate the optional field `targetTaskDefinition`
+      if (jsonObj.get("targetTaskDefinition") != null && !jsonObj.get("targetTaskDefinition").isJsonNull()) {
+        VersionedTaskDefinitionId.validateJsonElement(jsonObj.get("targetTaskDefinition"));
       }
   }
 
@@ -200,22 +195,22 @@ public class LauncherSummaries {
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!LauncherSummaries.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'LauncherSummaries' and its subtypes
+       if (!LauncherEdge.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'LauncherEdge' and its subtypes
        }
        final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<LauncherSummaries> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(LauncherSummaries.class));
+       final TypeAdapter<LauncherEdge> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(LauncherEdge.class));
 
-       return (TypeAdapter<T>) new TypeAdapter<LauncherSummaries>() {
+       return (TypeAdapter<T>) new TypeAdapter<LauncherEdge>() {
            @Override
-           public void write(JsonWriter out, LauncherSummaries value) throws IOException {
+           public void write(JsonWriter out, LauncherEdge value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              elementAdapter.write(out, obj);
            }
 
            @Override
-           public LauncherSummaries read(JsonReader in) throws IOException {
+           public LauncherEdge read(JsonReader in) throws IOException {
              JsonElement jsonElement = elementAdapter.read(in);
              validateJsonElement(jsonElement);
              return thisAdapter.fromJsonTree(jsonElement);
@@ -226,18 +221,18 @@ public class LauncherSummaries {
   }
 
  /**
-  * Create an instance of LauncherSummaries given an JSON string
+  * Create an instance of LauncherEdge given an JSON string
   *
   * @param jsonString JSON string
-  * @return An instance of LauncherSummaries
-  * @throws IOException if the JSON string is invalid with respect to LauncherSummaries
+  * @return An instance of LauncherEdge
+  * @throws IOException if the JSON string is invalid with respect to LauncherEdge
   */
-  public static LauncherSummaries fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, LauncherSummaries.class);
+  public static LauncherEdge fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, LauncherEdge.class);
   }
 
  /**
-  * Convert an instance of LauncherSummaries to an JSON string
+  * Convert an instance of LauncherEdge to an JSON string
   *
   * @return JSON string
   */

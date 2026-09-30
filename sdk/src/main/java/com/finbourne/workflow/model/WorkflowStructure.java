@@ -47,7 +47,7 @@ import java.util.Set;
 import com.finbourne.workflow.JSON;
 
 /**
- * Describes the structure of a Workflow as a graph of Task Definitions
+ * Describes the structure of a Workflow as a graph of its Task Definitions and its Launchers
  */
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class WorkflowStructure {
@@ -58,6 +58,10 @@ public class WorkflowStructure {
   public static final String SERIALIZED_NAME_EDGES = "edges";
   @SerializedName(SERIALIZED_NAME_EDGES)
   private WorkflowStructureEdges edges;
+
+  public static final String SERIALIZED_NAME_LAUNCHERS_TRUNCATED = "launchersTruncated";
+  @SerializedName(SERIALIZED_NAME_LAUNCHERS_TRUNCATED)
+  private Boolean launchersTruncated;
 
   public WorkflowStructure() {
   }
@@ -104,6 +108,27 @@ public class WorkflowStructure {
   }
 
 
+  public WorkflowStructure launchersTruncated(Boolean launchersTruncated) {
+    
+    this.launchersTruncated = launchersTruncated;
+    return this;
+  }
+
+   /**
+   * True when the Workflow has more Launchers than were returned inline in nodes.launchers. Call ListLaunchers for the full set
+   * @return launchersTruncated
+  **/
+  @jakarta.annotation.Nullable
+  public Boolean getLaunchersTruncated() {
+    return launchersTruncated;
+  }
+
+
+  public void setLaunchersTruncated(Boolean launchersTruncated) {
+    this.launchersTruncated = launchersTruncated;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -115,12 +140,13 @@ public class WorkflowStructure {
     }
     WorkflowStructure workflowStructure = (WorkflowStructure) o;
     return Objects.equals(this.nodes, workflowStructure.nodes) &&
-        Objects.equals(this.edges, workflowStructure.edges);
+        Objects.equals(this.edges, workflowStructure.edges) &&
+        Objects.equals(this.launchersTruncated, workflowStructure.launchersTruncated);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(nodes, edges);
+    return Objects.hash(nodes, edges, launchersTruncated);
   }
 
   @Override
@@ -129,6 +155,7 @@ public class WorkflowStructure {
     sb.append("class WorkflowStructure {\n");
     sb.append("    nodes: ").append(toIndentedString(nodes)).append("\n");
     sb.append("    edges: ").append(toIndentedString(edges)).append("\n");
+    sb.append("    launchersTruncated: ").append(toIndentedString(launchersTruncated)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -153,6 +180,7 @@ public class WorkflowStructure {
     openapiFields = new HashSet<String>();
     openapiFields.add("nodes");
     openapiFields.add("edges");
+    openapiFields.add("launchersTruncated");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();

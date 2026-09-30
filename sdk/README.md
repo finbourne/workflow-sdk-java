@@ -113,6 +113,7 @@ Class | Method | HTTP request | Description
  - [LabelValueSet](docs/LabelValueSet.md)
  - [LauncherDetails](docs/LauncherDetails.md)
  - [LauncherDetailsResponse](docs/LauncherDetailsResponse.md)
+ - [LauncherEdge](docs/LauncherEdge.md)
  - [LauncherEventMatchingPattern](docs/LauncherEventMatchingPattern.md)
  - [LauncherMapping](docs/LauncherMapping.md)
  - [LauncherResponse](docs/LauncherResponse.md)

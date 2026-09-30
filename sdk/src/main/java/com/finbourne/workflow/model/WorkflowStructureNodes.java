@@ -11,6 +11,7 @@
 package com.finbourne.workflow.model;
 
 import java.util.Objects;
+import com.finbourne.workflow.model.LauncherResponse;
 import com.finbourne.workflow.model.TaskDefinition;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
@@ -49,13 +50,17 @@ import java.util.Set;
 import com.finbourne.workflow.JSON;
 
 /**
- * The nodes of a Workflow structure graph — the Task Definitions involved
+ * The nodes of a Workflow structure graph — the Task Definitions and the Launchers involved
  */
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class WorkflowStructureNodes {
   public static final String SERIALIZED_NAME_TASK_DEFINITIONS = "taskDefinitions";
   @SerializedName(SERIALIZED_NAME_TASK_DEFINITIONS)
   private List<TaskDefinition> taskDefinitions;
+
+  public static final String SERIALIZED_NAME_LAUNCHERS = "launchers";
+  @SerializedName(SERIALIZED_NAME_LAUNCHERS)
+  private List<LauncherResponse> launchers;
 
   public WorkflowStructureNodes() {
   }
@@ -89,6 +94,35 @@ public class WorkflowStructureNodes {
   }
 
 
+  public WorkflowStructureNodes launchers(List<LauncherResponse> launchers) {
+    
+    this.launchers = launchers;
+    return this;
+  }
+
+  public WorkflowStructureNodes addLaunchersItem(LauncherResponse launchersItem) {
+    if (this.launchers == null) {
+      this.launchers = new ArrayList<>();
+    }
+    this.launchers.add(launchersItem);
+    return this;
+  }
+
+   /**
+   * The Launchers of this Workflow, as full Launcher objects. At most the first 10 by launcher id are returned, in the same order as ListLaunchers gives by default. Inactive Launchers are included. When the Workflow has more, launchersTruncated is true and ListLaunchers returns the full set
+   * @return launchers
+  **/
+  @jakarta.annotation.Nullable
+  public List<LauncherResponse> getLaunchers() {
+    return launchers;
+  }
+
+
+  public void setLaunchers(List<LauncherResponse> launchers) {
+    this.launchers = launchers;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -99,7 +133,8 @@ public class WorkflowStructureNodes {
       return false;
     }
     WorkflowStructureNodes workflowStructureNodes = (WorkflowStructureNodes) o;
-    return Objects.equals(this.taskDefinitions, workflowStructureNodes.taskDefinitions);
+    return Objects.equals(this.taskDefinitions, workflowStructureNodes.taskDefinitions) &&
+        Objects.equals(this.launchers, workflowStructureNodes.launchers);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -108,7 +143,7 @@ public class WorkflowStructureNodes {
 
   @Override
   public int hashCode() {
-    return Objects.hash(taskDefinitions);
+    return Objects.hash(taskDefinitions, launchers);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -123,6 +158,7 @@ public class WorkflowStructureNodes {
     StringBuilder sb = new StringBuilder();
     sb.append("class WorkflowStructureNodes {\n");
     sb.append("    taskDefinitions: ").append(toIndentedString(taskDefinitions)).append("\n");
+    sb.append("    launchers: ").append(toIndentedString(launchers)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -146,6 +182,7 @@ public class WorkflowStructureNodes {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
     openapiFields.add("taskDefinitions");
+    openapiFields.add("launchers");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -175,6 +212,20 @@ public class WorkflowStructureNodes {
           // validate the optional field `taskDefinitions` (array)
           for (int i = 0; i < jsonArraytaskDefinitions.size(); i++) {
             TaskDefinition.validateJsonElement(jsonArraytaskDefinitions.get(i));
+          };
+        }
+      }
+      if (jsonObj.get("launchers") != null && !jsonObj.get("launchers").isJsonNull()) {
+        JsonArray jsonArraylaunchers = jsonObj.getAsJsonArray("launchers");
+        if (jsonArraylaunchers != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("launchers").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `launchers` to be an array in the JSON string but got `%s`", jsonObj.get("launchers").toString()));
+          }
+
+          // validate the optional field `launchers` (array)
+          for (int i = 0; i < jsonArraylaunchers.size(); i++) {
+            LauncherResponse.validateJsonElement(jsonArraylaunchers.get(i));
           };
         }
       }

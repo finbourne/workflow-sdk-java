@@ -5,7 +5,7 @@ Sentences that say what a Launcher does, meant to be shown to a person.   These 
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**schedule** | **String** | A sentence that says when the Launcher starts a run, for example \&quot;At 09:00 every weekday, London time\&quot;.   Null for an Event Launcher, which has no schedule | [optional] [default to String]
+**schedule** | **String** | A sentence that says when the Launcher starts a run, for example \&quot;Weekly on Mon at 09:00, rolled forward to the next business day\&quot;.   Null for an Event Launcher, which has no schedule | [optional] [default to String]
 **fields** | **Map&lt;String, String&gt;** | A sentence for each field of the root task the Launcher fills, keyed by the field name on the root task definition. Empty when the Launcher fills no fields | [optional] [default to Map<String, String>]
 
 ```java

@@ -12,6 +12,7 @@ package com.finbourne.workflow.model;
 
 import java.util.Objects;
 import com.finbourne.workflow.model.ChildTaskDefinitionEdge;
+import com.finbourne.workflow.model.LauncherEdge;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -49,13 +50,17 @@ import java.util.Set;
 import com.finbourne.workflow.JSON;
 
 /**
- * The edges of a Workflow structure graph — the parent-child relationships between Task Definitions
+ * The edges of a Workflow structure graph — the parent-child relationships between Task Definitions and the relationships between Launchers and the Task Definitions they start
  */
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class WorkflowStructureEdges {
   public static final String SERIALIZED_NAME_CHILD_TASK_DEFINITIONS = "childTaskDefinitions";
   @SerializedName(SERIALIZED_NAME_CHILD_TASK_DEFINITIONS)
   private List<ChildTaskDefinitionEdge> childTaskDefinitions;
+
+  public static final String SERIALIZED_NAME_LAUNCHERS = "launchers";
+  @SerializedName(SERIALIZED_NAME_LAUNCHERS)
+  private List<LauncherEdge> launchers;
 
   public WorkflowStructureEdges() {
   }
@@ -89,6 +94,35 @@ public class WorkflowStructureEdges {
   }
 
 
+  public WorkflowStructureEdges launchers(List<LauncherEdge> launchers) {
+    
+    this.launchers = launchers;
+    return this;
+  }
+
+  public WorkflowStructureEdges addLaunchersItem(LauncherEdge launchersItem) {
+    if (this.launchers == null) {
+      this.launchers = new ArrayList<>();
+    }
+    this.launchers.add(launchersItem);
+    return this;
+  }
+
+   /**
+   * The Launcher relationships. There is one entry per Launcher in nodes.launchers, in the same order
+   * @return launchers
+  **/
+  @jakarta.annotation.Nullable
+  public List<LauncherEdge> getLaunchers() {
+    return launchers;
+  }
+
+
+  public void setLaunchers(List<LauncherEdge> launchers) {
+    this.launchers = launchers;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -99,7 +133,8 @@ public class WorkflowStructureEdges {
       return false;
     }
     WorkflowStructureEdges workflowStructureEdges = (WorkflowStructureEdges) o;
-    return Objects.equals(this.childTaskDefinitions, workflowStructureEdges.childTaskDefinitions);
+    return Objects.equals(this.childTaskDefinitions, workflowStructureEdges.childTaskDefinitions) &&
+        Objects.equals(this.launchers, workflowStructureEdges.launchers);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -108,7 +143,7 @@ public class WorkflowStructureEdges {
 
   @Override
   public int hashCode() {
-    return Objects.hash(childTaskDefinitions);
+    return Objects.hash(childTaskDefinitions, launchers);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -123,6 +158,7 @@ public class WorkflowStructureEdges {
     StringBuilder sb = new StringBuilder();
     sb.append("class WorkflowStructureEdges {\n");
     sb.append("    childTaskDefinitions: ").append(toIndentedString(childTaskDefinitions)).append("\n");
+    sb.append("    launchers: ").append(toIndentedString(launchers)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -146,6 +182,7 @@ public class WorkflowStructureEdges {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
     openapiFields.add("childTaskDefinitions");
+    openapiFields.add("launchers");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -175,6 +212,20 @@ public class WorkflowStructureEdges {
           // validate the optional field `childTaskDefinitions` (array)
           for (int i = 0; i < jsonArraychildTaskDefinitions.size(); i++) {
             ChildTaskDefinitionEdge.validateJsonElement(jsonArraychildTaskDefinitions.get(i));
+          };
+        }
+      }
+      if (jsonObj.get("launchers") != null && !jsonObj.get("launchers").isJsonNull()) {
+        JsonArray jsonArraylaunchers = jsonObj.getAsJsonArray("launchers");
+        if (jsonArraylaunchers != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("launchers").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `launchers` to be an array in the JSON string but got `%s`", jsonObj.get("launchers").toString()));
+          }
+
+          // validate the optional field `launchers` (array)
+          for (int i = 0; i < jsonArraylaunchers.size(); i++) {
+            LauncherEdge.validateJsonElement(jsonArraylaunchers.get(i));
           };
         }
       }

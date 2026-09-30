@@ -40,7 +40,7 @@ info:
     | <a name="973">973</a>|Workflow already exists.| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1873
+  version: 0.1.1881
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -5089,8 +5089,82 @@ paths:
                           trigger: cancel
                           guard: "fields['cancellationDetail'] exists AND fields['cancellationDetail']\
                             \ NOT eq ''"
+                      launchers:
+                      - workflowId:
+                          scope: default
+                          code: ExampleWorkflow
+                        launcherId: EveryMonday
+                        displayName: An example Schedule launcher
+                        description: "Starts a run of the workflow at 09:00 every\
+                          \ Monday, London time"
+                        status: Active
+                        launcherDetails:
+                          launcherType: Schedule
+                          schedule:
+                            calendarContext: London
+                            recurrencePattern:
+                              timeConstraints:
+                                startDate: 2025-01-01
+                                timesOfDay:
+                                - hours: 9
+                                  minutes: 0
+                                  type: Specified
+                              dateRegularity:
+                                frequency: 1
+                                daysOfWeek:
+                                - Monday
+                                type: Week
+                              businessDayAdjustment: Following
+                          calendarContexts:
+                          - name: London
+                            timeZone: Europe/London
+                            holidayCalendars:
+                            - scope: A1
+                              code: UkHolidays
+                          mapTaskFields:
+                            asAtDate:
+                              mapFrom: ScheduledTime
+                              dateTimeAdjustment:
+                                calendarContext: London
+                                dateAdjustment:
+                                  deltaDays: -1
+                                  businessDayAdjustment: Previous
+                                timeAdjustment:
+                                  setTo:
+                                    hours: 23
+                                    minutes: 59
+                                    type: Specified
+                          runAsUserId:
+                            setTo: ExampleUserId
+                          setTaskFields:
+                            clientId: client-1
+                          setCorrelationIds:
+                          - example-correlation-id
+                          initialTrigger: Start
+                        summaries:
+                          schedule: "Weekly on Mon at 09:00, rolled forward to the\
+                            \ next business day"
+                          fields:
+                            asAtDate: "1 day before the scheduled date, rolled back\
+                              \ to the previous business day at 23:59 in London"
+                        version:
+                          asAtCreated: 2022-01-01T01:02:03.0000000+00:00
+                          userIdCreated: User-1
+                          requestIdCreated: RequestId-1
+                          asAtModified: 2022-01-01T01:02:03.0000000+00:00
+                          userIdModified: User-1
+                          requestIdModified: RequestId-1
+                          asAtVersionNumber: 1
                     edges:
                       childTaskDefinitions: []
+                      launchers:
+                      - launcherId: EveryMonday
+                        targetTaskDefinition:
+                          taskDefinitionId:
+                            scope: default
+                            code: ExampleTaskDefinition
+                          taskDefinitionAsAt: 2022-01-01T01:02:03.0000000+00:00
+                    launchersTruncated: false
                   runCount: 0
                 links: []
               schema:
@@ -5383,8 +5457,82 @@ paths:
                         trigger: cancel
                         guard: "fields['cancellationDetail'] exists AND fields['cancellationDetail']\
                           \ NOT eq ''"
+                    launchers:
+                    - workflowId:
+                        scope: default
+                        code: ExampleWorkflow
+                      launcherId: EveryMonday
+                      displayName: An example Schedule launcher
+                      description: "Starts a run of the workflow at 09:00 every Monday,\
+                        \ London time"
+                      status: Active
+                      launcherDetails:
+                        launcherType: Schedule
+                        schedule:
+                          calendarContext: London
+                          recurrencePattern:
+                            timeConstraints:
+                              startDate: 2025-01-01
+                              timesOfDay:
+                              - hours: 9
+                                minutes: 0
+                                type: Specified
+                            dateRegularity:
+                              frequency: 1
+                              daysOfWeek:
+                              - Monday
+                              type: Week
+                            businessDayAdjustment: Following
+                        calendarContexts:
+                        - name: London
+                          timeZone: Europe/London
+                          holidayCalendars:
+                          - scope: A1
+                            code: UkHolidays
+                        mapTaskFields:
+                          asAtDate:
+                            mapFrom: ScheduledTime
+                            dateTimeAdjustment:
+                              calendarContext: London
+                              dateAdjustment:
+                                deltaDays: -1
+                                businessDayAdjustment: Previous
+                              timeAdjustment:
+                                setTo:
+                                  hours: 23
+                                  minutes: 59
+                                  type: Specified
+                        runAsUserId:
+                          setTo: ExampleUserId
+                        setTaskFields:
+                          clientId: client-1
+                        setCorrelationIds:
+                        - example-correlation-id
+                        initialTrigger: Start
+                      summaries:
+                        schedule: "Weekly on Mon at 09:00, rolled forward to the next\
+                          \ business day"
+                        fields:
+                          asAtDate: "1 day before the scheduled date, rolled back\
+                            \ to the previous business day at 23:59 in London"
+                      version:
+                        asAtCreated: 2022-01-01T01:02:03.0000000+00:00
+                        userIdCreated: User-1
+                        requestIdCreated: RequestId-1
+                        asAtModified: 2022-01-01T01:02:03.0000000+00:00
+                        userIdModified: User-1
+                        requestIdModified: RequestId-1
+                        asAtVersionNumber: 1
                   edges:
                     childTaskDefinitions: []
+                    launchers:
+                    - launcherId: EveryMonday
+                      targetTaskDefinition:
+                        taskDefinitionId:
+                          scope: default
+                          code: ExampleTaskDefinition
+                        taskDefinitionAsAt: 2022-01-01T01:02:03.0000000+00:00
+                  launchersTruncated: false
                 runCount: 0
               schema:
                 $ref: '#/components/schemas/WorkflowResponse'
@@ -5689,8 +5837,82 @@ paths:
                         trigger: cancel
                         guard: "fields['cancellationDetail'] exists AND fields['cancellationDetail']\
                           \ NOT eq ''"
+                    launchers:
+                    - workflowId:
+                        scope: default
+                        code: ExampleWorkflow
+                      launcherId: EveryMonday
+                      displayName: An example Schedule launcher
+                      description: "Starts a run of the workflow at 09:00 every Monday,\
+                        \ London time"
+                      status: Active
+                      launcherDetails:
+                        launcherType: Schedule
+                        schedule:
+                          calendarContext: London
+                          recurrencePattern:
+                            timeConstraints:
+                              startDate: 2025-01-01
+                              timesOfDay:
+                              - hours: 9
+                                minutes: 0
+                                type: Specified
+                            dateRegularity:
+                              frequency: 1
+                              daysOfWeek:
+                              - Monday
+                              type: Week
+                            businessDayAdjustment: Following
+                        calendarContexts:
+                        - name: London
+                          timeZone: Europe/London
+                          holidayCalendars:
+                          - scope: A1
+                            code: UkHolidays
+                        mapTaskFields:
+                          asAtDate:
+                            mapFrom: ScheduledTime
+                            dateTimeAdjustment:
+                              calendarContext: London
+                              dateAdjustment:
+                                deltaDays: -1
+                                businessDayAdjustment: Previous
+                              timeAdjustment:
+                                setTo:
+                                  hours: 23
+                                  minutes: 59
+                                  type: Specified
+                        runAsUserId:
+                          setTo: ExampleUserId
+                        setTaskFields:
+                          clientId: client-1
+                        setCorrelationIds:
+                        - example-correlation-id
+                        initialTrigger: Start
+                      summaries:
+                        schedule: "Weekly on Mon at 09:00, rolled forward to the next\
+                          \ business day"
+                        fields:
+                          asAtDate: "1 day before the scheduled date, rolled back\
+                            \ to the previous business day at 23:59 in London"
+                      version:
+                        asAtCreated: 2022-01-01T01:02:03.0000000+00:00
+                        userIdCreated: User-1
+                        requestIdCreated: RequestId-1
+                        asAtModified: 2022-01-01T01:02:03.0000000+00:00
+                        userIdModified: User-1
+                        requestIdModified: RequestId-1
+                        asAtVersionNumber: 1
                   edges:
                     childTaskDefinitions: []
+                    launchers:
+                    - launcherId: EveryMonday
+                      targetTaskDefinition:
+                        taskDefinitionId:
+                          scope: default
+                          code: ExampleTaskDefinition
+                        taskDefinitionAsAt: 2022-01-01T01:02:03.0000000+00:00
+                  launchersTruncated: false
                 runCount: 0
               schema:
                 $ref: '#/components/schemas/WorkflowResponse'
@@ -5985,8 +6207,82 @@ paths:
                         trigger: cancel
                         guard: "fields['cancellationDetail'] exists AND fields['cancellationDetail']\
                           \ NOT eq ''"
+                    launchers:
+                    - workflowId:
+                        scope: default
+                        code: ExampleWorkflow
+                      launcherId: EveryMonday
+                      displayName: An example Schedule launcher
+                      description: "Starts a run of the workflow at 09:00 every Monday,\
+                        \ London time"
+                      status: Active
+                      launcherDetails:
+                        launcherType: Schedule
+                        schedule:
+                          calendarContext: London
+                          recurrencePattern:
+                            timeConstraints:
+                              startDate: 2025-01-01
+                              timesOfDay:
+                              - hours: 9
+                                minutes: 0
+                                type: Specified
+                            dateRegularity:
+                              frequency: 1
+                              daysOfWeek:
+                              - Monday
+                              type: Week
+                            businessDayAdjustment: Following
+                        calendarContexts:
+                        - name: London
+                          timeZone: Europe/London
+                          holidayCalendars:
+                          - scope: A1
+                            code: UkHolidays
+                        mapTaskFields:
+                          asAtDate:
+                            mapFrom: ScheduledTime
+                            dateTimeAdjustment:
+                              calendarContext: London
+                              dateAdjustment:
+                                deltaDays: -1
+                                businessDayAdjustment: Previous
+                              timeAdjustment:
+                                setTo:
+                                  hours: 23
+                                  minutes: 59
+                                  type: Specified
+                        runAsUserId:
+                          setTo: ExampleUserId
+                        setTaskFields:
+                          clientId: client-1
+                        setCorrelationIds:
+                        - example-correlation-id
+                        initialTrigger: Start
+                      summaries:
+                        schedule: "Weekly on Mon at 09:00, rolled forward to the next\
+                          \ business day"
+                        fields:
+                          asAtDate: "1 day before the scheduled date, rolled back\
+                            \ to the previous business day at 23:59 in London"
+                      version:
+                        asAtCreated: 2022-01-01T01:02:03.0000000+00:00
+                        userIdCreated: User-1
+                        requestIdCreated: RequestId-1
+                        asAtModified: 2022-01-01T01:02:03.0000000+00:00
+                        userIdModified: User-1
+                        requestIdModified: RequestId-1
+                        asAtVersionNumber: 1
                   edges:
                     childTaskDefinitions: []
+                    launchers:
+                    - launcherId: EveryMonday
+                      targetTaskDefinition:
+                        taskDefinitionId:
+                          scope: default
+                          code: ExampleTaskDefinition
+                        taskDefinitionAsAt: 2022-01-01T01:02:03.0000000+00:00
+                  launchersTruncated: false
                 runCount: 0
               schema:
                 $ref: '#/components/schemas/WorkflowResponse'
@@ -6118,9 +6414,9 @@ paths:
                 - workflowId:
                     scope: A1
                     code: CustodyReconciliation
-                  launcherId: EveryWeekday
+                  launcherId: EveryMonday
                   displayName: An example Schedule launcher
-                  description: "Starts a run of the workflow at 09:00 on every weekday,\
+                  description: "Starts a run of the workflow at 09:00 every Monday,\
                     \ London time"
                   status: Active
                   launcherDetails:
@@ -6138,10 +6434,6 @@ paths:
                           frequency: 1
                           daysOfWeek:
                           - Monday
-                          - Tuesday
-                          - Wednesday
-                          - Thursday
-                          - Friday
                           type: Week
                         businessDayAdjustment: Following
                     calendarContexts:
@@ -6171,7 +6463,11 @@ paths:
                     - example-correlation-id
                     initialTrigger: Start
                   summaries:
-                    fields: {}
+                    schedule: "Weekly on Mon at 09:00, rolled forward to the next\
+                      \ business day"
+                    fields:
+                      asAtDate: "1 day before the scheduled date, rolled back to the\
+                        \ previous business day at 23:59 in London"
                   version:
                     asAtCreated: 2022-01-01T01:02:03.0000000+00:00
                     userIdCreated: User-1
@@ -6240,9 +6536,9 @@ paths:
             examples:
               Schedule launcher:
                 value:
-                  launcherId: EveryWeekday
+                  launcherId: EveryMonday
                   displayName: An example Schedule launcher
-                  description: "Starts a run of the workflow at 09:00 on every weekday,\
+                  description: "Starts a run of the workflow at 09:00 every Monday,\
                     \ London time"
                   status: Active
                   launcherDetails:
@@ -6260,10 +6556,6 @@ paths:
                           frequency: 1
                           daysOfWeek:
                           - Monday
-                          - Tuesday
-                          - Wednesday
-                          - Thursday
-                          - Friday
                           type: Week
                         businessDayAdjustment: Following
                     calendarContexts:
@@ -6320,9 +6612,9 @@ paths:
             examples:
               Schedule launcher:
                 value:
-                  launcherId: EveryWeekday
+                  launcherId: EveryMonday
                   displayName: An example Schedule launcher
-                  description: "Starts a run of the workflow at 09:00 on every weekday,\
+                  description: "Starts a run of the workflow at 09:00 every Monday,\
                     \ London time"
                   status: Active
                   launcherDetails:
@@ -6340,10 +6632,6 @@ paths:
                           frequency: 1
                           daysOfWeek:
                           - Monday
-                          - Tuesday
-                          - Wednesday
-                          - Thursday
-                          - Friday
                           type: Week
                         businessDayAdjustment: Following
                     calendarContexts:
@@ -6400,9 +6688,9 @@ paths:
             examples:
               Schedule launcher:
                 value:
-                  launcherId: EveryWeekday
+                  launcherId: EveryMonday
                   displayName: An example Schedule launcher
-                  description: "Starts a run of the workflow at 09:00 on every weekday,\
+                  description: "Starts a run of the workflow at 09:00 every Monday,\
                     \ London time"
                   status: Active
                   launcherDetails:
@@ -6420,10 +6708,6 @@ paths:
                           frequency: 1
                           daysOfWeek:
                           - Monday
-                          - Tuesday
-                          - Wednesday
-                          - Thursday
-                          - Friday
                           type: Week
                         businessDayAdjustment: Following
                     calendarContexts:
@@ -6480,9 +6764,9 @@ paths:
             examples:
               Schedule launcher:
                 value:
-                  launcherId: EveryWeekday
+                  launcherId: EveryMonday
                   displayName: An example Schedule launcher
-                  description: "Starts a run of the workflow at 09:00 on every weekday,\
+                  description: "Starts a run of the workflow at 09:00 every Monday,\
                     \ London time"
                   status: Active
                   launcherDetails:
@@ -6500,10 +6784,6 @@ paths:
                           frequency: 1
                           daysOfWeek:
                           - Monday
-                          - Tuesday
-                          - Wednesday
-                          - Thursday
-                          - Friday
                           type: Week
                         businessDayAdjustment: Following
                     calendarContexts:
@@ -6566,9 +6846,9 @@ paths:
                 workflowId:
                   scope: A1
                   code: CustodyReconciliation
-                launcherId: EveryWeekday
+                launcherId: EveryMonday
                 displayName: An example Schedule launcher
-                description: "Starts a run of the workflow at 09:00 on every weekday,\
+                description: "Starts a run of the workflow at 09:00 every Monday,\
                   \ London time"
                 status: Active
                 launcherDetails:
@@ -6586,10 +6866,6 @@ paths:
                         frequency: 1
                         daysOfWeek:
                         - Monday
-                        - Tuesday
-                        - Wednesday
-                        - Thursday
-                        - Friday
                         type: Week
                       businessDayAdjustment: Following
                   calendarContexts:
@@ -6619,7 +6895,11 @@ paths:
                   - example-correlation-id
                   initialTrigger: Start
                 summaries:
-                  fields: {}
+                  schedule: "Weekly on Mon at 09:00, rolled forward to the next business\
+                    \ day"
+                  fields:
+                    asAtDate: "1 day before the scheduled date, rolled back to the\
+                      \ previous business day at 23:59 in London"
                 version:
                   asAtCreated: 2022-01-01T01:02:03.0000000+00:00
                   userIdCreated: User-1
@@ -6789,9 +7069,9 @@ paths:
                 workflowId:
                   scope: A1
                   code: CustodyReconciliation
-                launcherId: EveryWeekday
+                launcherId: EveryMonday
                 displayName: An example Schedule launcher
-                description: "Starts a run of the workflow at 09:00 on every weekday,\
+                description: "Starts a run of the workflow at 09:00 every Monday,\
                   \ London time"
                 status: Active
                 launcherDetails:
@@ -6809,10 +7089,6 @@ paths:
                         frequency: 1
                         daysOfWeek:
                         - Monday
-                        - Tuesday
-                        - Wednesday
-                        - Thursday
-                        - Friday
                         type: Week
                       businessDayAdjustment: Following
                   calendarContexts:
@@ -6842,7 +7118,11 @@ paths:
                   - example-correlation-id
                   initialTrigger: Start
                 summaries:
-                  fields: {}
+                  schedule: "Weekly on Mon at 09:00, rolled forward to the next business\
+                    \ day"
+                  fields:
+                    asAtDate: "1 day before the scheduled date, rolled back to the\
+                      \ previous business day at 23:59 in London"
                 version:
                   asAtCreated: 2022-01-01T01:02:03.0000000+00:00
                   userIdCreated: User-1
@@ -6923,7 +7203,7 @@ paths:
               Schedule launcher:
                 value:
                   displayName: An example Schedule launcher
-                  description: "Starts a run of the workflow at 09:00 on every weekday,\
+                  description: "Starts a run of the workflow at 09:00 every Monday,\
                     \ London time"
                   status: Active
                   launcherDetails:
@@ -6941,10 +7221,6 @@ paths:
                           frequency: 1
                           daysOfWeek:
                           - Monday
-                          - Tuesday
-                          - Wednesday
-                          - Thursday
-                          - Friday
                           type: Week
                         businessDayAdjustment: Following
                     calendarContexts:
@@ -7001,7 +7277,7 @@ paths:
               Schedule launcher:
                 value:
                   displayName: An example Schedule launcher
-                  description: "Starts a run of the workflow at 09:00 on every weekday,\
+                  description: "Starts a run of the workflow at 09:00 every Monday,\
                     \ London time"
                   status: Active
                   launcherDetails:
@@ -7019,10 +7295,6 @@ paths:
                           frequency: 1
                           daysOfWeek:
                           - Monday
-                          - Tuesday
-                          - Wednesday
-                          - Thursday
-                          - Friday
                           type: Week
                         businessDayAdjustment: Following
                     calendarContexts:
@@ -7079,7 +7351,7 @@ paths:
               Schedule launcher:
                 value:
                   displayName: An example Schedule launcher
-                  description: "Starts a run of the workflow at 09:00 on every weekday,\
+                  description: "Starts a run of the workflow at 09:00 every Monday,\
                     \ London time"
                   status: Active
                   launcherDetails:
@@ -7097,10 +7369,6 @@ paths:
                           frequency: 1
                           daysOfWeek:
                           - Monday
-                          - Tuesday
-                          - Wednesday
-                          - Thursday
-                          - Friday
                           type: Week
                         businessDayAdjustment: Following
                     calendarContexts:
@@ -7157,7 +7425,7 @@ paths:
               Schedule launcher:
                 value:
                   displayName: An example Schedule launcher
-                  description: "Starts a run of the workflow at 09:00 on every weekday,\
+                  description: "Starts a run of the workflow at 09:00 every Monday,\
                     \ London time"
                   status: Active
                   launcherDetails:
@@ -7175,10 +7443,6 @@ paths:
                           frequency: 1
                           daysOfWeek:
                           - Monday
-                          - Tuesday
-                          - Wednesday
-                          - Thursday
-                          - Friday
                           type: Week
                         businessDayAdjustment: Following
                     calendarContexts:
@@ -7240,9 +7504,9 @@ paths:
                 workflowId:
                   scope: A1
                   code: CustodyReconciliation
-                launcherId: EveryWeekday
+                launcherId: EveryMonday
                 displayName: An example Schedule launcher
-                description: "Starts a run of the workflow at 09:00 on every weekday,\
+                description: "Starts a run of the workflow at 09:00 every Monday,\
                   \ London time"
                 status: Active
                 launcherDetails:
@@ -7260,10 +7524,6 @@ paths:
                         frequency: 1
                         daysOfWeek:
                         - Monday
-                        - Tuesday
-                        - Wednesday
-                        - Thursday
-                        - Friday
                         type: Week
                       businessDayAdjustment: Following
                   calendarContexts:
@@ -7293,7 +7553,11 @@ paths:
                   - example-correlation-id
                   initialTrigger: Start
                 summaries:
-                  fields: {}
+                  schedule: "Weekly on Mon at 09:00, rolled forward to the next business\
+                    \ day"
+                  fields:
+                    asAtDate: "1 day before the scheduled date, rolled back to the\
+                      \ previous business day at 23:59 in London"
                 version:
                   asAtCreated: 2022-01-01T01:02:03.0000000+00:00
                   userIdCreated: User-1
@@ -10061,6 +10325,25 @@ components:
           nullable: true
           type: string
       type: object
+    LauncherEdge:
+      additionalProperties: false
+      description: Represents the relationship between a Launcher of a Workflow and
+        the Task Definition it starts a run of
+      example:
+        launcherId: launcherId
+        targetTaskDefinition:
+          taskDefinitionId:
+            code: code
+            scope: scope
+          taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        launcherId:
+          description: The identifier of the Launcher inside its Workflow
+          nullable: true
+          type: string
+        targetTaskDefinition:
+          $ref: '#/components/schemas/VersionedTaskDefinitionId'
+      type: object
     LauncherEventMatchingPattern:
       additionalProperties: false
       description: Which events make an Event Launcher start a run of its Workflow
@@ -10206,8 +10489,8 @@ components:
       properties:
         schedule:
           description: "A sentence that says when the Launcher starts a run, for example\
-            \ \"At 09:00 every weekday, London time\".\n \nNull for an Event Launcher,\
-            \ which has no schedule"
+            \ \"Weekly on Mon at 09:00, rolled forward to\nthe next business day\"\
+            .\n \nNull for an Event Launcher, which has no schedule"
           nullable: true
           type: string
         fields:
@@ -11397,6 +11680,67 @@ components:
         values:
         - workflowStructure:
             nodes:
+              launchers:
+              - launcherId: launcherId
+                displayName: displayName
+                description: description
+                launcherDetails:
+                  setTaskFields:
+                    key: ""
+                  setCorrelationIds:
+                  - setCorrelationIds
+                  - setCorrelationIds
+                  runAsUserId:
+                    setTo: setTo
+                    mapFrom: mapFrom
+                  launcherType: launcherType
+                  initialTrigger: initialTrigger
+                version:
+                  asAtModified: 2000-01-23T04:56:07.000+00:00
+                  userIdModified: userIdModified
+                  asAtVersionNumber: 0
+                  asAtCreated: 2000-01-23T04:56:07.000+00:00
+                  requestIdCreated: requestIdCreated
+                  userIdCreated: userIdCreated
+                  requestIdModified: requestIdModified
+                workflowId:
+                  code: code
+                  scope: scope
+                status: status
+                summaries:
+                  schedule: schedule
+                  fields:
+                    key: fields
+              - launcherId: launcherId
+                displayName: displayName
+                description: description
+                launcherDetails:
+                  setTaskFields:
+                    key: ""
+                  setCorrelationIds:
+                  - setCorrelationIds
+                  - setCorrelationIds
+                  runAsUserId:
+                    setTo: setTo
+                    mapFrom: mapFrom
+                  launcherType: launcherType
+                  initialTrigger: initialTrigger
+                version:
+                  asAtModified: 2000-01-23T04:56:07.000+00:00
+                  userIdModified: userIdModified
+                  asAtVersionNumber: 0
+                  asAtCreated: 2000-01-23T04:56:07.000+00:00
+                  requestIdCreated: requestIdCreated
+                  userIdCreated: userIdCreated
+                  requestIdModified: requestIdModified
+                workflowId:
+                  code: code
+                  scope: scope
+                status: status
+                summaries:
+                  schedule: schedule
+                  fields:
+                    key: fields
               taskDefinitions:
               - initialState:
                   requiredFields:
@@ -11636,7 +11980,21 @@ components:
                   name: name
                   description: description
                   category: category
+            launchersTruncated: true
             edges:
+              launchers:
+              - launcherId: launcherId
+                targetTaskDefinition:
+                  taskDefinitionId:
+                    code: code
+                    scope: scope
+                  taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
+              - launcherId: launcherId
+                targetTaskDefinition:
+                  taskDefinitionId:
+                    code: code
+                    scope: scope
+                  taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
               childTaskDefinitions:
               - parent:
                   taskDefinitionId:
@@ -11689,6 +12047,67 @@ components:
               key: key
         - workflowStructure:
             nodes:
+              launchers:
+              - launcherId: launcherId
+                displayName: displayName
+                description: description
+                launcherDetails:
+                  setTaskFields:
+                    key: ""
+                  setCorrelationIds:
+                  - setCorrelationIds
+                  - setCorrelationIds
+                  runAsUserId:
+                    setTo: setTo
+                    mapFrom: mapFrom
+                  launcherType: launcherType
+                  initialTrigger: initialTrigger
+                version:
+                  asAtModified: 2000-01-23T04:56:07.000+00:00
+                  userIdModified: userIdModified
+                  asAtVersionNumber: 0
+                  asAtCreated: 2000-01-23T04:56:07.000+00:00
+                  requestIdCreated: requestIdCreated
+                  userIdCreated: userIdCreated
+                  requestIdModified: requestIdModified
+                workflowId:
+                  code: code
+                  scope: scope
+                status: status
+                summaries:
+                  schedule: schedule
+                  fields:
+                    key: fields
+              - launcherId: launcherId
+                displayName: displayName
+                description: description
+                launcherDetails:
+                  setTaskFields:
+                    key: ""
+                  setCorrelationIds:
+                  - setCorrelationIds
+                  - setCorrelationIds
+                  runAsUserId:
+                    setTo: setTo
+                    mapFrom: mapFrom
+                  launcherType: launcherType
+                  initialTrigger: initialTrigger
+                version:
+                  asAtModified: 2000-01-23T04:56:07.000+00:00
+                  userIdModified: userIdModified
+                  asAtVersionNumber: 0
+                  asAtCreated: 2000-01-23T04:56:07.000+00:00
+                  requestIdCreated: requestIdCreated
+                  userIdCreated: userIdCreated
+                  requestIdModified: requestIdModified
+                workflowId:
+                  code: code
+                  scope: scope
+                status: status
+                summaries:
+                  schedule: schedule
+                  fields:
+                    key: fields
               taskDefinitions:
               - initialState:
                   requiredFields:
@@ -11928,7 +12347,21 @@ components:
                   name: name
                   description: description
                   category: category
+            launchersTruncated: true
             edges:
+              launchers:
+              - launcherId: launcherId
+                targetTaskDefinition:
+                  taskDefinitionId:
+                    code: code
+                    scope: scope
+                  taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
+              - launcherId: launcherId
+                targetTaskDefinition:
+                  taskDefinitionId:
+                    code: code
+                    scope: scope
+                  taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
               childTaskDefinitions:
               - parent:
                   taskDefinitionId:
@@ -15337,6 +15770,67 @@ components:
       example:
         workflowStructure:
           nodes:
+            launchers:
+            - launcherId: launcherId
+              displayName: displayName
+              description: description
+              launcherDetails:
+                setTaskFields:
+                  key: ""
+                setCorrelationIds:
+                - setCorrelationIds
+                - setCorrelationIds
+                runAsUserId:
+                  setTo: setTo
+                  mapFrom: mapFrom
+                launcherType: launcherType
+                initialTrigger: initialTrigger
+              version:
+                asAtModified: 2000-01-23T04:56:07.000+00:00
+                userIdModified: userIdModified
+                asAtVersionNumber: 0
+                asAtCreated: 2000-01-23T04:56:07.000+00:00
+                requestIdCreated: requestIdCreated
+                userIdCreated: userIdCreated
+                requestIdModified: requestIdModified
+              workflowId:
+                code: code
+                scope: scope
+              status: status
+              summaries:
+                schedule: schedule
+                fields:
+                  key: fields
+            - launcherId: launcherId
+              displayName: displayName
+              description: description
+              launcherDetails:
+                setTaskFields:
+                  key: ""
+                setCorrelationIds:
+                - setCorrelationIds
+                - setCorrelationIds
+                runAsUserId:
+                  setTo: setTo
+                  mapFrom: mapFrom
+                launcherType: launcherType
+                initialTrigger: initialTrigger
+              version:
+                asAtModified: 2000-01-23T04:56:07.000+00:00
+                userIdModified: userIdModified
+                asAtVersionNumber: 0
+                asAtCreated: 2000-01-23T04:56:07.000+00:00
+                requestIdCreated: requestIdCreated
+                userIdCreated: userIdCreated
+                requestIdModified: requestIdModified
+              workflowId:
+                code: code
+                scope: scope
+              status: status
+              summaries:
+                schedule: schedule
+                fields:
+                  key: fields
             taskDefinitions:
             - initialState:
                 requiredFields:
@@ -15576,7 +16070,21 @@ components:
                 name: name
                 description: description
                 category: category
+          launchersTruncated: true
           edges:
+            launchers:
+            - launcherId: launcherId
+              targetTaskDefinition:
+                taskDefinitionId:
+                  code: code
+                  scope: scope
+                taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
+            - launcherId: launcherId
+              targetTaskDefinition:
+                taskDefinitionId:
+                  code: code
+                  scope: scope
+                taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
             childTaskDefinitions:
             - parent:
                 taskDefinitionId:
@@ -15695,9 +16203,71 @@ components:
       type: object
     WorkflowStructure:
       additionalProperties: false
-      description: Describes the structure of a Workflow as a graph of Task Definitions
+      description: Describes the structure of a Workflow as a graph of its Task Definitions
+        and its Launchers
       example:
         nodes:
+          launchers:
+          - launcherId: launcherId
+            displayName: displayName
+            description: description
+            launcherDetails:
+              setTaskFields:
+                key: ""
+              setCorrelationIds:
+              - setCorrelationIds
+              - setCorrelationIds
+              runAsUserId:
+                setTo: setTo
+                mapFrom: mapFrom
+              launcherType: launcherType
+              initialTrigger: initialTrigger
+            version:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+              userIdModified: userIdModified
+              asAtVersionNumber: 0
+              asAtCreated: 2000-01-23T04:56:07.000+00:00
+              requestIdCreated: requestIdCreated
+              userIdCreated: userIdCreated
+              requestIdModified: requestIdModified
+            workflowId:
+              code: code
+              scope: scope
+            status: status
+            summaries:
+              schedule: schedule
+              fields:
+                key: fields
+          - launcherId: launcherId
+            displayName: displayName
+            description: description
+            launcherDetails:
+              setTaskFields:
+                key: ""
+              setCorrelationIds:
+              - setCorrelationIds
+              - setCorrelationIds
+              runAsUserId:
+                setTo: setTo
+                mapFrom: mapFrom
+              launcherType: launcherType
+              initialTrigger: initialTrigger
+            version:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+              userIdModified: userIdModified
+              asAtVersionNumber: 0
+              asAtCreated: 2000-01-23T04:56:07.000+00:00
+              requestIdCreated: requestIdCreated
+              userIdCreated: userIdCreated
+              requestIdModified: requestIdModified
+            workflowId:
+              code: code
+              scope: scope
+            status: status
+            summaries:
+              schedule: schedule
+              fields:
+                key: fields
           taskDefinitions:
           - initialState:
               requiredFields:
@@ -15937,7 +16507,21 @@ components:
               name: name
               description: description
               category: category
+        launchersTruncated: true
         edges:
+          launchers:
+          - launcherId: launcherId
+            targetTaskDefinition:
+              taskDefinitionId:
+                code: code
+                scope: scope
+              taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
+          - launcherId: launcherId
+            targetTaskDefinition:
+              taskDefinitionId:
+                code: code
+                scope: scope
+              taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
           childTaskDefinitions:
           - parent:
               taskDefinitionId:
@@ -15964,12 +16548,31 @@ components:
           $ref: '#/components/schemas/WorkflowStructureNodes'
         edges:
           $ref: '#/components/schemas/WorkflowStructureEdges'
+        launchersTruncated:
+          description: |-
+            True when the Workflow has more Launchers than were returned inline in nodes.launchers. Call
+            ListLaunchers for the full set
+          type: boolean
       type: object
     WorkflowStructureEdges:
       additionalProperties: false
-      description: The edges of a Workflow structure graph — the parent-child relationships
-        between Task Definitions
+      description: |-
+        The edges of a Workflow structure graph — the parent-child relationships between Task Definitions and the
+        relationships between Launchers and the Task Definitions they start
       example:
+        launchers:
+        - launcherId: launcherId
+          targetTaskDefinition:
+            taskDefinitionId:
+              code: code
+              scope: scope
+            taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
+        - launcherId: launcherId
+          targetTaskDefinition:
+            taskDefinitionId:
+              code: code
+              scope: scope
+            taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
         childTaskDefinitions:
         - parent:
             taskDefinitionId:
@@ -15998,12 +16601,80 @@ components:
             $ref: '#/components/schemas/ChildTaskDefinitionEdge'
           nullable: true
           type: array
+        launchers:
+          description: "The Launcher relationships. There is one entry per Launcher\
+            \ in nodes.launchers, in the same order"
+          items:
+            $ref: '#/components/schemas/LauncherEdge'
+          nullable: true
+          type: array
       type: object
     WorkflowStructureNodes:
       additionalProperties: false
       description: The nodes of a Workflow structure graph — the Task Definitions
-        involved
+        and the Launchers involved
       example:
+        launchers:
+        - launcherId: launcherId
+          displayName: displayName
+          description: description
+          launcherDetails:
+            setTaskFields:
+              key: ""
+            setCorrelationIds:
+            - setCorrelationIds
+            - setCorrelationIds
+            runAsUserId:
+              setTo: setTo
+              mapFrom: mapFrom
+            launcherType: launcherType
+            initialTrigger: initialTrigger
+          version:
+            asAtModified: 2000-01-23T04:56:07.000+00:00
+            userIdModified: userIdModified
+            asAtVersionNumber: 0
+            asAtCreated: 2000-01-23T04:56:07.000+00:00
+            requestIdCreated: requestIdCreated
+            userIdCreated: userIdCreated
+            requestIdModified: requestIdModified
+          workflowId:
+            code: code
+            scope: scope
+          status: status
+          summaries:
+            schedule: schedule
+            fields:
+              key: fields
+        - launcherId: launcherId
+          displayName: displayName
+          description: description
+          launcherDetails:
+            setTaskFields:
+              key: ""
+            setCorrelationIds:
+            - setCorrelationIds
+            - setCorrelationIds
+            runAsUserId:
+              setTo: setTo
+              mapFrom: mapFrom
+            launcherType: launcherType
+            initialTrigger: initialTrigger
+          version:
+            asAtModified: 2000-01-23T04:56:07.000+00:00
+            userIdModified: userIdModified
+            asAtVersionNumber: 0
+            asAtCreated: 2000-01-23T04:56:07.000+00:00
+            requestIdCreated: requestIdCreated
+            userIdCreated: userIdCreated
+            requestIdModified: requestIdModified
+          workflowId:
+            code: code
+            scope: scope
+          status: status
+          summaries:
+            schedule: schedule
+            fields:
+              key: fields
         taskDefinitions:
         - initialState:
             requiredFields:
@@ -16248,6 +16919,15 @@ components:
           description: The Task Definitions that make up the nodes of this Workflow
           items:
             $ref: '#/components/schemas/TaskDefinition'
+          nullable: true
+          type: array
+        launchers:
+          description: |-
+            The Launchers of this Workflow, as full Launcher objects. At most the first 10 by launcher id are
+            returned, in the same order as ListLaunchers gives by default. Inactive Launchers are included. When
+            the Workflow has more, launchersTruncated is true and ListLaunchers returns the full set
+          items:
+            $ref: '#/components/schemas/LauncherResponse'
           nullable: true
           type: array
       type: object
