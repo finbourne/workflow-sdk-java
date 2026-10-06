@@ -112,6 +112,18 @@ public class Task {
   @SerializedName(SERIALIZED_NAME_CHILD_TASKS)
   private List<TaskSummary> childTasks;
 
+  public static final String SERIALIZED_NAME_PREVIOUS_TASK = "previousTask";
+  @SerializedName(SERIALIZED_NAME_PREVIOUS_TASK)
+  private TaskSummary previousTask;
+
+  public static final String SERIALIZED_NAME_NEXT_TASK = "nextTask";
+  @SerializedName(SERIALIZED_NAME_NEXT_TASK)
+  private TaskSummary nextTask;
+
+  public static final String SERIALIZED_NAME_NEXT_TASK_INITIAL_TRIGGER = "nextTaskInitialTrigger";
+  @SerializedName(SERIALIZED_NAME_NEXT_TASK_INITIAL_TRIGGER)
+  private String nextTaskInitialTrigger;
+
   public static final String SERIALIZED_NAME_CORRELATION_IDS = "correlationIds";
   @SerializedName(SERIALIZED_NAME_CORRELATION_IDS)
   private List<String> correlationIds;
@@ -436,6 +448,69 @@ public class Task {
 
   public void setChildTasks(List<TaskSummary> childTasks) {
     this.childTasks = childTasks;
+  }
+
+
+  public Task previousTask(TaskSummary previousTask) {
+    
+    this.previousTask = previousTask;
+    return this;
+  }
+
+   /**
+   * Get previousTask
+   * @return previousTask
+  **/
+  @jakarta.annotation.Nullable
+  public TaskSummary getPreviousTask() {
+    return previousTask;
+  }
+
+
+  public void setPreviousTask(TaskSummary previousTask) {
+    this.previousTask = previousTask;
+  }
+
+
+  public Task nextTask(TaskSummary nextTask) {
+    
+    this.nextTask = nextTask;
+    return this;
+  }
+
+   /**
+   * Get nextTask
+   * @return nextTask
+  **/
+  @jakarta.annotation.Nullable
+  public TaskSummary getNextTask() {
+    return nextTask;
+  }
+
+
+  public void setNextTask(TaskSummary nextTask) {
+    this.nextTask = nextTask;
+  }
+
+
+  public Task nextTaskInitialTrigger(String nextTaskInitialTrigger) {
+    
+    this.nextTaskInitialTrigger = nextTaskInitialTrigger;
+    return this;
+  }
+
+   /**
+   * The trigger this Task&#39;s next Task should receive when this Task completes, if any
+   * @return nextTaskInitialTrigger
+  **/
+  @jakarta.annotation.Nullable
+  public String getNextTaskInitialTrigger() {
+    return nextTaskInitialTrigger;
+  }
+
+
+  public void setNextTaskInitialTrigger(String nextTaskInitialTrigger) {
+    this.nextTaskInitialTrigger = nextTaskInitialTrigger;
   }
 
 
@@ -821,6 +896,9 @@ public class Task {
         Objects.equals(this.ultimateParentTask, task.ultimateParentTask) &&
         Objects.equals(this.parentTask, task.parentTask) &&
         Objects.equals(this.childTasks, task.childTasks) &&
+        Objects.equals(this.previousTask, task.previousTask) &&
+        Objects.equals(this.nextTask, task.nextTask) &&
+        Objects.equals(this.nextTaskInitialTrigger, task.nextTaskInitialTrigger) &&
         Objects.equals(this.correlationIds, task.correlationIds) &&
         Objects.equals(this.version, task.version) &&
         Objects.equals(this.terminalState, task.terminalState) &&
@@ -845,7 +923,7 @@ public class Task {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, taskDefinitionId, taskDefinitionVersion, taskDefinitionDisplayName, workflowId, workflowDisplayName, workflowRun, state, stateDisplayName, ultimateParentTask, parentTask, childTasks, correlationIds, version, terminalState, asAtLastTransition, fields, stackingKey, stack, actionLogIdCreated, actionLogIdModified, actionLogIdSubmitted, hierarchicalPosition, completionStatus, openDuration, openDurationSinceLastUpdate, openDurationSinceLastTransition, properties);
+    return Objects.hash(id, taskDefinitionId, taskDefinitionVersion, taskDefinitionDisplayName, workflowId, workflowDisplayName, workflowRun, state, stateDisplayName, ultimateParentTask, parentTask, childTasks, previousTask, nextTask, nextTaskInitialTrigger, correlationIds, version, terminalState, asAtLastTransition, fields, stackingKey, stack, actionLogIdCreated, actionLogIdModified, actionLogIdSubmitted, hierarchicalPosition, completionStatus, openDuration, openDurationSinceLastUpdate, openDurationSinceLastTransition, properties);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -871,6 +949,9 @@ public class Task {
     sb.append("    ultimateParentTask: ").append(toIndentedString(ultimateParentTask)).append("\n");
     sb.append("    parentTask: ").append(toIndentedString(parentTask)).append("\n");
     sb.append("    childTasks: ").append(toIndentedString(childTasks)).append("\n");
+    sb.append("    previousTask: ").append(toIndentedString(previousTask)).append("\n");
+    sb.append("    nextTask: ").append(toIndentedString(nextTask)).append("\n");
+    sb.append("    nextTaskInitialTrigger: ").append(toIndentedString(nextTaskInitialTrigger)).append("\n");
     sb.append("    correlationIds: ").append(toIndentedString(correlationIds)).append("\n");
     sb.append("    version: ").append(toIndentedString(version)).append("\n");
     sb.append("    terminalState: ").append(toIndentedString(terminalState)).append("\n");
@@ -921,6 +1002,9 @@ public class Task {
     openapiFields.add("ultimateParentTask");
     openapiFields.add("parentTask");
     openapiFields.add("childTasks");
+    openapiFields.add("previousTask");
+    openapiFields.add("nextTask");
+    openapiFields.add("nextTaskInitialTrigger");
     openapiFields.add("correlationIds");
     openapiFields.add("version");
     openapiFields.add("terminalState");
@@ -1015,6 +1099,17 @@ public class Task {
             TaskSummary.validateJsonElement(jsonArraychildTasks.get(i));
           };
         }
+      }
+      // validate the optional field `previousTask`
+      if (jsonObj.get("previousTask") != null && !jsonObj.get("previousTask").isJsonNull()) {
+        TaskSummary.validateJsonElement(jsonObj.get("previousTask"));
+      }
+      // validate the optional field `nextTask`
+      if (jsonObj.get("nextTask") != null && !jsonObj.get("nextTask").isJsonNull()) {
+        TaskSummary.validateJsonElement(jsonObj.get("nextTask"));
+      }
+      if ((jsonObj.get("nextTaskInitialTrigger") != null && !jsonObj.get("nextTaskInitialTrigger").isJsonNull()) && !jsonObj.get("nextTaskInitialTrigger").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `nextTaskInitialTrigger` to be a primitive type in the JSON string but got `%s`", jsonObj.get("nextTaskInitialTrigger").toString()));
       }
       // ensure the optional json data is an array if present
       if (jsonObj.get("correlationIds") != null && !jsonObj.get("correlationIds").isJsonNull() && !jsonObj.get("correlationIds").isJsonArray()) {

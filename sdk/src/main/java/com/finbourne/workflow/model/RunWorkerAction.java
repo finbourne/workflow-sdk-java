@@ -137,6 +137,10 @@ public class RunWorkerAction {
   @SerializedName(SERIALIZED_NAME_WORKER_TIMEOUT)
   private Integer workerTimeout;
 
+  public static final String SERIALIZED_NAME_ORDERING = "ordering";
+  @SerializedName(SERIALIZED_NAME_ORDERING)
+  private String ordering;
+
   public RunWorkerAction() {
   }
 
@@ -332,6 +336,27 @@ public class RunWorkerAction {
   }
 
 
+  public RunWorkerAction ordering(String ordering) {
+    
+    this.ordering = ordering;
+    return this;
+  }
+
+   /**
+   * How the created child tasks are ordered for execution: Parallel (default), Series, or ParallelSeries
+   * @return ordering
+  **/
+  @jakarta.annotation.Nullable
+  public String getOrdering() {
+    return ordering;
+  }
+
+
+  public void setOrdering(String ordering) {
+    this.ordering = ordering;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -349,7 +374,8 @@ public class RunWorkerAction {
         Objects.equals(this.workerStatusTriggers, runWorkerAction.workerStatusTriggers) &&
         Objects.equals(this.childTaskConfigurations, runWorkerAction.childTaskConfigurations) &&
         Objects.equals(this.reRunConfigurations, runWorkerAction.reRunConfigurations) &&
-        Objects.equals(this.workerTimeout, runWorkerAction.workerTimeout);
+        Objects.equals(this.workerTimeout, runWorkerAction.workerTimeout) &&
+        Objects.equals(this.ordering, runWorkerAction.ordering);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -358,7 +384,7 @@ public class RunWorkerAction {
 
   @Override
   public int hashCode() {
-    return Objects.hash(type, workerId, workerAsAt, workerParameters, workerStatusTriggers, childTaskConfigurations, reRunConfigurations, workerTimeout);
+    return Objects.hash(type, workerId, workerAsAt, workerParameters, workerStatusTriggers, childTaskConfigurations, reRunConfigurations, workerTimeout, ordering);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -380,6 +406,7 @@ public class RunWorkerAction {
     sb.append("    childTaskConfigurations: ").append(toIndentedString(childTaskConfigurations)).append("\n");
     sb.append("    reRunConfigurations: ").append(toIndentedString(reRunConfigurations)).append("\n");
     sb.append("    workerTimeout: ").append(toIndentedString(workerTimeout)).append("\n");
+    sb.append("    ordering: ").append(toIndentedString(ordering)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -410,6 +437,7 @@ public class RunWorkerAction {
     openapiFields.add("childTaskConfigurations");
     openapiFields.add("reRunConfigurations");
     openapiFields.add("workerTimeout");
+    openapiFields.add("ordering");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -473,6 +501,9 @@ public class RunWorkerAction {
             ReRunConfiguration.validateJsonElement(jsonArrayreRunConfigurations.get(i));
           };
         }
+      }
+      if ((jsonObj.get("ordering") != null && !jsonObj.get("ordering").isJsonNull()) && !jsonObj.get("ordering").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ordering` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ordering").toString()));
       }
   }
 

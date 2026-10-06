@@ -17,6 +17,9 @@ Name | Type | Description | Notes
 **ultimateParentTask** | [**TaskSummary**](TaskSummary.md) |  | [default to TaskSummary]
 **parentTask** | [**TaskSummary**](TaskSummary.md) |  | [optional] [default to TaskSummary]
 **childTasks** | [**List&lt;TaskSummary&gt;**](TaskSummary.md) | This Task&#39;s child tasks | [optional] [default to List<TaskSummary>]
+**previousTask** | [**TaskSummary**](TaskSummary.md) |  | [optional] [default to TaskSummary]
+**nextTask** | [**TaskSummary**](TaskSummary.md) |  | [optional] [default to TaskSummary]
+**nextTaskInitialTrigger** | **String** | The trigger this Task&#39;s next Task should receive when this Task completes, if any | [optional] [default to String]
 **correlationIds** | **List&lt;String&gt;** | User-provided ID used to link entities and tasks | [optional] [default to List<String>]
 **version** | [**VersionInfo**](VersionInfo.md) |  | [optional] [default to VersionInfo]
 **terminalState** | **Boolean** | True if no onward transitions are possible | [default to Boolean]
@@ -52,6 +55,9 @@ String State = "example State";
 TaskSummary UltimateParentTask = new TaskSummary();
 TaskSummary ParentTask = new TaskSummary();
 @jakarta.annotation.Nullable List<TaskSummary> ChildTasks = new List<TaskSummary>();
+TaskSummary PreviousTask = new TaskSummary();
+TaskSummary NextTask = new TaskSummary();
+@jakarta.annotation.Nullable String NextTaskInitialTrigger = "example NextTaskInitialTrigger";
 @jakarta.annotation.Nullable List<String> CorrelationIds = new List<String>();
 VersionInfo Version = new VersionInfo();
 Boolean TerminalState = true;
@@ -83,6 +89,9 @@ Task taskInstance = new Task()
     .UltimateParentTask(UltimateParentTask)
     .ParentTask(ParentTask)
     .ChildTasks(ChildTasks)
+    .PreviousTask(PreviousTask)
+    .NextTask(NextTask)
+    .NextTaskInitialTrigger(NextTaskInitialTrigger)
     .CorrelationIds(CorrelationIds)
     .Version(Version)
     .TerminalState(TerminalState)

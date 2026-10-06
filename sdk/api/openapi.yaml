@@ -40,7 +40,7 @@ info:
     | <a name="973">973</a>|Workflow already exists.| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1881
+  version: 0.1.1894
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -880,6 +880,85 @@ paths:
       - oauth2: []
       summary: "ListAccessControlledResources: Get resources available for access\
         \ control"
+      tags:
+      - Application Metadata
+      x-fbn-apistatus: Stable
+      x-accepts: application/json
+  /api/metadata/endpoints:
+    get:
+      description: "Get the name of the application and the operation, HTTP method,\
+        \ path, status, summary and description of each of its API endpoints"
+      operationId: ListApiEndpoints
+      responses:
+        "200":
+          content:
+            text/plain:
+              example:
+                application: workflow
+                endpoints:
+                - operation: CreateTaskDefinition
+                  httpMethod: POST
+                  path: /workflow/api/taskdefinitions
+                  status: Stable
+                  summary: Create a new Task Definition
+                - operation: GetWorker
+                  httpMethod: GET
+                  path: "/workflow/api/workers/{scope}/{code}"
+                  status: Stable
+                  summary: Get a Worker
+                  description: Will return a NotFound failure if the Worker does not
+                    exist
+                href: https://example.lusid.com/workflow/api/metadata/endpoints
+              schema:
+                $ref: '#/components/schemas/ServiceApiEndpoints'
+            application/json:
+              example:
+                application: workflow
+                endpoints:
+                - operation: CreateTaskDefinition
+                  httpMethod: POST
+                  path: /workflow/api/taskdefinitions
+                  status: Stable
+                  summary: Create a new Task Definition
+                - operation: GetWorker
+                  httpMethod: GET
+                  path: "/workflow/api/workers/{scope}/{code}"
+                  status: Stable
+                  summary: Get a Worker
+                  description: Will return a NotFound failure if the Worker does not
+                    exist
+                href: https://example.lusid.com/workflow/api/metadata/endpoints
+              schema:
+                $ref: '#/components/schemas/ServiceApiEndpoints'
+            text/json:
+              example:
+                application: workflow
+                endpoints:
+                - operation: CreateTaskDefinition
+                  httpMethod: POST
+                  path: /workflow/api/taskdefinitions
+                  status: Stable
+                  summary: Create a new Task Definition
+                - operation: GetWorker
+                  httpMethod: GET
+                  path: "/workflow/api/workers/{scope}/{code}"
+                  status: Stable
+                  summary: Get a Worker
+                  description: Will return a NotFound failure if the Worker does not
+                    exist
+                href: https://example.lusid.com/workflow/api/metadata/endpoints
+              schema:
+                $ref: '#/components/schemas/ServiceApiEndpoints'
+          description: OK
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: "ListApiEndpoints: Get the API endpoints available"
       tags:
       - Application Metadata
       x-fbn-apistatus: Stable
@@ -8201,6 +8280,38 @@ components:
       required:
       - requestId
       type: object
+    ApiEndpoint:
+      additionalProperties: false
+      example:
+        summary: summary
+        path: path
+        description: description
+        httpMethod: httpMethod
+        operation: operation
+        status: status
+      properties:
+        operation:
+          nullable: true
+          type: string
+        httpMethod:
+          minLength: 1
+          type: string
+        path:
+          minLength: 1
+          type: string
+        status:
+          nullable: true
+          type: string
+        summary:
+          nullable: true
+          type: string
+        description:
+          nullable: true
+          type: string
+      required:
+      - httpMethod
+      - path
+      type: object
     BatchUpdateTasksRequest:
       additionalProperties: false
       description: A request to update multiple Tasks
@@ -8320,6 +8431,7 @@ components:
               code: code
               scope: scope
           asAtLastTransition: 2000-01-23T04:56:07.000+00:00
+          nextTaskInitialTrigger: nextTaskInitialTrigger
           ultimateParentTask:
             correlationIds:
             - correlationIds
@@ -8335,6 +8447,19 @@ components:
               scope: scope
           taskDefinitionVersion:
             asAtModified: 2000-01-23T04:56:07.000+00:00
+          previousTask:
+            correlationIds:
+            - correlationIds
+            - correlationIds
+            taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
           completionStatus: completionStatus
           fields:
           - name: name
@@ -8344,6 +8469,19 @@ components:
           workflowId:
             code: code
             scope: scope
+          nextTask:
+            correlationIds:
+            - correlationIds
+            - correlationIds
+            taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
           properties:
             key:
               value:
@@ -8436,6 +8574,7 @@ components:
               code: code
               scope: scope
           asAtLastTransition: 2000-01-23T04:56:07.000+00:00
+          nextTaskInitialTrigger: nextTaskInitialTrigger
           ultimateParentTask:
             correlationIds:
             - correlationIds
@@ -8451,6 +8590,19 @@ components:
               scope: scope
           taskDefinitionVersion:
             asAtModified: 2000-01-23T04:56:07.000+00:00
+          previousTask:
+            correlationIds:
+            - correlationIds
+            - correlationIds
+            taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
           completionStatus: completionStatus
           fields:
           - name: name
@@ -8460,6 +8612,19 @@ components:
           workflowId:
             code: code
             scope: scope
+          nextTask:
+            correlationIds:
+            - correlationIds
+            - correlationIds
+            taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
           properties:
             key:
               value:
@@ -11080,6 +11245,7 @@ components:
               code: code
               scope: scope
           asAtLastTransition: 2000-01-23T04:56:07.000+00:00
+          nextTaskInitialTrigger: nextTaskInitialTrigger
           ultimateParentTask:
             correlationIds:
             - correlationIds
@@ -11095,6 +11261,19 @@ components:
               scope: scope
           taskDefinitionVersion:
             asAtModified: 2000-01-23T04:56:07.000+00:00
+          previousTask:
+            correlationIds:
+            - correlationIds
+            - correlationIds
+            taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
           completionStatus: completionStatus
           fields:
           - name: name
@@ -11104,6 +11283,19 @@ components:
           workflowId:
             code: code
             scope: scope
+          nextTask:
+            correlationIds:
+            - correlationIds
+            - correlationIds
+            taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
           properties:
             key:
               value:
@@ -11196,6 +11388,7 @@ components:
               code: code
               scope: scope
           asAtLastTransition: 2000-01-23T04:56:07.000+00:00
+          nextTaskInitialTrigger: nextTaskInitialTrigger
           ultimateParentTask:
             correlationIds:
             - correlationIds
@@ -11211,6 +11404,19 @@ components:
               scope: scope
           taskDefinitionVersion:
             asAtModified: 2000-01-23T04:56:07.000+00:00
+          previousTask:
+            correlationIds:
+            - correlationIds
+            - correlationIds
+            taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
           completionStatus: completionStatus
           fields:
           - name: name
@@ -11220,6 +11426,19 @@ components:
           workflowId:
             code: code
             scope: scope
+          nextTask:
+            correlationIds:
+            - correlationIds
+            - correlationIds
+            taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
           properties:
             key:
               value:
@@ -13145,6 +13364,7 @@ components:
               code: code
               scope: scope
           asAtLastTransition: 2000-01-23T04:56:07.000+00:00
+          nextTaskInitialTrigger: nextTaskInitialTrigger
           ultimateParentTask:
             correlationIds:
             - correlationIds
@@ -13160,6 +13380,19 @@ components:
               scope: scope
           taskDefinitionVersion:
             asAtModified: 2000-01-23T04:56:07.000+00:00
+          previousTask:
+            correlationIds:
+            - correlationIds
+            - correlationIds
+            taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
           completionStatus: completionStatus
           fields:
           - name: name
@@ -13169,6 +13402,19 @@ components:
           workflowId:
             code: code
             scope: scope
+          nextTask:
+            correlationIds:
+            - correlationIds
+            - correlationIds
+            taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
           properties:
             key:
               value:
@@ -13261,6 +13507,7 @@ components:
               code: code
               scope: scope
           asAtLastTransition: 2000-01-23T04:56:07.000+00:00
+          nextTaskInitialTrigger: nextTaskInitialTrigger
           ultimateParentTask:
             correlationIds:
             - correlationIds
@@ -13276,6 +13523,19 @@ components:
               scope: scope
           taskDefinitionVersion:
             asAtModified: 2000-01-23T04:56:07.000+00:00
+          previousTask:
+            correlationIds:
+            - correlationIds
+            - correlationIds
+            taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
           completionStatus: completionStatus
           fields:
           - name: name
@@ -13285,6 +13545,19 @@ components:
           workflowId:
             code: code
             scope: scope
+          nextTask:
+            correlationIds:
+            - correlationIds
+            - correlationIds
+            taskDefinitionVersion:
+              asAtModified: 2000-01-23T04:56:07.000+00:00
+            stateDisplayName: stateDisplayName
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            state: state
+            taskDefinitionDisplayName: taskDefinitionDisplayName
+            taskDefinitionId:
+              code: code
+              scope: scope
           properties:
             key:
               value:
@@ -13476,6 +13749,11 @@ components:
           format: int32
           nullable: true
           type: integer
+        ordering:
+          description: "How the created child tasks are ordered for execution: Parallel\
+            \ (default), Series, or ParallelSeries"
+          nullable: true
+          type: string
       required:
       - type
       - workerId
@@ -13525,6 +13803,11 @@ components:
           format: int32
           nullable: true
           type: integer
+        ordering:
+          description: "How the created child tasks are ordered for execution: Parallel\
+            \ (default), Series, or ParallelSeries"
+          nullable: true
+          type: string
       type: object
     RunWorkerRequest:
       additionalProperties: false
@@ -13815,6 +14098,54 @@ components:
       required:
       - mapFrom
       type: object
+    ServiceApiEndpoints:
+      additionalProperties: false
+      example:
+        endpoints:
+        - summary: summary
+          path: path
+          description: description
+          httpMethod: httpMethod
+          operation: operation
+          status: status
+        - summary: summary
+          path: path
+          description: description
+          httpMethod: httpMethod
+          operation: operation
+          status: status
+        application: application
+        links:
+        - method: method
+          description: description
+          href: https://openapi-generator.tech
+          relation: relation
+        - method: method
+          description: description
+          href: https://openapi-generator.tech
+          relation: relation
+        href: https://openapi-generator.tech
+      properties:
+        application:
+          minLength: 1
+          type: string
+        endpoints:
+          items:
+            $ref: '#/components/schemas/ApiEndpoint'
+          type: array
+        href:
+          format: uri
+          nullable: true
+          type: string
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          nullable: true
+          type: array
+      required:
+      - application
+      - endpoints
+      type: object
     Sleep:
       additionalProperties: false
       description: Configuration for a Worker that Sleeps for a user-defined amount
@@ -14036,6 +14367,7 @@ components:
             code: code
             scope: scope
         asAtLastTransition: 2000-01-23T04:56:07.000+00:00
+        nextTaskInitialTrigger: nextTaskInitialTrigger
         ultimateParentTask:
           correlationIds:
           - correlationIds
@@ -14051,6 +14383,19 @@ components:
             scope: scope
         taskDefinitionVersion:
           asAtModified: 2000-01-23T04:56:07.000+00:00
+        previousTask:
+          correlationIds:
+          - correlationIds
+          - correlationIds
+          taskDefinitionVersion:
+            asAtModified: 2000-01-23T04:56:07.000+00:00
+          stateDisplayName: stateDisplayName
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: state
+          taskDefinitionDisplayName: taskDefinitionDisplayName
+          taskDefinitionId:
+            code: code
+            scope: scope
         completionStatus: completionStatus
         fields:
         - name: name
@@ -14060,6 +14405,19 @@ components:
         workflowId:
           code: code
           scope: scope
+        nextTask:
+          correlationIds:
+          - correlationIds
+          - correlationIds
+          taskDefinitionVersion:
+            asAtModified: 2000-01-23T04:56:07.000+00:00
+          stateDisplayName: stateDisplayName
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: state
+          taskDefinitionDisplayName: taskDefinitionDisplayName
+          taskDefinitionId:
+            code: code
+            scope: scope
         properties:
           key:
             value:
@@ -14114,6 +14472,15 @@ components:
             $ref: '#/components/schemas/TaskSummary'
           nullable: true
           type: array
+        previousTask:
+          $ref: '#/components/schemas/TaskSummary'
+        nextTask:
+          $ref: '#/components/schemas/TaskSummary'
+        nextTaskInitialTrigger:
+          description: "The trigger this Task's next Task should receive when this\
+            \ Task completes, if any"
+          nullable: true
+          type: string
         correlationIds:
           description: User-provided ID used to link entities and tasks
           items:
