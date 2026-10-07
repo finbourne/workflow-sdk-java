@@ -40,7 +40,7 @@ info:
     | <a name="973">973</a>|Workflow already exists.| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1894
+  version: 0.1.1899
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -10088,6 +10088,7 @@ components:
           - GroupReconciliation
           - HealthCheck
           - HorizonIntegration
+          - InstantiateRec
           - LuminesceView
           - LusidEntityDataQualityCheck
           - PortfolioHoldingDataQualityCheck
@@ -10110,6 +10111,7 @@ components:
           - GroupReconciliation
           - HealthCheck
           - HorizonIntegration
+          - InstantiateRec
           - Library
           - LuminesceView
           - LusidEntityDataQualityCheck
@@ -10371,6 +10373,31 @@ components:
           type: array
       required:
       - name
+      type: object
+    InstantiateRec:
+      additionalProperties: false
+      description: Configuration for a Worker that requests the instantiation of a
+        rec definition in LUSID
+      properties:
+        type:
+          description: The type of worker
+          enum:
+          - InstantiateRec
+          minLength: 1
+          type: string
+      required:
+      - type
+      type: object
+    InstantiateRecResponse:
+      additionalProperties: false
+      description: Readonly configuration for the Instantiate Rec Worker
+      properties:
+        type:
+          description: The type of worker
+          enum:
+          - InstantiateRec
+          nullable: true
+          type: string
       type: object
     LabelValueSet:
       additionalProperties: false
@@ -16076,6 +16103,7 @@ components:
       - $ref: '#/components/schemas/GroupReconciliation'
       - $ref: '#/components/schemas/HealthCheck'
       - $ref: '#/components/schemas/HorizonIntegration'
+      - $ref: '#/components/schemas/InstantiateRec'
       - $ref: '#/components/schemas/LuminesceView'
       - $ref: '#/components/schemas/LusidEntityDataQualityCheck'
       - $ref: '#/components/schemas/PortfolioHoldingDataQualityCheck'
@@ -16098,6 +16126,7 @@ components:
       - $ref: '#/components/schemas/GroupReconciliationResponse'
       - $ref: '#/components/schemas/HealthCheckResponse'
       - $ref: '#/components/schemas/HorizonIntegrationResponse'
+      - $ref: '#/components/schemas/InstantiateRecResponse'
       - $ref: '#/components/schemas/LibraryResponse'
       - $ref: '#/components/schemas/LuminesceViewResponse'
       - $ref: '#/components/schemas/LusidEntityDataQualityCheckResponse'

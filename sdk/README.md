@@ -112,6 +112,8 @@ Class | Method | HTTP request | Description
  - [IdSelectorDefinition](docs/IdSelectorDefinition.md)
  - [IdentifierPartSchema](docs/IdentifierPartSchema.md)
  - [InitialState](docs/InitialState.md)
+ - [InstantiateRec](docs/InstantiateRec.md)
+ - [InstantiateRecResponse](docs/InstantiateRecResponse.md)
  - [LabelValueSet](docs/LabelValueSet.md)
  - [LauncherDetails](docs/LauncherDetails.md)
  - [LauncherDetailsResponse](docs/LauncherDetailsResponse.md)

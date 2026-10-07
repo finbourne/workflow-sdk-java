@@ -15,6 +15,7 @@ import com.finbourne.workflow.model.FailResponse;
 import com.finbourne.workflow.model.GroupReconciliationResponse;
 import com.finbourne.workflow.model.HealthCheckResponse;
 import com.finbourne.workflow.model.HorizonIntegrationResponse;
+import com.finbourne.workflow.model.InstantiateRecResponse;
 import com.finbourne.workflow.model.LibraryResponse;
 import com.finbourne.workflow.model.LuminesceViewResponse;
 import com.finbourne.workflow.model.LusidEntityDataQualityCheckResponse;
@@ -83,6 +84,7 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
             final TypeAdapter<GroupReconciliationResponse> adapterGroupReconciliationResponse = gson.getDelegateAdapter(this, TypeToken.get(GroupReconciliationResponse.class));
             final TypeAdapter<HealthCheckResponse> adapterHealthCheckResponse = gson.getDelegateAdapter(this, TypeToken.get(HealthCheckResponse.class));
             final TypeAdapter<HorizonIntegrationResponse> adapterHorizonIntegrationResponse = gson.getDelegateAdapter(this, TypeToken.get(HorizonIntegrationResponse.class));
+            final TypeAdapter<InstantiateRecResponse> adapterInstantiateRecResponse = gson.getDelegateAdapter(this, TypeToken.get(InstantiateRecResponse.class));
             final TypeAdapter<LibraryResponse> adapterLibraryResponse = gson.getDelegateAdapter(this, TypeToken.get(LibraryResponse.class));
             final TypeAdapter<LuminesceViewResponse> adapterLuminesceViewResponse = gson.getDelegateAdapter(this, TypeToken.get(LuminesceViewResponse.class));
             final TypeAdapter<LusidEntityDataQualityCheckResponse> adapterLusidEntityDataQualityCheckResponse = gson.getDelegateAdapter(this, TypeToken.get(LusidEntityDataQualityCheckResponse.class));
@@ -120,6 +122,12 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
                     // check if the actual instance is of the type `HorizonIntegrationResponse`
                     if (value.getActualInstance() instanceof HorizonIntegrationResponse) {
                       JsonElement element = adapterHorizonIntegrationResponse.toJsonTree((HorizonIntegrationResponse)value.getActualInstance());
+                      elementAdapter.write(out, element);
+                      return;
+                    }
+                    // check if the actual instance is of the type `InstantiateRecResponse`
+                    if (value.getActualInstance() instanceof InstantiateRecResponse) {
+                      JsonElement element = adapterInstantiateRecResponse.toJsonTree((InstantiateRecResponse)value.getActualInstance());
                       elementAdapter.write(out, element);
                       return;
                     }
@@ -165,7 +173,7 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
                       elementAdapter.write(out, element);
                       return;
                     }
-                    throw new IOException("Failed to serialize as the type doesn't match oneOf schemas: FailResponse, GroupReconciliationResponse, HealthCheckResponse, HorizonIntegrationResponse, LibraryResponse, LuminesceViewResponse, LusidEntityDataQualityCheckResponse, PortfolioHoldingDataQualityCheckResponse, PortfolioTransactionDataQualityCheckResponse, SchedulerJobResponse, SleepResponse");
+                    throw new IOException("Failed to serialize as the type doesn't match oneOf schemas: FailResponse, GroupReconciliationResponse, HealthCheckResponse, HorizonIntegrationResponse, InstantiateRecResponse, LibraryResponse, LuminesceViewResponse, LusidEntityDataQualityCheckResponse, PortfolioHoldingDataQualityCheckResponse, PortfolioTransactionDataQualityCheckResponse, SchedulerJobResponse, SleepResponse");
                 }
 
                 @Override
@@ -224,6 +232,18 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
                       // deserialization failed, continue
                       errorMessages.add(String.format("Deserialization for HorizonIntegrationResponse failed with `%s`.", e.getMessage()));
                       log.log(Level.FINER, "Input data does not match schema 'HorizonIntegrationResponse'", e);
+                    }
+                    // deserialize InstantiateRecResponse
+                    try {
+                      // validate the JSON object to see if any exception is thrown
+                      InstantiateRecResponse.validateJsonElement(jsonElement);
+                      actualAdapter = adapterInstantiateRecResponse;
+                      match++;
+                      log.log(Level.FINER, "Input data matches schema 'InstantiateRecResponse'");
+                    } catch (Exception e) {
+                      // deserialization failed, continue
+                      errorMessages.add(String.format("Deserialization for InstantiateRecResponse failed with `%s`.", e.getMessage()));
+                      log.log(Level.FINER, "Input data does not match schema 'InstantiateRecResponse'", e);
                     }
                     // deserialize LibraryResponse
                     try {
@@ -349,6 +369,11 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
         setActualInstance(o);
     }
 
+    public WorkerConfigurationResponse(InstantiateRecResponse o) {
+        super("oneOf", Boolean.FALSE);
+        setActualInstance(o);
+    }
+
     public WorkerConfigurationResponse(LibraryResponse o) {
         super("oneOf", Boolean.FALSE);
         setActualInstance(o);
@@ -389,6 +414,7 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
         schemas.put("GroupReconciliationResponse", GroupReconciliationResponse.class);
         schemas.put("HealthCheckResponse", HealthCheckResponse.class);
         schemas.put("HorizonIntegrationResponse", HorizonIntegrationResponse.class);
+        schemas.put("InstantiateRecResponse", InstantiateRecResponse.class);
         schemas.put("LibraryResponse", LibraryResponse.class);
         schemas.put("LuminesceViewResponse", LuminesceViewResponse.class);
         schemas.put("LusidEntityDataQualityCheckResponse", LusidEntityDataQualityCheckResponse.class);
@@ -406,7 +432,7 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
     /**
      * Set the instance that matches the oneOf child schema, check
      * the instance parameter is valid against the oneOf child schemas:
-     * FailResponse, GroupReconciliationResponse, HealthCheckResponse, HorizonIntegrationResponse, LibraryResponse, LuminesceViewResponse, LusidEntityDataQualityCheckResponse, PortfolioHoldingDataQualityCheckResponse, PortfolioTransactionDataQualityCheckResponse, SchedulerJobResponse, SleepResponse
+     * FailResponse, GroupReconciliationResponse, HealthCheckResponse, HorizonIntegrationResponse, InstantiateRecResponse, LibraryResponse, LuminesceViewResponse, LusidEntityDataQualityCheckResponse, PortfolioHoldingDataQualityCheckResponse, PortfolioTransactionDataQualityCheckResponse, SchedulerJobResponse, SleepResponse
      *
      * It could be an instance of the 'oneOf' schemas.
      */
@@ -428,6 +454,11 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
         }
 
         if (instance instanceof HorizonIntegrationResponse) {
+            super.setActualInstance(instance);
+            return;
+        }
+
+        if (instance instanceof InstantiateRecResponse) {
             super.setActualInstance(instance);
             return;
         }
@@ -467,14 +498,14 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
             return;
         }
 
-        throw new RuntimeException("Invalid instance type. Must be FailResponse, GroupReconciliationResponse, HealthCheckResponse, HorizonIntegrationResponse, LibraryResponse, LuminesceViewResponse, LusidEntityDataQualityCheckResponse, PortfolioHoldingDataQualityCheckResponse, PortfolioTransactionDataQualityCheckResponse, SchedulerJobResponse, SleepResponse");
+        throw new RuntimeException("Invalid instance type. Must be FailResponse, GroupReconciliationResponse, HealthCheckResponse, HorizonIntegrationResponse, InstantiateRecResponse, LibraryResponse, LuminesceViewResponse, LusidEntityDataQualityCheckResponse, PortfolioHoldingDataQualityCheckResponse, PortfolioTransactionDataQualityCheckResponse, SchedulerJobResponse, SleepResponse");
     }
 
     /**
      * Get the actual instance, which can be the following:
-     * FailResponse, GroupReconciliationResponse, HealthCheckResponse, HorizonIntegrationResponse, LibraryResponse, LuminesceViewResponse, LusidEntityDataQualityCheckResponse, PortfolioHoldingDataQualityCheckResponse, PortfolioTransactionDataQualityCheckResponse, SchedulerJobResponse, SleepResponse
+     * FailResponse, GroupReconciliationResponse, HealthCheckResponse, HorizonIntegrationResponse, InstantiateRecResponse, LibraryResponse, LuminesceViewResponse, LusidEntityDataQualityCheckResponse, PortfolioHoldingDataQualityCheckResponse, PortfolioTransactionDataQualityCheckResponse, SchedulerJobResponse, SleepResponse
      *
-     * @return The actual instance (FailResponse, GroupReconciliationResponse, HealthCheckResponse, HorizonIntegrationResponse, LibraryResponse, LuminesceViewResponse, LusidEntityDataQualityCheckResponse, PortfolioHoldingDataQualityCheckResponse, PortfolioTransactionDataQualityCheckResponse, SchedulerJobResponse, SleepResponse)
+     * @return The actual instance (FailResponse, GroupReconciliationResponse, HealthCheckResponse, HorizonIntegrationResponse, InstantiateRecResponse, LibraryResponse, LuminesceViewResponse, LusidEntityDataQualityCheckResponse, PortfolioHoldingDataQualityCheckResponse, PortfolioTransactionDataQualityCheckResponse, SchedulerJobResponse, SleepResponse)
      */
     @Override
     public Object getActualInstance() {
@@ -520,6 +551,16 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
      */
     public HorizonIntegrationResponse getHorizonIntegrationResponse() throws ClassCastException {
         return (HorizonIntegrationResponse)super.getActualInstance();
+    }
+    /**
+     * Get the actual instance of `InstantiateRecResponse`. If the actual instance is not `InstantiateRecResponse`,
+     * the ClassCastException will be thrown.
+     *
+     * @return The actual instance of `InstantiateRecResponse`
+     * @throws ClassCastException if the instance is not `InstantiateRecResponse`
+     */
+    public InstantiateRecResponse getInstantiateRecResponse() throws ClassCastException {
+        return (InstantiateRecResponse)super.getActualInstance();
     }
     /**
      * Get the actual instance of `LibraryResponse`. If the actual instance is not `LibraryResponse`,
@@ -634,6 +675,14 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
       errorMessages.add(String.format("Deserialization for HorizonIntegrationResponse failed with `%s`.", e.getMessage()));
       // continue to the next one
     }
+    // validate the json string with InstantiateRecResponse
+    try {
+      InstantiateRecResponse.validateJsonElement(jsonElement);
+      validCount++;
+    } catch (Exception e) {
+      errorMessages.add(String.format("Deserialization for InstantiateRecResponse failed with `%s`.", e.getMessage()));
+      // continue to the next one
+    }
     // validate the json string with LibraryResponse
     try {
       LibraryResponse.validateJsonElement(jsonElement);
@@ -691,7 +740,7 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
       // continue to the next one
     }
     if (validCount != 1) {
-      throw new IOException(String.format("The JSON string is invalid for WorkerConfigurationResponse with oneOf schemas: FailResponse, GroupReconciliationResponse, HealthCheckResponse, HorizonIntegrationResponse, LibraryResponse, LuminesceViewResponse, LusidEntityDataQualityCheckResponse, PortfolioHoldingDataQualityCheckResponse, PortfolioTransactionDataQualityCheckResponse, SchedulerJobResponse, SleepResponse. %d class(es) match the result, expected 1. Detailed failure message for oneOf schemas: %s. JSON: %s", validCount, errorMessages, jsonElement.toString()));
+      throw new IOException(String.format("The JSON string is invalid for WorkerConfigurationResponse with oneOf schemas: FailResponse, GroupReconciliationResponse, HealthCheckResponse, HorizonIntegrationResponse, InstantiateRecResponse, LibraryResponse, LuminesceViewResponse, LusidEntityDataQualityCheckResponse, PortfolioHoldingDataQualityCheckResponse, PortfolioTransactionDataQualityCheckResponse, SchedulerJobResponse, SleepResponse. %d class(es) match the result, expected 1. Detailed failure message for oneOf schemas: %s. JSON: %s", validCount, errorMessages, jsonElement.toString()));
     }
   }
 

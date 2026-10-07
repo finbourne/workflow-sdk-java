@@ -32,6 +32,8 @@ WorkerConfiguration config = new WorkerConfiguration(workerConfiguration);
 
 * [HorizonIntegration](./HorizonIntegration.md)
 
+* [InstantiateRec](./InstantiateRec.md)
+
 * [LuminesceView](./LuminesceView.md)
 
 * [LusidEntityDataQualityCheck](./LusidEntityDataQualityCheck.md)
