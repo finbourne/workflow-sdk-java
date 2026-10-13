@@ -24,6 +24,7 @@ import com.finbourne.workflow.model.PortfolioTransactionDataQualityCheckResponse
 import com.finbourne.workflow.model.ResourceId;
 import com.finbourne.workflow.model.SchedulerJobResponse;
 import com.finbourne.workflow.model.SleepResponse;
+import com.finbourne.workflow.model.StructuredResultDataQualityCheckResponse;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -92,6 +93,7 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
             final TypeAdapter<PortfolioTransactionDataQualityCheckResponse> adapterPortfolioTransactionDataQualityCheckResponse = gson.getDelegateAdapter(this, TypeToken.get(PortfolioTransactionDataQualityCheckResponse.class));
             final TypeAdapter<SchedulerJobResponse> adapterSchedulerJobResponse = gson.getDelegateAdapter(this, TypeToken.get(SchedulerJobResponse.class));
             final TypeAdapter<SleepResponse> adapterSleepResponse = gson.getDelegateAdapter(this, TypeToken.get(SleepResponse.class));
+            final TypeAdapter<StructuredResultDataQualityCheckResponse> adapterStructuredResultDataQualityCheckResponse = gson.getDelegateAdapter(this, TypeToken.get(StructuredResultDataQualityCheckResponse.class));
 
             return (TypeAdapter<T>) new TypeAdapter<WorkerConfigurationResponse>() {
                 @Override
@@ -173,7 +175,13 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
                       elementAdapter.write(out, element);
                       return;
                     }
-                    throw new IOException("Failed to serialize as the type doesn't match oneOf schemas: FailResponse, GroupReconciliationResponse, HealthCheckResponse, HorizonIntegrationResponse, InstantiateRecResponse, LibraryResponse, LuminesceViewResponse, LusidEntityDataQualityCheckResponse, PortfolioHoldingDataQualityCheckResponse, PortfolioTransactionDataQualityCheckResponse, SchedulerJobResponse, SleepResponse");
+                    // check if the actual instance is of the type `StructuredResultDataQualityCheckResponse`
+                    if (value.getActualInstance() instanceof StructuredResultDataQualityCheckResponse) {
+                      JsonElement element = adapterStructuredResultDataQualityCheckResponse.toJsonTree((StructuredResultDataQualityCheckResponse)value.getActualInstance());
+                      elementAdapter.write(out, element);
+                      return;
+                    }
+                    throw new IOException("Failed to serialize as the type doesn't match oneOf schemas: FailResponse, GroupReconciliationResponse, HealthCheckResponse, HorizonIntegrationResponse, InstantiateRecResponse, LibraryResponse, LuminesceViewResponse, LusidEntityDataQualityCheckResponse, PortfolioHoldingDataQualityCheckResponse, PortfolioTransactionDataQualityCheckResponse, SchedulerJobResponse, SleepResponse, StructuredResultDataQualityCheckResponse");
                 }
 
                 @Override
@@ -329,6 +337,18 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
                       errorMessages.add(String.format("Deserialization for SleepResponse failed with `%s`.", e.getMessage()));
                       log.log(Level.FINER, "Input data does not match schema 'SleepResponse'", e);
                     }
+                    // deserialize StructuredResultDataQualityCheckResponse
+                    try {
+                      // validate the JSON object to see if any exception is thrown
+                      StructuredResultDataQualityCheckResponse.validateJsonElement(jsonElement);
+                      actualAdapter = adapterStructuredResultDataQualityCheckResponse;
+                      match++;
+                      log.log(Level.FINER, "Input data matches schema 'StructuredResultDataQualityCheckResponse'");
+                    } catch (Exception e) {
+                      // deserialization failed, continue
+                      errorMessages.add(String.format("Deserialization for StructuredResultDataQualityCheckResponse failed with `%s`.", e.getMessage()));
+                      log.log(Level.FINER, "Input data does not match schema 'StructuredResultDataQualityCheckResponse'", e);
+                    }
 
                     if (match == 1) {
                         WorkerConfigurationResponse ret = new WorkerConfigurationResponse();
@@ -409,6 +429,11 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
         setActualInstance(o);
     }
 
+    public WorkerConfigurationResponse(StructuredResultDataQualityCheckResponse o) {
+        super("oneOf", Boolean.FALSE);
+        setActualInstance(o);
+    }
+
     static {
         schemas.put("FailResponse", FailResponse.class);
         schemas.put("GroupReconciliationResponse", GroupReconciliationResponse.class);
@@ -422,6 +447,7 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
         schemas.put("PortfolioTransactionDataQualityCheckResponse", PortfolioTransactionDataQualityCheckResponse.class);
         schemas.put("SchedulerJobResponse", SchedulerJobResponse.class);
         schemas.put("SleepResponse", SleepResponse.class);
+        schemas.put("StructuredResultDataQualityCheckResponse", StructuredResultDataQualityCheckResponse.class);
     }
 
     @Override
@@ -432,7 +458,7 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
     /**
      * Set the instance that matches the oneOf child schema, check
      * the instance parameter is valid against the oneOf child schemas:
-     * FailResponse, GroupReconciliationResponse, HealthCheckResponse, HorizonIntegrationResponse, InstantiateRecResponse, LibraryResponse, LuminesceViewResponse, LusidEntityDataQualityCheckResponse, PortfolioHoldingDataQualityCheckResponse, PortfolioTransactionDataQualityCheckResponse, SchedulerJobResponse, SleepResponse
+     * FailResponse, GroupReconciliationResponse, HealthCheckResponse, HorizonIntegrationResponse, InstantiateRecResponse, LibraryResponse, LuminesceViewResponse, LusidEntityDataQualityCheckResponse, PortfolioHoldingDataQualityCheckResponse, PortfolioTransactionDataQualityCheckResponse, SchedulerJobResponse, SleepResponse, StructuredResultDataQualityCheckResponse
      *
      * It could be an instance of the 'oneOf' schemas.
      */
@@ -498,14 +524,19 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
             return;
         }
 
-        throw new RuntimeException("Invalid instance type. Must be FailResponse, GroupReconciliationResponse, HealthCheckResponse, HorizonIntegrationResponse, InstantiateRecResponse, LibraryResponse, LuminesceViewResponse, LusidEntityDataQualityCheckResponse, PortfolioHoldingDataQualityCheckResponse, PortfolioTransactionDataQualityCheckResponse, SchedulerJobResponse, SleepResponse");
+        if (instance instanceof StructuredResultDataQualityCheckResponse) {
+            super.setActualInstance(instance);
+            return;
+        }
+
+        throw new RuntimeException("Invalid instance type. Must be FailResponse, GroupReconciliationResponse, HealthCheckResponse, HorizonIntegrationResponse, InstantiateRecResponse, LibraryResponse, LuminesceViewResponse, LusidEntityDataQualityCheckResponse, PortfolioHoldingDataQualityCheckResponse, PortfolioTransactionDataQualityCheckResponse, SchedulerJobResponse, SleepResponse, StructuredResultDataQualityCheckResponse");
     }
 
     /**
      * Get the actual instance, which can be the following:
-     * FailResponse, GroupReconciliationResponse, HealthCheckResponse, HorizonIntegrationResponse, InstantiateRecResponse, LibraryResponse, LuminesceViewResponse, LusidEntityDataQualityCheckResponse, PortfolioHoldingDataQualityCheckResponse, PortfolioTransactionDataQualityCheckResponse, SchedulerJobResponse, SleepResponse
+     * FailResponse, GroupReconciliationResponse, HealthCheckResponse, HorizonIntegrationResponse, InstantiateRecResponse, LibraryResponse, LuminesceViewResponse, LusidEntityDataQualityCheckResponse, PortfolioHoldingDataQualityCheckResponse, PortfolioTransactionDataQualityCheckResponse, SchedulerJobResponse, SleepResponse, StructuredResultDataQualityCheckResponse
      *
-     * @return The actual instance (FailResponse, GroupReconciliationResponse, HealthCheckResponse, HorizonIntegrationResponse, InstantiateRecResponse, LibraryResponse, LuminesceViewResponse, LusidEntityDataQualityCheckResponse, PortfolioHoldingDataQualityCheckResponse, PortfolioTransactionDataQualityCheckResponse, SchedulerJobResponse, SleepResponse)
+     * @return The actual instance (FailResponse, GroupReconciliationResponse, HealthCheckResponse, HorizonIntegrationResponse, InstantiateRecResponse, LibraryResponse, LuminesceViewResponse, LusidEntityDataQualityCheckResponse, PortfolioHoldingDataQualityCheckResponse, PortfolioTransactionDataQualityCheckResponse, SchedulerJobResponse, SleepResponse, StructuredResultDataQualityCheckResponse)
      */
     @Override
     public Object getActualInstance() {
@@ -632,6 +663,16 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
     public SleepResponse getSleepResponse() throws ClassCastException {
         return (SleepResponse)super.getActualInstance();
     }
+    /**
+     * Get the actual instance of `StructuredResultDataQualityCheckResponse`. If the actual instance is not `StructuredResultDataQualityCheckResponse`,
+     * the ClassCastException will be thrown.
+     *
+     * @return The actual instance of `StructuredResultDataQualityCheckResponse`
+     * @throws ClassCastException if the instance is not `StructuredResultDataQualityCheckResponse`
+     */
+    public StructuredResultDataQualityCheckResponse getStructuredResultDataQualityCheckResponse() throws ClassCastException {
+        return (StructuredResultDataQualityCheckResponse)super.getActualInstance();
+    }
 
  /**
   * Validates the JSON Element and throws an exception if issues found
@@ -739,8 +780,16 @@ public class WorkerConfigurationResponse extends AbstractOpenApiSchema {
       errorMessages.add(String.format("Deserialization for SleepResponse failed with `%s`.", e.getMessage()));
       // continue to the next one
     }
+    // validate the json string with StructuredResultDataQualityCheckResponse
+    try {
+      StructuredResultDataQualityCheckResponse.validateJsonElement(jsonElement);
+      validCount++;
+    } catch (Exception e) {
+      errorMessages.add(String.format("Deserialization for StructuredResultDataQualityCheckResponse failed with `%s`.", e.getMessage()));
+      // continue to the next one
+    }
     if (validCount != 1) {
-      throw new IOException(String.format("The JSON string is invalid for WorkerConfigurationResponse with oneOf schemas: FailResponse, GroupReconciliationResponse, HealthCheckResponse, HorizonIntegrationResponse, InstantiateRecResponse, LibraryResponse, LuminesceViewResponse, LusidEntityDataQualityCheckResponse, PortfolioHoldingDataQualityCheckResponse, PortfolioTransactionDataQualityCheckResponse, SchedulerJobResponse, SleepResponse. %d class(es) match the result, expected 1. Detailed failure message for oneOf schemas: %s. JSON: %s", validCount, errorMessages, jsonElement.toString()));
+      throw new IOException(String.format("The JSON string is invalid for WorkerConfigurationResponse with oneOf schemas: FailResponse, GroupReconciliationResponse, HealthCheckResponse, HorizonIntegrationResponse, InstantiateRecResponse, LibraryResponse, LuminesceViewResponse, LusidEntityDataQualityCheckResponse, PortfolioHoldingDataQualityCheckResponse, PortfolioTransactionDataQualityCheckResponse, SchedulerJobResponse, SleepResponse, StructuredResultDataQualityCheckResponse. %d class(es) match the result, expected 1. Detailed failure message for oneOf schemas: %s. JSON: %s", validCount, errorMessages, jsonElement.toString()));
     }
   }
 

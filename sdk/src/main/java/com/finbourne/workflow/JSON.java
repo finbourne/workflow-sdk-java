@@ -154,6 +154,7 @@ public class JSON {
         gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.InstantiateRec.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.InstantiateRecResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.LabelValueSet.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.LaunchedBy.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.LauncherDetails.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.LauncherDetailsResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.LauncherEdge.CustomTypeAdapterFactory());
@@ -217,6 +218,8 @@ public class JSON {
         gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.SpecificMonthRegularity.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.SpecifiedTime.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.Stack.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.StructuredResultDataQualityCheck.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.StructuredResultDataQualityCheckResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.Task.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.TaskActivity.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.TaskActivityResponse.CustomTypeAdapterFactory());

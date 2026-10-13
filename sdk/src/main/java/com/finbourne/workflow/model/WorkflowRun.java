@@ -11,6 +11,7 @@
 package com.finbourne.workflow.model;
 
 import java.util.Objects;
+import com.finbourne.workflow.model.LaunchedBy;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -61,6 +62,10 @@ public class WorkflowRun {
   public static final String SERIALIZED_NAME_COMPLETION_STATUS = "completionStatus";
   @SerializedName(SERIALIZED_NAME_COMPLETION_STATUS)
   private String completionStatus;
+
+  public static final String SERIALIZED_NAME_LAUNCHED_BY = "launchedBy";
+  @SerializedName(SERIALIZED_NAME_LAUNCHED_BY)
+  private LaunchedBy launchedBy;
 
   public WorkflowRun() {
   }
@@ -128,6 +133,27 @@ public class WorkflowRun {
   }
 
 
+  public WorkflowRun launchedBy(LaunchedBy launchedBy) {
+    
+    this.launchedBy = launchedBy;
+    return this;
+  }
+
+   /**
+   * Get launchedBy
+   * @return launchedBy
+  **/
+  @jakarta.annotation.Nullable
+  public LaunchedBy getLaunchedBy() {
+    return launchedBy;
+  }
+
+
+  public void setLaunchedBy(LaunchedBy launchedBy) {
+    this.launchedBy = launchedBy;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -140,12 +166,13 @@ public class WorkflowRun {
     WorkflowRun workflowRun = (WorkflowRun) o;
     return Objects.equals(this.id, workflowRun.id) &&
         Objects.equals(this.asAtCreated, workflowRun.asAtCreated) &&
-        Objects.equals(this.completionStatus, workflowRun.completionStatus);
+        Objects.equals(this.completionStatus, workflowRun.completionStatus) &&
+        Objects.equals(this.launchedBy, workflowRun.launchedBy);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, asAtCreated, completionStatus);
+    return Objects.hash(id, asAtCreated, completionStatus, launchedBy);
   }
 
   @Override
@@ -155,6 +182,7 @@ public class WorkflowRun {
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    asAtCreated: ").append(toIndentedString(asAtCreated)).append("\n");
     sb.append("    completionStatus: ").append(toIndentedString(completionStatus)).append("\n");
+    sb.append("    launchedBy: ").append(toIndentedString(launchedBy)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -180,6 +208,7 @@ public class WorkflowRun {
     openapiFields.add("id");
     openapiFields.add("asAtCreated");
     openapiFields.add("completionStatus");
+    openapiFields.add("launchedBy");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -210,6 +239,10 @@ public class WorkflowRun {
         JsonObject jsonObj = jsonElement.getAsJsonObject();
       if (!jsonObj.get("completionStatus").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `completionStatus` to be a primitive type in the JSON string but got `%s`", jsonObj.get("completionStatus").toString()));
+      }
+      // validate the optional field `launchedBy`
+      if (jsonObj.get("launchedBy") != null && !jsonObj.get("launchedBy").isJsonNull()) {
+        LaunchedBy.validateJsonElement(jsonObj.get("launchedBy"));
       }
   }
 

@@ -40,7 +40,7 @@ info:
     | <a name="973">973</a>|Workflow already exists.| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1899
+  version: 0.1.1910
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -8369,6 +8369,11 @@ components:
             scope: scope
           stackingKey: stackingKey
           workflowRun:
+            launchedBy:
+              launcherId: launcherId
+              launcherAsAt: 2000-01-23T04:56:07.000+00:00
+              launcherType: launcherType
+              firedAt: 2000-01-23T04:56:07.000+00:00
             asAtCreated: 2000-01-23T04:56:07.000+00:00
             id: 0
             completionStatus: completionStatus
@@ -8512,6 +8517,11 @@ components:
             scope: scope
           stackingKey: stackingKey
           workflowRun:
+            launchedBy:
+              launcherId: launcherId
+              launcherAsAt: 2000-01-23T04:56:07.000+00:00
+              launcherType: launcherType
+              firedAt: 2000-01-23T04:56:07.000+00:00
             asAtCreated: 2000-01-23T04:56:07.000+00:00
             id: 0
             completionStatus: completionStatus
@@ -10095,6 +10105,7 @@ components:
           - PortfolioTransactionDataQualityCheck
           - SchedulerJob
           - Sleep
+          - StructuredResultDataQualityCheck
           minLength: 1
           type: string
       required:
@@ -10119,6 +10130,7 @@ components:
           - PortfolioTransactionDataQualityCheck
           - SchedulerJob
           - Sleep
+          - StructuredResultDataQualityCheck
           nullable: true
           type: string
       type: object
@@ -10415,6 +10427,39 @@ components:
           type: array
       required:
       - values
+      type: object
+    LaunchedBy:
+      additionalProperties: false
+      description: The Launcher that started a run of a Workflow
+      example:
+        launcherId: launcherId
+        launcherAsAt: 2000-01-23T04:56:07.000+00:00
+        launcherType: launcherType
+        firedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        launcherId:
+          description: The ID of the Launcher inside its Workflow
+          minLength: 1
+          type: string
+        launcherType:
+          description: "The type of Launcher. One of - Schedule, Event"
+          minLength: 1
+          type: string
+        launcherAsAt:
+          description: The version.asAtModified of the Launcher definition that fired
+          format: date-time
+          type: string
+        firedAt:
+          description: |-
+            When the Launcher fired. For a Schedule Launcher this is the scheduled trigger time, and for an Event Launcher
+            it is the timestamp of the event
+          format: date-time
+          type: string
+      required:
+      - firedAt
+      - launcherAsAt
+      - launcherId
+      - launcherType
       type: object
     LauncherDetails:
       additionalProperties: false
@@ -11210,6 +11255,11 @@ components:
             scope: scope
           stackingKey: stackingKey
           workflowRun:
+            launchedBy:
+              launcherId: launcherId
+              launcherAsAt: 2000-01-23T04:56:07.000+00:00
+              launcherType: launcherType
+              firedAt: 2000-01-23T04:56:07.000+00:00
             asAtCreated: 2000-01-23T04:56:07.000+00:00
             id: 0
             completionStatus: completionStatus
@@ -11353,6 +11403,11 @@ components:
             scope: scope
           stackingKey: stackingKey
           workflowRun:
+            launchedBy:
+              launcherId: launcherId
+              launcherAsAt: 2000-01-23T04:56:07.000+00:00
+              launcherType: launcherType
+              firedAt: 2000-01-23T04:56:07.000+00:00
             asAtCreated: 2000-01-23T04:56:07.000+00:00
             id: 0
             completionStatus: completionStatus
@@ -13329,6 +13384,11 @@ components:
             scope: scope
           stackingKey: stackingKey
           workflowRun:
+            launchedBy:
+              launcherId: launcherId
+              launcherAsAt: 2000-01-23T04:56:07.000+00:00
+              launcherType: launcherType
+              firedAt: 2000-01-23T04:56:07.000+00:00
             asAtCreated: 2000-01-23T04:56:07.000+00:00
             id: 0
             completionStatus: completionStatus
@@ -13472,6 +13532,11 @@ components:
             scope: scope
           stackingKey: stackingKey
           workflowRun:
+            launchedBy:
+              launcherId: launcherId
+              launcherAsAt: 2000-01-23T04:56:07.000+00:00
+              launcherType: launcherType
+              firedAt: 2000-01-23T04:56:07.000+00:00
             asAtCreated: 2000-01-23T04:56:07.000+00:00
             id: 0
             completionStatus: completionStatus
@@ -14311,6 +14376,32 @@ components:
           format: int32
           type: integer
       type: object
+    StructuredResultDataQualityCheck:
+      additionalProperties: false
+      description: Configuration for a Worker that runs a structured result Data quality
+        check in LUSID
+      properties:
+        type:
+          description: The type of worker
+          enum:
+          - StructuredResultDataQualityCheck
+          minLength: 1
+          type: string
+      required:
+      - type
+      type: object
+    StructuredResultDataQualityCheckResponse:
+      additionalProperties: false
+      description: Readonly configuration for the Structured Result Data Quality Check
+        Worker
+      properties:
+        type:
+          description: The type of worker
+          enum:
+          - StructuredResultDataQualityCheck
+          nullable: true
+          type: string
+      type: object
     Task:
       additionalProperties: false
       description: Defines a Task created based on a Task Definition
@@ -14332,6 +14423,11 @@ components:
           scope: scope
         stackingKey: stackingKey
         workflowRun:
+          launchedBy:
+            launcherId: launcherId
+            launcherAsAt: 2000-01-23T04:56:07.000+00:00
+            launcherType: launcherType
+            firedAt: 2000-01-23T04:56:07.000+00:00
           asAtCreated: 2000-01-23T04:56:07.000+00:00
           id: 0
           completionStatus: completionStatus
@@ -16110,6 +16206,7 @@ components:
       - $ref: '#/components/schemas/PortfolioTransactionDataQualityCheck'
       - $ref: '#/components/schemas/SchedulerJob'
       - $ref: '#/components/schemas/Sleep'
+      - $ref: '#/components/schemas/StructuredResultDataQualityCheck'
       properties:
         type:
           description: The type of worker
@@ -16134,6 +16231,7 @@ components:
       - $ref: '#/components/schemas/PortfolioTransactionDataQualityCheckResponse'
       - $ref: '#/components/schemas/SchedulerJobResponse'
       - $ref: '#/components/schemas/SleepResponse'
+      - $ref: '#/components/schemas/StructuredResultDataQualityCheckResponse'
       type: object
     WorkerStatusTriggers:
       additionalProperties: false
@@ -16573,6 +16671,11 @@ components:
         Information about the run of the Workflow that created this Task, inherited from the root/ultimate
         parent Task.
       example:
+        launchedBy:
+          launcherId: launcherId
+          launcherAsAt: 2000-01-23T04:56:07.000+00:00
+          launcherType: launcherType
+          firedAt: 2000-01-23T04:56:07.000+00:00
         asAtCreated: 2000-01-23T04:56:07.000+00:00
         id: 0
         completionStatus: completionStatus
@@ -16592,6 +16695,8 @@ components:
             \ this run: NotStarted, InProgress, or Completed."
           minLength: 1
           type: string
+        launchedBy:
+          $ref: '#/components/schemas/LaunchedBy'
       required:
       - asAtCreated
       - completionStatus
