@@ -236,6 +236,10 @@ public class JSON {
         gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.TransitionTriggerDefinition.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.TriggerChildTasksAction.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.TriggerChildTasksActionResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.TriggerNextTaskAction.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.TriggerNextTaskActionResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.TriggerNextTaskFallbackActions.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.TriggerNextTaskFallbackActionsResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.TriggerParentTaskAction.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.TriggerParentTaskActionResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.finbourne.workflow.model.TriggerSchema.CustomTypeAdapterFactory());

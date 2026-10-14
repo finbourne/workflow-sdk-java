@@ -63,6 +63,8 @@ public class CreateChildTasksAction {
     
     TRIGGERCHILDTASKS("TriggerChildTasks"),
     
+    TRIGGERNEXTTASK("TriggerNextTask"),
+    
     TRIGGERPARENTTASK("TriggerParentTask");
 
     private String value;

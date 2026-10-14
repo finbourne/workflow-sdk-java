@@ -40,7 +40,7 @@ info:
     | <a name="973">973</a>|Workflow already exists.| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1910
+  version: 0.1.1918
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -1159,6 +1159,7 @@ paths:
                         resultMatchingPattern: null
                         taskDefinitionAsAt: null
                         initialTrigger: test-trigger
+                        displayName: Health check follow-up
                       workerTimeout: 120
                     displayName: Health Check
                     description: Health check
@@ -1359,6 +1360,7 @@ paths:
                     resultMatchingPattern: null
                     taskDefinitionAsAt: null
                     initialTrigger: test-trigger
+                    displayName: Health check follow-up
                   workerTimeout: 120
                 displayName: Health Check
                 description: Health check
@@ -1498,6 +1500,7 @@ paths:
                     resultMatchingPattern: null
                     taskDefinitionAsAt: null
                     initialTrigger: test-trigger
+                    displayName: Health check follow-up
                   workerTimeout: 120
                 displayName: Health Check
                 description: Health check
@@ -1637,6 +1640,7 @@ paths:
                     resultMatchingPattern: null
                     taskDefinitionAsAt: null
                     initialTrigger: test-trigger
+                    displayName: Health check follow-up
                   workerTimeout: 120
                 displayName: Health Check
                 description: Health check
@@ -1776,6 +1780,7 @@ paths:
                     resultMatchingPattern: null
                     taskDefinitionAsAt: null
                     initialTrigger: test-trigger
+                    displayName: Health check follow-up
                   workerTimeout: 120
                 displayName: Health Check
                 description: Health check
@@ -1899,6 +1904,7 @@ paths:
                       resultMatchingPattern: null
                       taskDefinitionAsAt: null
                       initialTrigger: test-trigger
+                      displayName: Health check follow-up
                     workerTimeout: 120
                   displayName: Health Check
                   description: Health check
@@ -2176,6 +2182,7 @@ paths:
                       resultMatchingPattern: null
                       taskDefinitionAsAt: null
                       initialTrigger: test-trigger
+                      displayName: Health check follow-up
                     workerTimeout: 120
                   displayName: Health Check
                   description: Health check
@@ -2395,6 +2402,7 @@ paths:
                     resultMatchingPattern: null
                     taskDefinitionAsAt: null
                     initialTrigger: test-trigger
+                    displayName: Health check follow-up
                   workerTimeout: 120
                 displayName: Health Check
                 description: Health check
@@ -2531,6 +2539,7 @@ paths:
                     resultMatchingPattern: null
                     taskDefinitionAsAt: null
                     initialTrigger: test-trigger
+                    displayName: Health check follow-up
                   workerTimeout: 120
                 displayName: Health Check
                 description: Health check
@@ -2667,6 +2676,7 @@ paths:
                     resultMatchingPattern: null
                     taskDefinitionAsAt: null
                     initialTrigger: test-trigger
+                    displayName: Health check follow-up
                   workerTimeout: 120
                 displayName: Health Check
                 description: Health check
@@ -2803,6 +2813,7 @@ paths:
                     resultMatchingPattern: null
                     taskDefinitionAsAt: null
                     initialTrigger: test-trigger
+                    displayName: Health check follow-up
                   workerTimeout: 120
                 displayName: Health Check
                 description: Health check
@@ -2926,6 +2937,7 @@ paths:
                       resultMatchingPattern: null
                       taskDefinitionAsAt: null
                       initialTrigger: test-trigger
+                      displayName: Health check follow-up
                     workerTimeout: 120
                   displayName: Health Check
                   description: Health check
@@ -5135,6 +5147,7 @@ paths:
                               resultMatchingPattern: null
                               taskDefinitionAsAt: null
                               initialTrigger: test-trigger
+                              displayName: Health check follow-up
                             workerTimeout: 120
                           displayName: Health Check
                           description: Health check
@@ -5503,6 +5516,7 @@ paths:
                             resultMatchingPattern: null
                             taskDefinitionAsAt: null
                             initialTrigger: test-trigger
+                            displayName: Health check follow-up
                           workerTimeout: 120
                         displayName: Health Check
                         description: Health check
@@ -5883,6 +5897,7 @@ paths:
                             resultMatchingPattern: null
                             taskDefinitionAsAt: null
                             initialTrigger: test-trigger
+                            displayName: Health check follow-up
                           workerTimeout: 120
                         displayName: Health Check
                         description: Health check
@@ -6253,6 +6268,7 @@ paths:
                             resultMatchingPattern: null
                             taskDefinitionAsAt: null
                             initialTrigger: test-trigger
+                            displayName: Health check follow-up
                           workerTimeout: 120
                         displayName: Health Check
                         description: Health check
@@ -8136,6 +8152,7 @@ components:
       - $ref: '#/components/schemas/CreateChildTasksAction'
       - $ref: '#/components/schemas/RunWorkerAction'
       - $ref: '#/components/schemas/TriggerChildTasksAction'
+      - $ref: '#/components/schemas/TriggerNextTaskAction'
       - $ref: '#/components/schemas/TriggerParentTaskAction'
       properties:
         type:
@@ -8154,6 +8171,7 @@ components:
       - $ref: '#/components/schemas/CreateChildTasksActionResponse'
       - $ref: '#/components/schemas/RunWorkerActionResponse'
       - $ref: '#/components/schemas/TriggerChildTasksActionResponse'
+      - $ref: '#/components/schemas/TriggerNextTaskActionResponse'
       - $ref: '#/components/schemas/TriggerParentTaskActionResponse'
       properties:
         type:
@@ -8977,6 +8995,14 @@ components:
             \ be the Stacking Key on any created child tasks"
           nullable: true
           type: string
+        displayName:
+          description: "An optional display name, to tell apart child task configurations\
+            \ that use the same Task Definition"
+          maxLength: 150
+          minLength: 1
+          nullable: true
+          pattern: "^[\\s\\S]*$"
+          type: string
       required:
       - taskDefinitionId
       type: object
@@ -8990,6 +9016,7 @@ components:
           - CreateChildTasks
           - RunWorker
           - TriggerChildTasks
+          - TriggerNextTask
           - TriggerParentTask
           minLength: 1
           type: string
@@ -9012,6 +9039,7 @@ components:
           - CreateChildTasks
           - RunWorker
           - TriggerChildTasks
+          - TriggerNextTask
           - TriggerParentTask
           nullable: true
           type: string
@@ -13724,6 +13752,14 @@ components:
           description: The field to be mapped as the ChildTasks Stacking Key
           nullable: true
           type: string
+        displayName:
+          description: "An optional display name, to tell apart child task configurations\
+            \ that use the same Task Definition"
+          maxLength: 150
+          minLength: 1
+          nullable: true
+          pattern: "^[\\s\\S]*$"
+          type: string
       required:
       - childTaskFields
       - taskDefinitionId
@@ -15383,6 +15419,80 @@ components:
         filter:
           description: Optional LUSID filter expression to limit the action to a subset
             of the child tasks
+          nullable: true
+          type: string
+      type: object
+    TriggerNextTaskAction:
+      additionalProperties: false
+      description: Defines a Trigger Next Task Action
+      properties:
+        type:
+          description: Type name for this Action
+          enum:
+          - TriggerNextTask
+          minLength: 1
+          type: string
+        defaultTrigger:
+          description: Trigger sent to the next task when this task has no nextTaskInitialTrigger
+            of its own
+          maxLength: 1024
+          nullable: true
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        fallbackActions:
+          $ref: '#/components/schemas/TriggerNextTaskFallbackActions'
+      required:
+      - type
+      type: object
+    TriggerNextTaskActionResponse:
+      additionalProperties: false
+      description: Trigger Next Task Action Response
+      properties:
+        type:
+          description: Type name for this Action
+          enum:
+          - TriggerNextTask
+          nullable: true
+          type: string
+        defaultTrigger:
+          description: Trigger sent to the next task when this task has no nextTaskInitialTrigger
+            of its own
+          nullable: true
+          type: string
+        fallbackActions:
+          $ref: '#/components/schemas/TriggerNextTaskFallbackActionsResponse'
+      type: object
+    TriggerNextTaskFallbackActions:
+      additionalProperties: false
+      description: Actions on the same task definition that a Trigger Next Task action
+        runs instead of triggering the next task
+      properties:
+        endOfSequence:
+          description: Run when this task has no next task to trigger
+          maxLength: 1024
+          nullable: true
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        nextTaskError:
+          description: "Run when the next task cannot be triggered, e.g. it was deleted\
+            \ or is not in its initial state"
+          maxLength: 1024
+          nullable: true
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+      type: object
+    TriggerNextTaskFallbackActionsResponse:
+      additionalProperties: false
+      description: Actions on the same task definition that a Trigger Next Task action
+        runs instead of triggering the next task
+      properties:
+        endOfSequence:
+          description: Run when this task has no next task to trigger
+          nullable: true
+          type: string
+        nextTaskError:
+          description: "Run when the next task cannot be triggered, e.g. it was deleted\
+            \ or is not in its initial state"
           nullable: true
           type: string
       type: object

@@ -16,6 +16,8 @@ Name | Type | Description | Notes
 **ordering** | **String** | How the created child tasks are ordered for execution: Parallel (default), Series, or ParallelSeries | [optional] [default to String]
 **trigger** | **String** | Trigger on parent task to be invoked | [default to String]
 **filter** | **String** | Optional LUSID filter expression to limit the action to a subset of the child tasks | [optional] [default to String]
+**defaultTrigger** | **String** | Trigger sent to the next task when this task has no nextTaskInitialTrigger of its own | [optional] [default to String]
+**fallbackActions** | [**TriggerNextTaskFallbackActions**](TriggerNextTaskFallbackActions.md) |  | [optional] [default to TriggerNextTaskFallbackActions]
 
 ```java
 import com.finbourne.workflow.model.ActionDetails;
@@ -35,6 +37,8 @@ ActionDetails config = new ActionDetails(actionDetails);
 * [RunWorkerAction](./RunWorkerAction.md)
 
 * [TriggerChildTasksAction](./TriggerChildTasksAction.md)
+
+* [TriggerNextTaskAction](./TriggerNextTaskAction.md)
 
 * [TriggerParentTaskAction](./TriggerParentTaskAction.md)
 

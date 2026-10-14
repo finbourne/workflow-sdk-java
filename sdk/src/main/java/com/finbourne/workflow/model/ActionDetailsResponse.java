@@ -18,6 +18,8 @@ import com.finbourne.workflow.model.ResourceId;
 import com.finbourne.workflow.model.ResultantChildTaskConfiguration;
 import com.finbourne.workflow.model.RunWorkerActionResponse;
 import com.finbourne.workflow.model.TriggerChildTasksActionResponse;
+import com.finbourne.workflow.model.TriggerNextTaskActionResponse;
+import com.finbourne.workflow.model.TriggerNextTaskFallbackActionsResponse;
 import com.finbourne.workflow.model.TriggerParentTaskActionResponse;
 import com.finbourne.workflow.model.WorkerStatusTriggers;
 import com.google.gson.TypeAdapter;
@@ -84,6 +86,7 @@ public class ActionDetailsResponse extends AbstractOpenApiSchema {
             final TypeAdapter<CreateChildTasksActionResponse> adapterCreateChildTasksActionResponse = gson.getDelegateAdapter(this, TypeToken.get(CreateChildTasksActionResponse.class));
             final TypeAdapter<RunWorkerActionResponse> adapterRunWorkerActionResponse = gson.getDelegateAdapter(this, TypeToken.get(RunWorkerActionResponse.class));
             final TypeAdapter<TriggerChildTasksActionResponse> adapterTriggerChildTasksActionResponse = gson.getDelegateAdapter(this, TypeToken.get(TriggerChildTasksActionResponse.class));
+            final TypeAdapter<TriggerNextTaskActionResponse> adapterTriggerNextTaskActionResponse = gson.getDelegateAdapter(this, TypeToken.get(TriggerNextTaskActionResponse.class));
             final TypeAdapter<TriggerParentTaskActionResponse> adapterTriggerParentTaskActionResponse = gson.getDelegateAdapter(this, TypeToken.get(TriggerParentTaskActionResponse.class));
 
             return (TypeAdapter<T>) new TypeAdapter<ActionDetailsResponse>() {
@@ -112,13 +115,19 @@ public class ActionDetailsResponse extends AbstractOpenApiSchema {
                       elementAdapter.write(out, element);
                       return;
                     }
+                    // check if the actual instance is of the type `TriggerNextTaskActionResponse`
+                    if (value.getActualInstance() instanceof TriggerNextTaskActionResponse) {
+                      JsonElement element = adapterTriggerNextTaskActionResponse.toJsonTree((TriggerNextTaskActionResponse)value.getActualInstance());
+                      elementAdapter.write(out, element);
+                      return;
+                    }
                     // check if the actual instance is of the type `TriggerParentTaskActionResponse`
                     if (value.getActualInstance() instanceof TriggerParentTaskActionResponse) {
                       JsonElement element = adapterTriggerParentTaskActionResponse.toJsonTree((TriggerParentTaskActionResponse)value.getActualInstance());
                       elementAdapter.write(out, element);
                       return;
                     }
-                    throw new IOException("Failed to serialize as the type doesn't match oneOf schemas: CreateChildTasksActionResponse, RunWorkerActionResponse, TriggerChildTasksActionResponse, TriggerParentTaskActionResponse");
+                    throw new IOException("Failed to serialize as the type doesn't match oneOf schemas: CreateChildTasksActionResponse, RunWorkerActionResponse, TriggerChildTasksActionResponse, TriggerNextTaskActionResponse, TriggerParentTaskActionResponse");
                 }
 
                 @Override
@@ -165,6 +174,18 @@ public class ActionDetailsResponse extends AbstractOpenApiSchema {
                       // deserialization failed, continue
                       errorMessages.add(String.format("Deserialization for TriggerChildTasksActionResponse failed with `%s`.", e.getMessage()));
                       log.log(Level.FINER, "Input data does not match schema 'TriggerChildTasksActionResponse'", e);
+                    }
+                    // deserialize TriggerNextTaskActionResponse
+                    try {
+                      // validate the JSON object to see if any exception is thrown
+                      TriggerNextTaskActionResponse.validateJsonElement(jsonElement);
+                      actualAdapter = adapterTriggerNextTaskActionResponse;
+                      match++;
+                      log.log(Level.FINER, "Input data matches schema 'TriggerNextTaskActionResponse'");
+                    } catch (Exception e) {
+                      // deserialization failed, continue
+                      errorMessages.add(String.format("Deserialization for TriggerNextTaskActionResponse failed with `%s`.", e.getMessage()));
+                      log.log(Level.FINER, "Input data does not match schema 'TriggerNextTaskActionResponse'", e);
                     }
                     // deserialize TriggerParentTaskActionResponse
                     try {
@@ -213,6 +234,11 @@ public class ActionDetailsResponse extends AbstractOpenApiSchema {
         setActualInstance(o);
     }
 
+    public ActionDetailsResponse(TriggerNextTaskActionResponse o) {
+        super("oneOf", Boolean.FALSE);
+        setActualInstance(o);
+    }
+
     public ActionDetailsResponse(TriggerParentTaskActionResponse o) {
         super("oneOf", Boolean.FALSE);
         setActualInstance(o);
@@ -222,6 +248,7 @@ public class ActionDetailsResponse extends AbstractOpenApiSchema {
         schemas.put("CreateChildTasksActionResponse", CreateChildTasksActionResponse.class);
         schemas.put("RunWorkerActionResponse", RunWorkerActionResponse.class);
         schemas.put("TriggerChildTasksActionResponse", TriggerChildTasksActionResponse.class);
+        schemas.put("TriggerNextTaskActionResponse", TriggerNextTaskActionResponse.class);
         schemas.put("TriggerParentTaskActionResponse", TriggerParentTaskActionResponse.class);
     }
 
@@ -233,7 +260,7 @@ public class ActionDetailsResponse extends AbstractOpenApiSchema {
     /**
      * Set the instance that matches the oneOf child schema, check
      * the instance parameter is valid against the oneOf child schemas:
-     * CreateChildTasksActionResponse, RunWorkerActionResponse, TriggerChildTasksActionResponse, TriggerParentTaskActionResponse
+     * CreateChildTasksActionResponse, RunWorkerActionResponse, TriggerChildTasksActionResponse, TriggerNextTaskActionResponse, TriggerParentTaskActionResponse
      *
      * It could be an instance of the 'oneOf' schemas.
      */
@@ -254,19 +281,24 @@ public class ActionDetailsResponse extends AbstractOpenApiSchema {
             return;
         }
 
+        if (instance instanceof TriggerNextTaskActionResponse) {
+            super.setActualInstance(instance);
+            return;
+        }
+
         if (instance instanceof TriggerParentTaskActionResponse) {
             super.setActualInstance(instance);
             return;
         }
 
-        throw new RuntimeException("Invalid instance type. Must be CreateChildTasksActionResponse, RunWorkerActionResponse, TriggerChildTasksActionResponse, TriggerParentTaskActionResponse");
+        throw new RuntimeException("Invalid instance type. Must be CreateChildTasksActionResponse, RunWorkerActionResponse, TriggerChildTasksActionResponse, TriggerNextTaskActionResponse, TriggerParentTaskActionResponse");
     }
 
     /**
      * Get the actual instance, which can be the following:
-     * CreateChildTasksActionResponse, RunWorkerActionResponse, TriggerChildTasksActionResponse, TriggerParentTaskActionResponse
+     * CreateChildTasksActionResponse, RunWorkerActionResponse, TriggerChildTasksActionResponse, TriggerNextTaskActionResponse, TriggerParentTaskActionResponse
      *
-     * @return The actual instance (CreateChildTasksActionResponse, RunWorkerActionResponse, TriggerChildTasksActionResponse, TriggerParentTaskActionResponse)
+     * @return The actual instance (CreateChildTasksActionResponse, RunWorkerActionResponse, TriggerChildTasksActionResponse, TriggerNextTaskActionResponse, TriggerParentTaskActionResponse)
      */
     @Override
     public Object getActualInstance() {
@@ -302,6 +334,16 @@ public class ActionDetailsResponse extends AbstractOpenApiSchema {
      */
     public TriggerChildTasksActionResponse getTriggerChildTasksActionResponse() throws ClassCastException {
         return (TriggerChildTasksActionResponse)super.getActualInstance();
+    }
+    /**
+     * Get the actual instance of `TriggerNextTaskActionResponse`. If the actual instance is not `TriggerNextTaskActionResponse`,
+     * the ClassCastException will be thrown.
+     *
+     * @return The actual instance of `TriggerNextTaskActionResponse`
+     * @throws ClassCastException if the instance is not `TriggerNextTaskActionResponse`
+     */
+    public TriggerNextTaskActionResponse getTriggerNextTaskActionResponse() throws ClassCastException {
+        return (TriggerNextTaskActionResponse)super.getActualInstance();
     }
     /**
      * Get the actual instance of `TriggerParentTaskActionResponse`. If the actual instance is not `TriggerParentTaskActionResponse`,
@@ -348,6 +390,14 @@ public class ActionDetailsResponse extends AbstractOpenApiSchema {
       errorMessages.add(String.format("Deserialization for TriggerChildTasksActionResponse failed with `%s`.", e.getMessage()));
       // continue to the next one
     }
+    // validate the json string with TriggerNextTaskActionResponse
+    try {
+      TriggerNextTaskActionResponse.validateJsonElement(jsonElement);
+      validCount++;
+    } catch (Exception e) {
+      errorMessages.add(String.format("Deserialization for TriggerNextTaskActionResponse failed with `%s`.", e.getMessage()));
+      // continue to the next one
+    }
     // validate the json string with TriggerParentTaskActionResponse
     try {
       TriggerParentTaskActionResponse.validateJsonElement(jsonElement);
@@ -357,7 +407,7 @@ public class ActionDetailsResponse extends AbstractOpenApiSchema {
       // continue to the next one
     }
     if (validCount != 1) {
-      throw new IOException(String.format("The JSON string is invalid for ActionDetailsResponse with oneOf schemas: CreateChildTasksActionResponse, RunWorkerActionResponse, TriggerChildTasksActionResponse, TriggerParentTaskActionResponse. %d class(es) match the result, expected 1. Detailed failure message for oneOf schemas: %s. JSON: %s", validCount, errorMessages, jsonElement.toString()));
+      throw new IOException(String.format("The JSON string is invalid for ActionDetailsResponse with oneOf schemas: CreateChildTasksActionResponse, RunWorkerActionResponse, TriggerChildTasksActionResponse, TriggerNextTaskActionResponse, TriggerParentTaskActionResponse. %d class(es) match the result, expected 1. Detailed failure message for oneOf schemas: %s. JSON: %s", validCount, errorMessages, jsonElement.toString()));
     }
   }
 
