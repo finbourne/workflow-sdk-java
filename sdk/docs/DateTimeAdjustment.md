@@ -5,7 +5,7 @@ A change applied to the date and the time of a source value, in a named calendar
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**calendarContext** | **String** | The name of the calendar context this change happens in, which must be one the Launcher declares. When it is left out a Schedule Launcher uses the context of its schedule | [optional] [default to String]
+**calendarContext** | **String** | The name of the calendar context this change happens in, which must be one the Launcher declares. It is required on an Event Launcher. When it is left out a Schedule Launcher uses the context of its schedule | [optional] [default to String]
 **dateAdjustment** | [**DateAdjustment**](DateAdjustment.md) |  | [optional] [default to DateAdjustment]
 **timeAdjustment** | [**TimeAdjustment**](TimeAdjustment.md) |  | [optional] [default to TimeAdjustment]
 

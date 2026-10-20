@@ -11,6 +11,7 @@
 package com.finbourne.workflow.model;
 
 import java.util.Objects;
+import com.finbourne.workflow.model.CalendarContext;
 import com.finbourne.workflow.model.CorrelationIdMapping;
 import com.finbourne.workflow.model.EventTaskFieldMapping;
 import com.finbourne.workflow.model.LauncherEventMatchingPattern;
@@ -111,6 +112,10 @@ public class EventLauncherDetailsResponse {
   @SerializedName(SERIALIZED_NAME_EVENT_MATCHING_PATTERN)
   private LauncherEventMatchingPattern eventMatchingPattern;
 
+  public static final String SERIALIZED_NAME_CALENDAR_CONTEXTS = "calendarContexts";
+  @SerializedName(SERIALIZED_NAME_CALENDAR_CONTEXTS)
+  private List<CalendarContext> calendarContexts;
+
   public static final String SERIALIZED_NAME_MAP_TASK_FIELDS = "mapTaskFields";
   @SerializedName(SERIALIZED_NAME_MAP_TASK_FIELDS)
   private Map<String, EventTaskFieldMapping> mapTaskFields;
@@ -177,6 +182,35 @@ public class EventLauncherDetailsResponse {
 
   public void setEventMatchingPattern(LauncherEventMatchingPattern eventMatchingPattern) {
     this.eventMatchingPattern = eventMatchingPattern;
+  }
+
+
+  public EventLauncherDetailsResponse calendarContexts(List<CalendarContext> calendarContexts) {
+    
+    this.calendarContexts = calendarContexts;
+    return this;
+  }
+
+  public EventLauncherDetailsResponse addCalendarContextsItem(CalendarContext calendarContextsItem) {
+    if (this.calendarContexts == null) {
+      this.calendarContexts = new ArrayList<>();
+    }
+    this.calendarContexts.add(calendarContextsItem);
+    return this;
+  }
+
+   /**
+   * The named time zones and holiday calendars the date time adjustments of this Launcher work in
+   * @return calendarContexts
+  **/
+  @jakarta.annotation.Nullable
+  public List<CalendarContext> getCalendarContexts() {
+    return calendarContexts;
+  }
+
+
+  public void setCalendarContexts(List<CalendarContext> calendarContexts) {
+    this.calendarContexts = calendarContexts;
   }
 
 
@@ -350,6 +384,7 @@ public class EventLauncherDetailsResponse {
     EventLauncherDetailsResponse eventLauncherDetailsResponse = (EventLauncherDetailsResponse) o;
     return Objects.equals(this.launcherType, eventLauncherDetailsResponse.launcherType) &&
         Objects.equals(this.eventMatchingPattern, eventLauncherDetailsResponse.eventMatchingPattern) &&
+        Objects.equals(this.calendarContexts, eventLauncherDetailsResponse.calendarContexts) &&
         Objects.equals(this.mapTaskFields, eventLauncherDetailsResponse.mapTaskFields) &&
         Objects.equals(this.mapCorrelationIds, eventLauncherDetailsResponse.mapCorrelationIds) &&
         Objects.equals(this.runAsUserId, eventLauncherDetailsResponse.runAsUserId) &&
@@ -364,7 +399,7 @@ public class EventLauncherDetailsResponse {
 
   @Override
   public int hashCode() {
-    return Objects.hash(launcherType, eventMatchingPattern, mapTaskFields, mapCorrelationIds, runAsUserId, setTaskFields, setCorrelationIds, initialTrigger);
+    return Objects.hash(launcherType, eventMatchingPattern, calendarContexts, mapTaskFields, mapCorrelationIds, runAsUserId, setTaskFields, setCorrelationIds, initialTrigger);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -380,6 +415,7 @@ public class EventLauncherDetailsResponse {
     sb.append("class EventLauncherDetailsResponse {\n");
     sb.append("    launcherType: ").append(toIndentedString(launcherType)).append("\n");
     sb.append("    eventMatchingPattern: ").append(toIndentedString(eventMatchingPattern)).append("\n");
+    sb.append("    calendarContexts: ").append(toIndentedString(calendarContexts)).append("\n");
     sb.append("    mapTaskFields: ").append(toIndentedString(mapTaskFields)).append("\n");
     sb.append("    mapCorrelationIds: ").append(toIndentedString(mapCorrelationIds)).append("\n");
     sb.append("    runAsUserId: ").append(toIndentedString(runAsUserId)).append("\n");
@@ -410,6 +446,7 @@ public class EventLauncherDetailsResponse {
     openapiFields = new HashSet<String>();
     openapiFields.add("launcherType");
     openapiFields.add("eventMatchingPattern");
+    openapiFields.add("calendarContexts");
     openapiFields.add("mapTaskFields");
     openapiFields.add("mapCorrelationIds");
     openapiFields.add("runAsUserId");
@@ -440,6 +477,20 @@ public class EventLauncherDetailsResponse {
       // validate the optional field `eventMatchingPattern`
       if (jsonObj.get("eventMatchingPattern") != null && !jsonObj.get("eventMatchingPattern").isJsonNull()) {
         LauncherEventMatchingPattern.validateJsonElement(jsonObj.get("eventMatchingPattern"));
+      }
+      if (jsonObj.get("calendarContexts") != null && !jsonObj.get("calendarContexts").isJsonNull()) {
+        JsonArray jsonArraycalendarContexts = jsonObj.getAsJsonArray("calendarContexts");
+        if (jsonArraycalendarContexts != null) {
+          // ensure the json data is an array
+          if (!jsonObj.get("calendarContexts").isJsonArray()) {
+            throw new IllegalArgumentException(String.format("Expected the field `calendarContexts` to be an array in the JSON string but got `%s`", jsonObj.get("calendarContexts").toString()));
+          }
+
+          // validate the optional field `calendarContexts` (array)
+          for (int i = 0; i < jsonArraycalendarContexts.size(); i++) {
+            CalendarContext.validateJsonElement(jsonArraycalendarContexts.get(i));
+          };
+        }
       }
       if (jsonObj.get("mapCorrelationIds") != null && !jsonObj.get("mapCorrelationIds").isJsonNull()) {
         JsonArray jsonArraymapCorrelationIds = jsonObj.getAsJsonArray("mapCorrelationIds");

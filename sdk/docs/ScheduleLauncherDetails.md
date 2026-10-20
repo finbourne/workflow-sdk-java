@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **launcherType** | **String** |  | [default to String]
 **schedule** | [**LauncherSchedule**](LauncherSchedule.md) |  | [default to LauncherSchedule]
-**calendarContexts** | [**List&lt;CalendarContext&gt;**](CalendarContext.md) | The named time zones and holiday calendars this Launcher works in.   Only a Schedule Launcher works in a calendar context | [optional] [default to List<CalendarContext>]
+**calendarContexts** | [**List&lt;CalendarContext&gt;**](CalendarContext.md) | The named time zones and holiday calendars this Launcher works in | [optional] [default to List<CalendarContext>]
 **mapTaskFields** | [**Map&lt;String, ScheduleTaskFieldMapping&gt;**](ScheduleTaskFieldMapping.md) | Fields of the root task filled from the instant the schedule fired, keyed by the field name on the root task definition | [optional] [default to Map<String, ScheduleTaskFieldMapping>]
 **runAsUserId** | [**LauncherMapping**](LauncherMapping.md) |  | [default to LauncherMapping]
 **setTaskFields** | **Map&lt;String, Object&gt;** | Fields of the root task set to a fixed value, keyed by the field name on the root task definition | [optional] [default to Map<String, Object>]

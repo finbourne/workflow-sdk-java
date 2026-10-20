@@ -74,7 +74,7 @@ public class DateTimeAdjustment {
   }
 
    /**
-   * The name of the calendar context this change happens in, which must be one the Launcher declares. When it is left out a Schedule Launcher uses the context of its schedule
+   * The name of the calendar context this change happens in, which must be one the Launcher declares. It is required on an Event Launcher. When it is left out a Schedule Launcher uses the context of its schedule
    * @return calendarContext
   **/
   @jakarta.annotation.Nullable

@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **launcherType** | **String** |  | [optional] [default to String]
 **eventMatchingPattern** | [**LauncherEventMatchingPattern**](LauncherEventMatchingPattern.md) |  | [optional] [default to LauncherEventMatchingPattern]
+**calendarContexts** | [**List&lt;CalendarContext&gt;**](CalendarContext.md) | The named time zones and holiday calendars the date time adjustments of this Launcher work in | [optional] [default to List<CalendarContext>]
 **mapTaskFields** | [**Map&lt;String, EventTaskFieldMapping&gt;**](EventTaskFieldMapping.md) | Fields of the root task filled from the event, keyed by the field name on the root task definition | [optional] [default to Map<String, EventTaskFieldMapping>]
 **mapCorrelationIds** | [**List&lt;CorrelationIdMapping&gt;**](CorrelationIdMapping.md) | Correlation IDs of the root task filled from the event | [optional] [default to List<CorrelationIdMapping>]
 **runAsUserId** | [**LauncherMapping**](LauncherMapping.md) |  | [optional] [default to LauncherMapping]
@@ -22,6 +23,7 @@ import java.net.URI;
 
 @jakarta.annotation.Nullable String LauncherType = "example LauncherType";
 LauncherEventMatchingPattern EventMatchingPattern = new LauncherEventMatchingPattern();
+@jakarta.annotation.Nullable List<CalendarContext> CalendarContexts = new List<CalendarContext>();
 @jakarta.annotation.Nullable Map<String, EventTaskFieldMapping> MapTaskFields = new Map<String, EventTaskFieldMapping>();
 @jakarta.annotation.Nullable List<CorrelationIdMapping> MapCorrelationIds = new List<CorrelationIdMapping>();
 LauncherMapping RunAsUserId = new LauncherMapping();
@@ -33,6 +35,7 @@ LauncherMapping RunAsUserId = new LauncherMapping();
 EventLauncherDetailsResponse eventLauncherDetailsResponseInstance = new EventLauncherDetailsResponse()
     .LauncherType(LauncherType)
     .EventMatchingPattern(EventMatchingPattern)
+    .CalendarContexts(CalendarContexts)
     .MapTaskFields(MapTaskFields)
     .MapCorrelationIds(MapCorrelationIds)
     .RunAsUserId(RunAsUserId)

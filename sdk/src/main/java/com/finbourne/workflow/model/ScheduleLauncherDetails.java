@@ -195,7 +195,7 @@ public class ScheduleLauncherDetails {
   }
 
    /**
-   * The named time zones and holiday calendars this Launcher works in.   Only a Schedule Launcher works in a calendar context
+   * The named time zones and holiday calendars this Launcher works in
    * @return calendarContexts
   **/
   @jakarta.annotation.Nullable

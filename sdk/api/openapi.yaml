@@ -40,7 +40,7 @@ info:
     | <a name="973">973</a>|Workflow already exists.| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1918
+  version: 0.1.1927
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -6571,6 +6571,60 @@ paths:
                     userIdModified: User-1
                     requestIdModified: RequestId-1
                     asAtVersionNumber: 1
+                - workflowId:
+                    scope: A1
+                    code: CustodyReconciliation
+                  launcherId: OnPortfolioCreated
+                  displayName: An example Event launcher
+                  description: Starts a run of the workflow when a portfolio is created
+                  status: Active
+                  launcherDetails:
+                    launcherType: Event
+                    eventMatchingPattern:
+                      eventType: PortfolioCreated
+                      filter: body.portfolioScope eq 'TestScope'
+                    calendarContexts:
+                    - name: NYC
+                      timeZone: America/New_York
+                      holidayCalendars:
+                      - scope: Cal
+                        code: USNY
+                    mapTaskFields:
+                      asAtDate:
+                        mapFrom: header.timestamp
+                      leftEffectiveAt:
+                        mapFrom: header.timestamp
+                        dateTimeAdjustment:
+                          calendarContext: NYC
+                          dateAdjustment:
+                            deltaDays: -1
+                            businessDayAdjustment: Previous
+                          timeAdjustment:
+                            setTo:
+                              hours: 16
+                              minutes: 0
+                              type: Specified
+                    mapCorrelationIds:
+                    - mapFrom: body.portfolioCode
+                    runAsUserId:
+                      mapFrom: header.userId
+                    setTaskFields:
+                      clientId: client-1
+                    setCorrelationIds: []
+                    initialTrigger: Start
+                  summaries:
+                    fields:
+                      asAtDate: The event's header.timestamp
+                      leftEffectiveAt: "1 day before the date of header.timestamp,\
+                        \ rolled back to the previous business day at 16:00 in NYC"
+                  version:
+                    asAtCreated: 2022-01-01T01:02:03.0000000+00:00
+                    userIdCreated: User-1
+                    requestIdCreated: RequestId-1
+                    asAtModified: 2022-01-01T01:02:03.0000000+00:00
+                    userIdModified: User-1
+                    requestIdModified: RequestId-1
+                    asAtVersionNumber: 1
                 links: []
               schema:
                 $ref: '#/components/schemas/PagedResourceListOfLauncherResponse'
@@ -6690,9 +6744,27 @@ paths:
                     eventMatchingPattern:
                       eventType: PortfolioCreated
                       filter: body.portfolioScope eq 'TestScope'
+                    calendarContexts:
+                    - name: NYC
+                      timeZone: America/New_York
+                      holidayCalendars:
+                      - scope: Cal
+                        code: USNY
                     mapTaskFields:
                       asAtDate:
                         mapFrom: header.timestamp
+                      leftEffectiveAt:
+                        mapFrom: header.timestamp
+                        dateTimeAdjustment:
+                          calendarContext: NYC
+                          dateAdjustment:
+                            deltaDays: -1
+                            businessDayAdjustment: Previous
+                          timeAdjustment:
+                            setTo:
+                              hours: 16
+                              minutes: 0
+                              type: Specified
                     mapCorrelationIds:
                     - mapFrom: body.portfolioCode
                     runAsUserId:
@@ -6766,9 +6838,27 @@ paths:
                     eventMatchingPattern:
                       eventType: PortfolioCreated
                       filter: body.portfolioScope eq 'TestScope'
+                    calendarContexts:
+                    - name: NYC
+                      timeZone: America/New_York
+                      holidayCalendars:
+                      - scope: Cal
+                        code: USNY
                     mapTaskFields:
                       asAtDate:
                         mapFrom: header.timestamp
+                      leftEffectiveAt:
+                        mapFrom: header.timestamp
+                        dateTimeAdjustment:
+                          calendarContext: NYC
+                          dateAdjustment:
+                            deltaDays: -1
+                            businessDayAdjustment: Previous
+                          timeAdjustment:
+                            setTo:
+                              hours: 16
+                              minutes: 0
+                              type: Specified
                     mapCorrelationIds:
                     - mapFrom: body.portfolioCode
                     runAsUserId:
@@ -6842,9 +6932,27 @@ paths:
                     eventMatchingPattern:
                       eventType: PortfolioCreated
                       filter: body.portfolioScope eq 'TestScope'
+                    calendarContexts:
+                    - name: NYC
+                      timeZone: America/New_York
+                      holidayCalendars:
+                      - scope: Cal
+                        code: USNY
                     mapTaskFields:
                       asAtDate:
                         mapFrom: header.timestamp
+                      leftEffectiveAt:
+                        mapFrom: header.timestamp
+                        dateTimeAdjustment:
+                          calendarContext: NYC
+                          dateAdjustment:
+                            deltaDays: -1
+                            businessDayAdjustment: Previous
+                          timeAdjustment:
+                            setTo:
+                              hours: 16
+                              minutes: 0
+                              type: Specified
                     mapCorrelationIds:
                     - mapFrom: body.portfolioCode
                     runAsUserId:
@@ -6918,9 +7026,27 @@ paths:
                     eventMatchingPattern:
                       eventType: PortfolioCreated
                       filter: body.portfolioScope eq 'TestScope'
+                    calendarContexts:
+                    - name: NYC
+                      timeZone: America/New_York
+                      holidayCalendars:
+                      - scope: Cal
+                        code: USNY
                     mapTaskFields:
                       asAtDate:
                         mapFrom: header.timestamp
+                      leftEffectiveAt:
+                        mapFrom: header.timestamp
+                        dateTimeAdjustment:
+                          calendarContext: NYC
+                          dateAdjustment:
+                            deltaDays: -1
+                            businessDayAdjustment: Previous
+                          timeAdjustment:
+                            setTo:
+                              hours: 16
+                              minutes: 0
+                              type: Specified
                     mapCorrelationIds:
                     - mapFrom: body.portfolioCode
                     runAsUserId:
@@ -7354,9 +7480,27 @@ paths:
                     eventMatchingPattern:
                       eventType: PortfolioCreated
                       filter: body.portfolioScope eq 'TestScope'
+                    calendarContexts:
+                    - name: NYC
+                      timeZone: America/New_York
+                      holidayCalendars:
+                      - scope: Cal
+                        code: USNY
                     mapTaskFields:
                       asAtDate:
                         mapFrom: header.timestamp
+                      leftEffectiveAt:
+                        mapFrom: header.timestamp
+                        dateTimeAdjustment:
+                          calendarContext: NYC
+                          dateAdjustment:
+                            deltaDays: -1
+                            businessDayAdjustment: Previous
+                          timeAdjustment:
+                            setTo:
+                              hours: 16
+                              minutes: 0
+                              type: Specified
                     mapCorrelationIds:
                     - mapFrom: body.portfolioCode
                     runAsUserId:
@@ -7428,9 +7572,27 @@ paths:
                     eventMatchingPattern:
                       eventType: PortfolioCreated
                       filter: body.portfolioScope eq 'TestScope'
+                    calendarContexts:
+                    - name: NYC
+                      timeZone: America/New_York
+                      holidayCalendars:
+                      - scope: Cal
+                        code: USNY
                     mapTaskFields:
                       asAtDate:
                         mapFrom: header.timestamp
+                      leftEffectiveAt:
+                        mapFrom: header.timestamp
+                        dateTimeAdjustment:
+                          calendarContext: NYC
+                          dateAdjustment:
+                            deltaDays: -1
+                            businessDayAdjustment: Previous
+                          timeAdjustment:
+                            setTo:
+                              hours: 16
+                              minutes: 0
+                              type: Specified
                     mapCorrelationIds:
                     - mapFrom: body.portfolioCode
                     runAsUserId:
@@ -7502,9 +7664,27 @@ paths:
                     eventMatchingPattern:
                       eventType: PortfolioCreated
                       filter: body.portfolioScope eq 'TestScope'
+                    calendarContexts:
+                    - name: NYC
+                      timeZone: America/New_York
+                      holidayCalendars:
+                      - scope: Cal
+                        code: USNY
                     mapTaskFields:
                       asAtDate:
                         mapFrom: header.timestamp
+                      leftEffectiveAt:
+                        mapFrom: header.timestamp
+                        dateTimeAdjustment:
+                          calendarContext: NYC
+                          dateAdjustment:
+                            deltaDays: -1
+                            businessDayAdjustment: Previous
+                          timeAdjustment:
+                            setTo:
+                              hours: 16
+                              minutes: 0
+                              type: Specified
                     mapCorrelationIds:
                     - mapFrom: body.portfolioCode
                     runAsUserId:
@@ -7576,9 +7756,27 @@ paths:
                     eventMatchingPattern:
                       eventType: PortfolioCreated
                       filter: body.portfolioScope eq 'TestScope'
+                    calendarContexts:
+                    - name: NYC
+                      timeZone: America/New_York
+                      holidayCalendars:
+                      - scope: Cal
+                        code: USNY
                     mapTaskFields:
                       asAtDate:
                         mapFrom: header.timestamp
+                      leftEffectiveAt:
+                        mapFrom: header.timestamp
+                        dateTimeAdjustment:
+                          calendarContext: NYC
+                          dateAdjustment:
+                            deltaDays: -1
+                            businessDayAdjustment: Previous
+                          timeAdjustment:
+                            setTo:
+                              hours: 16
+                              minutes: 0
+                              type: Specified
                     mapCorrelationIds:
                     - mapFrom: body.portfolioCode
                     runAsUserId:
@@ -9654,8 +9852,8 @@ components:
       properties:
         calendarContext:
           description: |-
-            The name of the calendar context this change happens in, which must be one the Launcher declares. When it is
-            left out a Schedule Launcher uses the context of its schedule
+            The name of the calendar context this change happens in, which must be one the Launcher declares. It is
+            required on an Event Launcher. When it is left out a Schedule Launcher uses the context of its schedule
           maxLength: 64
           minLength: 1
           nullable: true
@@ -9942,11 +10140,22 @@ components:
           type: string
         eventMatchingPattern:
           $ref: '#/components/schemas/LauncherEventMatchingPattern'
+        calendarContexts:
+          description: "The named time zones and holiday calendars the date time adjustments\
+            \ of this Launcher work in.\n \nRequired when any mapped field has a dateTimeAdjustment"
+          items:
+            $ref: '#/components/schemas/CalendarContext'
+          maxItems: 10
+          minItems: 0
+          nullable: true
+          type: array
         mapTaskFields:
           additionalProperties:
             $ref: '#/components/schemas/EventTaskFieldMapping'
           description: "Fields of the root task filled from the event, keyed by the\
             \ field name on the root task definition"
+          maxLength: 10
+          minLength: 0
           nullable: true
           type: object
         mapCorrelationIds:
@@ -9995,6 +10204,13 @@ components:
           type: string
         eventMatchingPattern:
           $ref: '#/components/schemas/LauncherEventMatchingPattern'
+        calendarContexts:
+          description: The named time zones and holiday calendars the date time adjustments
+            of this Launcher work in
+          items:
+            $ref: '#/components/schemas/CalendarContext'
+          nullable: true
+          type: array
         mapTaskFields:
           additionalProperties:
             $ref: '#/components/schemas/EventTaskFieldMapping'
@@ -14016,8 +14232,8 @@ components:
         schedule:
           $ref: '#/components/schemas/LauncherSchedule'
         calendarContexts:
-          description: "The named time zones and holiday calendars this Launcher works\
-            \ in.\n \nOnly a Schedule Launcher works in a calendar context"
+          description: The named time zones and holiday calendars this Launcher works
+            in
           items:
             $ref: '#/components/schemas/CalendarContext'
           maxItems: 10
@@ -14075,8 +14291,8 @@ components:
         schedule:
           $ref: '#/components/schemas/LauncherSchedule'
         calendarContexts:
-          description: "The named time zones and holiday calendars this Launcher works\
-            \ in.\n \nOnly a Schedule Launcher works in a calendar context"
+          description: The named time zones and holiday calendars this Launcher works
+            in
           items:
             $ref: '#/components/schemas/CalendarContext'
           nullable: true
