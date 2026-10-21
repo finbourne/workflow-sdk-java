@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **childTaskFields** | [**Map&lt;String, FieldMapping&gt;**](FieldMapping.md) | Field Mappings | [optional] [default to Map<String, FieldMapping>]
 **mapStackingKeyFrom** | **String** | If present, the value of this field on the parent task will be the Stacking Key on any created child tasks | [optional] [default to String]
 **displayName** | **String** | An optional display name, to tell apart child task configurations that use the same Task Definition | [optional] [default to String]
+**condition** | **String** | A filter expression over the parent Task, in the same form as a transition Guard. If present, the child Task is only created when it evaluates to true, after the field changes of the update that made the transition | [optional] [default to String]
 
 ```java
 import com.finbourne.workflow.model.CreateChildTaskConfiguration;
@@ -24,6 +25,7 @@ ResourceId TaskDefinitionId = new ResourceId();
 @jakarta.annotation.Nullable Map<String, FieldMapping> ChildTaskFields = new Map<String, FieldMapping>();
 @jakarta.annotation.Nullable String MapStackingKeyFrom = "example MapStackingKeyFrom";
 @jakarta.annotation.Nullable String DisplayName = "example DisplayName";
+@jakarta.annotation.Nullable String Condition = "example Condition";
 
 
 CreateChildTaskConfiguration createChildTaskConfigurationInstance = new CreateChildTaskConfiguration()
@@ -32,7 +34,8 @@ CreateChildTaskConfiguration createChildTaskConfigurationInstance = new CreateCh
     .InitialTrigger(InitialTrigger)
     .ChildTaskFields(ChildTaskFields)
     .MapStackingKeyFrom(MapStackingKeyFrom)
-    .DisplayName(DisplayName);
+    .DisplayName(DisplayName)
+    .Condition(Condition);
 ```
 
 

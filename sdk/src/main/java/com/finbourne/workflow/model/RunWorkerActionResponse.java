@@ -343,7 +343,7 @@ public class RunWorkerActionResponse {
   }
 
    /**
-   * How the created child tasks are ordered for execution: Parallel (default), Series, or ParallelSeries
+   * How the created child tasks are ordered for execution: Parallel (default), Series, or ParallelSeries. In Series and ParallelSeries only the first child task of each chain is started; each later one is started by its predecessor&#39;s TriggerNextTask action, or by another trigger such as a TriggerChildTasks filter on previousTask. Without one, the chain stops after its first child.
    * @return ordering
   **/
   @jakarta.annotation.Nullable

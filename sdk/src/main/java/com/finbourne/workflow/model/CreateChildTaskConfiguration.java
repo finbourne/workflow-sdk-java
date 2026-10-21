@@ -79,6 +79,10 @@ public class CreateChildTaskConfiguration {
   @SerializedName(SERIALIZED_NAME_DISPLAY_NAME)
   private String displayName;
 
+  public static final String SERIALIZED_NAME_CONDITION = "condition";
+  @SerializedName(SERIALIZED_NAME_CONDITION)
+  private String condition;
+
   public CreateChildTaskConfiguration() {
   }
 
@@ -216,6 +220,27 @@ public class CreateChildTaskConfiguration {
   }
 
 
+  public CreateChildTaskConfiguration condition(String condition) {
+    
+    this.condition = condition;
+    return this;
+  }
+
+   /**
+   * A filter expression over the parent Task, in the same form as a transition Guard. If present, the child Task is only created when it evaluates to true, after the field changes of the update that made the transition
+   * @return condition
+  **/
+  @jakarta.annotation.Nullable
+  public String getCondition() {
+    return condition;
+  }
+
+
+  public void setCondition(String condition) {
+    this.condition = condition;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -231,7 +256,8 @@ public class CreateChildTaskConfiguration {
         Objects.equals(this.initialTrigger, createChildTaskConfiguration.initialTrigger) &&
         Objects.equals(this.childTaskFields, createChildTaskConfiguration.childTaskFields) &&
         Objects.equals(this.mapStackingKeyFrom, createChildTaskConfiguration.mapStackingKeyFrom) &&
-        Objects.equals(this.displayName, createChildTaskConfiguration.displayName);
+        Objects.equals(this.displayName, createChildTaskConfiguration.displayName) &&
+        Objects.equals(this.condition, createChildTaskConfiguration.condition);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -240,7 +266,7 @@ public class CreateChildTaskConfiguration {
 
   @Override
   public int hashCode() {
-    return Objects.hash(taskDefinitionId, taskDefinitionAsAt, initialTrigger, childTaskFields, mapStackingKeyFrom, displayName);
+    return Objects.hash(taskDefinitionId, taskDefinitionAsAt, initialTrigger, childTaskFields, mapStackingKeyFrom, displayName, condition);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -260,6 +286,7 @@ public class CreateChildTaskConfiguration {
     sb.append("    childTaskFields: ").append(toIndentedString(childTaskFields)).append("\n");
     sb.append("    mapStackingKeyFrom: ").append(toIndentedString(mapStackingKeyFrom)).append("\n");
     sb.append("    displayName: ").append(toIndentedString(displayName)).append("\n");
+    sb.append("    condition: ").append(toIndentedString(condition)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -288,6 +315,7 @@ public class CreateChildTaskConfiguration {
     openapiFields.add("childTaskFields");
     openapiFields.add("mapStackingKeyFrom");
     openapiFields.add("displayName");
+    openapiFields.add("condition");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -324,6 +352,9 @@ public class CreateChildTaskConfiguration {
       }
       if ((jsonObj.get("displayName") != null && !jsonObj.get("displayName").isJsonNull()) && !jsonObj.get("displayName").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `displayName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("displayName").toString()));
+      }
+      if ((jsonObj.get("condition") != null && !jsonObj.get("condition").isJsonNull()) && !jsonObj.get("condition").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `condition` to be a primitive type in the JSON string but got `%s`", jsonObj.get("condition").toString()));
       }
   }
 

@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **String** | Type name for this Action | [default to String]
 **childTaskConfigurations** | [**List&lt;CreateChildTaskConfiguration&gt;**](CreateChildTaskConfiguration.md) | The Child Task Configurations | [default to List<CreateChildTaskConfiguration>]
+**ordering** | **String** | How the created child tasks are ordered for execution: Parallel (default) or Series. In Series the child tasks form a chain and only the first is started; each later one is started by its predecessor&#39;s TriggerNextTask action, or by another trigger such as a TriggerChildTasks filter on previousTask. Without one, the chain stops after the first child. | [optional] [default to String]
 
 ```java
 import com.finbourne.workflow.model.CreateChildTasksAction;
@@ -16,11 +17,13 @@ import java.net.URI;
 
 String Type = "example Type";
 List<CreateChildTaskConfiguration> ChildTaskConfigurations = new List<CreateChildTaskConfiguration>();
+@jakarta.annotation.Nullable String Ordering = "example Ordering";
 
 
 CreateChildTasksAction createChildTasksActionInstance = new CreateChildTasksAction()
     .Type(Type)
-    .ChildTaskConfigurations(ChildTaskConfigurations);
+    .ChildTaskConfigurations(ChildTaskConfigurations)
+    .Ordering(Ordering);
 ```
 
 

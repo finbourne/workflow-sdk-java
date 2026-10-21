@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.openapitools.jackson.nullable.JsonNullable;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -113,6 +114,10 @@ public class CreateChildTasksAction {
   @SerializedName(SERIALIZED_NAME_CHILD_TASK_CONFIGURATIONS)
   private List<CreateChildTaskConfiguration> childTaskConfigurations = new ArrayList<>();
 
+  public static final String SERIALIZED_NAME_ORDERING = "ordering";
+  @SerializedName(SERIALIZED_NAME_ORDERING)
+  private String ordering;
+
   public CreateChildTasksAction() {
   }
 
@@ -166,6 +171,27 @@ public class CreateChildTasksAction {
   }
 
 
+  public CreateChildTasksAction ordering(String ordering) {
+    
+    this.ordering = ordering;
+    return this;
+  }
+
+   /**
+   * How the created child tasks are ordered for execution: Parallel (default) or Series. In Series the child tasks form a chain and only the first is started; each later one is started by its predecessor&#39;s TriggerNextTask action, or by another trigger such as a TriggerChildTasks filter on previousTask. Without one, the chain stops after the first child.
+   * @return ordering
+  **/
+  @jakarta.annotation.Nullable
+  public String getOrdering() {
+    return ordering;
+  }
+
+
+  public void setOrdering(String ordering) {
+    this.ordering = ordering;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -177,12 +203,24 @@ public class CreateChildTasksAction {
     }
     CreateChildTasksAction createChildTasksAction = (CreateChildTasksAction) o;
     return Objects.equals(this.type, createChildTasksAction.type) &&
-        Objects.equals(this.childTaskConfigurations, createChildTasksAction.childTaskConfigurations);
+        Objects.equals(this.childTaskConfigurations, createChildTasksAction.childTaskConfigurations) &&
+        Objects.equals(this.ordering, createChildTasksAction.ordering);
+  }
+
+  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
+    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(type, childTaskConfigurations);
+    return Objects.hash(type, childTaskConfigurations, ordering);
+  }
+
+  private static <T> int hashCodeNullable(JsonNullable<T> a) {
+    if (a == null) {
+      return 1;
+    }
+    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
   }
 
   @Override
@@ -191,6 +229,7 @@ public class CreateChildTasksAction {
     sb.append("class CreateChildTasksAction {\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    childTaskConfigurations: ").append(toIndentedString(childTaskConfigurations)).append("\n");
+    sb.append("    ordering: ").append(toIndentedString(ordering)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -215,6 +254,7 @@ public class CreateChildTasksAction {
     openapiFields = new HashSet<String>();
     openapiFields.add("type");
     openapiFields.add("childTaskConfigurations");
+    openapiFields.add("ordering");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -255,6 +295,9 @@ public class CreateChildTasksAction {
       for (int i = 0; i < jsonArraychildTaskConfigurations.size(); i++) {
         CreateChildTaskConfiguration.validateJsonElement(jsonArraychildTaskConfigurations.get(i));
       };
+      if ((jsonObj.get("ordering") != null && !jsonObj.get("ordering").isJsonNull()) && !jsonObj.get("ordering").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ordering` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ordering").toString()));
+      }
   }
 
   public static class CustomTypeAdapterFactory implements TypeAdapterFactory {

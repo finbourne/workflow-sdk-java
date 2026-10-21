@@ -40,7 +40,7 @@ info:
     | <a name="973">973</a>|Workflow already exists.| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1929
+  version: 0.1.1933
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -9202,6 +9202,15 @@ components:
           nullable: true
           pattern: "^[\\s\\S]*$"
           type: string
+        condition:
+          description: |-
+            A filter expression over the parent Task, in the same form as a transition Guard. If present, the child Task
+            is only created when it evaluates to true, after the field changes of the update that made the transition
+          maxLength: 1024
+          minLength: 1
+          nullable: true
+          pattern: "^[\\s\\S]*$"
+          type: string
       required:
       - taskDefinitionId
       type: object
@@ -9224,6 +9233,14 @@ components:
           items:
             $ref: '#/components/schemas/CreateChildTaskConfiguration'
           type: array
+        ordering:
+          description: |-
+            How the created child tasks are ordered for execution: Parallel (default) or Series. In Series the child tasks
+            form a chain and only the first is started; each later one is started by its predecessor's TriggerNextTask action,
+            or by another trigger such as a TriggerChildTasks filter on previousTask. Without one, the chain stops after the
+            first child.
+          nullable: true
+          type: string
       required:
       - childTaskConfigurations
       - type
@@ -9248,6 +9265,14 @@ components:
             $ref: '#/components/schemas/CreateChildTaskConfiguration'
           nullable: true
           type: array
+        ordering:
+          description: |-
+            How the created child tasks are ordered for execution: Parallel (default) or Series. In Series the child tasks
+            form a chain and only the first is started; each later one is started by its predecessor's TriggerNextTask action,
+            or by another trigger such as a TriggerChildTasks filter on previousTask. Without one, the chain stops after the
+            first child.
+          nullable: true
+          type: string
       type: object
     CreateEventHandlerRequest:
       additionalProperties: false
@@ -14101,8 +14126,11 @@ components:
           nullable: true
           type: integer
         ordering:
-          description: "How the created child tasks are ordered for execution: Parallel\
-            \ (default), Series, or ParallelSeries"
+          description: |-
+            How the created child tasks are ordered for execution: Parallel (default), Series, or ParallelSeries. In Series and
+            ParallelSeries only the first child task of each chain is started; each later one is started by its predecessor's
+            TriggerNextTask action, or by another trigger such as a TriggerChildTasks filter on previousTask. Without one, the
+            chain stops after its first child.
           nullable: true
           type: string
       required:
@@ -14155,8 +14183,11 @@ components:
           nullable: true
           type: integer
         ordering:
-          description: "How the created child tasks are ordered for execution: Parallel\
-            \ (default), Series, or ParallelSeries"
+          description: |-
+            How the created child tasks are ordered for execution: Parallel (default), Series, or ParallelSeries. In Series and
+            ParallelSeries only the first child task of each chain is started; each later one is started by its predecessor's
+            TriggerNextTask action, or by another trigger such as a TriggerChildTasks filter on previousTask. Without one, the
+            chain stops after its first child.
           nullable: true
           type: string
       type: object
