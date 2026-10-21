@@ -63,7 +63,7 @@ public class CorrelationIdMapping {
   }
 
    /**
-   * The path into the event the correlation ID is taken from, for example body.fileId
+   * The path into the event the correlation ID is taken from, for example body.fileId. The path must be in the schema of the event type, and a value of any type is written as a string
    * @return mapFrom
   **/
   @jakarta.annotation.Nonnull

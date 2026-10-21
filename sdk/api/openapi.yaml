@@ -40,7 +40,7 @@ info:
     | <a name="973">973</a>|Workflow already exists.| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1927
+  version: 0.1.1929
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -9157,8 +9157,9 @@ components:
         \ correlation IDs of the Launcher"
       properties:
         mapFrom:
-          description: "The path into the event the correlation ID is taken from,\
-            \ for example body.fileId"
+          description: |-
+            The path into the event the correlation ID is taken from, for example body.fileId. The path must be in the
+            schema of the event type, and a value of any type is written as a string
           maxLength: 1024
           minLength: 1
           type: string
@@ -10280,8 +10281,12 @@ components:
         event that arrived
       properties:
         mapFrom:
-          description: "The path into the event the value is taken from, for example\
-            \ header.timestamp"
+          description: |-
+            The path into the event the value is taken from, for example header.timestamp. The path must be in the schema
+            of the event type, and the value must suit the type of the field. A string fills a String or LusidUserId
+            field, a number fills a Decimal field, a boolean fills a Boolean field, and a date and time fills a DateTime
+            field. A path to an identifier collection names a key, for example
+            body.identifiers[Instrument/default/Figi], and fills a String field
           maxLength: 1024
           minLength: 1
           type: string
@@ -10866,7 +10871,9 @@ components:
           nullable: true
           type: string
         mapFrom:
-          description: "The path the value is taken from, for example header.userId"
+          description: |-
+            The path the value is taken from. A runAsUserId can only be taken from header.userId, and not for an event
+            type whose header has no user ID
           maxLength: 1024
           minLength: 0
           nullable: true

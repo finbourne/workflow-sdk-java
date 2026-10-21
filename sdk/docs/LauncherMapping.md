@@ -6,7 +6,7 @@ A value a Launcher either gives as it is or takes from somewhere.   Exactly one 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **setTo** | **String** | The value to use, given as it is | [optional] [default to String]
-**mapFrom** | **String** | The path the value is taken from, for example header.userId | [optional] [default to String]
+**mapFrom** | **String** | The path the value is taken from. A runAsUserId can only be taken from header.userId, and not for an event type whose header has no user ID | [optional] [default to String]
 
 ```java
 import com.finbourne.workflow.model.LauncherMapping;

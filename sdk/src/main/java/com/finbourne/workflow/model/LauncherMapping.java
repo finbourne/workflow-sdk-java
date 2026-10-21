@@ -89,7 +89,7 @@ public class LauncherMapping {
   }
 
    /**
-   * The path the value is taken from, for example header.userId
+   * The path the value is taken from. A runAsUserId can only be taken from header.userId, and not for an event type whose header has no user ID
    * @return mapFrom
   **/
   @jakarta.annotation.Nullable
