@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.openapitools.jackson.nullable.JsonNullable;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -54,7 +53,7 @@ import com.finbourne.workflow.JSON;
 public class DeleteTasksRequest {
   public static final String SERIALIZED_NAME_TASK_IDS = "taskIds";
   @SerializedName(SERIALIZED_NAME_TASK_IDS)
-  private List<String> taskIds;
+  private List<String> taskIds = new ArrayList<>();
 
   public DeleteTasksRequest() {
   }
@@ -77,7 +76,7 @@ public class DeleteTasksRequest {
    * The Ids of the Tasks to delete
    * @return taskIds
   **/
-  @jakarta.annotation.Nullable
+  @jakarta.annotation.Nonnull
   public List<String> getTaskIds() {
     return taskIds;
   }
@@ -101,20 +100,9 @@ public class DeleteTasksRequest {
     return Objects.equals(this.taskIds, deleteTasksRequest.taskIds);
   }
 
-  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
-    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
-  }
-
   @Override
   public int hashCode() {
     return Objects.hash(taskIds);
-  }
-
-  private static <T> int hashCodeNullable(JsonNullable<T> a) {
-    if (a == null) {
-      return 1;
-    }
-    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
   }
 
   @Override
@@ -148,6 +136,7 @@ public class DeleteTasksRequest {
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
+    openapiRequiredFields.add("taskIds");
   }
 
  /**
@@ -162,9 +151,18 @@ public class DeleteTasksRequest {
           throw new IllegalArgumentException(String.format("The required field(s) %s in DeleteTasksRequest is not found in the empty JSON string", DeleteTasksRequest.openapiRequiredFields.toString()));
         }
       }
+
+      // check to make sure all required properties/fields are present in the JSON string
+      for (String requiredField : DeleteTasksRequest.openapiRequiredFields) {
+        if (jsonElement.getAsJsonObject().get(requiredField) == null) {
+          throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonElement.toString()));
+        }
+      }
         JsonObject jsonObj = jsonElement.getAsJsonObject();
-      // ensure the optional json data is an array if present
-      if (jsonObj.get("taskIds") != null && !jsonObj.get("taskIds").isJsonNull() && !jsonObj.get("taskIds").isJsonArray()) {
+      // ensure the required json array is present
+      if (jsonObj.get("taskIds") == null) {
+        throw new IllegalArgumentException("Expected the field `linkedContent` to be an array in the JSON string but got `null`");
+      } else if (!jsonObj.get("taskIds").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `taskIds` to be an array in the JSON string but got `%s`", jsonObj.get("taskIds").toString()));
       }
   }
