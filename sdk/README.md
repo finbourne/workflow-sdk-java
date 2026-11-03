@@ -126,6 +126,8 @@ Class | Method | HTTP request | Description
  - [LauncherSummaries](docs/LauncherSummaries.md)
  - [LibraryResponse](docs/LibraryResponse.md)
  - [Link](docs/Link.md)
+ - [LuminesceMultiQuery](docs/LuminesceMultiQuery.md)
+ - [LuminesceMultiQueryResponse](docs/LuminesceMultiQueryResponse.md)
  - [LuminesceView](docs/LuminesceView.md)
  - [LuminesceViewResponse](docs/LuminesceViewResponse.md)
  - [LusidEntityDataQualityCheck](docs/LusidEntityDataQualityCheck.md)

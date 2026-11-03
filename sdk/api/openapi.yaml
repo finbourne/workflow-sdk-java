@@ -40,7 +40,7 @@ info:
     | <a name="973">973</a>|Workflow already exists.| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1949
+  version: 0.1.1950
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -10374,6 +10374,7 @@ components:
           - HealthCheck
           - HorizonIntegration
           - InstantiateRec
+          - LuminesceMultiQuery
           - LuminesceView
           - LusidEntityDataQualityCheck
           - PortfolioHoldingDataQualityCheck
@@ -10399,6 +10400,7 @@ components:
           - HorizonIntegration
           - InstantiateRec
           - Library
+          - LuminesceMultiQuery
           - LuminesceView
           - LusidEntityDataQualityCheck
           - PortfolioHoldingDataQualityCheck
@@ -11050,6 +11052,124 @@ components:
       - href
       - method
       - relation
+      type: object
+    LuminesceMultiQuery:
+      additionalProperties: false
+      description: |-
+        Configuration for a Worker that runs a Luminesce custom multi-query saved in Workspaces, saving its results to Drive as one
+        file. Its parameters are the multi-query's scalar parameters, and the export settings below, which a task may override
+        through the worker's `export-*` parameters.
+      properties:
+        type:
+          description: The type of worker
+          enum:
+          - LuminesceMultiQuery
+          minLength: 1
+          type: string
+        workspaceKey:
+          description: |-
+            The Workspaces key of the multi-query, e.g. `shared/SomeWorkspace/items/sets/SomeSet`, read as each run starts. An item of a
+            personal workspace can only be read by the user who saved it, so only runs as that user can use it.
+          maxLength: 1024
+          minLength: 0
+          type: string
+        driveLocationAndFileName:
+          description: |-
+            Where in Drive to save the results. May contain the placeholders `{executionId}`, `{date:format}` (when the queries
+            started, UTC) and `{param:name}` (a scalar parameter's value); the extension comes from the format.
+          maxLength: 1024
+          minLength: 0
+          type: string
+        format:
+          description: |-
+            The format to save in: csv (the default), pipe, excel, json, jsonProper, jsonProperWithLineage, jsonProperByTable, xml, parquet, sqlite or pdf.
+            Several results are one worksheet each for excel, one table each for sqlite, one key each for jsonProperByTable, and otherwise one file each within a zip.
+          maxLength: 64
+          minLength: 0
+          nullable: true
+          type: string
+        mayOverwrite:
+          description: "Whether an existing file of the same name may be overwritten,\
+            \ rather than the run failing. False by default."
+          nullable: true
+          type: boolean
+        driveTemplateLocation:
+          description: The Drive path and file name of a template to save with. Only
+            excel and pdf support templates.
+          maxLength: 1024
+          minLength: 0
+          nullable: true
+          type: string
+        dateTimeFormat:
+          description: "The format to write DateTime values in, Luminesce's default\
+            \ (`yyyy-MM-dd HH:mm:ss.fff`) when not given."
+          maxLength: 64
+          minLength: 0
+          nullable: true
+          type: string
+        whenSomeFail:
+          description: |-
+            Whether the results of the queries that succeeded are still saved when others did not, the worker then completing with
+            the status PartiallyCompleted. False by default, the worker then failing with nothing saved.
+          nullable: true
+          type: boolean
+        keepForSeconds:
+          description: |-
+            How long Luminesce keeps the results once done, e.g. to look into a run or save them again: 2 hours by default, at most
+            31 days.
+          format: int32
+          maximum: 2678400
+          minimum: 1
+          nullable: true
+          type: integer
+      required:
+      - driveLocationAndFileName
+      - type
+      - workspaceKey
+      type: object
+    LuminesceMultiQueryResponse:
+      additionalProperties: false
+      description: Readonly configuration for the Luminesce custom multi-query Worker
+      properties:
+        type:
+          description: The type of worker
+          enum:
+          - LuminesceMultiQuery
+          nullable: true
+          type: string
+        workspaceKey:
+          description: The Workspaces key of the multi-query the worker runs
+          nullable: true
+          type: string
+        driveLocationAndFileName:
+          description: "Where in Drive the results are saved, which may contain placeholders"
+          nullable: true
+          type: string
+        format:
+          description: "The format the results are saved in, csv when not given"
+          nullable: true
+          type: string
+        mayOverwrite:
+          description: Whether an existing file of the same name may be overwritten
+          nullable: true
+          type: boolean
+        driveTemplateLocation:
+          description: The Drive path of the template the results are saved with
+          nullable: true
+          type: string
+        dateTimeFormat:
+          description: The format DateTime values are written in
+          nullable: true
+          type: string
+        whenSomeFail:
+          description: Whether the results of the queries that succeeded are still
+            saved when others did not
+          nullable: true
+          type: boolean
+        keepForSeconds:
+          description: "How long Luminesce keeps the results once done, in seconds"
+          format: int32
+          type: integer
       type: object
     LuminesceView:
       additionalProperties: false
@@ -16565,6 +16685,7 @@ components:
       - $ref: '#/components/schemas/HealthCheck'
       - $ref: '#/components/schemas/HorizonIntegration'
       - $ref: '#/components/schemas/InstantiateRec'
+      - $ref: '#/components/schemas/LuminesceMultiQuery'
       - $ref: '#/components/schemas/LuminesceView'
       - $ref: '#/components/schemas/LusidEntityDataQualityCheck'
       - $ref: '#/components/schemas/PortfolioHoldingDataQualityCheck'
@@ -16590,6 +16711,7 @@ components:
       - $ref: '#/components/schemas/HorizonIntegrationResponse'
       - $ref: '#/components/schemas/InstantiateRecResponse'
       - $ref: '#/components/schemas/LibraryResponse'
+      - $ref: '#/components/schemas/LuminesceMultiQueryResponse'
       - $ref: '#/components/schemas/LuminesceViewResponse'
       - $ref: '#/components/schemas/LusidEntityDataQualityCheckResponse'
       - $ref: '#/components/schemas/PortfolioHoldingDataQualityCheckResponse'
