@@ -11,8 +11,9 @@ Name | Type | Description | Notes
 **valueConstraints** | [**ValueConstraints**](ValueConstraints.md) |  | [optional] [default to ValueConstraints]
 **displayName** | **String** | Display name for field definition | [optional] [default to String]
 **description** | **String** | Description for field definition | [optional] [default to String]
-**category** | **String** | Category for field definition | [optional] [default to String]
+**category** | **String** | Display group for the field. Fields sharing a category are presented together in the UI | [optional] [default to String]
 **containsUrl** | **Boolean** | Field contains url | [optional] [default to Boolean]
+**multiline** | **Boolean** | Whether the field should be rendered as a multi-line text area | [optional] [default to Boolean]
 
 ```java
 import com.finbourne.workflow.model.TaskFieldDefinition;
@@ -28,6 +29,7 @@ ValueConstraints ValueConstraints = new ValueConstraints();
 @jakarta.annotation.Nullable String Description = "example Description";
 @jakarta.annotation.Nullable String Category = "example Category";
 @jakarta.annotation.Nullable Boolean ContainsUrl = true;
+@jakarta.annotation.Nullable Boolean Multiline = true;
 
 
 TaskFieldDefinition taskFieldDefinitionInstance = new TaskFieldDefinition()
@@ -38,7 +40,8 @@ TaskFieldDefinition taskFieldDefinitionInstance = new TaskFieldDefinition()
     .DisplayName(DisplayName)
     .Description(Description)
     .Category(Category)
-    .ContainsUrl(ContainsUrl);
+    .ContainsUrl(ContainsUrl)
+    .Multiline(Multiline);
 ```
 
 

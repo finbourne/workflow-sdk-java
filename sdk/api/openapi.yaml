@@ -40,7 +40,7 @@ info:
     | <a name="973">973</a>|Workflow already exists.| |
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Workflow API
-  version: 0.1.1950
+  version: 0.1.1024
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -104,7 +104,7 @@ info:
     \ operational controls for LUSID by modelling workflows, defining tasks, and setting\
     \ state transitions with triggers and actions."
 servers:
-- url: https://fbn-prd.lusid.com/workflow
+- url: https://fbn-ci.lusid.com/workflow
 security:
 - {}
 tags:
@@ -1105,7 +1105,8 @@ paths:
                     type: String
                     readOnlyStates:
                       stateType: TerminalState
-                    category: LargetextArea
+                    category: Resolution
+                    multiline: true
                   initialState:
                     name: Submitted
                     requiredFields:
@@ -1277,7 +1278,8 @@ paths:
                 type: String
                 readOnlyStates:
                   stateType: TerminalState
-                category: LargetextArea
+                category: Resolution
+                multiline: true
               initialState:
                 name: Submitted
                 requiredFields:
@@ -1417,7 +1419,8 @@ paths:
                 type: String
                 readOnlyStates:
                   stateType: TerminalState
-                category: LargetextArea
+                category: Resolution
+                multiline: true
               initialState:
                 name: Submitted
                 requiredFields:
@@ -1557,7 +1560,8 @@ paths:
                 type: String
                 readOnlyStates:
                   stateType: TerminalState
-                category: LargetextArea
+                category: Resolution
+                multiline: true
               initialState:
                 name: Submitted
                 requiredFields:
@@ -1697,7 +1701,8 @@ paths:
                 type: String
                 readOnlyStates:
                   stateType: TerminalState
-                category: LargetextArea
+                category: Resolution
+                multiline: true
               initialState:
                 name: Submitted
                 requiredFields:
@@ -1850,7 +1855,8 @@ paths:
                   type: String
                   readOnlyStates:
                     stateType: TerminalState
-                  category: LargetextArea
+                  category: Resolution
+                  multiline: true
                 initialState:
                   name: Submitted
                   requiredFields:
@@ -2128,7 +2134,8 @@ paths:
                   type: String
                   readOnlyStates:
                     stateType: TerminalState
-                  category: LargetextArea
+                  category: Resolution
+                  multiline: true
                 initialState:
                   name: Submitted
                   requiredFields:
@@ -2319,7 +2326,8 @@ paths:
                 type: String
                 readOnlyStates:
                   stateType: TerminalState
-                category: LargetextArea
+                category: Resolution
+                multiline: true
               initialState:
                 name: Submitted
                 requiredFields:
@@ -2456,7 +2464,8 @@ paths:
                 type: String
                 readOnlyStates:
                   stateType: TerminalState
-                category: LargetextArea
+                category: Resolution
+                multiline: true
               initialState:
                 name: Submitted
                 requiredFields:
@@ -2593,7 +2602,8 @@ paths:
                 type: String
                 readOnlyStates:
                   stateType: TerminalState
-                category: LargetextArea
+                category: Resolution
+                multiline: true
               initialState:
                 name: Submitted
                 requiredFields:
@@ -2730,7 +2740,8 @@ paths:
                 type: String
                 readOnlyStates:
                   stateType: TerminalState
-                category: LargetextArea
+                category: Resolution
+                multiline: true
               initialState:
                 name: Submitted
                 requiredFields:
@@ -2883,7 +2894,8 @@ paths:
                   type: String
                   readOnlyStates:
                     stateType: TerminalState
-                  category: LargetextArea
+                  category: Resolution
+                  multiline: true
                 initialState:
                   name: Submitted
                   requiredFields:
@@ -5093,7 +5105,8 @@ paths:
                           type: String
                           readOnlyStates:
                             stateType: TerminalState
-                          category: LargetextArea
+                          category: Resolution
+                          multiline: true
                         initialState:
                           name: Submitted
                           requiredFields:
@@ -5462,7 +5475,8 @@ paths:
                         type: String
                         readOnlyStates:
                           stateType: TerminalState
-                        category: LargetextArea
+                        category: Resolution
+                        multiline: true
                       initialState:
                         name: Submitted
                         requiredFields:
@@ -5843,7 +5857,8 @@ paths:
                         type: String
                         readOnlyStates:
                           stateType: TerminalState
-                        category: LargetextArea
+                        category: Resolution
+                        multiline: true
                       initialState:
                         name: Submitted
                         requiredFields:
@@ -6214,7 +6229,8 @@ paths:
                         type: String
                         readOnlyStates:
                           stateType: TerminalState
-                        category: LargetextArea
+                        category: Resolution
+                        multiline: true
                       initialState:
                         name: Submitted
                         requiredFields:
@@ -9524,6 +9540,7 @@ components:
             - selectedStates
           displayName: displayName
           containsUrl: true
+          multiline: true
           name: name
           description: description
           valueConstraints:
@@ -9541,6 +9558,7 @@ components:
             - selectedStates
           displayName: displayName
           containsUrl: true
+          multiline: true
           name: name
           description: description
           valueConstraints:
@@ -9935,6 +9953,22 @@ components:
       - frequency
       - type
       type: object
+    DeleteTasksRequest:
+      additionalProperties: false
+      description: Contains required info to delete Tasks
+      example:
+        taskIds:
+        - taskIds
+        - taskIds
+      properties:
+        taskIds:
+          description: The Ids of the Tasks to delete
+          items:
+            type: string
+          type: array
+      required:
+      - taskIds
+      type: object
     DeletedEntityResponse:
       additionalProperties: false
       example:
@@ -9972,22 +10006,6 @@ components:
           type: array
       required:
       - asAt
-      type: object
-    DeleteTasksRequest:
-      additionalProperties: false
-      description: Contains required info to delete Tasks
-      example:
-        taskIds:
-        - taskIds
-        - taskIds
-      properties:
-        taskIds:
-          description: The Ids of the Tasks to delete
-          items:
-            type: string
-          type: array
-      required:
-      - taskIds
       type: object
     ErrorDetail:
       additionalProperties: false
@@ -10555,6 +10573,46 @@ components:
           nullable: true
           type: string
       type: object
+    IdSelectorDefinition:
+      additionalProperties: false
+      example:
+        identifier:
+          key: identifier
+        name: name
+        description: description
+        actions:
+        - activity: activity
+          scope: scope
+          entity: entity
+        - activity: activity
+          scope: scope
+          entity: entity
+      properties:
+        identifier:
+          additionalProperties:
+            nullable: true
+            type: string
+          minLength: 1
+          type: object
+        actions:
+          items:
+            $ref: '#/components/schemas/ActionId'
+          minItems: 1
+          type: array
+        name:
+          maxLength: 100
+          minLength: 0
+          nullable: true
+          type: string
+        description:
+          maxLength: 1024
+          minLength: 0
+          nullable: true
+          type: string
+      required:
+      - actions
+      - identifier
+      type: object
     IdentifierPartSchema:
       additionalProperties: false
       example:
@@ -10598,46 +10656,6 @@ components:
       - index
       - name
       - required
-      type: object
-    IdSelectorDefinition:
-      additionalProperties: false
-      example:
-        identifier:
-          key: identifier
-        name: name
-        description: description
-        actions:
-        - activity: activity
-          scope: scope
-          entity: entity
-        - activity: activity
-          scope: scope
-          entity: entity
-      properties:
-        identifier:
-          additionalProperties:
-            nullable: true
-            type: string
-          minLength: 1
-          type: object
-        actions:
-          items:
-            $ref: '#/components/schemas/ActionId'
-          minItems: 1
-          type: array
-        name:
-          maxLength: 100
-          minLength: 0
-          nullable: true
-          type: string
-        description:
-          maxLength: 1024
-          minLength: 0
-          nullable: true
-          type: string
-      required:
-      - actions
-      - identifier
       type: object
     InitialState:
       additionalProperties: false
@@ -11985,6 +12003,7 @@ components:
               - selectedStates
             displayName: displayName
             containsUrl: true
+            multiline: true
             name: name
             description: description
             valueConstraints:
@@ -12002,6 +12021,7 @@ components:
               - selectedStates
             displayName: displayName
             containsUrl: true
+            multiline: true
             name: name
             description: description
             valueConstraints:
@@ -12104,6 +12124,7 @@ components:
               - selectedStates
             displayName: displayName
             containsUrl: true
+            multiline: true
             name: name
             description: description
             valueConstraints:
@@ -12121,6 +12142,7 @@ components:
               - selectedStates
             displayName: displayName
             containsUrl: true
+            multiline: true
             name: name
             description: description
             valueConstraints:
@@ -12455,6 +12477,7 @@ components:
                     - selectedStates
                   displayName: displayName
                   containsUrl: true
+                  multiline: true
                   name: name
                   description: description
                   valueConstraints:
@@ -12472,6 +12495,7 @@ components:
                     - selectedStates
                   displayName: displayName
                   containsUrl: true
+                  multiline: true
                   name: name
                   description: description
                   valueConstraints:
@@ -12574,6 +12598,7 @@ components:
                     - selectedStates
                   displayName: displayName
                   containsUrl: true
+                  multiline: true
                   name: name
                   description: description
                   valueConstraints:
@@ -12591,6 +12616,7 @@ components:
                     - selectedStates
                   displayName: displayName
                   containsUrl: true
+                  multiline: true
                   name: name
                   description: description
                   valueConstraints:
@@ -12822,6 +12848,7 @@ components:
                     - selectedStates
                   displayName: displayName
                   containsUrl: true
+                  multiline: true
                   name: name
                   description: description
                   valueConstraints:
@@ -12839,6 +12866,7 @@ components:
                     - selectedStates
                   displayName: displayName
                   containsUrl: true
+                  multiline: true
                   name: name
                   description: description
                   valueConstraints:
@@ -12941,6 +12969,7 @@ components:
                     - selectedStates
                   displayName: displayName
                   containsUrl: true
+                  multiline: true
                   name: name
                   description: description
                   valueConstraints:
@@ -12958,6 +12987,7 @@ components:
                     - selectedStates
                   displayName: displayName
                   containsUrl: true
+                  multiline: true
                   name: name
                   description: description
                   valueConstraints:
@@ -13308,6 +13338,23 @@ components:
         labelValueSet:
           $ref: '#/components/schemas/LabelValueSet'
       type: object
+    ReRunConfiguration:
+      additionalProperties: false
+      description: |-
+        Defines how re-run results for a given (child) TaskDefinitionId should be reconciled
+        against existing (non-terminal) child tasks of the same parent Task instance.
+      properties:
+        taskDefinitionId:
+          $ref: '#/components/schemas/ResourceId'
+        resultsRecurring:
+          $ref: '#/components/schemas/ResultsRecurringConfiguration'
+        resultsNotRecurring:
+          $ref: '#/components/schemas/ResultsNotRecurringConfiguration'
+      required:
+      - resultsNotRecurring
+      - resultsRecurring
+      - taskDefinitionId
+      type: object
     ReadOnlyStates:
       additionalProperties: false
       description: Information about which states the field can be edited in
@@ -13400,23 +13447,6 @@ components:
       - frequency
       - index
       - type
-      type: object
-    ReRunConfiguration:
-      additionalProperties: false
-      description: |-
-        Defines how re-run results for a given (child) TaskDefinitionId should be reconciled
-        against existing (non-terminal) child tasks of the same parent Task instance.
-      properties:
-        taskDefinitionId:
-          $ref: '#/components/schemas/ResourceId'
-        resultsRecurring:
-          $ref: '#/components/schemas/ResultsRecurringConfiguration'
-        resultsNotRecurring:
-          $ref: '#/components/schemas/ResultsNotRecurringConfiguration'
-      required:
-      - resultsNotRecurring
-      - resultsRecurring
-      - taskDefinitionId
       type: object
     ResourceId:
       additionalProperties: false
@@ -14093,46 +14123,6 @@ components:
       required:
       - values
       type: object
-    ResultantChildTaskConfiguration:
-      additionalProperties: false
-      description: Child Task Configuration
-      properties:
-        resultMatchingPattern:
-          $ref: '#/components/schemas/ResultMatchingPattern'
-        taskDefinitionId:
-          $ref: '#/components/schemas/ResourceId'
-        taskDefinitionAsAt:
-          description: TaskDefinition AsAt timestamp
-          format: date-time
-          nullable: true
-          type: string
-        initialTrigger:
-          description: The Initial Trigger for automatic start
-          maxLength: 1024
-          nullable: true
-          pattern: "^[a-zA-Z0-9\\-_]+$"
-          type: string
-        childTaskFields:
-          additionalProperties:
-            $ref: '#/components/schemas/FieldMapping'
-          description: Field Mappings
-          type: object
-        mapStackingKeyFrom:
-          description: The field to be mapped as the ChildTasks Stacking Key
-          nullable: true
-          type: string
-        displayName:
-          description: "An optional display name, to tell apart child task configurations\
-            \ that use the same Task Definition"
-          maxLength: 150
-          minLength: 1
-          nullable: true
-          pattern: "^[\\s\\S]*$"
-          type: string
-      required:
-      - childTaskFields
-      - taskDefinitionId
-      type: object
     ResultField:
       additionalProperties: false
       description: Defines a Worker Result Field
@@ -14174,6 +14164,46 @@ components:
           type: string
       required:
       - filter
+      type: object
+    ResultantChildTaskConfiguration:
+      additionalProperties: false
+      description: Child Task Configuration
+      properties:
+        resultMatchingPattern:
+          $ref: '#/components/schemas/ResultMatchingPattern'
+        taskDefinitionId:
+          $ref: '#/components/schemas/ResourceId'
+        taskDefinitionAsAt:
+          description: TaskDefinition AsAt timestamp
+          format: date-time
+          nullable: true
+          type: string
+        initialTrigger:
+          description: The Initial Trigger for automatic start
+          maxLength: 1024
+          nullable: true
+          pattern: "^[a-zA-Z0-9\\-_]+$"
+          type: string
+        childTaskFields:
+          additionalProperties:
+            $ref: '#/components/schemas/FieldMapping'
+          description: Field Mappings
+          type: object
+        mapStackingKeyFrom:
+          description: The field to be mapped as the ChildTasks Stacking Key
+          nullable: true
+          type: string
+        displayName:
+          description: "An optional display name, to tell apart child task configurations\
+            \ that use the same Task Definition"
+          maxLength: 150
+          minLength: 1
+          nullable: true
+          pattern: "^[\\s\\S]*$"
+          type: string
+      required:
+      - childTaskFields
+      - taskDefinitionId
       type: object
     ResultsNotRecurringConfiguration:
       additionalProperties: false
@@ -14353,29 +14383,6 @@ components:
           type: string
       required:
       - runId
-      type: object
-    ScheduledTimeAdjustment:
-      additionalProperties: false
-      description: |-
-        Represents an adjustment to the scheduled time of an EventHandler. Only relevant for EventHandlers with a
-        Finbourne.Workflow.WebApi.Common.Dto.Json.EventHandlers.ScheduleMatchingPattern
-      example:
-        dateAdjustment:
-          deltaDays: 2054
-          businessDayAdjustment: businessDayAdjustment
-        timeAdjustment:
-          setTo:
-            hours: 3
-            minutes: 35
-            type: Specified
-      properties:
-        dateAdjustment:
-          $ref: '#/components/schemas/DateAdjustment'
-        timeAdjustment:
-          $ref: '#/components/schemas/TimeAdjustment'
-      required:
-      - dateAdjustment
-      - timeAdjustment
       type: object
     ScheduleLauncherDetails:
       additionalProperties: false
@@ -14558,6 +14565,43 @@ components:
       required:
       - timeZone
       type: object
+    ScheduleTaskFieldMapping:
+      additionalProperties: false
+      description: How a Schedule Launcher fills one field of the root task from the
+        instant the schedule fired
+      properties:
+        mapFrom:
+          description: The value the field is taken from. One of - ScheduledTime
+          minLength: 1
+          type: string
+        dateTimeAdjustment:
+          $ref: '#/components/schemas/DateTimeAdjustment'
+      required:
+      - mapFrom
+      type: object
+    ScheduledTimeAdjustment:
+      additionalProperties: false
+      description: |-
+        Represents an adjustment to the scheduled time of an EventHandler. Only relevant for EventHandlers with a
+        Finbourne.Workflow.WebApi.Common.Dto.Json.EventHandlers.ScheduleMatchingPattern
+      example:
+        dateAdjustment:
+          deltaDays: 2054
+          businessDayAdjustment: businessDayAdjustment
+        timeAdjustment:
+          setTo:
+            hours: 3
+            minutes: 35
+            type: Specified
+      properties:
+        dateAdjustment:
+          $ref: '#/components/schemas/DateAdjustment'
+        timeAdjustment:
+          $ref: '#/components/schemas/TimeAdjustment'
+      required:
+      - dateAdjustment
+      - timeAdjustment
+      type: object
     SchedulerJob:
       additionalProperties: false
       description: Configuration for a Worker that calls a Scheduler Job
@@ -14586,20 +14630,6 @@ components:
           type: string
         jobId:
           $ref: '#/components/schemas/ResourceId'
-      type: object
-    ScheduleTaskFieldMapping:
-      additionalProperties: false
-      description: How a Schedule Launcher fills one field of the root task from the
-        instant the schedule fired
-      properties:
-        mapFrom:
-          description: The value the field is taken from. One of - ScheduledTime
-          minLength: 1
-          type: string
-        dateTimeAdjustment:
-          $ref: '#/components/schemas/DateTimeAdjustment'
-      required:
-      - mapFrom
       type: object
     ServiceApiEndpoints:
       additionalProperties: false
@@ -15232,6 +15262,7 @@ components:
             - selectedStates
           displayName: displayName
           containsUrl: true
+          multiline: true
           name: name
           description: description
           valueConstraints:
@@ -15249,6 +15280,7 @@ components:
             - selectedStates
           displayName: displayName
           containsUrl: true
+          multiline: true
           name: name
           description: description
           valueConstraints:
@@ -15417,6 +15449,7 @@ components:
           - selectedStates
         displayName: displayName
         containsUrl: true
+        multiline: true
         name: name
         description: description
         valueConstraints:
@@ -15457,11 +15490,18 @@ components:
           pattern: "^[\\s\\S]*$"
           type: string
         category:
-          description: Category for field definition
+          description: Display group for the field. Fields sharing a category are
+            presented together in the UI
+          maxLength: 1024
+          minLength: 1
           nullable: true
           type: string
         containsUrl:
           description: Field contains url
+          nullable: true
+          type: boolean
+        multiline:
+          description: Whether the field should be rendered as a multi-line text area
           nullable: true
           type: boolean
       required:
@@ -15516,7 +15556,12 @@ components:
           pattern: "^[\\s\\S]*$"
           type: string
         category:
-          description: The category of this State
+          description: "The category of this State. Free text; categories understood\
+            \ by the LUSID web app are: NotStarted, Waiting, Warning, Exceptions,\
+            \ InProgress, Error, CompletedSuccess, CompletedFail, AwaitingApproval,\
+            \ Critical, HighPriority, MediumPriority, LowPriority, Other"
+          maxLength: 1024
+          minLength: 0
           nullable: true
           type: string
       required:
@@ -16162,6 +16207,7 @@ components:
             - selectedStates
           displayName: displayName
           containsUrl: true
+          multiline: true
           name: name
           description: description
           valueConstraints:
@@ -16179,6 +16225,7 @@ components:
             - selectedStates
           displayName: displayName
           containsUrl: true
+          multiline: true
           name: name
           description: description
           valueConstraints:
@@ -16494,25 +16541,6 @@ components:
       - constraintType
       - valueSourceType
       type: object
-    VersionedTaskDefinitionId:
-      additionalProperties: false
-      description: A Task Definition Id with an optional asAt timestamp identifying
-        a specific version
-      example:
-        taskDefinitionId:
-          code: code
-          scope: scope
-        taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
-      properties:
-        taskDefinitionId:
-          $ref: '#/components/schemas/ResourceId'
-        taskDefinitionAsAt:
-          description: The asAt time of this version of the Task Definition. Null
-            means the latest version.
-          format: date-time
-          nullable: true
-          type: string
-      type: object
     VersionInfo:
       additionalProperties: false
       description: The version metadata.
@@ -16557,6 +16585,25 @@ components:
           format: int32
           nullable: true
           type: integer
+      type: object
+    VersionedTaskDefinitionId:
+      additionalProperties: false
+      description: A Task Definition Id with an optional asAt timestamp identifying
+        a specific version
+      example:
+        taskDefinitionId:
+          code: code
+          scope: scope
+        taskDefinitionAsAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        taskDefinitionId:
+          $ref: '#/components/schemas/ResourceId'
+        taskDefinitionAsAt:
+          description: The asAt time of this version of the Task Definition. Null
+            means the latest version.
+          format: date-time
+          nullable: true
+          type: string
       type: object
     WeekRegularity:
       additionalProperties: false
@@ -16828,6 +16875,7 @@ components:
                   - selectedStates
                 displayName: displayName
                 containsUrl: true
+                multiline: true
                 name: name
                 description: description
                 valueConstraints:
@@ -16845,6 +16893,7 @@ components:
                   - selectedStates
                 displayName: displayName
                 containsUrl: true
+                multiline: true
                 name: name
                 description: description
                 valueConstraints:
@@ -16947,6 +16996,7 @@ components:
                   - selectedStates
                 displayName: displayName
                 containsUrl: true
+                multiline: true
                 name: name
                 description: description
                 valueConstraints:
@@ -16964,6 +17014,7 @@ components:
                   - selectedStates
                 displayName: displayName
                 containsUrl: true
+                multiline: true
                 name: name
                 description: description
                 valueConstraints:
@@ -17272,6 +17323,7 @@ components:
                 - selectedStates
               displayName: displayName
               containsUrl: true
+              multiline: true
               name: name
               description: description
               valueConstraints:
@@ -17289,6 +17341,7 @@ components:
                 - selectedStates
               displayName: displayName
               containsUrl: true
+              multiline: true
               name: name
               description: description
               valueConstraints:
@@ -17391,6 +17444,7 @@ components:
                 - selectedStates
               displayName: displayName
               containsUrl: true
+              multiline: true
               name: name
               description: description
               valueConstraints:
@@ -17408,6 +17462,7 @@ components:
                 - selectedStates
               displayName: displayName
               containsUrl: true
+              multiline: true
               name: name
               description: description
               valueConstraints:
@@ -17679,6 +17734,7 @@ components:
               - selectedStates
             displayName: displayName
             containsUrl: true
+            multiline: true
             name: name
             description: description
             valueConstraints:
@@ -17696,6 +17752,7 @@ components:
               - selectedStates
             displayName: displayName
             containsUrl: true
+            multiline: true
             name: name
             description: description
             valueConstraints:
@@ -17798,6 +17855,7 @@ components:
               - selectedStates
             displayName: displayName
             containsUrl: true
+            multiline: true
             name: name
             description: description
             valueConstraints:
@@ -17815,6 +17873,7 @@ components:
               - selectedStates
             displayName: displayName
             containsUrl: true
+            multiline: true
             name: name
             description: description
             valueConstraints:
@@ -17945,7 +18004,7 @@ components:
       description: OAuth2 Implicit Grant
       flows:
         implicit:
-          authorizationUrl: https://lusid.okta.com/oauth2/default/v1/authorize
+          authorizationUrl: https://fbn-ci.identity.lusid.com/oauth2/aus8gzrg5mGP60i9K2p7/v1/authorize
           scopes: {}
       type: oauth2
 x-tagGroups:

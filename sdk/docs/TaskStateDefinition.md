@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **name** | **String** | The Name of this State | [default to String]
 **displayName** | **String** | The display name of this State | [optional] [default to String]
 **description** | **String** | The description of this State | [optional] [default to String]
-**category** | **String** | The category of this State | [optional] [default to String]
+**category** | **String** | The category of this State. Free text; categories understood by the LUSID web app are: NotStarted, Waiting, Warning, Exceptions, InProgress, Error, CompletedSuccess, CompletedFail, AwaitingApproval, Critical, HighPriority, MediumPriority, LowPriority, Other | [optional] [default to String]
 
 ```java
 import com.finbourne.workflow.model.TaskStateDefinition;

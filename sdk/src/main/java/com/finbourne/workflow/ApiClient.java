@@ -66,10 +66,10 @@ import com.finbourne.workflow.extensions.RateLimitRetryInterceptor;
  */
 public class ApiClient {
 
-    private String basePath = "https://fbn-prd.lusid.com/workflow";
+    private String basePath = "https://fbn-ci.lusid.com/workflow";
     protected List<ServerConfiguration> servers = new ArrayList<ServerConfiguration>(Arrays.asList(
     new ServerConfiguration(
-      "https://fbn-prd.lusid.com/workflow",
+      "https://fbn-ci.lusid.com/workflow",
       "No description provided",
       new HashMap<String, ServerVariable>()
     )
@@ -212,7 +212,7 @@ public class ApiClient {
         json = new JSON();
 
         // Set default User-Agent.
-        setUserAgent("OpenAPI-Generator/2.1.48/java");
+        setUserAgent("OpenAPI-Generator/2.1.49/java");
 
         authentications = new HashMap<String, Authentication>();
     }
@@ -229,7 +229,7 @@ public class ApiClient {
     /**
      * Set base path
      *
-     * @param basePath Base path of the URL (e.g https://fbn-prd.lusid.com/workflow
+     * @param basePath Base path of the URL (e.g https://fbn-ci.lusid.com/workflow
      * @return An instance of OkHttpClient
      */
     public ApiClient setBasePath(String basePath) {

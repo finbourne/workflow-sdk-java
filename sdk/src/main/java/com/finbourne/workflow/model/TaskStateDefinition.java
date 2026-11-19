@@ -139,7 +139,7 @@ public class TaskStateDefinition {
   }
 
    /**
-   * The category of this State
+   * The category of this State. Free text; categories understood by the LUSID web app are: NotStarted, Waiting, Warning, Exceptions, InProgress, Error, CompletedSuccess, CompletedFail, AwaitingApproval, Critical, HighPriority, MediumPriority, LowPriority, Other
    * @return category
   **/
   @jakarta.annotation.Nullable

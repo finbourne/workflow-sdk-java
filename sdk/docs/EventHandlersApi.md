@@ -1,6 +1,6 @@
 # EventHandlersApi
 
-All URIs are relative to *https://fbn-prd.lusid.com/workflow*
+All URIs are relative to *https://fbn-ci.lusid.com/workflow*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
